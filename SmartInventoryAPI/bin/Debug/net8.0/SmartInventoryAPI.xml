@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>SmartInventoryAPI</name>
+    </assembly>
+    <members>
+        <member name="M:SmartInventoryAPI.Controllers.AuthController.Login(SmartInventoryAPI.Models.DTOs.Request.Auth.LoginRequestDto)">
+            <summary>
+            Login with username and password
+            </summary>
+        </member>
+        <member name="M:SmartInventoryAPI.Controllers.OrderFulfillmentController.ReceiveOrderFulfillment(SmartInventoryAPI.Models.DTOs.Request.OrderFulfillment.ReceiveOrderFulfillmentRequestDto)">
+            <summary>
+            Integration API: Receive order fulfillment from external customer system
+            </summary>
+        </member>
+        <member name="M:SmartInventoryAPI.Controllers.SalesController.ReceiveSales(SmartInventoryAPI.Models.DTOs.Request.Sales.ReceiveSalesRequestDto)">
+            <summary>
+            Integration API: Receive sales data from POS system
+            </summary>
+        </member>
+        <member name="M:SmartInventoryAPI.Controllers.UsersController.GetAllUsers(System.Int32,System.Int32)">
+            <summary>
+            Get all users with pagination
+            </summary>
+        </member>
+        <member name="M:SmartInventoryAPI.Controllers.UsersController.GetUserById(System.Int64)">
+            <summary>
+            Get user by ID
+            </summary>
+        </member>
+        <member name="M:SmartInventoryAPI.Controllers.UsersController.CreateUser(SmartInventoryAPI.Models.DTOs.Request.User.CreateUserRequestDto)">
+            <summary>
+            Create new user
+            </summary>
+        </member>
+        <member name="M:SmartInventoryAPI.Controllers.UsersController.UpdateUser(System.Int64,SmartInventoryAPI.Models.DTOs.Request.User.UpdateUserRequestDto)">
+            <summary>
+            Update user
+            </summary>
+        </member>
+        <member name="M:SmartInventoryAPI.Controllers.UsersController.DeleteUser(System.Int64)">
+            <summary>
+            Delete user (soft delete)
+            </summary>
+        </member>
+    </members>
+</doc>

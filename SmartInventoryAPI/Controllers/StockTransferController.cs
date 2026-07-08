@@ -1,0 +1,84 @@
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using SmartInventoryAPI.Models.DTOs.Response;
+using SmartInventoryAPI.Services.Interfaces;
+
+namespace SmartInventoryAPI.Controllers;
+
+[ApiController]
+[Route("api/[controller]")]
+[Authorize]
+public class StockTransferController : ControllerBase
+{
+    private readonly IStockTransferService _stService;
+    private readonly ILogger<StockTransferController> _logger;
+
+    public StockTransferController(IStockTransferService stService, ILogger<StockTransferController> logger)
+    {
+        _stService = stService;
+        _logger = logger;
+    }
+
+    [HttpGet]
+    public async Task<ActionResult<ApiResponseDto<IEnumerable<object>>>> GetAllStockTransfers(
+        [FromQuery] int skip = 0,
+        [FromQuery] int take = 10)
+    {
+        var transfers = await _stService.GetAllStockTransfersAsync(skip, take);
+        return Ok(new ApiResponseDto<IEnumerable<object>>
+        {
+            Success = true,
+            Message = "Stock transfers retrieved successfully",
+            Data = transfers,
+            StatusCode = 200
+        });
+    }
+
+    [HttpGet("from-location/{locationId}")]
+    public async Task<ActionResult<ApiResponseDto<IEnumerable<object>>>> GetByFromLocation(
+        long locationId,
+        [FromQuery] int skip = 0,
+        [FromQuery] int take = 10)
+    {
+        var transfers = await _stService.GetByFromLocationAsync(locationId, skip, take);
+        return Ok(new ApiResponseDto<IEnumerable<object>>
+        {
+            Success = true,
+            Message = "Stock transfers retrieved by source location successfully",
+            Data = transfers,
+            StatusCode = 200
+        });
+    }
+
+    [HttpGet("to-location/{locationId}")]
+    public async Task<ActionResult<ApiResponseDto<IEnumerable<object>>>> GetByToLocation(
+        long locationId,
+        [FromQuery] int skip = 0,
+        [FromQuery] int take = 10)
+    {
+        var transfers = await _stService.GetByToLocationAsync(locationId, skip, take);
+        return Ok(new ApiResponseDto<IEnumerable<object>>
+        {
+            Success = true,
+            Message = "Stock transfers retrieved by destination location successfully",
+            Data = transfers,
+            StatusCode = 200
+        });
+    }
+
+    [HttpGet("status/{status}")]
+    public async Task<ActionResult<ApiResponseDto<IEnumerable<object>>>> GetByStatus(
+        int status,
+        [FromQuery] int skip = 0,
+        [FromQuery] int take = 10)
+    {
+        var transfers = await _stService.GetByStatusAsync(status, skip, take);
+        return Ok(new ApiResponseDto<IEnumerable<object>>
+        {
+            Success = true,
+            Message = "Stock transfers retrieved by status successfully",
+            Data = transfers,
+            StatusCode = 200
+        });
+    }
+}

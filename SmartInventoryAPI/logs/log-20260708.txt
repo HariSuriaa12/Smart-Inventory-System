@@ -1,0 +1,1688 @@
+2026-07-08 00:00:02.973 +08:00 [DBG] Connection id "0HNMS834TK3AU" accepted.
+2026-07-08 00:00:02.973 +08:00 [DBG] Connection id "0HNMS834TK3AU" received FIN.
+2026-07-08 00:00:02.989 +08:00 [DBG] Connection id "0HNMS834TK3AU" started.
+2026-07-08 00:00:02.991 +08:00 [DBG] Connection id "0HNMS834TK3AV" accepted.
+2026-07-08 00:00:02.998 +08:00 [DBG] Failed to authenticate HTTPS connection.
+System.IO.IOException: Received an unexpected EOF or 0 bytes from the transport stream.
+   at System.Net.Security.SslStream.ReceiveHandshakeFrameAsync[TIOAdapter](CancellationToken cancellationToken)
+   at System.Net.Security.SslStream.ForceAuthenticationAsync[TIOAdapter](Boolean receiveFirst, Byte[] reAuthenticationData, CancellationToken cancellationToken)
+   at System.Net.Security.SslStream.ProcessAuthenticationWithTelemetryAsync(Boolean isAsync, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Https.Internal.HttpsConnectionMiddleware.OnConnectionAsync(ConnectionContext context)
+2026-07-08 00:00:03.000 +08:00 [DBG] Connection id "0HNMS834TK3AV" started.
+2026-07-08 00:00:03.014 +08:00 [DBG] Connection id "0HNMS834TK3AU" stopped.
+2026-07-08 00:00:03.020 +08:00 [DBG] Connection id "0HNMS834TK3AU" sending FIN because: "The Socket transport's send loop completed gracefully."
+2026-07-08 00:00:03.028 +08:00 [DBG] Connection 0HNMS834TK3AV established using the following protocol: "Tls13"
+2026-07-08 00:00:03.043 +08:00 [INF] Request starting HTTP/1.1 POST https://localhost:62549/api/auth/login - application/json 55
+2026-07-08 00:00:03.068 +08:00 [DBG] 1 candidate(s) found for the request path '/api/auth/login'
+2026-07-08 00:00:03.077 +08:00 [DBG] Endpoint 'SmartInventoryAPI.Controllers.AuthController.Login (SmartInventoryAPI)' with route pattern 'api/Auth/login' is valid for the request path '/api/auth/login'
+2026-07-08 00:00:03.086 +08:00 [DBG] Request matched endpoint 'SmartInventoryAPI.Controllers.AuthController.Login (SmartInventoryAPI)'
+2026-07-08 00:00:03.095 +08:00 [DBG] Static files was skipped as the request already matched an endpoint.
+2026-07-08 00:00:03.099 +08:00 [INF] Incoming request: POST /api/auth/login from ::1
+2026-07-08 00:00:03.108 +08:00 [DBG] AuthenticationScheme: Bearer was not authenticated.
+2026-07-08 00:00:03.114 +08:00 [INF] Executing endpoint 'SmartInventoryAPI.Controllers.AuthController.Login (SmartInventoryAPI)'
+2026-07-08 00:00:03.173 +08:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[SmartInventoryAPI.Models.DTOs.Response.ApiResponseDto`1[SmartInventoryAPI.Models.DTOs.Response.AuthResponseDto]]] Login(SmartInventoryAPI.Models.DTOs.Request.Auth.LoginRequestDto) on controller SmartInventoryAPI.Controllers.AuthController (SmartInventoryAPI).
+2026-07-08 00:00:03.180 +08:00 [DBG] Execution plan of authorization filters (in the following order): ["None"]
+2026-07-08 00:00:03.185 +08:00 [DBG] Execution plan of resource filters (in the following order): ["None"]
+2026-07-08 00:00:03.190 +08:00 [DBG] Execution plan of action filters (in the following order): ["Microsoft.AspNetCore.Mvc.ModelBinding.UnsupportedContentTypeFilter (Order: -3000)","Microsoft.AspNetCore.Mvc.Infrastructure.ModelStateInvalidFilter (Order: -2000)"]
+2026-07-08 00:00:03.195 +08:00 [DBG] Execution plan of exception filters (in the following order): ["None"]
+2026-07-08 00:00:03.199 +08:00 [DBG] Execution plan of result filters (in the following order): ["Microsoft.AspNetCore.Mvc.Infrastructure.ClientErrorResultFilter (Order: -2000)"]
+2026-07-08 00:00:03.207 +08:00 [DBG] Executing controller factory for controller SmartInventoryAPI.Controllers.AuthController (SmartInventoryAPI)
+2026-07-08 00:00:03.217 +08:00 [DBG] Executed controller factory for controller SmartInventoryAPI.Controllers.AuthController (SmartInventoryAPI)
+2026-07-08 00:00:03.243 +08:00 [DBG] Attempting to bind parameter 'request' of type 'SmartInventoryAPI.Models.DTOs.Request.Auth.LoginRequestDto' ...
+2026-07-08 00:00:03.251 +08:00 [DBG] Attempting to bind parameter 'request' of type 'SmartInventoryAPI.Models.DTOs.Request.Auth.LoginRequestDto' using the name '' in request data ...
+2026-07-08 00:00:03.257 +08:00 [DBG] Selected input formatter 'Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonInputFormatter' for content type 'application/json'.
+2026-07-08 00:00:03.273 +08:00 [DBG] Connection id "0HNMS834TK3AV", Request id "0HNMS834TK3AV:00000001": started reading request body.
+2026-07-08 00:00:03.277 +08:00 [DBG] Connection id "0HNMS834TK3AV", Request id "0HNMS834TK3AV:00000001": done reading request body.
+2026-07-08 00:00:03.287 +08:00 [DBG] JSON input formatter succeeded, deserializing to type 'SmartInventoryAPI.Models.DTOs.Request.Auth.LoginRequestDto'
+2026-07-08 00:00:03.292 +08:00 [DBG] Done attempting to bind parameter 'request' of type 'SmartInventoryAPI.Models.DTOs.Request.Auth.LoginRequestDto'.
+2026-07-08 00:00:03.296 +08:00 [DBG] Done attempting to bind parameter 'request' of type 'SmartInventoryAPI.Models.DTOs.Request.Auth.LoginRequestDto'.
+2026-07-08 00:00:03.300 +08:00 [DBG] Attempting to validate the bound parameter 'request' of type 'SmartInventoryAPI.Models.DTOs.Request.Auth.LoginRequestDto' ...
+2026-07-08 00:00:03.315 +08:00 [DBG] Done attempting to validate the bound parameter 'request' of type 'SmartInventoryAPI.Models.DTOs.Request.Auth.LoginRequestDto'.
+2026-07-08 00:00:04.800 +08:00 [DBG] Entity Framework Core 8.0.0 initialized 'SmartInventoryDbContext' using provider 'Npgsql.EntityFrameworkCore.PostgreSQL:8.0.0+2539d1f4bd0d429cbae20336d531d14938a54297' with options: None
+2026-07-08 00:00:04.912 +08:00 [DBG] Compiling query expression: 
+'DbSet<User>()
+    .FirstOrDefault(u => u.Username == __username_0 && !(u.Is_Deleted))'
+2026-07-08 00:00:05.297 +08:00 [DBG] Generated query execution expression: 
+'queryContext => ShapedQueryCompilingExpressionVisitor.SingleOrDefaultAsync<User>(
+    asyncEnumerable: new SingleQueryingEnumerable<User>(
+        (RelationalQueryContext)queryContext, 
+        RelationalCommandCache.QueryExpression(
+            Projection Mapping:
+                EmptyProjectionMember -> Dictionary<IProperty, int> { [Property: User.ID (long) Required PK AfterSave:Throw ValueGenerated.OnAdd, 0], [Property: User.Creation_Date (DateTime) Required, 1], [Property: User.Email (string), 2], [Property: User.Full_Name (string), 3], [Property: User.IC (string), 4], [Property: User.Is_Deleted (bool) Required, 5], [Property: User.Mobile_No (string), 6], [Property: User.Password (string), 7], [Property: User.Role (int) Required, 8], [Property: User.Staff_Code (string), 9], [Property: User.Username (string), 10] }
+            SELECT TOP(1) u.ID, u.Creation_Date, u.Email, u.Full_Name, u.IC, u.Is_Deleted, u.Mobile_No, u.Password, u.Role, u.Staff_Code, u.Username
+            FROM User AS u
+            WHERE (u.Username == @__username_0) && Not(u.Is_Deleted == B'1')), 
+        null, 
+        Func<QueryContext, DbDataReader, ResultContext, SingleQueryResultCoordinator, User>, 
+        SmartInventoryAPI.Data.SmartInventoryDbContext, 
+        False, 
+        False, 
+        True
+    ), 
+    cancellationToken: queryContext.CancellationToken)'
+2026-07-08 00:00:05.354 +08:00 [DBG] Creating DbConnection.
+2026-07-08 00:00:05.356 +08:00 [DBG] Created DbConnection. (2ms).
+2026-07-08 00:00:05.360 +08:00 [DBG] Opening connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 00:00:05.365 +08:00 [DBG] Opened connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 00:00:05.367 +08:00 [DBG] Creating DbCommand for 'ExecuteReader'.
+2026-07-08 00:00:05.369 +08:00 [DBG] Created DbCommand for 'ExecuteReader' (1ms).
+2026-07-08 00:00:05.376 +08:00 [DBG] Initialized DbCommand for 'ExecuteReader' (9ms).
+2026-07-08 00:00:05.384 +08:00 [DBG] Executing DbCommand [Parameters=[@__username_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT u."ID", u."Creation_Date", u."Email", u."Full_Name", u."IC", u."Is_Deleted", u."Mobile_No", u."Password", u."Role", u."Staff_Code", u."Username"
+FROM "User" AS u
+WHERE u."Username" = @__username_0 AND u."Is_Deleted" = B'0'
+LIMIT 1
+2026-07-08 00:00:05.434 +08:00 [INF] Executed DbCommand (53ms) [Parameters=[@__username_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT u."ID", u."Creation_Date", u."Email", u."Full_Name", u."IC", u."Is_Deleted", u."Mobile_No", u."Password", u."Role", u."Staff_Code", u."Username"
+FROM "User" AS u
+WHERE u."Username" = @__username_0 AND u."Is_Deleted" = B'0'
+LIMIT 1
+2026-07-08 00:00:05.529 +08:00 [DBG] Context 'SmartInventoryDbContext' started tracking 'User' entity. Consider using 'DbContextOptionsBuilder.EnableSensitiveDataLogging' to see key values.
+2026-07-08 00:00:05.590 +08:00 [DBG] Closing data reader to 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 00:00:05.593 +08:00 [DBG] A data reader for 'Test' on server 'tcp://localhost:5432' is being disposed after spending 153ms reading results.
+2026-07-08 00:00:05.601 +08:00 [DBG] Closing connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 00:00:05.604 +08:00 [DBG] Closed connection to database 'Test' on server 'tcp://localhost:5432' (3ms).
+2026-07-08 00:00:43.579 +08:00 [DBG] Registered model binder providers, in the following order: ["Microsoft.AspNetCore.Mvc.ModelBinding.Binders.BinderTypeModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ServicesModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.BodyModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.HeaderModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.FloatingPointTypeModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.EnumTypeModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.DateTimeModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.SimpleTypeModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.TryParseModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.CancellationTokenModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ByteArrayModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.FormFileModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.FormCollectionModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.KeyValuePairModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.DictionaryModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ArrayModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.CollectionModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ComplexObjectModelBinderProvider"]
+2026-07-08 00:00:43.836 +08:00 [DBG] An 'IServiceProvider' was created for internal use by Entity Framework.
+2026-07-08 00:00:44.438 +08:00 [DBG] The property 'InventoryLog.PerformLogID' was created in shadow state because there are no eligible CLR members with a matching name.
+2026-07-08 00:00:44.449 +08:00 [DBG] The property 'OrderFulfillmentHeader.UserID' was created in shadow state because there are no eligible CLR members with a matching name.
+2026-07-08 00:00:44.472 +08:00 [DBG] The property 'OrderFulfillmentItem.OrderFulfillmentID' was created in shadow state because there are no eligible CLR members with a matching name.
+2026-07-08 00:00:44.494 +08:00 [DBG] The property 'PerformLog.LocationID' was created in shadow state because there are no eligible CLR members with a matching name.
+2026-07-08 00:00:44.538 +08:00 [DBG] The property 'PerformLog.UserID' was created in shadow state because there are no eligible CLR members with a matching name.
+2026-07-08 00:00:44.584 +08:00 [DBG] The property 'PriceLog.PerformLogID' was created in shadow state because there are no eligible CLR members with a matching name.
+2026-07-08 00:00:44.595 +08:00 [DBG] The property 'PurchaseOrderHeader.UserID' was created in shadow state because there are no eligible CLR members with a matching name.
+2026-07-08 00:00:44.605 +08:00 [DBG] The property 'PurchaseOrderItem.PurchaseOrderID' was created in shadow state because there are no eligible CLR members with a matching name.
+2026-07-08 00:00:44.608 +08:00 [DBG] The property 'Sales.RefSalesID' was created in shadow state because there are no eligible CLR members with a matching name.
+2026-07-08 00:00:44.611 +08:00 [DBG] The property 'StockTransfer.UserID' was created in shadow state because there are no eligible CLR members with a matching name.
+2026-07-08 00:00:44.827 +08:00 [DBG] Entity Framework Core 8.0.0 initialized 'SmartInventoryDbContext' using provider 'Npgsql.EntityFrameworkCore.PostgreSQL:8.0.0+2539d1f4bd0d429cbae20336d531d14938a54297' with options: None
+2026-07-08 00:00:45.132 +08:00 [DBG] Creating DbConnection.
+2026-07-08 00:00:45.307 +08:00 [DBG] Created DbConnection. (167ms).
+2026-07-08 00:00:45.356 +08:00 [DBG] Opening connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 00:00:45.701 +08:00 [DBG] Opened connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 00:00:45.708 +08:00 [DBG] Closing connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 00:00:45.725 +08:00 [DBG] Closed connection to database 'Test' on server 'tcp://localhost:5432' (11ms).
+2026-07-08 00:00:45.737 +08:00 [DBG] Creating DbCommand for 'ExecuteScalar'.
+2026-07-08 00:00:45.749 +08:00 [DBG] Created DbCommand for 'ExecuteScalar' (8ms).
+2026-07-08 00:00:45.753 +08:00 [DBG] Initialized DbCommand for 'ExecuteScalar' (17ms).
+2026-07-08 00:00:45.756 +08:00 [DBG] Opening connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 00:00:45.824 +08:00 [DBG] Opened connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 00:00:45.839 +08:00 [DBG] Executing DbCommand [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1 FROM pg_catalog.pg_class c
+    JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace
+    WHERE n.nspname='public' AND
+          c.relname='__EFMigrationsHistory'
+)
+2026-07-08 00:00:46.030 +08:00 [INF] Executed DbCommand (186ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1 FROM pg_catalog.pg_class c
+    JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace
+    WHERE n.nspname='public' AND
+          c.relname='__EFMigrationsHistory'
+)
+2026-07-08 00:00:46.037 +08:00 [DBG] Closing connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 00:00:46.044 +08:00 [DBG] Closed connection to database 'Test' on server 'tcp://localhost:5432' (6ms).
+2026-07-08 00:00:46.089 +08:00 [DBG] Opening connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 00:00:46.094 +08:00 [DBG] Opened connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 00:00:46.098 +08:00 [DBG] Creating DbCommand for 'ExecuteReader'.
+2026-07-08 00:00:46.101 +08:00 [DBG] Created DbCommand for 'ExecuteReader' (2ms).
+2026-07-08 00:00:46.105 +08:00 [DBG] Initialized DbCommand for 'ExecuteReader' (6ms).
+2026-07-08 00:00:46.110 +08:00 [DBG] Executing DbCommand [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "MigrationId", "ProductVersion"
+FROM "__EFMigrationsHistory"
+ORDER BY "MigrationId";
+2026-07-08 00:00:46.119 +08:00 [INF] Executed DbCommand (9ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "MigrationId", "ProductVersion"
+FROM "__EFMigrationsHistory"
+ORDER BY "MigrationId";
+2026-07-08 00:00:46.132 +08:00 [DBG] Closing data reader to 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 00:00:46.138 +08:00 [DBG] A data reader for 'Test' on server 'tcp://localhost:5432' is being disposed after spending 7ms reading results.
+2026-07-08 00:00:46.142 +08:00 [DBG] Closing connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 00:00:46.146 +08:00 [DBG] Closed connection to database 'Test' on server 'tcp://localhost:5432' (4ms).
+2026-07-08 00:00:46.155 +08:00 [DBG] Migrating using database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 00:00:46.160 +08:00 [DBG] Opening connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 00:00:46.202 +08:00 [DBG] Opened connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 00:00:46.205 +08:00 [DBG] Closing connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 00:00:46.207 +08:00 [DBG] Closed connection to database 'Test' on server 'tcp://localhost:5432' (2ms).
+2026-07-08 00:00:46.211 +08:00 [DBG] Creating DbCommand for 'ExecuteScalar'.
+2026-07-08 00:00:46.213 +08:00 [DBG] Created DbCommand for 'ExecuteScalar' (2ms).
+2026-07-08 00:00:46.216 +08:00 [DBG] Initialized DbCommand for 'ExecuteScalar' (4ms).
+2026-07-08 00:00:46.218 +08:00 [DBG] Opening connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 00:00:46.221 +08:00 [DBG] Opened connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 00:00:46.224 +08:00 [DBG] Executing DbCommand [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1 FROM pg_catalog.pg_class c
+    JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace
+    WHERE n.nspname='public' AND
+          c.relname='__EFMigrationsHistory'
+)
+2026-07-08 00:00:46.230 +08:00 [INF] Executed DbCommand (6ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1 FROM pg_catalog.pg_class c
+    JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace
+    WHERE n.nspname='public' AND
+          c.relname='__EFMigrationsHistory'
+)
+2026-07-08 00:00:46.235 +08:00 [DBG] Closing connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 00:00:46.238 +08:00 [DBG] Closed connection to database 'Test' on server 'tcp://localhost:5432' (3ms).
+2026-07-08 00:00:46.242 +08:00 [DBG] Opening connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 00:00:46.281 +08:00 [DBG] Opened connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 00:00:46.284 +08:00 [DBG] Closing connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 00:00:46.286 +08:00 [DBG] Closed connection to database 'Test' on server 'tcp://localhost:5432' (2ms).
+2026-07-08 00:00:46.289 +08:00 [DBG] Creating DbCommand for 'ExecuteScalar'.
+2026-07-08 00:00:46.290 +08:00 [DBG] Created DbCommand for 'ExecuteScalar' (1ms).
+2026-07-08 00:00:46.293 +08:00 [DBG] Initialized DbCommand for 'ExecuteScalar' (4ms).
+2026-07-08 00:00:46.296 +08:00 [DBG] Opening connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 00:00:46.298 +08:00 [DBG] Opened connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 00:00:46.300 +08:00 [DBG] Executing DbCommand [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1 FROM pg_catalog.pg_class c
+    JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace
+    WHERE n.nspname='public' AND
+          c.relname='__EFMigrationsHistory'
+)
+2026-07-08 00:00:46.305 +08:00 [INF] Executed DbCommand (5ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1 FROM pg_catalog.pg_class c
+    JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace
+    WHERE n.nspname='public' AND
+          c.relname='__EFMigrationsHistory'
+)
+2026-07-08 00:00:46.311 +08:00 [DBG] Closing connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 00:00:46.314 +08:00 [DBG] Closed connection to database 'Test' on server 'tcp://localhost:5432' (2ms).
+2026-07-08 00:00:46.317 +08:00 [DBG] Opening connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 00:00:46.319 +08:00 [DBG] Opened connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 00:00:46.321 +08:00 [DBG] Creating DbCommand for 'ExecuteReader'.
+2026-07-08 00:00:46.323 +08:00 [DBG] Created DbCommand for 'ExecuteReader' (2ms).
+2026-07-08 00:00:46.327 +08:00 [DBG] Initialized DbCommand for 'ExecuteReader' (5ms).
+2026-07-08 00:00:46.329 +08:00 [DBG] Executing DbCommand [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "MigrationId", "ProductVersion"
+FROM "__EFMigrationsHistory"
+ORDER BY "MigrationId";
+2026-07-08 00:00:46.333 +08:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "MigrationId", "ProductVersion"
+FROM "__EFMigrationsHistory"
+ORDER BY "MigrationId";
+2026-07-08 00:00:46.336 +08:00 [DBG] Closing data reader to 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 00:00:46.339 +08:00 [DBG] A data reader for 'Test' on server 'tcp://localhost:5432' is being disposed after spending 2ms reading results.
+2026-07-08 00:00:46.341 +08:00 [DBG] Closing connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 00:00:46.344 +08:00 [DBG] Closed connection to database 'Test' on server 'tcp://localhost:5432' (2ms).
+2026-07-08 00:00:46.357 +08:00 [DBG] No migrations were found in assembly 'SmartInventoryAPI'.
+2026-07-08 00:00:46.365 +08:00 [INF] No migrations were applied. The database is already up to date.
+2026-07-08 00:00:46.367 +08:00 [DBG] No migrations were found in assembly 'SmartInventoryAPI'.
+2026-07-08 00:00:46.371 +08:00 [INF] Database migration completed successfully
+2026-07-08 00:00:46.377 +08:00 [DBG] 'SmartInventoryDbContext' disposed.
+2026-07-08 00:00:46.382 +08:00 [DBG] Disposing connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 00:00:46.385 +08:00 [DBG] Disposed connection to database 'Test' on server 'tcp://localhost:5432' (3ms).
+2026-07-08 00:00:46.392 +08:00 [DBG] Hosting starting
+2026-07-08 00:00:46.427 +08:00 [INF] User profile is available. Using 'C:\Users\User\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2026-07-08 00:00:46.444 +08:00 [DBG] Reading data from file 'C:\Users\User\AppData\Local\ASP.NET\DataProtection-Keys\key-008d005a-5df2-4a03-8980-e854d7302475.xml'.
+2026-07-08 00:00:46.462 +08:00 [DBG] Found key {008d005a-5df2-4a03-8980-e854d7302475}.
+2026-07-08 00:00:46.477 +08:00 [DBG] Considering key {008d005a-5df2-4a03-8980-e854d7302475} with expiration date 2026-10-05 15:12:03Z as default key.
+2026-07-08 00:00:46.486 +08:00 [DBG] Forwarded activator type request from Microsoft.AspNetCore.DataProtection.XmlEncryption.DpapiXmlDecryptor, Microsoft.AspNetCore.DataProtection, Version=8.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60 to Microsoft.AspNetCore.DataProtection.XmlEncryption.DpapiXmlDecryptor, Microsoft.AspNetCore.DataProtection, Culture=neutral, PublicKeyToken=adb9793829ddae60
+2026-07-08 00:00:46.490 +08:00 [DBG] Decrypting secret element using Windows DPAPI.
+2026-07-08 00:00:46.494 +08:00 [DBG] Forwarded activator type request from Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel.AuthenticatedEncryptorDescriptorDeserializer, Microsoft.AspNetCore.DataProtection, Version=8.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60 to Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel.AuthenticatedEncryptorDescriptorDeserializer, Microsoft.AspNetCore.DataProtection, Culture=neutral, PublicKeyToken=adb9793829ddae60
+2026-07-08 00:00:46.500 +08:00 [DBG] Opening CNG algorithm 'AES' from provider 'null' with chaining mode CBC.
+2026-07-08 00:00:46.505 +08:00 [DBG] Opening CNG algorithm 'SHA256' from provider 'null' with HMAC.
+2026-07-08 00:00:46.511 +08:00 [DBG] Using key {008d005a-5df2-4a03-8980-e854d7302475} as the default key.
+2026-07-08 00:00:46.515 +08:00 [DBG] Key ring with default key {008d005a-5df2-4a03-8980-e854d7302475} was loaded during application startup.
+2026-07-08 00:00:46.525 +08:00 [DBG] Middleware loaded
+2026-07-08 00:00:46.529 +08:00 [DBG] Middleware loaded. Script /_framework/aspnetcore-browser-refresh.js (16519 B).
+2026-07-08 00:00:46.533 +08:00 [DBG] Middleware loaded. Script /_framework/blazor-hotreload.js (799 B).
+2026-07-08 00:00:46.637 +08:00 [DBG] Middleware loaded: DOTNET_MODIFIABLE_ASSEMBLIES=debug, __ASPNETCORE_BROWSER_TOOLS=true
+2026-07-08 00:00:46.765 +08:00 [INF] Now listening on: https://localhost:62549
+2026-07-08 00:00:46.767 +08:00 [INF] Now listening on: http://localhost:62550
+2026-07-08 00:00:46.768 +08:00 [DBG] Loaded hosting startup assembly SmartInventoryAPI
+2026-07-08 00:00:46.770 +08:00 [DBG] Loaded hosting startup assembly Microsoft.WebTools.ApiEndpointDiscovery
+2026-07-08 00:00:46.772 +08:00 [DBG] Loaded hosting startup assembly Microsoft.AspNetCore.Watch.BrowserRefresh
+2026-07-08 00:00:46.774 +08:00 [DBG] Loaded hosting startup assembly Microsoft.WebTools.BrowserLink.Net
+2026-07-08 00:00:46.863 +08:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-07-08 00:00:46.865 +08:00 [INF] Hosting environment: Development
+2026-07-08 00:00:46.867 +08:00 [INF] Content root path: C:\Users\User\Documents\Hari\Unitar\Semester 6\Major Project\Smart Inventory System\SmartInventoryAPI
+2026-07-08 00:00:46.869 +08:00 [DBG] Hosting started
+2026-07-08 00:00:47.219 +08:00 [DBG] Connection id "0HNMS83KA5H2J" accepted.
+2026-07-08 00:00:47.222 +08:00 [DBG] Connection id "0HNMS83KA5H2K" accepted.
+2026-07-08 00:00:47.224 +08:00 [DBG] Connection id "0HNMS83KA5H2J" started.
+2026-07-08 00:00:47.226 +08:00 [DBG] Connection id "0HNMS83KA5H2K" started.
+2026-07-08 00:00:47.254 +08:00 [DBG] Connection id "0HNMS83KA5H2K" received FIN.
+2026-07-08 00:00:47.254 +08:00 [DBG] Connection id "0HNMS83KA5H2J" received FIN.
+2026-07-08 00:00:47.264 +08:00 [DBG] Failed to authenticate HTTPS connection.
+System.IO.IOException: Received an unexpected EOF or 0 bytes from the transport stream.
+   at System.Net.Security.SslStream.ReceiveHandshakeFrameAsync[TIOAdapter](CancellationToken cancellationToken)
+   at System.Net.Security.SslStream.ForceAuthenticationAsync[TIOAdapter](Boolean receiveFirst, Byte[] reAuthenticationData, CancellationToken cancellationToken)
+   at System.Net.Security.SslStream.ProcessAuthenticationWithTelemetryAsync(Boolean isAsync, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Https.Internal.HttpsConnectionMiddleware.OnConnectionAsync(ConnectionContext context)
+2026-07-08 00:00:47.264 +08:00 [DBG] Failed to authenticate HTTPS connection.
+System.IO.IOException: Received an unexpected EOF or 0 bytes from the transport stream.
+   at System.Net.Security.SslStream.ReceiveHandshakeFrameAsync[TIOAdapter](CancellationToken cancellationToken)
+   at System.Net.Security.SslStream.ForceAuthenticationAsync[TIOAdapter](Boolean receiveFirst, Byte[] reAuthenticationData, CancellationToken cancellationToken)
+   at System.Net.Security.SslStream.ProcessAuthenticationWithTelemetryAsync(Boolean isAsync, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Https.Internal.HttpsConnectionMiddleware.OnConnectionAsync(ConnectionContext context)
+2026-07-08 00:00:47.304 +08:00 [DBG] Connection id "0HNMS83KA5H2J" stopped.
+2026-07-08 00:00:47.304 +08:00 [DBG] Connection id "0HNMS83KA5H2K" stopped.
+2026-07-08 00:00:47.309 +08:00 [DBG] Connection id "0HNMS83KA5H2K" sending FIN because: "The Socket transport's send loop completed gracefully."
+2026-07-08 00:00:47.309 +08:00 [DBG] Connection id "0HNMS83KA5H2J" sending FIN because: "The Socket transport's send loop completed gracefully."
+2026-07-08 00:00:47.389 +08:00 [DBG] Connection id "0HNMS83KA5H2L" accepted.
+2026-07-08 00:00:47.392 +08:00 [DBG] Connection id "0HNMS83KA5H2L" started.
+2026-07-08 00:00:47.510 +08:00 [DBG] Connection 0HNMS83KA5H2L established using the following protocol: "Tls13"
+2026-07-08 00:00:47.593 +08:00 [INF] Request starting HTTP/2 GET https://localhost:62549/ - null null
+2026-07-08 00:00:47.743 +08:00 [DBG] Wildcard detected, all requests with hosts will be allowed.
+2026-07-08 00:00:47.790 +08:00 [DBG] No candidates found for the request path '/'
+2026-07-08 00:00:47.793 +08:00 [DBG] Request did not match any endpoints
+2026-07-08 00:00:47.804 +08:00 [DBG] The request path  does not match the path filter
+2026-07-08 00:00:47.816 +08:00 [INF] Incoming request: GET / from ::1
+2026-07-08 00:00:47.904 +08:00 [DBG] AuthenticationScheme: Bearer was not authenticated.
+2026-07-08 00:00:47.910 +08:00 [INF] Response: GET / - Status: 404 - Duration: 97.5464ms
+2026-07-08 00:00:47.919 +08:00 [INF] Request finished HTTP/2 GET https://localhost:62549/ - 404 0 null 335.7706ms
+2026-07-08 00:00:47.930 +08:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET https://localhost:62549/, Response status code: 404
+2026-07-08 00:01:15.592 +08:00 [DBG] Connection id "0HNMS83KA5H2M" received FIN.
+2026-07-08 00:01:15.596 +08:00 [DBG] Connection id "0HNMS83KA5H2M" accepted.
+2026-07-08 00:01:15.598 +08:00 [DBG] Connection id "0HNMS83KA5H2M" started.
+2026-07-08 00:01:15.611 +08:00 [DBG] Connection id "0HNMS83KA5H2N" accepted.
+2026-07-08 00:01:15.615 +08:00 [DBG] Failed to authenticate HTTPS connection.
+System.IO.IOException: Received an unexpected EOF or 0 bytes from the transport stream.
+   at System.Net.Security.SslStream.ReceiveHandshakeFrameAsync[TIOAdapter](CancellationToken cancellationToken)
+   at System.Net.Security.SslStream.ForceAuthenticationAsync[TIOAdapter](Boolean receiveFirst, Byte[] reAuthenticationData, CancellationToken cancellationToken)
+   at System.Net.Security.SslStream.ProcessAuthenticationWithTelemetryAsync(Boolean isAsync, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Https.Internal.HttpsConnectionMiddleware.OnConnectionAsync(ConnectionContext context)
+2026-07-08 00:01:15.616 +08:00 [DBG] Connection id "0HNMS83KA5H2N" started.
+2026-07-08 00:01:15.620 +08:00 [DBG] Connection id "0HNMS83KA5H2M" stopped.
+2026-07-08 00:01:15.622 +08:00 [DBG] Connection id "0HNMS83KA5H2M" sending FIN because: "The Socket transport's send loop completed gracefully."
+2026-07-08 00:01:15.627 +08:00 [DBG] Connection 0HNMS83KA5H2N established using the following protocol: "Tls13"
+2026-07-08 00:01:15.637 +08:00 [INF] Request starting HTTP/1.1 POST https://localhost:62549/api/auth/login - application/json 55
+2026-07-08 00:01:15.650 +08:00 [DBG] 1 candidate(s) found for the request path '/api/auth/login'
+2026-07-08 00:01:15.656 +08:00 [DBG] Endpoint 'SmartInventoryAPI.Controllers.AuthController.Login (SmartInventoryAPI)' with route pattern 'api/Auth/login' is valid for the request path '/api/auth/login'
+2026-07-08 00:01:15.659 +08:00 [DBG] Request matched endpoint 'SmartInventoryAPI.Controllers.AuthController.Login (SmartInventoryAPI)'
+2026-07-08 00:01:15.664 +08:00 [DBG] Static files was skipped as the request already matched an endpoint.
+2026-07-08 00:01:15.665 +08:00 [INF] Incoming request: POST /api/auth/login from ::1
+2026-07-08 00:01:15.669 +08:00 [DBG] AuthenticationScheme: Bearer was not authenticated.
+2026-07-08 00:01:15.671 +08:00 [INF] Executing endpoint 'SmartInventoryAPI.Controllers.AuthController.Login (SmartInventoryAPI)'
+2026-07-08 00:01:15.705 +08:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[SmartInventoryAPI.Models.DTOs.Response.ApiResponseDto`1[SmartInventoryAPI.Models.DTOs.Response.AuthResponseDto]]] Login(SmartInventoryAPI.Models.DTOs.Request.Auth.LoginRequestDto) on controller SmartInventoryAPI.Controllers.AuthController (SmartInventoryAPI).
+2026-07-08 00:01:15.711 +08:00 [DBG] Execution plan of authorization filters (in the following order): ["None"]
+2026-07-08 00:01:15.713 +08:00 [DBG] Execution plan of resource filters (in the following order): ["None"]
+2026-07-08 00:01:15.715 +08:00 [DBG] Execution plan of action filters (in the following order): ["Microsoft.AspNetCore.Mvc.ModelBinding.UnsupportedContentTypeFilter (Order: -3000)","Microsoft.AspNetCore.Mvc.Infrastructure.ModelStateInvalidFilter (Order: -2000)"]
+2026-07-08 00:01:15.717 +08:00 [DBG] Execution plan of exception filters (in the following order): ["None"]
+2026-07-08 00:01:15.720 +08:00 [DBG] Execution plan of result filters (in the following order): ["Microsoft.AspNetCore.Mvc.Infrastructure.ClientErrorResultFilter (Order: -2000)"]
+2026-07-08 00:01:15.725 +08:00 [DBG] Executing controller factory for controller SmartInventoryAPI.Controllers.AuthController (SmartInventoryAPI)
+2026-07-08 00:01:15.732 +08:00 [DBG] Executed controller factory for controller SmartInventoryAPI.Controllers.AuthController (SmartInventoryAPI)
+2026-07-08 00:01:15.746 +08:00 [DBG] Attempting to bind parameter 'request' of type 'SmartInventoryAPI.Models.DTOs.Request.Auth.LoginRequestDto' ...
+2026-07-08 00:01:15.751 +08:00 [DBG] Attempting to bind parameter 'request' of type 'SmartInventoryAPI.Models.DTOs.Request.Auth.LoginRequestDto' using the name '' in request data ...
+2026-07-08 00:01:15.755 +08:00 [DBG] Selected input formatter 'Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonInputFormatter' for content type 'application/json'.
+2026-07-08 00:01:15.765 +08:00 [DBG] Connection id "0HNMS83KA5H2N", Request id "0HNMS83KA5H2N:00000001": started reading request body.
+2026-07-08 00:01:15.767 +08:00 [DBG] Connection id "0HNMS83KA5H2N", Request id "0HNMS83KA5H2N:00000001": done reading request body.
+2026-07-08 00:01:15.773 +08:00 [DBG] JSON input formatter succeeded, deserializing to type 'SmartInventoryAPI.Models.DTOs.Request.Auth.LoginRequestDto'
+2026-07-08 00:01:15.775 +08:00 [DBG] Done attempting to bind parameter 'request' of type 'SmartInventoryAPI.Models.DTOs.Request.Auth.LoginRequestDto'.
+2026-07-08 00:01:15.777 +08:00 [DBG] Done attempting to bind parameter 'request' of type 'SmartInventoryAPI.Models.DTOs.Request.Auth.LoginRequestDto'.
+2026-07-08 00:01:15.779 +08:00 [DBG] Attempting to validate the bound parameter 'request' of type 'SmartInventoryAPI.Models.DTOs.Request.Auth.LoginRequestDto' ...
+2026-07-08 00:01:15.791 +08:00 [DBG] Done attempting to validate the bound parameter 'request' of type 'SmartInventoryAPI.Models.DTOs.Request.Auth.LoginRequestDto'.
+2026-07-08 00:01:16.760 +08:00 [DBG] Entity Framework Core 8.0.0 initialized 'SmartInventoryDbContext' using provider 'Npgsql.EntityFrameworkCore.PostgreSQL:8.0.0+2539d1f4bd0d429cbae20336d531d14938a54297' with options: None
+2026-07-08 00:01:16.848 +08:00 [DBG] Compiling query expression: 
+'DbSet<User>()
+    .FirstOrDefault(u => u.Username == __username_0 && !(u.Is_Deleted))'
+2026-07-08 00:01:17.137 +08:00 [DBG] Generated query execution expression: 
+'queryContext => ShapedQueryCompilingExpressionVisitor.SingleOrDefaultAsync<User>(
+    asyncEnumerable: new SingleQueryingEnumerable<User>(
+        (RelationalQueryContext)queryContext, 
+        RelationalCommandCache.QueryExpression(
+            Projection Mapping:
+                EmptyProjectionMember -> Dictionary<IProperty, int> { [Property: User.ID (long) Required PK AfterSave:Throw ValueGenerated.OnAdd, 0], [Property: User.Creation_Date (DateTime) Required, 1], [Property: User.Email (string), 2], [Property: User.Full_Name (string), 3], [Property: User.IC (string), 4], [Property: User.Is_Deleted (bool) Required, 5], [Property: User.Mobile_No (string), 6], [Property: User.Password (string), 7], [Property: User.Role (int) Required, 8], [Property: User.Staff_Code (string), 9], [Property: User.Username (string), 10] }
+            SELECT TOP(1) u.ID, u.Creation_Date, u.Email, u.Full_Name, u.IC, u.Is_Deleted, u.Mobile_No, u.Password, u.Role, u.Staff_Code, u.Username
+            FROM User AS u
+            WHERE (u.Username == @__username_0) && Not(u.Is_Deleted == B'1')), 
+        null, 
+        Func<QueryContext, DbDataReader, ResultContext, SingleQueryResultCoordinator, User>, 
+        SmartInventoryAPI.Data.SmartInventoryDbContext, 
+        False, 
+        False, 
+        True
+    ), 
+    cancellationToken: queryContext.CancellationToken)'
+2026-07-08 00:01:17.189 +08:00 [DBG] Creating DbConnection.
+2026-07-08 00:01:17.191 +08:00 [DBG] Created DbConnection. (1ms).
+2026-07-08 00:01:17.195 +08:00 [DBG] Opening connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 00:01:17.199 +08:00 [DBG] Opened connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 00:01:17.201 +08:00 [DBG] Creating DbCommand for 'ExecuteReader'.
+2026-07-08 00:01:17.203 +08:00 [DBG] Created DbCommand for 'ExecuteReader' (1ms).
+2026-07-08 00:01:17.209 +08:00 [DBG] Initialized DbCommand for 'ExecuteReader' (7ms).
+2026-07-08 00:01:17.214 +08:00 [DBG] Executing DbCommand [Parameters=[@__username_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT u."ID", u."Creation_Date", u."Email", u."Full_Name", u."IC", u."Is_Deleted", u."Mobile_No", u."Password", u."Role", u."Staff_Code", u."Username"
+FROM "User" AS u
+WHERE u."Username" = @__username_0 AND u."Is_Deleted" = B'0'
+LIMIT 1
+2026-07-08 00:01:17.242 +08:00 [INF] Executed DbCommand (30ms) [Parameters=[@__username_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT u."ID", u."Creation_Date", u."Email", u."Full_Name", u."IC", u."Is_Deleted", u."Mobile_No", u."Password", u."Role", u."Staff_Code", u."Username"
+FROM "User" AS u
+WHERE u."Username" = @__username_0 AND u."Is_Deleted" = B'0'
+LIMIT 1
+2026-07-08 00:01:17.322 +08:00 [DBG] Context 'SmartInventoryDbContext' started tracking 'User' entity. Consider using 'DbContextOptionsBuilder.EnableSensitiveDataLogging' to see key values.
+2026-07-08 00:01:17.371 +08:00 [DBG] Closing data reader to 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 00:01:17.374 +08:00 [DBG] A data reader for 'Test' on server 'tcp://localhost:5432' is being disposed after spending 126ms reading results.
+2026-07-08 00:01:17.382 +08:00 [DBG] Closing connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 00:01:17.385 +08:00 [DBG] Closed connection to database 'Test' on server 'tcp://localhost:5432' (3ms).
+2026-07-08 00:01:18.515 +08:00 [INF] Executed action SmartInventoryAPI.Controllers.AuthController.Login (SmartInventoryAPI) in 2788.2611ms
+2026-07-08 00:01:18.519 +08:00 [INF] Executed endpoint 'SmartInventoryAPI.Controllers.AuthController.Login (SmartInventoryAPI)'
+2026-07-08 00:01:19.830 +08:00 [ERR] An unhandled exception has occurred
+SmartInventoryAPI.Utilities.Exceptions.UnauthorizedException: Invalid credentials
+   at SmartInventoryAPI.Services.Implementations.AuthService.LoginAsync(LoginRequestDto request) in C:\Users\User\Documents\Hari\Unitar\Semester 6\Major Project\Smart Inventory System\SmartInventoryAPI\Services\Implementations\AuthService.cs:line 33
+   at SmartInventoryAPI.Controllers.AuthController.Login(LoginRequestDto request) in C:\Users\User\Documents\Hari\Unitar\Semester 6\Major Project\Smart Inventory System\SmartInventoryAPI\Controllers\AuthController.cs:line 27
+   at lambda_method23(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.AwaitableObjectResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|7_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at SmartInventoryAPI.Middleware.RequestLoggingMiddleware.InvokeAsync(HttpContext context) in C:\Users\User\Documents\Hari\Unitar\Semester 6\Major Project\Smart Inventory System\SmartInventoryAPI\Middleware\RequestLoggingMiddleware.cs:line 25
+   at SmartInventoryAPI.Middleware.ExceptionHandlingMiddleware.InvokeAsync(HttpContext context) in C:\Users\User\Documents\Hari\Unitar\Semester 6\Major Project\Smart Inventory System\SmartInventoryAPI\Middleware\ExceptionHandlingMiddleware.cs:line 23
+2026-07-08 00:01:19.877 +08:00 [DBG] Connection id "0HNMS83KA5H2N" completed keep alive response.
+2026-07-08 00:01:19.880 +08:00 [DBG] 'SmartInventoryDbContext' disposed.
+2026-07-08 00:01:19.882 +08:00 [DBG] Disposing connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 00:01:19.884 +08:00 [DBG] Disposed connection to database 'Test' on server 'tcp://localhost:5432' (1ms).
+2026-07-08 00:01:19.888 +08:00 [INF] Request finished HTTP/1.1 POST https://localhost:62549/api/auth/login - 401 null application/json; charset=utf-8 4250.951ms
+2026-07-08 00:02:21.392 +08:00 [DBG] Registered model binder providers, in the following order: ["Microsoft.AspNetCore.Mvc.ModelBinding.Binders.BinderTypeModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ServicesModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.BodyModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.HeaderModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.FloatingPointTypeModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.EnumTypeModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.DateTimeModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.SimpleTypeModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.TryParseModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.CancellationTokenModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ByteArrayModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.FormFileModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.FormCollectionModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.KeyValuePairModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.DictionaryModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ArrayModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.CollectionModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ComplexObjectModelBinderProvider"]
+2026-07-08 00:02:21.665 +08:00 [DBG] An 'IServiceProvider' was created for internal use by Entity Framework.
+2026-07-08 00:02:22.342 +08:00 [DBG] The property 'InventoryLog.PerformLogID' was created in shadow state because there are no eligible CLR members with a matching name.
+2026-07-08 00:02:22.349 +08:00 [DBG] The property 'OrderFulfillmentHeader.UserID' was created in shadow state because there are no eligible CLR members with a matching name.
+2026-07-08 00:02:22.356 +08:00 [DBG] The property 'OrderFulfillmentItem.OrderFulfillmentID' was created in shadow state because there are no eligible CLR members with a matching name.
+2026-07-08 00:02:22.362 +08:00 [DBG] The property 'PerformLog.LocationID' was created in shadow state because there are no eligible CLR members with a matching name.
+2026-07-08 00:02:22.364 +08:00 [DBG] The property 'PerformLog.UserID' was created in shadow state because there are no eligible CLR members with a matching name.
+2026-07-08 00:02:22.368 +08:00 [DBG] The property 'PriceLog.PerformLogID' was created in shadow state because there are no eligible CLR members with a matching name.
+2026-07-08 00:02:22.372 +08:00 [DBG] The property 'PurchaseOrderHeader.UserID' was created in shadow state because there are no eligible CLR members with a matching name.
+2026-07-08 00:02:22.376 +08:00 [DBG] The property 'PurchaseOrderItem.PurchaseOrderID' was created in shadow state because there are no eligible CLR members with a matching name.
+2026-07-08 00:02:22.378 +08:00 [DBG] The property 'Sales.RefSalesID' was created in shadow state because there are no eligible CLR members with a matching name.
+2026-07-08 00:02:22.383 +08:00 [DBG] The property 'StockTransfer.UserID' was created in shadow state because there are no eligible CLR members with a matching name.
+2026-07-08 00:02:22.545 +08:00 [DBG] Entity Framework Core 8.0.0 initialized 'SmartInventoryDbContext' using provider 'Npgsql.EntityFrameworkCore.PostgreSQL:8.0.0+2539d1f4bd0d429cbae20336d531d14938a54297' with options: None
+2026-07-08 00:02:22.559 +08:00 [DBG] Creating DbConnection.
+2026-07-08 00:02:22.609 +08:00 [DBG] Created DbConnection. (47ms).
+2026-07-08 00:02:22.618 +08:00 [DBG] Opening connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 00:02:22.768 +08:00 [DBG] Opened connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 00:02:22.777 +08:00 [DBG] Closing connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 00:02:22.800 +08:00 [DBG] Closed connection to database 'Test' on server 'tcp://localhost:5432' (14ms).
+2026-07-08 00:02:22.817 +08:00 [DBG] Creating DbCommand for 'ExecuteScalar'.
+2026-07-08 00:02:22.830 +08:00 [DBG] Created DbCommand for 'ExecuteScalar' (9ms).
+2026-07-08 00:02:22.836 +08:00 [DBG] Initialized DbCommand for 'ExecuteScalar' (19ms).
+2026-07-08 00:02:22.839 +08:00 [DBG] Opening connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 00:02:22.909 +08:00 [DBG] Opened connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 00:02:22.930 +08:00 [DBG] Executing DbCommand [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1 FROM pg_catalog.pg_class c
+    JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace
+    WHERE n.nspname='public' AND
+          c.relname='__EFMigrationsHistory'
+)
+2026-07-08 00:02:23.040 +08:00 [INF] Executed DbCommand (112ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1 FROM pg_catalog.pg_class c
+    JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace
+    WHERE n.nspname='public' AND
+          c.relname='__EFMigrationsHistory'
+)
+2026-07-08 00:02:23.045 +08:00 [DBG] Closing connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 00:02:23.051 +08:00 [DBG] Closed connection to database 'Test' on server 'tcp://localhost:5432' (5ms).
+2026-07-08 00:02:23.080 +08:00 [DBG] Opening connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 00:02:23.083 +08:00 [DBG] Opened connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 00:02:23.086 +08:00 [DBG] Creating DbCommand for 'ExecuteReader'.
+2026-07-08 00:02:23.088 +08:00 [DBG] Created DbCommand for 'ExecuteReader' (2ms).
+2026-07-08 00:02:23.091 +08:00 [DBG] Initialized DbCommand for 'ExecuteReader' (4ms).
+2026-07-08 00:02:23.094 +08:00 [DBG] Executing DbCommand [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "MigrationId", "ProductVersion"
+FROM "__EFMigrationsHistory"
+ORDER BY "MigrationId";
+2026-07-08 00:02:23.100 +08:00 [INF] Executed DbCommand (6ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "MigrationId", "ProductVersion"
+FROM "__EFMigrationsHistory"
+ORDER BY "MigrationId";
+2026-07-08 00:02:23.106 +08:00 [DBG] Closing data reader to 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 00:02:23.111 +08:00 [DBG] A data reader for 'Test' on server 'tcp://localhost:5432' is being disposed after spending 5ms reading results.
+2026-07-08 00:02:23.114 +08:00 [DBG] Closing connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 00:02:23.116 +08:00 [DBG] Closed connection to database 'Test' on server 'tcp://localhost:5432' (2ms).
+2026-07-08 00:02:23.121 +08:00 [DBG] Migrating using database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 00:02:23.125 +08:00 [DBG] Opening connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 00:02:23.283 +08:00 [DBG] Opened connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 00:02:23.287 +08:00 [DBG] Closing connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 00:02:23.290 +08:00 [DBG] Closed connection to database 'Test' on server 'tcp://localhost:5432' (3ms).
+2026-07-08 00:02:23.294 +08:00 [DBG] Creating DbCommand for 'ExecuteScalar'.
+2026-07-08 00:02:23.297 +08:00 [DBG] Created DbCommand for 'ExecuteScalar' (2ms).
+2026-07-08 00:02:23.300 +08:00 [DBG] Initialized DbCommand for 'ExecuteScalar' (5ms).
+2026-07-08 00:02:23.302 +08:00 [DBG] Opening connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 00:02:23.305 +08:00 [DBG] Opened connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 00:02:23.307 +08:00 [DBG] Executing DbCommand [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1 FROM pg_catalog.pg_class c
+    JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace
+    WHERE n.nspname='public' AND
+          c.relname='__EFMigrationsHistory'
+)
+2026-07-08 00:02:23.313 +08:00 [INF] Executed DbCommand (5ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1 FROM pg_catalog.pg_class c
+    JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace
+    WHERE n.nspname='public' AND
+          c.relname='__EFMigrationsHistory'
+)
+2026-07-08 00:02:23.316 +08:00 [DBG] Closing connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 00:02:23.319 +08:00 [DBG] Closed connection to database 'Test' on server 'tcp://localhost:5432' (2ms).
+2026-07-08 00:02:23.322 +08:00 [DBG] Opening connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 00:02:23.366 +08:00 [DBG] Opened connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 00:02:23.369 +08:00 [DBG] Closing connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 00:02:23.371 +08:00 [DBG] Closed connection to database 'Test' on server 'tcp://localhost:5432' (2ms).
+2026-07-08 00:02:23.374 +08:00 [DBG] Creating DbCommand for 'ExecuteScalar'.
+2026-07-08 00:02:23.375 +08:00 [DBG] Created DbCommand for 'ExecuteScalar' (1ms).
+2026-07-08 00:02:23.377 +08:00 [DBG] Initialized DbCommand for 'ExecuteScalar' (3ms).
+2026-07-08 00:02:23.379 +08:00 [DBG] Opening connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 00:02:23.380 +08:00 [DBG] Opened connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 00:02:23.382 +08:00 [DBG] Executing DbCommand [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1 FROM pg_catalog.pg_class c
+    JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace
+    WHERE n.nspname='public' AND
+          c.relname='__EFMigrationsHistory'
+)
+2026-07-08 00:02:23.387 +08:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1 FROM pg_catalog.pg_class c
+    JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace
+    WHERE n.nspname='public' AND
+          c.relname='__EFMigrationsHistory'
+)
+2026-07-08 00:02:23.392 +08:00 [DBG] Closing connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 00:02:23.396 +08:00 [DBG] Closed connection to database 'Test' on server 'tcp://localhost:5432' (4ms).
+2026-07-08 00:02:23.400 +08:00 [DBG] Opening connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 00:02:23.403 +08:00 [DBG] Opened connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 00:02:23.406 +08:00 [DBG] Creating DbCommand for 'ExecuteReader'.
+2026-07-08 00:02:23.409 +08:00 [DBG] Created DbCommand for 'ExecuteReader' (2ms).
+2026-07-08 00:02:23.412 +08:00 [DBG] Initialized DbCommand for 'ExecuteReader' (6ms).
+2026-07-08 00:02:23.416 +08:00 [DBG] Executing DbCommand [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "MigrationId", "ProductVersion"
+FROM "__EFMigrationsHistory"
+ORDER BY "MigrationId";
+2026-07-08 00:02:23.420 +08:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "MigrationId", "ProductVersion"
+FROM "__EFMigrationsHistory"
+ORDER BY "MigrationId";
+2026-07-08 00:02:23.424 +08:00 [DBG] Closing data reader to 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 00:02:23.427 +08:00 [DBG] A data reader for 'Test' on server 'tcp://localhost:5432' is being disposed after spending 2ms reading results.
+2026-07-08 00:02:23.430 +08:00 [DBG] Closing connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 00:02:23.433 +08:00 [DBG] Closed connection to database 'Test' on server 'tcp://localhost:5432' (2ms).
+2026-07-08 00:02:23.448 +08:00 [DBG] No migrations were found in assembly 'SmartInventoryAPI'.
+2026-07-08 00:02:23.454 +08:00 [INF] No migrations were applied. The database is already up to date.
+2026-07-08 00:02:23.457 +08:00 [DBG] No migrations were found in assembly 'SmartInventoryAPI'.
+2026-07-08 00:02:23.460 +08:00 [INF] Database migration completed successfully
+2026-07-08 00:02:23.466 +08:00 [DBG] 'SmartInventoryDbContext' disposed.
+2026-07-08 00:02:23.470 +08:00 [DBG] Disposing connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 00:02:23.474 +08:00 [DBG] Disposed connection to database 'Test' on server 'tcp://localhost:5432' (3ms).
+2026-07-08 00:02:23.480 +08:00 [DBG] Hosting starting
+2026-07-08 00:02:23.519 +08:00 [INF] User profile is available. Using 'C:\Users\User\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2026-07-08 00:02:23.533 +08:00 [DBG] Reading data from file 'C:\Users\User\AppData\Local\ASP.NET\DataProtection-Keys\key-008d005a-5df2-4a03-8980-e854d7302475.xml'.
+2026-07-08 00:02:23.548 +08:00 [DBG] Found key {008d005a-5df2-4a03-8980-e854d7302475}.
+2026-07-08 00:02:23.563 +08:00 [DBG] Considering key {008d005a-5df2-4a03-8980-e854d7302475} with expiration date 2026-10-05 15:12:03Z as default key.
+2026-07-08 00:02:23.571 +08:00 [DBG] Forwarded activator type request from Microsoft.AspNetCore.DataProtection.XmlEncryption.DpapiXmlDecryptor, Microsoft.AspNetCore.DataProtection, Version=8.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60 to Microsoft.AspNetCore.DataProtection.XmlEncryption.DpapiXmlDecryptor, Microsoft.AspNetCore.DataProtection, Culture=neutral, PublicKeyToken=adb9793829ddae60
+2026-07-08 00:02:23.575 +08:00 [DBG] Decrypting secret element using Windows DPAPI.
+2026-07-08 00:02:23.579 +08:00 [DBG] Forwarded activator type request from Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel.AuthenticatedEncryptorDescriptorDeserializer, Microsoft.AspNetCore.DataProtection, Version=8.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60 to Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel.AuthenticatedEncryptorDescriptorDeserializer, Microsoft.AspNetCore.DataProtection, Culture=neutral, PublicKeyToken=adb9793829ddae60
+2026-07-08 00:02:23.585 +08:00 [DBG] Opening CNG algorithm 'AES' from provider 'null' with chaining mode CBC.
+2026-07-08 00:02:23.591 +08:00 [DBG] Opening CNG algorithm 'SHA256' from provider 'null' with HMAC.
+2026-07-08 00:02:23.597 +08:00 [DBG] Using key {008d005a-5df2-4a03-8980-e854d7302475} as the default key.
+2026-07-08 00:02:23.600 +08:00 [DBG] Key ring with default key {008d005a-5df2-4a03-8980-e854d7302475} was loaded during application startup.
+2026-07-08 00:02:23.613 +08:00 [DBG] Middleware loaded
+2026-07-08 00:02:23.617 +08:00 [DBG] Middleware loaded. Script /_framework/aspnetcore-browser-refresh.js (16519 B).
+2026-07-08 00:02:23.622 +08:00 [DBG] Middleware loaded. Script /_framework/blazor-hotreload.js (799 B).
+2026-07-08 00:02:23.748 +08:00 [DBG] Middleware loaded: DOTNET_MODIFIABLE_ASSEMBLIES=debug, __ASPNETCORE_BROWSER_TOOLS=true
+2026-07-08 00:02:23.866 +08:00 [INF] Now listening on: https://localhost:62549
+2026-07-08 00:02:23.869 +08:00 [INF] Now listening on: http://localhost:62550
+2026-07-08 00:02:23.871 +08:00 [DBG] Loaded hosting startup assembly SmartInventoryAPI
+2026-07-08 00:02:23.873 +08:00 [DBG] Loaded hosting startup assembly Microsoft.WebTools.ApiEndpointDiscovery
+2026-07-08 00:02:23.875 +08:00 [DBG] Loaded hosting startup assembly Microsoft.AspNetCore.Watch.BrowserRefresh
+2026-07-08 00:02:23.876 +08:00 [DBG] Loaded hosting startup assembly Microsoft.WebTools.BrowserLink.Net
+2026-07-08 00:02:23.980 +08:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-07-08 00:02:23.984 +08:00 [INF] Hosting environment: Development
+2026-07-08 00:02:23.986 +08:00 [INF] Content root path: C:\Users\User\Documents\Hari\Unitar\Semester 6\Major Project\Smart Inventory System\SmartInventoryAPI
+2026-07-08 00:02:23.990 +08:00 [DBG] Hosting started
+2026-07-08 00:02:24.020 +08:00 [DBG] Connection id "0HNMS84H5AP0Q" accepted.
+2026-07-08 00:02:24.023 +08:00 [DBG] Connection id "0HNMS84H5AP0Q" started.
+2026-07-08 00:02:24.024 +08:00 [DBG] Connection id "0HNMS84H5AP0R" accepted.
+2026-07-08 00:02:24.050 +08:00 [DBG] Connection id "0HNMS84H5AP0R" received FIN.
+2026-07-08 00:02:24.050 +08:00 [DBG] Connection id "0HNMS84H5AP0Q" received FIN.
+2026-07-08 00:02:24.052 +08:00 [DBG] Connection id "0HNMS84H5AP0R" started.
+2026-07-08 00:02:24.068 +08:00 [DBG] Failed to authenticate HTTPS connection.
+System.IO.IOException: Received an unexpected EOF or 0 bytes from the transport stream.
+   at System.Net.Security.SslStream.ReceiveHandshakeFrameAsync[TIOAdapter](CancellationToken cancellationToken)
+   at System.Net.Security.SslStream.ForceAuthenticationAsync[TIOAdapter](Boolean receiveFirst, Byte[] reAuthenticationData, CancellationToken cancellationToken)
+   at System.Net.Security.SslStream.ProcessAuthenticationWithTelemetryAsync(Boolean isAsync, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Https.Internal.HttpsConnectionMiddleware.OnConnectionAsync(ConnectionContext context)
+2026-07-08 00:02:24.068 +08:00 [DBG] Failed to authenticate HTTPS connection.
+System.IO.IOException: Received an unexpected EOF or 0 bytes from the transport stream.
+   at System.Net.Security.SslStream.ReceiveHandshakeFrameAsync[TIOAdapter](CancellationToken cancellationToken)
+   at System.Net.Security.SslStream.ForceAuthenticationAsync[TIOAdapter](Boolean receiveFirst, Byte[] reAuthenticationData, CancellationToken cancellationToken)
+   at System.Net.Security.SslStream.ProcessAuthenticationWithTelemetryAsync(Boolean isAsync, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Https.Internal.HttpsConnectionMiddleware.OnConnectionAsync(ConnectionContext context)
+2026-07-08 00:02:24.117 +08:00 [DBG] Connection id "0HNMS84H5AP0Q" stopped.
+2026-07-08 00:02:24.117 +08:00 [DBG] Connection id "0HNMS84H5AP0R" stopped.
+2026-07-08 00:02:24.127 +08:00 [DBG] Connection id "0HNMS84H5AP0R" sending FIN because: "The Socket transport's send loop completed gracefully."
+2026-07-08 00:02:24.127 +08:00 [DBG] Connection id "0HNMS84H5AP0Q" sending FIN because: "The Socket transport's send loop completed gracefully."
+2026-07-08 00:02:24.206 +08:00 [DBG] Connection id "0HNMS84H5AP0S" accepted.
+2026-07-08 00:02:24.209 +08:00 [DBG] Connection id "0HNMS84H5AP0S" started.
+2026-07-08 00:02:24.318 +08:00 [DBG] Connection 0HNMS84H5AP0S established using the following protocol: "Tls13"
+2026-07-08 00:02:24.403 +08:00 [INF] Request starting HTTP/2 GET https://localhost:62549/ - null null
+2026-07-08 00:02:24.555 +08:00 [DBG] Wildcard detected, all requests with hosts will be allowed.
+2026-07-08 00:02:24.592 +08:00 [DBG] No candidates found for the request path '/'
+2026-07-08 00:02:24.596 +08:00 [DBG] Request did not match any endpoints
+2026-07-08 00:02:24.604 +08:00 [DBG] The request path  does not match the path filter
+2026-07-08 00:02:24.610 +08:00 [INF] Incoming request: GET / from ::1
+2026-07-08 00:02:24.699 +08:00 [DBG] AuthenticationScheme: Bearer was not authenticated.
+2026-07-08 00:02:24.704 +08:00 [INF] Response: GET / - Status: 404 - Duration: 95.353ms
+2026-07-08 00:02:24.712 +08:00 [INF] Request finished HTTP/2 GET https://localhost:62549/ - 404 0 null 322.992ms
+2026-07-08 00:02:24.720 +08:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET https://localhost:62549/, Response status code: 404
+2026-07-08 00:02:29.445 +08:00 [DBG] Connection id "0HNMS84H5AP0T" received FIN.
+2026-07-08 00:02:29.445 +08:00 [DBG] Connection id "0HNMS84H5AP0T" accepted.
+2026-07-08 00:02:29.450 +08:00 [DBG] Connection id "0HNMS84H5AP0T" started.
+2026-07-08 00:02:29.452 +08:00 [DBG] Connection id "0HNMS84H5AP0U" accepted.
+2026-07-08 00:02:29.455 +08:00 [DBG] Failed to authenticate HTTPS connection.
+System.IO.IOException: Received an unexpected EOF or 0 bytes from the transport stream.
+   at System.Net.Security.SslStream.ReceiveHandshakeFrameAsync[TIOAdapter](CancellationToken cancellationToken)
+   at System.Net.Security.SslStream.ForceAuthenticationAsync[TIOAdapter](Boolean receiveFirst, Byte[] reAuthenticationData, CancellationToken cancellationToken)
+   at System.Net.Security.SslStream.ProcessAuthenticationWithTelemetryAsync(Boolean isAsync, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Https.Internal.HttpsConnectionMiddleware.OnConnectionAsync(ConnectionContext context)
+2026-07-08 00:02:29.456 +08:00 [DBG] Connection id "0HNMS84H5AP0U" started.
+2026-07-08 00:02:29.461 +08:00 [DBG] Connection id "0HNMS84H5AP0T" stopped.
+2026-07-08 00:02:29.463 +08:00 [DBG] Connection id "0HNMS84H5AP0T" sending FIN because: "The Socket transport's send loop completed gracefully."
+2026-07-08 00:02:29.467 +08:00 [DBG] Connection 0HNMS84H5AP0U established using the following protocol: "Tls13"
+2026-07-08 00:02:29.475 +08:00 [INF] Request starting HTTP/1.1 POST https://localhost:62549/api/auth/login - application/json 55
+2026-07-08 00:02:29.486 +08:00 [DBG] 1 candidate(s) found for the request path '/api/auth/login'
+2026-07-08 00:02:29.492 +08:00 [DBG] Endpoint 'SmartInventoryAPI.Controllers.AuthController.Login (SmartInventoryAPI)' with route pattern 'api/Auth/login' is valid for the request path '/api/auth/login'
+2026-07-08 00:02:29.495 +08:00 [DBG] Request matched endpoint 'SmartInventoryAPI.Controllers.AuthController.Login (SmartInventoryAPI)'
+2026-07-08 00:02:29.498 +08:00 [DBG] Static files was skipped as the request already matched an endpoint.
+2026-07-08 00:02:29.500 +08:00 [INF] Incoming request: POST /api/auth/login from ::1
+2026-07-08 00:02:29.505 +08:00 [DBG] AuthenticationScheme: Bearer was not authenticated.
+2026-07-08 00:02:29.508 +08:00 [INF] Executing endpoint 'SmartInventoryAPI.Controllers.AuthController.Login (SmartInventoryAPI)'
+2026-07-08 00:02:29.551 +08:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[SmartInventoryAPI.Models.DTOs.Response.ApiResponseDto`1[SmartInventoryAPI.Models.DTOs.Response.AuthResponseDto]]] Login(SmartInventoryAPI.Models.DTOs.Request.Auth.LoginRequestDto) on controller SmartInventoryAPI.Controllers.AuthController (SmartInventoryAPI).
+2026-07-08 00:02:29.556 +08:00 [DBG] Execution plan of authorization filters (in the following order): ["None"]
+2026-07-08 00:02:29.559 +08:00 [DBG] Execution plan of resource filters (in the following order): ["None"]
+2026-07-08 00:02:29.562 +08:00 [DBG] Execution plan of action filters (in the following order): ["Microsoft.AspNetCore.Mvc.ModelBinding.UnsupportedContentTypeFilter (Order: -3000)","Microsoft.AspNetCore.Mvc.Infrastructure.ModelStateInvalidFilter (Order: -2000)"]
+2026-07-08 00:02:29.566 +08:00 [DBG] Execution plan of exception filters (in the following order): ["None"]
+2026-07-08 00:02:29.569 +08:00 [DBG] Execution plan of result filters (in the following order): ["Microsoft.AspNetCore.Mvc.Infrastructure.ClientErrorResultFilter (Order: -2000)"]
+2026-07-08 00:02:29.573 +08:00 [DBG] Executing controller factory for controller SmartInventoryAPI.Controllers.AuthController (SmartInventoryAPI)
+2026-07-08 00:02:29.581 +08:00 [DBG] Executed controller factory for controller SmartInventoryAPI.Controllers.AuthController (SmartInventoryAPI)
+2026-07-08 00:02:29.601 +08:00 [DBG] Attempting to bind parameter 'request' of type 'SmartInventoryAPI.Models.DTOs.Request.Auth.LoginRequestDto' ...
+2026-07-08 00:02:29.606 +08:00 [DBG] Attempting to bind parameter 'request' of type 'SmartInventoryAPI.Models.DTOs.Request.Auth.LoginRequestDto' using the name '' in request data ...
+2026-07-08 00:02:29.610 +08:00 [DBG] Selected input formatter 'Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonInputFormatter' for content type 'application/json'.
+2026-07-08 00:02:29.620 +08:00 [DBG] Connection id "0HNMS84H5AP0U", Request id "0HNMS84H5AP0U:00000001": started reading request body.
+2026-07-08 00:02:29.624 +08:00 [DBG] Connection id "0HNMS84H5AP0U", Request id "0HNMS84H5AP0U:00000001": done reading request body.
+2026-07-08 00:02:29.632 +08:00 [DBG] JSON input formatter succeeded, deserializing to type 'SmartInventoryAPI.Models.DTOs.Request.Auth.LoginRequestDto'
+2026-07-08 00:02:29.635 +08:00 [DBG] Done attempting to bind parameter 'request' of type 'SmartInventoryAPI.Models.DTOs.Request.Auth.LoginRequestDto'.
+2026-07-08 00:02:29.637 +08:00 [DBG] Done attempting to bind parameter 'request' of type 'SmartInventoryAPI.Models.DTOs.Request.Auth.LoginRequestDto'.
+2026-07-08 00:02:29.639 +08:00 [DBG] Attempting to validate the bound parameter 'request' of type 'SmartInventoryAPI.Models.DTOs.Request.Auth.LoginRequestDto' ...
+2026-07-08 00:02:29.654 +08:00 [DBG] Done attempting to validate the bound parameter 'request' of type 'SmartInventoryAPI.Models.DTOs.Request.Auth.LoginRequestDto'.
+2026-07-08 00:02:30.836 +08:00 [DBG] Entity Framework Core 8.0.0 initialized 'SmartInventoryDbContext' using provider 'Npgsql.EntityFrameworkCore.PostgreSQL:8.0.0+2539d1f4bd0d429cbae20336d531d14938a54297' with options: None
+2026-07-08 00:02:30.947 +08:00 [DBG] Compiling query expression: 
+'DbSet<User>()
+    .FirstOrDefault(u => u.Username == __username_0 && !(u.Is_Deleted))'
+2026-07-08 00:02:31.253 +08:00 [DBG] Generated query execution expression: 
+'queryContext => ShapedQueryCompilingExpressionVisitor.SingleOrDefaultAsync<User>(
+    asyncEnumerable: new SingleQueryingEnumerable<User>(
+        (RelationalQueryContext)queryContext, 
+        RelationalCommandCache.QueryExpression(
+            Projection Mapping:
+                EmptyProjectionMember -> Dictionary<IProperty, int> { [Property: User.ID (long) Required PK AfterSave:Throw ValueGenerated.OnAdd, 0], [Property: User.Creation_Date (DateTime) Required, 1], [Property: User.Email (string), 2], [Property: User.Full_Name (string), 3], [Property: User.IC (string), 4], [Property: User.Is_Deleted (bool) Required, 5], [Property: User.Mobile_No (string), 6], [Property: User.Password (string), 7], [Property: User.Role (int) Required, 8], [Property: User.Staff_Code (string), 9], [Property: User.Username (string), 10] }
+            SELECT TOP(1) u.ID, u.Creation_Date, u.Email, u.Full_Name, u.IC, u.Is_Deleted, u.Mobile_No, u.Password, u.Role, u.Staff_Code, u.Username
+            FROM User AS u
+            WHERE (u.Username == @__username_0) && Not(u.Is_Deleted == B'1')), 
+        null, 
+        Func<QueryContext, DbDataReader, ResultContext, SingleQueryResultCoordinator, User>, 
+        SmartInventoryAPI.Data.SmartInventoryDbContext, 
+        False, 
+        False, 
+        True
+    ), 
+    cancellationToken: queryContext.CancellationToken)'
+2026-07-08 00:02:31.304 +08:00 [DBG] Creating DbConnection.
+2026-07-08 00:02:31.306 +08:00 [DBG] Created DbConnection. (2ms).
+2026-07-08 00:02:31.310 +08:00 [DBG] Opening connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 00:02:31.314 +08:00 [DBG] Opened connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 00:02:31.317 +08:00 [DBG] Creating DbCommand for 'ExecuteReader'.
+2026-07-08 00:02:31.318 +08:00 [DBG] Created DbCommand for 'ExecuteReader' (1ms).
+2026-07-08 00:02:31.325 +08:00 [DBG] Initialized DbCommand for 'ExecuteReader' (8ms).
+2026-07-08 00:02:31.330 +08:00 [DBG] Executing DbCommand [Parameters=[@__username_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT u."ID", u."Creation_Date", u."Email", u."Full_Name", u."IC", u."Is_Deleted", u."Mobile_No", u."Password", u."Role", u."Staff_Code", u."Username"
+FROM "User" AS u
+WHERE u."Username" = @__username_0 AND u."Is_Deleted" = B'0'
+LIMIT 1
+2026-07-08 00:02:31.360 +08:00 [INF] Executed DbCommand (32ms) [Parameters=[@__username_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT u."ID", u."Creation_Date", u."Email", u."Full_Name", u."IC", u."Is_Deleted", u."Mobile_No", u."Password", u."Role", u."Staff_Code", u."Username"
+FROM "User" AS u
+WHERE u."Username" = @__username_0 AND u."Is_Deleted" = B'0'
+LIMIT 1
+2026-07-08 00:02:31.465 +08:00 [DBG] Context 'SmartInventoryDbContext' started tracking 'User' entity. Consider using 'DbContextOptionsBuilder.EnableSensitiveDataLogging' to see key values.
+2026-07-08 00:02:31.540 +08:00 [DBG] Closing data reader to 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 00:02:31.542 +08:00 [DBG] A data reader for 'Test' on server 'tcp://localhost:5432' is being disposed after spending 179ms reading results.
+2026-07-08 00:02:31.549 +08:00 [DBG] Closing connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 00:02:31.553 +08:00 [DBG] Closed connection to database 'Test' on server 'tcp://localhost:5432' (3ms).
+2026-07-08 00:02:36.948 +08:00 [INF] User hari12 logged in successfully
+2026-07-08 00:02:41.319 +08:00 [DBG] List of registered output formatters, in the following order: ["Microsoft.AspNetCore.Mvc.Formatters.HttpNoContentOutputFormatter","Microsoft.AspNetCore.Mvc.Formatters.StringOutputFormatter","Microsoft.AspNetCore.Mvc.Formatters.StreamOutputFormatter","Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonOutputFormatter"]
+2026-07-08 00:02:41.326 +08:00 [DBG] No information found on request to perform content negotiation.
+2026-07-08 00:02:41.327 +08:00 [DBG] Attempting to select an output formatter without using a content type as no explicit content types were specified for the response.
+2026-07-08 00:02:41.328 +08:00 [DBG] Attempting to select the first formatter in the output formatters list which can write the result.
+2026-07-08 00:02:41.331 +08:00 [DBG] Selected output formatter 'Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonOutputFormatter' and content type 'application/json' to write the response.
+2026-07-08 00:02:41.333 +08:00 [INF] Executing OkObjectResult, writing value of type 'SmartInventoryAPI.Models.DTOs.Response.ApiResponseDto`1[[SmartInventoryAPI.Models.DTOs.Response.AuthResponseDto, SmartInventoryAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-07-08 00:02:41.364 +08:00 [INF] Executed action SmartInventoryAPI.Controllers.AuthController.Login (SmartInventoryAPI) in 11787.6331ms
+2026-07-08 00:02:41.367 +08:00 [INF] Executed endpoint 'SmartInventoryAPI.Controllers.AuthController.Login (SmartInventoryAPI)'
+2026-07-08 00:02:41.370 +08:00 [INF] Response: POST /api/auth/login - Status: 200 - Duration: 11870.3995ms
+2026-07-08 00:02:41.376 +08:00 [DBG] Connection id "0HNMS84H5AP0U" completed keep alive response.
+2026-07-08 00:02:41.378 +08:00 [DBG] 'SmartInventoryDbContext' disposed.
+2026-07-08 00:02:41.380 +08:00 [DBG] Disposing connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 00:02:41.381 +08:00 [DBG] Disposed connection to database 'Test' on server 'tcp://localhost:5432' (1ms).
+2026-07-08 00:02:41.385 +08:00 [INF] Request finished HTTP/1.1 POST https://localhost:62549/api/auth/login - 200 null application/json; charset=utf-8 11910.0333ms
+2026-07-08 00:03:35.407 +08:00 [DBG] Connection id "0HNMS84H5AP0V" received FIN.
+2026-07-08 00:03:35.407 +08:00 [DBG] Connection id "0HNMS84H5AP0V" accepted.
+2026-07-08 00:03:35.425 +08:00 [DBG] Connection id "0HNMS84H5AP0V" started.
+2026-07-08 00:03:35.427 +08:00 [DBG] Connection id "0HNMS84H5AP10" accepted.
+2026-07-08 00:03:35.429 +08:00 [DBG] Failed to authenticate HTTPS connection.
+System.IO.IOException: Received an unexpected EOF or 0 bytes from the transport stream.
+   at System.Net.Security.SslStream.ReceiveHandshakeFrameAsync[TIOAdapter](CancellationToken cancellationToken)
+   at System.Net.Security.SslStream.ForceAuthenticationAsync[TIOAdapter](Boolean receiveFirst, Byte[] reAuthenticationData, CancellationToken cancellationToken)
+   at System.Net.Security.SslStream.ProcessAuthenticationWithTelemetryAsync(Boolean isAsync, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Https.Internal.HttpsConnectionMiddleware.OnConnectionAsync(ConnectionContext context)
+2026-07-08 00:03:35.430 +08:00 [DBG] Connection id "0HNMS84H5AP10" started.
+2026-07-08 00:03:35.435 +08:00 [DBG] Connection id "0HNMS84H5AP0V" stopped.
+2026-07-08 00:03:35.439 +08:00 [DBG] Connection id "0HNMS84H5AP0V" sending FIN because: "The Socket transport's send loop completed gracefully."
+2026-07-08 00:03:35.450 +08:00 [DBG] Connection 0HNMS84H5AP10 established using the following protocol: "Tls13"
+2026-07-08 00:03:35.459 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:62549/api/users - null null
+2026-07-08 00:03:35.464 +08:00 [DBG] 1 candidate(s) found for the request path '/api/users'
+2026-07-08 00:03:35.466 +08:00 [DBG] Endpoint 'SmartInventoryAPI.Controllers.UsersController.GetAllUsers (SmartInventoryAPI)' with route pattern 'api/Users' is valid for the request path '/api/users'
+2026-07-08 00:03:35.469 +08:00 [DBG] Request matched endpoint 'SmartInventoryAPI.Controllers.UsersController.GetAllUsers (SmartInventoryAPI)'
+2026-07-08 00:03:35.471 +08:00 [DBG] Static files was skipped as the request already matched an endpoint.
+2026-07-08 00:03:35.472 +08:00 [INF] Incoming request: GET /api/users from ::1
+2026-07-08 00:03:35.550 +08:00 [DBG] Successfully validated the token.
+2026-07-08 00:03:35.554 +08:00 [DBG] AuthenticationScheme: Bearer was successfully authenticated.
+2026-07-08 00:03:35.568 +08:00 [DBG] Authorization was successful.
+2026-07-08 00:03:35.570 +08:00 [INF] Executing endpoint 'SmartInventoryAPI.Controllers.UsersController.GetAllUsers (SmartInventoryAPI)'
+2026-07-08 00:03:35.587 +08:00 [INF] Route matched with {action = "GetAllUsers", controller = "Users"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[SmartInventoryAPI.Models.DTOs.Response.ApiResponseDto`1[System.Collections.Generic.IEnumerable`1[SmartInventoryAPI.Models.DTOs.Response.UserDto]]]] GetAllUsers(Int32, Int32) on controller SmartInventoryAPI.Controllers.UsersController (SmartInventoryAPI).
+2026-07-08 00:03:35.590 +08:00 [DBG] Execution plan of authorization filters (in the following order): ["None"]
+2026-07-08 00:03:35.592 +08:00 [DBG] Execution plan of resource filters (in the following order): ["None"]
+2026-07-08 00:03:35.595 +08:00 [DBG] Execution plan of action filters (in the following order): ["Microsoft.AspNetCore.Mvc.ModelBinding.UnsupportedContentTypeFilter (Order: -3000)","Microsoft.AspNetCore.Mvc.Infrastructure.ModelStateInvalidFilter (Order: -2000)"]
+2026-07-08 00:03:35.597 +08:00 [DBG] Execution plan of exception filters (in the following order): ["None"]
+2026-07-08 00:03:35.600 +08:00 [DBG] Execution plan of result filters (in the following order): ["Microsoft.AspNetCore.Mvc.Infrastructure.ClientErrorResultFilter (Order: -2000)"]
+2026-07-08 00:03:35.601 +08:00 [DBG] Executing controller factory for controller SmartInventoryAPI.Controllers.UsersController (SmartInventoryAPI)
+2026-07-08 00:03:35.843 +08:00 [DBG] Executed controller factory for controller SmartInventoryAPI.Controllers.UsersController (SmartInventoryAPI)
+2026-07-08 00:03:35.847 +08:00 [DBG] Attempting to bind parameter 'skip' of type 'System.Int32' ...
+2026-07-08 00:03:35.853 +08:00 [DBG] Attempting to bind parameter 'skip' of type 'System.Int32' using the name '' in request data ...
+2026-07-08 00:03:35.858 +08:00 [DBG] Could not find a value in the request with name '' for binding parameter 'skip' of type 'System.Int32'.
+2026-07-08 00:03:35.862 +08:00 [DBG] Done attempting to bind parameter 'skip' of type 'System.Int32'.
+2026-07-08 00:03:35.865 +08:00 [DBG] Done attempting to bind parameter 'skip' of type 'System.Int32'.
+2026-07-08 00:03:35.867 +08:00 [DBG] Attempting to validate the bound parameter 'skip' of type 'System.Int32' ...
+2026-07-08 00:03:35.871 +08:00 [DBG] Done attempting to validate the bound parameter 'skip' of type 'System.Int32'.
+2026-07-08 00:03:35.873 +08:00 [DBG] Attempting to bind parameter 'take' of type 'System.Int32' ...
+2026-07-08 00:03:35.876 +08:00 [DBG] Attempting to bind parameter 'take' of type 'System.Int32' using the name '' in request data ...
+2026-07-08 00:03:35.879 +08:00 [DBG] Could not find a value in the request with name '' for binding parameter 'take' of type 'System.Int32'.
+2026-07-08 00:03:35.882 +08:00 [DBG] Done attempting to bind parameter 'take' of type 'System.Int32'.
+2026-07-08 00:03:35.886 +08:00 [DBG] Done attempting to bind parameter 'take' of type 'System.Int32'.
+2026-07-08 00:03:35.888 +08:00 [DBG] Attempting to validate the bound parameter 'take' of type 'System.Int32' ...
+2026-07-08 00:03:35.890 +08:00 [DBG] Done attempting to validate the bound parameter 'take' of type 'System.Int32'.
+2026-07-08 00:03:53.960 +08:00 [DBG] Registered model binder providers, in the following order: ["Microsoft.AspNetCore.Mvc.ModelBinding.Binders.BinderTypeModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ServicesModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.BodyModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.HeaderModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.FloatingPointTypeModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.EnumTypeModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.DateTimeModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.SimpleTypeModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.TryParseModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.CancellationTokenModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ByteArrayModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.FormFileModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.FormCollectionModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.KeyValuePairModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.DictionaryModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ArrayModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.CollectionModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ComplexObjectModelBinderProvider"]
+2026-07-08 00:03:54.235 +08:00 [DBG] An 'IServiceProvider' was created for internal use by Entity Framework.
+2026-07-08 00:03:54.861 +08:00 [DBG] The property 'InventoryLog.PerformLogID' was created in shadow state because there are no eligible CLR members with a matching name.
+2026-07-08 00:03:54.863 +08:00 [DBG] The property 'OrderFulfillmentHeader.UserID' was created in shadow state because there are no eligible CLR members with a matching name.
+2026-07-08 00:03:54.865 +08:00 [DBG] The property 'OrderFulfillmentItem.OrderFulfillmentID' was created in shadow state because there are no eligible CLR members with a matching name.
+2026-07-08 00:03:54.867 +08:00 [DBG] The property 'PerformLog.LocationID' was created in shadow state because there are no eligible CLR members with a matching name.
+2026-07-08 00:03:54.869 +08:00 [DBG] The property 'PerformLog.UserID' was created in shadow state because there are no eligible CLR members with a matching name.
+2026-07-08 00:03:54.871 +08:00 [DBG] The property 'PriceLog.PerformLogID' was created in shadow state because there are no eligible CLR members with a matching name.
+2026-07-08 00:03:54.873 +08:00 [DBG] The property 'PurchaseOrderHeader.UserID' was created in shadow state because there are no eligible CLR members with a matching name.
+2026-07-08 00:03:54.876 +08:00 [DBG] The property 'PurchaseOrderItem.PurchaseOrderID' was created in shadow state because there are no eligible CLR members with a matching name.
+2026-07-08 00:03:54.878 +08:00 [DBG] The property 'Sales.RefSalesID' was created in shadow state because there are no eligible CLR members with a matching name.
+2026-07-08 00:03:54.881 +08:00 [DBG] The property 'StockTransfer.UserID' was created in shadow state because there are no eligible CLR members with a matching name.
+2026-07-08 00:03:55.015 +08:00 [DBG] Entity Framework Core 8.0.0 initialized 'SmartInventoryDbContext' using provider 'Npgsql.EntityFrameworkCore.PostgreSQL:8.0.0+2539d1f4bd0d429cbae20336d531d14938a54297' with options: None
+2026-07-08 00:03:55.051 +08:00 [DBG] Creating DbConnection.
+2026-07-08 00:03:55.113 +08:00 [DBG] Created DbConnection. (59ms).
+2026-07-08 00:03:55.124 +08:00 [DBG] Opening connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 00:03:55.312 +08:00 [DBG] Opened connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 00:03:55.324 +08:00 [DBG] Closing connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 00:03:55.349 +08:00 [DBG] Closed connection to database 'Test' on server 'tcp://localhost:5432' (19ms).
+2026-07-08 00:03:55.367 +08:00 [DBG] Creating DbCommand for 'ExecuteScalar'.
+2026-07-08 00:03:55.389 +08:00 [DBG] Created DbCommand for 'ExecuteScalar' (12ms).
+2026-07-08 00:03:55.396 +08:00 [DBG] Initialized DbCommand for 'ExecuteScalar' (29ms).
+2026-07-08 00:03:55.403 +08:00 [DBG] Opening connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 00:03:55.497 +08:00 [DBG] Opened connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 00:03:55.516 +08:00 [DBG] Executing DbCommand [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1 FROM pg_catalog.pg_class c
+    JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace
+    WHERE n.nspname='public' AND
+          c.relname='__EFMigrationsHistory'
+)
+2026-07-08 00:03:55.645 +08:00 [INF] Executed DbCommand (126ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1 FROM pg_catalog.pg_class c
+    JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace
+    WHERE n.nspname='public' AND
+          c.relname='__EFMigrationsHistory'
+)
+2026-07-08 00:03:55.650 +08:00 [DBG] Closing connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 00:03:55.656 +08:00 [DBG] Closed connection to database 'Test' on server 'tcp://localhost:5432' (5ms).
+2026-07-08 00:03:55.686 +08:00 [DBG] Opening connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 00:03:55.689 +08:00 [DBG] Opened connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 00:03:55.692 +08:00 [DBG] Creating DbCommand for 'ExecuteReader'.
+2026-07-08 00:03:55.694 +08:00 [DBG] Created DbCommand for 'ExecuteReader' (2ms).
+2026-07-08 00:03:55.697 +08:00 [DBG] Initialized DbCommand for 'ExecuteReader' (4ms).
+2026-07-08 00:03:55.700 +08:00 [DBG] Executing DbCommand [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "MigrationId", "ProductVersion"
+FROM "__EFMigrationsHistory"
+ORDER BY "MigrationId";
+2026-07-08 00:03:55.707 +08:00 [INF] Executed DbCommand (7ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "MigrationId", "ProductVersion"
+FROM "__EFMigrationsHistory"
+ORDER BY "MigrationId";
+2026-07-08 00:03:55.714 +08:00 [DBG] Closing data reader to 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 00:03:55.718 +08:00 [DBG] A data reader for 'Test' on server 'tcp://localhost:5432' is being disposed after spending 5ms reading results.
+2026-07-08 00:03:55.721 +08:00 [DBG] Closing connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 00:03:55.724 +08:00 [DBG] Closed connection to database 'Test' on server 'tcp://localhost:5432' (2ms).
+2026-07-08 00:03:55.729 +08:00 [DBG] Migrating using database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 00:03:55.732 +08:00 [DBG] Opening connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 00:03:55.772 +08:00 [DBG] Opened connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 00:03:55.775 +08:00 [DBG] Closing connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 00:03:55.778 +08:00 [DBG] Closed connection to database 'Test' on server 'tcp://localhost:5432' (2ms).
+2026-07-08 00:03:55.781 +08:00 [DBG] Creating DbCommand for 'ExecuteScalar'.
+2026-07-08 00:03:55.784 +08:00 [DBG] Created DbCommand for 'ExecuteScalar' (2ms).
+2026-07-08 00:03:55.786 +08:00 [DBG] Initialized DbCommand for 'ExecuteScalar' (4ms).
+2026-07-08 00:03:55.788 +08:00 [DBG] Opening connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 00:03:55.790 +08:00 [DBG] Opened connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 00:03:55.793 +08:00 [DBG] Executing DbCommand [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1 FROM pg_catalog.pg_class c
+    JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace
+    WHERE n.nspname='public' AND
+          c.relname='__EFMigrationsHistory'
+)
+2026-07-08 00:03:55.798 +08:00 [INF] Executed DbCommand (5ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1 FROM pg_catalog.pg_class c
+    JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace
+    WHERE n.nspname='public' AND
+          c.relname='__EFMigrationsHistory'
+)
+2026-07-08 00:03:55.802 +08:00 [DBG] Closing connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 00:03:55.805 +08:00 [DBG] Closed connection to database 'Test' on server 'tcp://localhost:5432' (2ms).
+2026-07-08 00:03:55.809 +08:00 [DBG] Opening connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 00:03:55.851 +08:00 [DBG] Opened connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 00:03:55.854 +08:00 [DBG] Closing connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 00:03:55.857 +08:00 [DBG] Closed connection to database 'Test' on server 'tcp://localhost:5432' (2ms).
+2026-07-08 00:03:55.860 +08:00 [DBG] Creating DbCommand for 'ExecuteScalar'.
+2026-07-08 00:03:55.862 +08:00 [DBG] Created DbCommand for 'ExecuteScalar' (2ms).
+2026-07-08 00:03:55.864 +08:00 [DBG] Initialized DbCommand for 'ExecuteScalar' (4ms).
+2026-07-08 00:03:55.868 +08:00 [DBG] Opening connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 00:03:55.871 +08:00 [DBG] Opened connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 00:03:55.875 +08:00 [DBG] Executing DbCommand [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1 FROM pg_catalog.pg_class c
+    JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace
+    WHERE n.nspname='public' AND
+          c.relname='__EFMigrationsHistory'
+)
+2026-07-08 00:03:55.879 +08:00 [INF] Executed DbCommand (5ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1 FROM pg_catalog.pg_class c
+    JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace
+    WHERE n.nspname='public' AND
+          c.relname='__EFMigrationsHistory'
+)
+2026-07-08 00:03:55.883 +08:00 [DBG] Closing connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 00:03:55.885 +08:00 [DBG] Closed connection to database 'Test' on server 'tcp://localhost:5432' (2ms).
+2026-07-08 00:03:55.888 +08:00 [DBG] Opening connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 00:03:55.890 +08:00 [DBG] Opened connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 00:03:55.892 +08:00 [DBG] Creating DbCommand for 'ExecuteReader'.
+2026-07-08 00:03:55.894 +08:00 [DBG] Created DbCommand for 'ExecuteReader' (2ms).
+2026-07-08 00:03:55.897 +08:00 [DBG] Initialized DbCommand for 'ExecuteReader' (4ms).
+2026-07-08 00:03:55.899 +08:00 [DBG] Executing DbCommand [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "MigrationId", "ProductVersion"
+FROM "__EFMigrationsHistory"
+ORDER BY "MigrationId";
+2026-07-08 00:03:55.903 +08:00 [INF] Executed DbCommand (5ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "MigrationId", "ProductVersion"
+FROM "__EFMigrationsHistory"
+ORDER BY "MigrationId";
+2026-07-08 00:03:55.907 +08:00 [DBG] Closing data reader to 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 00:03:55.909 +08:00 [DBG] A data reader for 'Test' on server 'tcp://localhost:5432' is being disposed after spending 2ms reading results.
+2026-07-08 00:03:55.913 +08:00 [DBG] Closing connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 00:03:55.916 +08:00 [DBG] Closed connection to database 'Test' on server 'tcp://localhost:5432' (2ms).
+2026-07-08 00:03:55.932 +08:00 [DBG] No migrations were found in assembly 'SmartInventoryAPI'.
+2026-07-08 00:03:55.938 +08:00 [INF] No migrations were applied. The database is already up to date.
+2026-07-08 00:03:55.941 +08:00 [DBG] No migrations were found in assembly 'SmartInventoryAPI'.
+2026-07-08 00:03:55.943 +08:00 [INF] Database migration completed successfully
+2026-07-08 00:03:55.948 +08:00 [DBG] 'SmartInventoryDbContext' disposed.
+2026-07-08 00:03:55.952 +08:00 [DBG] Disposing connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 00:03:55.956 +08:00 [DBG] Disposed connection to database 'Test' on server 'tcp://localhost:5432' (3ms).
+2026-07-08 00:03:55.961 +08:00 [DBG] Hosting starting
+2026-07-08 00:03:55.998 +08:00 [INF] User profile is available. Using 'C:\Users\User\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2026-07-08 00:03:56.012 +08:00 [DBG] Reading data from file 'C:\Users\User\AppData\Local\ASP.NET\DataProtection-Keys\key-008d005a-5df2-4a03-8980-e854d7302475.xml'.
+2026-07-08 00:03:56.026 +08:00 [DBG] Found key {008d005a-5df2-4a03-8980-e854d7302475}.
+2026-07-08 00:03:56.040 +08:00 [DBG] Considering key {008d005a-5df2-4a03-8980-e854d7302475} with expiration date 2026-10-05 15:12:03Z as default key.
+2026-07-08 00:03:56.046 +08:00 [DBG] Forwarded activator type request from Microsoft.AspNetCore.DataProtection.XmlEncryption.DpapiXmlDecryptor, Microsoft.AspNetCore.DataProtection, Version=8.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60 to Microsoft.AspNetCore.DataProtection.XmlEncryption.DpapiXmlDecryptor, Microsoft.AspNetCore.DataProtection, Culture=neutral, PublicKeyToken=adb9793829ddae60
+2026-07-08 00:03:56.049 +08:00 [DBG] Decrypting secret element using Windows DPAPI.
+2026-07-08 00:03:56.052 +08:00 [DBG] Forwarded activator type request from Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel.AuthenticatedEncryptorDescriptorDeserializer, Microsoft.AspNetCore.DataProtection, Version=8.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60 to Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel.AuthenticatedEncryptorDescriptorDeserializer, Microsoft.AspNetCore.DataProtection, Culture=neutral, PublicKeyToken=adb9793829ddae60
+2026-07-08 00:03:56.066 +08:00 [DBG] Opening CNG algorithm 'AES' from provider 'null' with chaining mode CBC.
+2026-07-08 00:03:56.072 +08:00 [DBG] Opening CNG algorithm 'SHA256' from provider 'null' with HMAC.
+2026-07-08 00:03:56.077 +08:00 [DBG] Using key {008d005a-5df2-4a03-8980-e854d7302475} as the default key.
+2026-07-08 00:03:56.079 +08:00 [DBG] Key ring with default key {008d005a-5df2-4a03-8980-e854d7302475} was loaded during application startup.
+2026-07-08 00:03:56.092 +08:00 [DBG] Middleware loaded
+2026-07-08 00:03:56.094 +08:00 [DBG] Middleware loaded. Script /_framework/aspnetcore-browser-refresh.js (16519 B).
+2026-07-08 00:03:56.098 +08:00 [DBG] Middleware loaded. Script /_framework/blazor-hotreload.js (799 B).
+2026-07-08 00:03:56.220 +08:00 [DBG] Middleware loaded: DOTNET_MODIFIABLE_ASSEMBLIES=debug, __ASPNETCORE_BROWSER_TOOLS=true
+2026-07-08 00:03:56.373 +08:00 [INF] Now listening on: https://localhost:62549
+2026-07-08 00:03:56.375 +08:00 [INF] Now listening on: http://localhost:62550
+2026-07-08 00:03:56.377 +08:00 [DBG] Loaded hosting startup assembly SmartInventoryAPI
+2026-07-08 00:03:56.379 +08:00 [DBG] Loaded hosting startup assembly Microsoft.WebTools.ApiEndpointDiscovery
+2026-07-08 00:03:56.380 +08:00 [DBG] Loaded hosting startup assembly Microsoft.AspNetCore.Watch.BrowserRefresh
+2026-07-08 00:03:56.381 +08:00 [DBG] Loaded hosting startup assembly Microsoft.WebTools.BrowserLink.Net
+2026-07-08 00:03:56.476 +08:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-07-08 00:03:56.479 +08:00 [INF] Hosting environment: Development
+2026-07-08 00:03:56.481 +08:00 [INF] Content root path: C:\Users\User\Documents\Hari\Unitar\Semester 6\Major Project\Smart Inventory System\SmartInventoryAPI
+2026-07-08 00:03:56.483 +08:00 [DBG] Hosting started
+2026-07-08 00:03:56.637 +08:00 [DBG] Connection id "0HNMS85COJ9TG" accepted.
+2026-07-08 00:03:56.637 +08:00 [DBG] Connection id "0HNMS85COJ9TH" accepted.
+2026-07-08 00:03:56.641 +08:00 [DBG] Connection id "0HNMS85COJ9TG" started.
+2026-07-08 00:03:56.661 +08:00 [DBG] Connection id "0HNMS85COJ9TH" received FIN.
+2026-07-08 00:03:56.653 +08:00 [DBG] Connection id "0HNMS85COJ9TH" started.
+2026-07-08 00:03:56.661 +08:00 [DBG] Connection id "0HNMS85COJ9TG" received FIN.
+2026-07-08 00:03:56.692 +08:00 [DBG] Failed to authenticate HTTPS connection.
+System.IO.IOException: Received an unexpected EOF or 0 bytes from the transport stream.
+   at System.Net.Security.SslStream.ReceiveHandshakeFrameAsync[TIOAdapter](CancellationToken cancellationToken)
+   at System.Net.Security.SslStream.ForceAuthenticationAsync[TIOAdapter](Boolean receiveFirst, Byte[] reAuthenticationData, CancellationToken cancellationToken)
+   at System.Net.Security.SslStream.ProcessAuthenticationWithTelemetryAsync(Boolean isAsync, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Https.Internal.HttpsConnectionMiddleware.OnConnectionAsync(ConnectionContext context)
+2026-07-08 00:03:56.692 +08:00 [DBG] Failed to authenticate HTTPS connection.
+System.IO.IOException: Received an unexpected EOF or 0 bytes from the transport stream.
+   at System.Net.Security.SslStream.ReceiveHandshakeFrameAsync[TIOAdapter](CancellationToken cancellationToken)
+   at System.Net.Security.SslStream.ForceAuthenticationAsync[TIOAdapter](Boolean receiveFirst, Byte[] reAuthenticationData, CancellationToken cancellationToken)
+   at System.Net.Security.SslStream.ProcessAuthenticationWithTelemetryAsync(Boolean isAsync, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Https.Internal.HttpsConnectionMiddleware.OnConnectionAsync(ConnectionContext context)
+2026-07-08 00:03:56.757 +08:00 [DBG] Connection id "0HNMS85COJ9TH" stopped.
+2026-07-08 00:03:56.757 +08:00 [DBG] Connection id "0HNMS85COJ9TG" stopped.
+2026-07-08 00:03:56.762 +08:00 [DBG] Connection id "0HNMS85COJ9TH" sending FIN because: "The Socket transport's send loop completed gracefully."
+2026-07-08 00:03:56.762 +08:00 [DBG] Connection id "0HNMS85COJ9TG" sending FIN because: "The Socket transport's send loop completed gracefully."
+2026-07-08 00:03:56.879 +08:00 [DBG] Connection id "0HNMS85COJ9TI" accepted.
+2026-07-08 00:03:56.882 +08:00 [DBG] Connection id "0HNMS85COJ9TI" started.
+2026-07-08 00:03:57.007 +08:00 [DBG] Connection 0HNMS85COJ9TI established using the following protocol: "Tls13"
+2026-07-08 00:03:57.097 +08:00 [INF] Request starting HTTP/2 GET https://localhost:62549/ - null null
+2026-07-08 00:03:57.236 +08:00 [DBG] Wildcard detected, all requests with hosts will be allowed.
+2026-07-08 00:03:57.282 +08:00 [DBG] No candidates found for the request path '/'
+2026-07-08 00:03:57.286 +08:00 [DBG] Request did not match any endpoints
+2026-07-08 00:03:57.296 +08:00 [DBG] The request path  does not match the path filter
+2026-07-08 00:03:57.302 +08:00 [INF] Incoming request: GET / from ::1
+2026-07-08 00:03:57.436 +08:00 [DBG] AuthenticationScheme: Bearer was not authenticated.
+2026-07-08 00:03:57.443 +08:00 [INF] Response: GET / - Status: 404 - Duration: 142.398ms
+2026-07-08 00:03:57.457 +08:00 [INF] Request finished HTTP/2 GET https://localhost:62549/ - 404 0 null 369.2334ms
+2026-07-08 00:03:57.470 +08:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET https://localhost:62549/, Response status code: 404
+2026-07-08 00:03:59.410 +08:00 [DBG] Connection id "0HNMS85COJ9TJ" accepted.
+2026-07-08 00:03:59.411 +08:00 [DBG] Connection id "0HNMS85COJ9TJ" received FIN.
+2026-07-08 00:03:59.414 +08:00 [DBG] Connection id "0HNMS85COJ9TJ" started.
+2026-07-08 00:03:59.416 +08:00 [DBG] Connection id "0HNMS85COJ9TK" accepted.
+2026-07-08 00:03:59.424 +08:00 [DBG] Failed to authenticate HTTPS connection.
+System.IO.IOException: Received an unexpected EOF or 0 bytes from the transport stream.
+   at System.Net.Security.SslStream.ReceiveHandshakeFrameAsync[TIOAdapter](CancellationToken cancellationToken)
+   at System.Net.Security.SslStream.ForceAuthenticationAsync[TIOAdapter](Boolean receiveFirst, Byte[] reAuthenticationData, CancellationToken cancellationToken)
+   at System.Net.Security.SslStream.ProcessAuthenticationWithTelemetryAsync(Boolean isAsync, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Https.Internal.HttpsConnectionMiddleware.OnConnectionAsync(ConnectionContext context)
+2026-07-08 00:03:59.425 +08:00 [DBG] Connection id "0HNMS85COJ9TK" started.
+2026-07-08 00:03:59.431 +08:00 [DBG] Connection id "0HNMS85COJ9TJ" stopped.
+2026-07-08 00:03:59.436 +08:00 [DBG] Connection id "0HNMS85COJ9TJ" sending FIN because: "The Socket transport's send loop completed gracefully."
+2026-07-08 00:03:59.440 +08:00 [DBG] Connection 0HNMS85COJ9TK established using the following protocol: "Tls13"
+2026-07-08 00:03:59.452 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:62549/api/users - null null
+2026-07-08 00:03:59.470 +08:00 [DBG] 1 candidate(s) found for the request path '/api/users'
+2026-07-08 00:03:59.479 +08:00 [DBG] Endpoint 'SmartInventoryAPI.Controllers.UsersController.GetAllUsers (SmartInventoryAPI)' with route pattern 'api/Users' is valid for the request path '/api/users'
+2026-07-08 00:03:59.483 +08:00 [DBG] Request matched endpoint 'SmartInventoryAPI.Controllers.UsersController.GetAllUsers (SmartInventoryAPI)'
+2026-07-08 00:03:59.486 +08:00 [DBG] Static files was skipped as the request already matched an endpoint.
+2026-07-08 00:03:59.489 +08:00 [INF] Incoming request: GET /api/users from ::1
+2026-07-08 00:03:59.494 +08:00 [DBG] AuthenticationScheme: Bearer was not authenticated.
+2026-07-08 00:03:59.499 +08:00 [DBG] Policy authentication schemes  did not succeed
+2026-07-08 00:03:59.506 +08:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2026-07-08 00:03:59.516 +08:00 [INF] AuthenticationScheme: Bearer was challenged.
+2026-07-08 00:03:59.518 +08:00 [INF] Response: GET /api/users - Status: 401 - Duration: 29.6279ms
+2026-07-08 00:03:59.535 +08:00 [DBG] Connection id "0HNMS85COJ9TK" completed keep alive response.
+2026-07-08 00:03:59.537 +08:00 [INF] Request finished HTTP/1.1 GET https://localhost:62549/api/users - 401 0 null 85.5582ms
+2026-07-08 00:04:04.073 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:62549/api/users - null null
+2026-07-08 00:04:04.085 +08:00 [DBG] 1 candidate(s) found for the request path '/api/users'
+2026-07-08 00:04:04.089 +08:00 [DBG] Endpoint 'SmartInventoryAPI.Controllers.UsersController.GetAllUsers (SmartInventoryAPI)' with route pattern 'api/Users' is valid for the request path '/api/users'
+2026-07-08 00:04:04.094 +08:00 [DBG] Request matched endpoint 'SmartInventoryAPI.Controllers.UsersController.GetAllUsers (SmartInventoryAPI)'
+2026-07-08 00:04:04.099 +08:00 [DBG] Static files was skipped as the request already matched an endpoint.
+2026-07-08 00:04:04.101 +08:00 [INF] Incoming request: GET /api/users from ::1
+2026-07-08 00:04:04.241 +08:00 [DBG] Successfully validated the token.
+2026-07-08 00:04:04.245 +08:00 [DBG] AuthenticationScheme: Bearer was successfully authenticated.
+2026-07-08 00:04:04.257 +08:00 [DBG] Authorization was successful.
+2026-07-08 00:04:04.260 +08:00 [INF] Executing endpoint 'SmartInventoryAPI.Controllers.UsersController.GetAllUsers (SmartInventoryAPI)'
+2026-07-08 00:04:04.296 +08:00 [INF] Route matched with {action = "GetAllUsers", controller = "Users"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[SmartInventoryAPI.Models.DTOs.Response.ApiResponseDto`1[System.Collections.Generic.IEnumerable`1[SmartInventoryAPI.Models.DTOs.Response.UserDto]]]] GetAllUsers(Int32, Int32) on controller SmartInventoryAPI.Controllers.UsersController (SmartInventoryAPI).
+2026-07-08 00:04:04.302 +08:00 [DBG] Execution plan of authorization filters (in the following order): ["None"]
+2026-07-08 00:04:04.305 +08:00 [DBG] Execution plan of resource filters (in the following order): ["None"]
+2026-07-08 00:04:04.308 +08:00 [DBG] Execution plan of action filters (in the following order): ["Microsoft.AspNetCore.Mvc.ModelBinding.UnsupportedContentTypeFilter (Order: -3000)","Microsoft.AspNetCore.Mvc.Infrastructure.ModelStateInvalidFilter (Order: -2000)"]
+2026-07-08 00:04:04.312 +08:00 [DBG] Execution plan of exception filters (in the following order): ["None"]
+2026-07-08 00:04:04.316 +08:00 [DBG] Execution plan of result filters (in the following order): ["Microsoft.AspNetCore.Mvc.Infrastructure.ClientErrorResultFilter (Order: -2000)"]
+2026-07-08 00:04:04.321 +08:00 [DBG] Executing controller factory for controller SmartInventoryAPI.Controllers.UsersController (SmartInventoryAPI)
+2026-07-08 00:04:04.574 +08:00 [DBG] Executed controller factory for controller SmartInventoryAPI.Controllers.UsersController (SmartInventoryAPI)
+2026-07-08 00:04:04.590 +08:00 [DBG] Attempting to bind parameter 'skip' of type 'System.Int32' ...
+2026-07-08 00:04:04.604 +08:00 [DBG] Attempting to bind parameter 'skip' of type 'System.Int32' using the name '' in request data ...
+2026-07-08 00:04:04.612 +08:00 [DBG] Could not find a value in the request with name '' for binding parameter 'skip' of type 'System.Int32'.
+2026-07-08 00:04:04.620 +08:00 [DBG] Done attempting to bind parameter 'skip' of type 'System.Int32'.
+2026-07-08 00:04:04.624 +08:00 [DBG] Done attempting to bind parameter 'skip' of type 'System.Int32'.
+2026-07-08 00:04:04.627 +08:00 [DBG] Attempting to validate the bound parameter 'skip' of type 'System.Int32' ...
+2026-07-08 00:04:04.633 +08:00 [DBG] Done attempting to validate the bound parameter 'skip' of type 'System.Int32'.
+2026-07-08 00:04:04.637 +08:00 [DBG] Attempting to bind parameter 'take' of type 'System.Int32' ...
+2026-07-08 00:04:04.640 +08:00 [DBG] Attempting to bind parameter 'take' of type 'System.Int32' using the name '' in request data ...
+2026-07-08 00:04:04.642 +08:00 [DBG] Could not find a value in the request with name '' for binding parameter 'take' of type 'System.Int32'.
+2026-07-08 00:04:04.645 +08:00 [DBG] Done attempting to bind parameter 'take' of type 'System.Int32'.
+2026-07-08 00:04:04.647 +08:00 [DBG] Done attempting to bind parameter 'take' of type 'System.Int32'.
+2026-07-08 00:04:04.651 +08:00 [DBG] Attempting to validate the bound parameter 'take' of type 'System.Int32' ...
+2026-07-08 00:04:04.654 +08:00 [DBG] Done attempting to validate the bound parameter 'take' of type 'System.Int32'.
+2026-07-08 00:04:07.958 +08:00 [DBG] Entity Framework Core 8.0.0 initialized 'SmartInventoryDbContext' using provider 'Npgsql.EntityFrameworkCore.PostgreSQL:8.0.0+2539d1f4bd0d429cbae20336d531d14938a54297' with options: None
+2026-07-08 00:04:08.044 +08:00 [DBG] Compiling query expression: 
+'DbSet<User>()
+    .Where(u => !(u.Is_Deleted))
+    .Skip(__p_0)
+    .Take(__p_1)'
+2026-07-08 00:04:08.247 +08:00 [WRN] The query uses a row limiting operator ('Skip'/'Take') without an 'OrderBy' operator. This may lead to unpredictable results. If the 'Distinct' operator is used after 'OrderBy', then make sure to use the 'OrderBy' operator after 'Distinct' as the ordering would otherwise get erased.
+2026-07-08 00:04:08.252 +08:00 [WRN] The query uses a row limiting operator ('Skip'/'Take') without an 'OrderBy' operator. This may lead to unpredictable results. If the 'Distinct' operator is used after 'OrderBy', then make sure to use the 'OrderBy' operator after 'Distinct' as the ordering would otherwise get erased.
+2026-07-08 00:04:08.400 +08:00 [DBG] Generated query execution expression: 
+'queryContext => new SingleQueryingEnumerable<User>(
+    (RelationalQueryContext)queryContext, 
+    RelationalCommandCache.QueryExpression(
+        Projection Mapping:
+            EmptyProjectionMember -> Dictionary<IProperty, int> { [Property: User.ID (long) Required PK AfterSave:Throw ValueGenerated.OnAdd, 0], [Property: User.Creation_Date (DateTime) Required, 1], [Property: User.Email (string), 2], [Property: User.Full_Name (string), 3], [Property: User.IC (string), 4], [Property: User.Is_Deleted (bool) Required, 5], [Property: User.Mobile_No (string), 6], [Property: User.Password (string), 7], [Property: User.Role (int) Required, 8], [Property: User.Staff_Code (string), 9], [Property: User.Username (string), 10] }
+        SELECT u.ID, u.Creation_Date, u.Email, u.Full_Name, u.IC, u.Is_Deleted, u.Mobile_No, u.Password, u.Role, u.Staff_Code, u.Username
+        FROM User AS u
+        WHERE Not(u.Is_Deleted == B'1')
+        OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY), 
+    null, 
+    Func<QueryContext, DbDataReader, ResultContext, SingleQueryResultCoordinator, User>, 
+    SmartInventoryAPI.Data.SmartInventoryDbContext, 
+    False, 
+    False, 
+    True
+)'
+2026-07-08 00:04:08.469 +08:00 [DBG] Creating DbConnection.
+2026-07-08 00:04:08.472 +08:00 [DBG] Created DbConnection. (3ms).
+2026-07-08 00:04:08.479 +08:00 [DBG] Opening connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 00:04:08.486 +08:00 [DBG] Opened connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 00:04:08.490 +08:00 [DBG] Creating DbCommand for 'ExecuteReader'.
+2026-07-08 00:04:08.493 +08:00 [DBG] Created DbCommand for 'ExecuteReader' (2ms).
+2026-07-08 00:04:08.505 +08:00 [DBG] Initialized DbCommand for 'ExecuteReader' (14ms).
+2026-07-08 00:04:08.515 +08:00 [DBG] Executing DbCommand [Parameters=[@__p_1='?' (DbType = Int32), @__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT u."ID", u."Creation_Date", u."Email", u."Full_Name", u."IC", u."Is_Deleted", u."Mobile_No", u."Password", u."Role", u."Staff_Code", u."Username"
+FROM "User" AS u
+WHERE u."Is_Deleted" = B'0'
+LIMIT @__p_1 OFFSET @__p_0
+2026-07-08 00:04:08.549 +08:00 [INF] Executed DbCommand (40ms) [Parameters=[@__p_1='?' (DbType = Int32), @__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT u."ID", u."Creation_Date", u."Email", u."Full_Name", u."IC", u."Is_Deleted", u."Mobile_No", u."Password", u."Role", u."Staff_Code", u."Username"
+FROM "User" AS u
+WHERE u."Is_Deleted" = B'0'
+LIMIT @__p_1 OFFSET @__p_0
+2026-07-08 00:04:08.648 +08:00 [DBG] Context 'SmartInventoryDbContext' started tracking 'User' entity. Consider using 'DbContextOptionsBuilder.EnableSensitiveDataLogging' to see key values.
+2026-07-08 00:04:08.705 +08:00 [DBG] Context 'SmartInventoryDbContext' started tracking 'User' entity. Consider using 'DbContextOptionsBuilder.EnableSensitiveDataLogging' to see key values.
+2026-07-08 00:04:08.709 +08:00 [DBG] Context 'SmartInventoryDbContext' started tracking 'User' entity. Consider using 'DbContextOptionsBuilder.EnableSensitiveDataLogging' to see key values.
+2026-07-08 00:04:08.712 +08:00 [DBG] Context 'SmartInventoryDbContext' started tracking 'User' entity. Consider using 'DbContextOptionsBuilder.EnableSensitiveDataLogging' to see key values.
+2026-07-08 00:04:08.715 +08:00 [DBG] Context 'SmartInventoryDbContext' started tracking 'User' entity. Consider using 'DbContextOptionsBuilder.EnableSensitiveDataLogging' to see key values.
+2026-07-08 00:04:08.723 +08:00 [DBG] Closing data reader to 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 00:04:08.726 +08:00 [DBG] A data reader for 'Test' on server 'tcp://localhost:5432' is being disposed after spending 171ms reading results.
+2026-07-08 00:04:08.733 +08:00 [DBG] Closing connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 00:04:08.738 +08:00 [DBG] Closed connection to database 'Test' on server 'tcp://localhost:5432' (4ms).
+2026-07-08 00:04:08.774 +08:00 [DBG] List of registered output formatters, in the following order: ["Microsoft.AspNetCore.Mvc.Formatters.HttpNoContentOutputFormatter","Microsoft.AspNetCore.Mvc.Formatters.StringOutputFormatter","Microsoft.AspNetCore.Mvc.Formatters.StreamOutputFormatter","Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonOutputFormatter"]
+2026-07-08 00:04:08.782 +08:00 [DBG] No information found on request to perform content negotiation.
+2026-07-08 00:04:08.784 +08:00 [DBG] Attempting to select an output formatter without using a content type as no explicit content types were specified for the response.
+2026-07-08 00:04:08.785 +08:00 [DBG] Attempting to select the first formatter in the output formatters list which can write the result.
+2026-07-08 00:04:08.788 +08:00 [DBG] Selected output formatter 'Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonOutputFormatter' and content type 'application/json' to write the response.
+2026-07-08 00:04:08.792 +08:00 [INF] Executing OkObjectResult, writing value of type 'SmartInventoryAPI.Models.DTOs.Response.ApiResponseDto`1[[System.Collections.Generic.IEnumerable`1[[SmartInventoryAPI.Models.DTOs.Response.UserDto, SmartInventoryAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2026-07-08 00:04:08.834 +08:00 [INF] Executed action SmartInventoryAPI.Controllers.UsersController.GetAllUsers (SmartInventoryAPI) in 4509.8558ms
+2026-07-08 00:04:08.838 +08:00 [INF] Executed endpoint 'SmartInventoryAPI.Controllers.UsersController.GetAllUsers (SmartInventoryAPI)'
+2026-07-08 00:04:08.842 +08:00 [INF] Response: GET /api/users - Status: 200 - Duration: 4741.0761ms
+2026-07-08 00:04:08.849 +08:00 [DBG] Connection id "0HNMS85COJ9TK" completed keep alive response.
+2026-07-08 00:04:08.852 +08:00 [DBG] 'SmartInventoryDbContext' disposed.
+2026-07-08 00:04:08.855 +08:00 [DBG] Disposing connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 00:04:08.858 +08:00 [DBG] Disposed connection to database 'Test' on server 'tcp://localhost:5432' (3ms).
+2026-07-08 00:04:08.864 +08:00 [INF] Request finished HTTP/1.1 GET https://localhost:62549/api/users - 200 null application/json; charset=utf-8 4790.6718ms
+2026-07-08 00:23:57.254 +08:00 [DBG] Connection id "0HNMS85COJ9TI" received FIN.
+2026-07-08 00:23:57.319 +08:00 [DBG] Connection id "0HNMS85COJ9TI" is closed. The last processed stream ID was 1.
+2026-07-08 00:23:57.319 +08:00 [DBG] The connection queue processing loop for 0HNMS85COJ9TI completed.
+2026-07-08 00:23:57.323 +08:00 [DBG] Connection id "0HNMS85COJ9TI" sending FIN because: "The Socket transport's send loop completed gracefully."
+2026-07-08 00:23:57.340 +08:00 [DBG] Connection id "0HNMS85COJ9TI" stopped.
+2026-07-08 00:42:47.147 +08:00 [DBG] Connection id "0HNMS85COJ9TK" received FIN.
+2026-07-08 00:42:47.406 +08:00 [DBG] Connection id "0HNMS85COJ9TK" sending FIN because: "The Socket transport's send loop completed gracefully."
+2026-07-08 00:42:47.411 +08:00 [DBG] Connection id "0HNMS85COJ9TK" disconnecting.
+2026-07-08 00:42:47.708 +08:00 [DBG] Connection id "0HNMS85COJ9TK" stopped.
+2026-07-08 22:44:15.922 +08:00 [DBG] Registered model binder providers, in the following order: ["Microsoft.AspNetCore.Mvc.ModelBinding.Binders.BinderTypeModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ServicesModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.BodyModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.HeaderModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.FloatingPointTypeModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.EnumTypeModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.DateTimeModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.SimpleTypeModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.TryParseModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.CancellationTokenModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ByteArrayModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.FormFileModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.FormCollectionModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.KeyValuePairModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.DictionaryModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ArrayModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.CollectionModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ComplexObjectModelBinderProvider"]
+2026-07-08 22:44:18.837 +08:00 [DBG] An 'IServiceProvider' was created for internal use by Entity Framework.
+2026-07-08 22:44:21.556 +08:00 [DBG] The property 'InventoryLog.PerformLogID' was created in shadow state because there are no eligible CLR members with a matching name.
+2026-07-08 22:44:21.560 +08:00 [DBG] The property 'OrderFulfillmentHeader.UserID' was created in shadow state because there are no eligible CLR members with a matching name.
+2026-07-08 22:44:21.566 +08:00 [DBG] The property 'OrderFulfillmentItem.OrderFulfillmentID' was created in shadow state because there are no eligible CLR members with a matching name.
+2026-07-08 22:44:21.570 +08:00 [DBG] The property 'PerformLog.LocationID' was created in shadow state because there are no eligible CLR members with a matching name.
+2026-07-08 22:44:21.573 +08:00 [DBG] The property 'PerformLog.UserID' was created in shadow state because there are no eligible CLR members with a matching name.
+2026-07-08 22:44:21.577 +08:00 [DBG] The property 'PriceLog.PerformLogID' was created in shadow state because there are no eligible CLR members with a matching name.
+2026-07-08 22:44:21.581 +08:00 [DBG] The property 'PurchaseOrderHeader.UserID' was created in shadow state because there are no eligible CLR members with a matching name.
+2026-07-08 22:44:21.585 +08:00 [DBG] The property 'PurchaseOrderItem.PurchaseOrderID' was created in shadow state because there are no eligible CLR members with a matching name.
+2026-07-08 22:44:21.590 +08:00 [DBG] The property 'Sales.RefSalesID' was created in shadow state because there are no eligible CLR members with a matching name.
+2026-07-08 22:44:21.594 +08:00 [DBG] The property 'StockTransfer.UserID' was created in shadow state because there are no eligible CLR members with a matching name.
+2026-07-08 22:44:22.108 +08:00 [DBG] Entity Framework Core 8.0.0 initialized 'SmartInventoryDbContext' using provider 'Npgsql.EntityFrameworkCore.PostgreSQL:8.0.0+2539d1f4bd0d429cbae20336d531d14938a54297' with options: None
+2026-07-08 22:44:22.153 +08:00 [DBG] Creating DbConnection.
+2026-07-08 22:44:22.283 +08:00 [DBG] Created DbConnection. (128ms).
+2026-07-08 22:44:22.302 +08:00 [DBG] Opening connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 22:44:22.662 +08:00 [DBG] Opened connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 22:44:22.670 +08:00 [DBG] Closing connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 22:44:22.694 +08:00 [DBG] Closed connection to database 'Test' on server 'tcp://localhost:5432' (16ms).
+2026-07-08 22:44:22.714 +08:00 [DBG] Creating DbCommand for 'ExecuteScalar'.
+2026-07-08 22:44:22.733 +08:00 [DBG] Created DbCommand for 'ExecuteScalar' (12ms).
+2026-07-08 22:44:22.742 +08:00 [DBG] Initialized DbCommand for 'ExecuteScalar' (29ms).
+2026-07-08 22:44:22.748 +08:00 [DBG] Opening connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 22:44:22.951 +08:00 [DBG] Opened connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 22:44:23.007 +08:00 [DBG] Executing DbCommand [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1 FROM pg_catalog.pg_class c
+    JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace
+    WHERE n.nspname='public' AND
+          c.relname='__EFMigrationsHistory'
+)
+2026-07-08 22:44:23.134 +08:00 [INF] Executed DbCommand (160ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1 FROM pg_catalog.pg_class c
+    JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace
+    WHERE n.nspname='public' AND
+          c.relname='__EFMigrationsHistory'
+)
+2026-07-08 22:44:23.141 +08:00 [DBG] Closing connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 22:44:23.147 +08:00 [DBG] Closed connection to database 'Test' on server 'tcp://localhost:5432' (5ms).
+2026-07-08 22:44:23.180 +08:00 [DBG] Opening connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 22:44:23.184 +08:00 [DBG] Opened connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 22:44:23.187 +08:00 [DBG] Creating DbCommand for 'ExecuteReader'.
+2026-07-08 22:44:23.189 +08:00 [DBG] Created DbCommand for 'ExecuteReader' (2ms).
+2026-07-08 22:44:23.193 +08:00 [DBG] Initialized DbCommand for 'ExecuteReader' (5ms).
+2026-07-08 22:44:23.196 +08:00 [DBG] Executing DbCommand [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "MigrationId", "ProductVersion"
+FROM "__EFMigrationsHistory"
+ORDER BY "MigrationId";
+2026-07-08 22:44:23.209 +08:00 [INF] Executed DbCommand (13ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "MigrationId", "ProductVersion"
+FROM "__EFMigrationsHistory"
+ORDER BY "MigrationId";
+2026-07-08 22:44:23.218 +08:00 [DBG] Closing data reader to 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 22:44:23.223 +08:00 [DBG] A data reader for 'Test' on server 'tcp://localhost:5432' is being disposed after spending 6ms reading results.
+2026-07-08 22:44:23.227 +08:00 [DBG] Closing connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 22:44:23.230 +08:00 [DBG] Closed connection to database 'Test' on server 'tcp://localhost:5432' (2ms).
+2026-07-08 22:44:23.236 +08:00 [DBG] Migrating using database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 22:44:23.239 +08:00 [DBG] Opening connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 22:44:23.281 +08:00 [DBG] Opened connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 22:44:23.285 +08:00 [DBG] Closing connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 22:44:23.289 +08:00 [DBG] Closed connection to database 'Test' on server 'tcp://localhost:5432' (3ms).
+2026-07-08 22:44:23.292 +08:00 [DBG] Creating DbCommand for 'ExecuteScalar'.
+2026-07-08 22:44:23.294 +08:00 [DBG] Created DbCommand for 'ExecuteScalar' (2ms).
+2026-07-08 22:44:23.296 +08:00 [DBG] Initialized DbCommand for 'ExecuteScalar' (4ms).
+2026-07-08 22:44:23.299 +08:00 [DBG] Opening connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 22:44:23.302 +08:00 [DBG] Opened connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 22:44:23.306 +08:00 [DBG] Executing DbCommand [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1 FROM pg_catalog.pg_class c
+    JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace
+    WHERE n.nspname='public' AND
+          c.relname='__EFMigrationsHistory'
+)
+2026-07-08 22:44:23.311 +08:00 [INF] Executed DbCommand (6ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1 FROM pg_catalog.pg_class c
+    JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace
+    WHERE n.nspname='public' AND
+          c.relname='__EFMigrationsHistory'
+)
+2026-07-08 22:44:23.316 +08:00 [DBG] Closing connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 22:44:23.320 +08:00 [DBG] Closed connection to database 'Test' on server 'tcp://localhost:5432' (3ms).
+2026-07-08 22:44:23.324 +08:00 [DBG] Opening connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 22:44:23.361 +08:00 [DBG] Opened connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 22:44:23.366 +08:00 [DBG] Closing connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 22:44:23.369 +08:00 [DBG] Closed connection to database 'Test' on server 'tcp://localhost:5432' (3ms).
+2026-07-08 22:44:23.374 +08:00 [DBG] Creating DbCommand for 'ExecuteScalar'.
+2026-07-08 22:44:23.377 +08:00 [DBG] Created DbCommand for 'ExecuteScalar' (2ms).
+2026-07-08 22:44:23.380 +08:00 [DBG] Initialized DbCommand for 'ExecuteScalar' (6ms).
+2026-07-08 22:44:23.383 +08:00 [DBG] Opening connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 22:44:23.386 +08:00 [DBG] Opened connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 22:44:23.389 +08:00 [DBG] Executing DbCommand [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1 FROM pg_catalog.pg_class c
+    JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace
+    WHERE n.nspname='public' AND
+          c.relname='__EFMigrationsHistory'
+)
+2026-07-08 22:44:23.393 +08:00 [INF] Executed DbCommand (5ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1 FROM pg_catalog.pg_class c
+    JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace
+    WHERE n.nspname='public' AND
+          c.relname='__EFMigrationsHistory'
+)
+2026-07-08 22:44:23.397 +08:00 [DBG] Closing connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 22:44:23.400 +08:00 [DBG] Closed connection to database 'Test' on server 'tcp://localhost:5432' (2ms).
+2026-07-08 22:44:23.404 +08:00 [DBG] Opening connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 22:44:23.406 +08:00 [DBG] Opened connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 22:44:23.409 +08:00 [DBG] Creating DbCommand for 'ExecuteReader'.
+2026-07-08 22:44:23.411 +08:00 [DBG] Created DbCommand for 'ExecuteReader' (2ms).
+2026-07-08 22:44:23.415 +08:00 [DBG] Initialized DbCommand for 'ExecuteReader' (5ms).
+2026-07-08 22:44:23.418 +08:00 [DBG] Executing DbCommand [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "MigrationId", "ProductVersion"
+FROM "__EFMigrationsHistory"
+ORDER BY "MigrationId";
+2026-07-08 22:44:23.423 +08:00 [INF] Executed DbCommand (5ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "MigrationId", "ProductVersion"
+FROM "__EFMigrationsHistory"
+ORDER BY "MigrationId";
+2026-07-08 22:44:23.427 +08:00 [DBG] Closing data reader to 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 22:44:23.430 +08:00 [DBG] A data reader for 'Test' on server 'tcp://localhost:5432' is being disposed after spending 3ms reading results.
+2026-07-08 22:44:23.433 +08:00 [DBG] Closing connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 22:44:23.436 +08:00 [DBG] Closed connection to database 'Test' on server 'tcp://localhost:5432' (2ms).
+2026-07-08 22:44:23.458 +08:00 [DBG] No migrations were found in assembly 'SmartInventoryAPI'.
+2026-07-08 22:44:23.469 +08:00 [INF] No migrations were applied. The database is already up to date.
+2026-07-08 22:44:23.472 +08:00 [DBG] No migrations were found in assembly 'SmartInventoryAPI'.
+2026-07-08 22:44:23.476 +08:00 [INF] Database migration completed successfully
+2026-07-08 22:44:23.481 +08:00 [DBG] 'SmartInventoryDbContext' disposed.
+2026-07-08 22:44:23.487 +08:00 [DBG] Disposing connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 22:44:23.491 +08:00 [DBG] Disposed connection to database 'Test' on server 'tcp://localhost:5432' (4ms).
+2026-07-08 22:44:23.498 +08:00 [DBG] Hosting starting
+2026-07-08 22:44:23.649 +08:00 [INF] User profile is available. Using 'C:\Users\User\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2026-07-08 22:44:23.668 +08:00 [DBG] Reading data from file 'C:\Users\User\AppData\Local\ASP.NET\DataProtection-Keys\key-008d005a-5df2-4a03-8980-e854d7302475.xml'.
+2026-07-08 22:44:23.726 +08:00 [DBG] Found key {008d005a-5df2-4a03-8980-e854d7302475}.
+2026-07-08 22:44:23.752 +08:00 [DBG] Considering key {008d005a-5df2-4a03-8980-e854d7302475} with expiration date 2026-10-05 15:12:03Z as default key.
+2026-07-08 22:44:23.762 +08:00 [DBG] Forwarded activator type request from Microsoft.AspNetCore.DataProtection.XmlEncryption.DpapiXmlDecryptor, Microsoft.AspNetCore.DataProtection, Version=8.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60 to Microsoft.AspNetCore.DataProtection.XmlEncryption.DpapiXmlDecryptor, Microsoft.AspNetCore.DataProtection, Culture=neutral, PublicKeyToken=adb9793829ddae60
+2026-07-08 22:44:23.769 +08:00 [DBG] Decrypting secret element using Windows DPAPI.
+2026-07-08 22:44:23.774 +08:00 [DBG] Forwarded activator type request from Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel.AuthenticatedEncryptorDescriptorDeserializer, Microsoft.AspNetCore.DataProtection, Version=8.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60 to Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel.AuthenticatedEncryptorDescriptorDeserializer, Microsoft.AspNetCore.DataProtection, Culture=neutral, PublicKeyToken=adb9793829ddae60
+2026-07-08 22:44:23.781 +08:00 [DBG] Opening CNG algorithm 'AES' from provider 'null' with chaining mode CBC.
+2026-07-08 22:44:23.786 +08:00 [DBG] Opening CNG algorithm 'SHA256' from provider 'null' with HMAC.
+2026-07-08 22:44:23.791 +08:00 [DBG] Using key {008d005a-5df2-4a03-8980-e854d7302475} as the default key.
+2026-07-08 22:44:23.795 +08:00 [DBG] Key ring with default key {008d005a-5df2-4a03-8980-e854d7302475} was loaded during application startup.
+2026-07-08 22:44:23.804 +08:00 [DBG] Middleware loaded
+2026-07-08 22:44:23.808 +08:00 [DBG] Middleware loaded. Script /_framework/aspnetcore-browser-refresh.js (16519 B).
+2026-07-08 22:44:23.813 +08:00 [DBG] Middleware loaded. Script /_framework/blazor-hotreload.js (799 B).
+2026-07-08 22:44:25.665 +08:00 [DBG] Middleware loaded: DOTNET_MODIFIABLE_ASSEMBLIES=debug, __ASPNETCORE_BROWSER_TOOLS=true
+2026-07-08 22:44:27.519 +08:00 [INF] Now listening on: https://localhost:62549
+2026-07-08 22:44:27.522 +08:00 [INF] Now listening on: http://localhost:62550
+2026-07-08 22:44:27.525 +08:00 [DBG] Loaded hosting startup assembly SmartInventoryAPI
+2026-07-08 22:44:27.527 +08:00 [DBG] Loaded hosting startup assembly Microsoft.WebTools.ApiEndpointDiscovery
+2026-07-08 22:44:27.530 +08:00 [DBG] Loaded hosting startup assembly Microsoft.AspNetCore.Watch.BrowserRefresh
+2026-07-08 22:44:27.532 +08:00 [DBG] Loaded hosting startup assembly Microsoft.WebTools.BrowserLink.Net
+2026-07-08 22:44:27.599 +08:00 [DBG] Connection id "0HNMSVTKM3UDP" received FIN.
+2026-07-08 22:44:27.620 +08:00 [DBG] Connection id "0HNMSVTKM3UDP" accepted.
+2026-07-08 22:44:27.626 +08:00 [DBG] Connection id "0HNMSVTKM3UDP" started.
+2026-07-08 22:44:27.845 +08:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-07-08 22:44:27.848 +08:00 [INF] Hosting environment: Development
+2026-07-08 22:44:27.850 +08:00 [INF] Content root path: C:\Users\User\Documents\Hari\Unitar\Semester 6\Major Project\Smart Inventory System\SmartInventoryAPI
+2026-07-08 22:44:27.852 +08:00 [DBG] Hosting started
+2026-07-08 22:44:28.095 +08:00 [DBG] Failed to authenticate HTTPS connection.
+System.IO.IOException: Received an unexpected EOF or 0 bytes from the transport stream.
+   at System.Net.Security.SslStream.ReceiveHandshakeFrameAsync[TIOAdapter](CancellationToken cancellationToken)
+   at System.Net.Security.SslStream.ForceAuthenticationAsync[TIOAdapter](Boolean receiveFirst, Byte[] reAuthenticationData, CancellationToken cancellationToken)
+   at System.Net.Security.SslStream.ProcessAuthenticationWithTelemetryAsync(Boolean isAsync, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Https.Internal.HttpsConnectionMiddleware.OnConnectionAsync(ConnectionContext context)
+2026-07-08 22:44:28.261 +08:00 [DBG] Connection id "0HNMSVTKM3UDP" stopped.
+2026-07-08 22:44:28.266 +08:00 [DBG] Connection id "0HNMSVTKM3UDP" sending FIN because: "The Socket transport's send loop completed gracefully."
+2026-07-08 22:44:29.549 +08:00 [DBG] Connection id "0HNMSVTKM3UDQ" accepted.
+2026-07-08 22:44:29.551 +08:00 [DBG] Connection id "0HNMSVTKM3UDQ" started.
+2026-07-08 22:44:30.453 +08:00 [DBG] Connection 0HNMSVTKM3UDQ established using the following protocol: "Tls13"
+2026-07-08 22:44:31.100 +08:00 [INF] Request starting HTTP/2 GET https://localhost:62549/ - null null
+2026-07-08 22:44:31.321 +08:00 [DBG] Wildcard detected, all requests with hosts will be allowed.
+2026-07-08 22:44:31.377 +08:00 [DBG] No candidates found for the request path '/'
+2026-07-08 22:44:31.381 +08:00 [DBG] Request did not match any endpoints
+2026-07-08 22:44:31.393 +08:00 [DBG] The request path  does not match the path filter
+2026-07-08 22:44:31.403 +08:00 [INF] Incoming request: GET / from ::1
+2026-07-08 22:44:31.515 +08:00 [DBG] AuthenticationScheme: Bearer was not authenticated.
+2026-07-08 22:44:31.522 +08:00 [INF] Response: GET / - Status: 404 - Duration: 121.4399ms
+2026-07-08 22:44:31.536 +08:00 [INF] Request finished HTTP/2 GET https://localhost:62549/ - 404 0 null 450.7711ms
+2026-07-08 22:44:31.548 +08:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET https://localhost:62549/, Response status code: 404
+2026-07-08 22:48:32.617 +08:00 [DBG] Connection id "0HNMSVTKM3UDR" accepted.
+2026-07-08 22:48:32.621 +08:00 [DBG] Connection id "0HNMSVTKM3UDR" received FIN.
+2026-07-08 22:48:32.647 +08:00 [DBG] Connection id "0HNMSVTKM3UDR" started.
+2026-07-08 22:48:32.659 +08:00 [DBG] Connection id "0HNMSVTKM3UDS" accepted.
+2026-07-08 22:48:32.669 +08:00 [DBG] Failed to authenticate HTTPS connection.
+System.IO.IOException: Received an unexpected EOF or 0 bytes from the transport stream.
+   at System.Net.Security.SslStream.ReceiveHandshakeFrameAsync[TIOAdapter](CancellationToken cancellationToken)
+   at System.Net.Security.SslStream.ForceAuthenticationAsync[TIOAdapter](Boolean receiveFirst, Byte[] reAuthenticationData, CancellationToken cancellationToken)
+   at System.Net.Security.SslStream.ProcessAuthenticationWithTelemetryAsync(Boolean isAsync, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Https.Internal.HttpsConnectionMiddleware.OnConnectionAsync(ConnectionContext context)
+2026-07-08 22:48:32.671 +08:00 [DBG] Connection id "0HNMSVTKM3UDS" started.
+2026-07-08 22:48:32.677 +08:00 [DBG] Connection id "0HNMSVTKM3UDR" stopped.
+2026-07-08 22:48:32.686 +08:00 [DBG] Connection id "0HNMSVTKM3UDR" sending FIN because: "The Socket transport's send loop completed gracefully."
+2026-07-08 22:48:32.695 +08:00 [DBG] Connection 0HNMSVTKM3UDS established using the following protocol: "Tls13"
+2026-07-08 22:48:32.708 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:62549/api/users - null null
+2026-07-08 22:48:32.727 +08:00 [DBG] 1 candidate(s) found for the request path '/api/users'
+2026-07-08 22:48:32.736 +08:00 [DBG] Endpoint 'SmartInventoryAPI.Controllers.UsersController.GetAllUsers (SmartInventoryAPI)' with route pattern 'api/Users' is valid for the request path '/api/users'
+2026-07-08 22:48:32.741 +08:00 [DBG] Request matched endpoint 'SmartInventoryAPI.Controllers.UsersController.GetAllUsers (SmartInventoryAPI)'
+2026-07-08 22:48:32.744 +08:00 [DBG] Static files was skipped as the request already matched an endpoint.
+2026-07-08 22:48:32.746 +08:00 [INF] Incoming request: GET /api/users from ::1
+2026-07-08 22:48:32.874 +08:00 [INF] Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenExpiredException: IDX10223: Lifetime validation failed. The token is expired. ValidTo (UTC): '7/7/2026 5:02:35 PM', Current time (UTC): '8/7/2026 2:48:32 PM'.
+   at Microsoft.IdentityModel.Tokens.Validators.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateTokenPayloadAsync(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateJWSAsync(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+2026-07-08 22:48:32.884 +08:00 [INF] Bearer was not authenticated. Failure message: IDX10223: Lifetime validation failed. The token is expired. ValidTo (UTC): '7/7/2026 5:02:35 PM', Current time (UTC): '8/7/2026 2:48:32 PM'.
+2026-07-08 22:48:32.896 +08:00 [DBG] Policy authentication schemes  did not succeed
+2026-07-08 22:48:32.914 +08:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2026-07-08 22:48:32.934 +08:00 [INF] AuthenticationScheme: Bearer was challenged.
+2026-07-08 22:48:32.937 +08:00 [INF] Response: GET /api/users - Status: 401 - Duration: 191.7552ms
+2026-07-08 22:48:32.963 +08:00 [DBG] Connection id "0HNMSVTKM3UDS" completed keep alive response.
+2026-07-08 22:48:32.967 +08:00 [INF] Request finished HTTP/1.1 GET https://localhost:62549/api/users - 401 0 null 258.9223ms
+2026-07-08 22:50:17.483 +08:00 [DBG] Connection id "0HNMSVTKM3UDS" received FIN.
+2026-07-08 22:50:17.498 +08:00 [DBG] Connection id "0HNMSVTKM3UDS" sending FIN because: "The Socket transport's send loop completed gracefully."
+2026-07-08 22:50:17.502 +08:00 [DBG] Connection id "0HNMSVTKM3UDS" disconnecting.
+2026-07-08 22:50:17.543 +08:00 [DBG] Connection id "0HNMSVTKM3UDS" stopped.
+2026-07-08 22:50:25.247 +08:00 [DBG] Connection id "0HNMSVTKM3UDT" accepted.
+2026-07-08 22:50:25.249 +08:00 [DBG] Connection id "0HNMSVTKM3UDT" started.
+2026-07-08 22:50:25.260 +08:00 [DBG] Connection 0HNMSVTKM3UDT established using the following protocol: "Tls13"
+2026-07-08 22:50:25.270 +08:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:62549/api/auth/login - null null
+2026-07-08 22:50:25.279 +08:00 [DBG] 1 candidate(s) found for the request path '/api/auth/login'
+2026-07-08 22:50:25.281 +08:00 [DBG] Request matched endpoint '405 HTTP Method Not Supported'
+2026-07-08 22:50:25.283 +08:00 [DBG] Static files was skipped as the request already matched an endpoint.
+2026-07-08 22:50:25.285 +08:00 [INF] Incoming request: OPTIONS /api/auth/login from ::1
+2026-07-08 22:50:25.289 +08:00 [DBG] The request has an origin header: 'http://localhost:3000'.
+2026-07-08 22:50:25.292 +08:00 [INF] CORS policy execution successful.
+2026-07-08 22:50:25.295 +08:00 [DBG] The request is a preflight request.
+2026-07-08 22:50:25.298 +08:00 [INF] Response: OPTIONS /api/auth/login - Status: 204 - Duration: 12.9374ms
+2026-07-08 22:50:25.305 +08:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:62549/api/auth/login - 204 null null 35.3072ms
+2026-07-08 22:50:25.310 +08:00 [INF] Request starting HTTP/2 POST https://localhost:62549/api/auth/login - application/json 39
+2026-07-08 22:50:25.318 +08:00 [DBG] 1 candidate(s) found for the request path '/api/auth/login'
+2026-07-08 22:50:25.320 +08:00 [DBG] Endpoint 'SmartInventoryAPI.Controllers.AuthController.Login (SmartInventoryAPI)' with route pattern 'api/Auth/login' is valid for the request path '/api/auth/login'
+2026-07-08 22:50:25.323 +08:00 [DBG] Request matched endpoint 'SmartInventoryAPI.Controllers.AuthController.Login (SmartInventoryAPI)'
+2026-07-08 22:50:25.324 +08:00 [DBG] Static files was skipped as the request already matched an endpoint.
+2026-07-08 22:50:25.325 +08:00 [INF] Incoming request: POST /api/auth/login from ::1
+2026-07-08 22:50:25.327 +08:00 [DBG] The request has an origin header: 'http://localhost:3000'.
+2026-07-08 22:50:25.329 +08:00 [INF] CORS policy execution successful.
+2026-07-08 22:50:25.332 +08:00 [DBG] AuthenticationScheme: Bearer was not authenticated.
+2026-07-08 22:50:25.335 +08:00 [INF] Executing endpoint 'SmartInventoryAPI.Controllers.AuthController.Login (SmartInventoryAPI)'
+2026-07-08 22:50:25.373 +08:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[SmartInventoryAPI.Models.DTOs.Response.ApiResponseDto`1[SmartInventoryAPI.Models.DTOs.Response.AuthResponseDto]]] Login(SmartInventoryAPI.Models.DTOs.Request.Auth.LoginRequestDto) on controller SmartInventoryAPI.Controllers.AuthController (SmartInventoryAPI).
+2026-07-08 22:50:25.378 +08:00 [DBG] Execution plan of authorization filters (in the following order): ["None"]
+2026-07-08 22:50:25.381 +08:00 [DBG] Execution plan of resource filters (in the following order): ["None"]
+2026-07-08 22:50:25.385 +08:00 [DBG] Execution plan of action filters (in the following order): ["Microsoft.AspNetCore.Mvc.ModelBinding.UnsupportedContentTypeFilter (Order: -3000)","Microsoft.AspNetCore.Mvc.Infrastructure.ModelStateInvalidFilter (Order: -2000)"]
+2026-07-08 22:50:25.388 +08:00 [DBG] Execution plan of exception filters (in the following order): ["None"]
+2026-07-08 22:50:25.391 +08:00 [DBG] Execution plan of result filters (in the following order): ["Microsoft.AspNetCore.Mvc.Infrastructure.ClientErrorResultFilter (Order: -2000)"]
+2026-07-08 22:50:25.395 +08:00 [DBG] Executing controller factory for controller SmartInventoryAPI.Controllers.AuthController (SmartInventoryAPI)
+2026-07-08 22:50:25.405 +08:00 [DBG] Executed controller factory for controller SmartInventoryAPI.Controllers.AuthController (SmartInventoryAPI)
+2026-07-08 22:50:25.414 +08:00 [DBG] Attempting to bind parameter 'request' of type 'SmartInventoryAPI.Models.DTOs.Request.Auth.LoginRequestDto' ...
+2026-07-08 22:50:25.420 +08:00 [DBG] Attempting to bind parameter 'request' of type 'SmartInventoryAPI.Models.DTOs.Request.Auth.LoginRequestDto' using the name '' in request data ...
+2026-07-08 22:50:25.425 +08:00 [DBG] Selected input formatter 'Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonInputFormatter' for content type 'application/json'.
+2026-07-08 22:50:25.436 +08:00 [DBG] Connection id "0HNMSVTKM3UDT", Request id "0HNMSVTKM3UDT:00000003": started reading request body.
+2026-07-08 22:50:25.438 +08:00 [DBG] Connection id "0HNMSVTKM3UDT", Request id "0HNMSVTKM3UDT:00000003": done reading request body.
+2026-07-08 22:50:25.446 +08:00 [DBG] JSON input formatter succeeded, deserializing to type 'SmartInventoryAPI.Models.DTOs.Request.Auth.LoginRequestDto'
+2026-07-08 22:50:25.449 +08:00 [DBG] Done attempting to bind parameter 'request' of type 'SmartInventoryAPI.Models.DTOs.Request.Auth.LoginRequestDto'.
+2026-07-08 22:50:25.451 +08:00 [DBG] Done attempting to bind parameter 'request' of type 'SmartInventoryAPI.Models.DTOs.Request.Auth.LoginRequestDto'.
+2026-07-08 22:50:25.454 +08:00 [DBG] Attempting to validate the bound parameter 'request' of type 'SmartInventoryAPI.Models.DTOs.Request.Auth.LoginRequestDto' ...
+2026-07-08 22:50:25.469 +08:00 [DBG] Done attempting to validate the bound parameter 'request' of type 'SmartInventoryAPI.Models.DTOs.Request.Auth.LoginRequestDto'.
+2026-07-08 22:50:28.062 +08:00 [DBG] Entity Framework Core 8.0.0 initialized 'SmartInventoryDbContext' using provider 'Npgsql.EntityFrameworkCore.PostgreSQL:8.0.0+2539d1f4bd0d429cbae20336d531d14938a54297' with options: None
+2026-07-08 22:50:28.156 +08:00 [DBG] Compiling query expression: 
+'DbSet<User>()
+    .FirstOrDefault(u => u.Username == __username_0 && !(u.Is_Deleted))'
+2026-07-08 22:50:28.441 +08:00 [DBG] Generated query execution expression: 
+'queryContext => ShapedQueryCompilingExpressionVisitor.SingleOrDefaultAsync<User>(
+    asyncEnumerable: new SingleQueryingEnumerable<User>(
+        (RelationalQueryContext)queryContext, 
+        RelationalCommandCache.QueryExpression(
+            Projection Mapping:
+                EmptyProjectionMember -> Dictionary<IProperty, int> { [Property: User.ID (long) Required PK AfterSave:Throw ValueGenerated.OnAdd, 0], [Property: User.Creation_Date (DateTime) Required, 1], [Property: User.Email (string), 2], [Property: User.Full_Name (string), 3], [Property: User.IC (string), 4], [Property: User.Is_Deleted (bool) Required, 5], [Property: User.Mobile_No (string), 6], [Property: User.Password (string), 7], [Property: User.Role (int) Required, 8], [Property: User.Staff_Code (string), 9], [Property: User.Username (string), 10] }
+            SELECT TOP(1) u.ID, u.Creation_Date, u.Email, u.Full_Name, u.IC, u.Is_Deleted, u.Mobile_No, u.Password, u.Role, u.Staff_Code, u.Username
+            FROM User AS u
+            WHERE (u.Username == @__username_0) && Not(u.Is_Deleted == B'1')), 
+        null, 
+        Func<QueryContext, DbDataReader, ResultContext, SingleQueryResultCoordinator, User>, 
+        SmartInventoryAPI.Data.SmartInventoryDbContext, 
+        False, 
+        False, 
+        True
+    ), 
+    cancellationToken: queryContext.CancellationToken)'
+2026-07-08 22:50:28.492 +08:00 [DBG] Creating DbConnection.
+2026-07-08 22:50:28.494 +08:00 [DBG] Created DbConnection. (1ms).
+2026-07-08 22:50:28.499 +08:00 [DBG] Opening connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 22:50:28.567 +08:00 [DBG] Opened connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 22:50:28.571 +08:00 [DBG] Creating DbCommand for 'ExecuteReader'.
+2026-07-08 22:50:28.572 +08:00 [DBG] Created DbCommand for 'ExecuteReader' (1ms).
+2026-07-08 22:50:28.578 +08:00 [DBG] Initialized DbCommand for 'ExecuteReader' (7ms).
+2026-07-08 22:50:28.583 +08:00 [DBG] Executing DbCommand [Parameters=[@__username_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT u."ID", u."Creation_Date", u."Email", u."Full_Name", u."IC", u."Is_Deleted", u."Mobile_No", u."Password", u."Role", u."Staff_Code", u."Username"
+FROM "User" AS u
+WHERE u."Username" = @__username_0 AND u."Is_Deleted" = B'0'
+LIMIT 1
+2026-07-08 22:50:28.614 +08:00 [INF] Executed DbCommand (33ms) [Parameters=[@__username_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT u."ID", u."Creation_Date", u."Email", u."Full_Name", u."IC", u."Is_Deleted", u."Mobile_No", u."Password", u."Role", u."Staff_Code", u."Username"
+FROM "User" AS u
+WHERE u."Username" = @__username_0 AND u."Is_Deleted" = B'0'
+LIMIT 1
+2026-07-08 22:50:28.626 +08:00 [DBG] Closing data reader to 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 22:50:28.629 +08:00 [DBG] A data reader for 'Test' on server 'tcp://localhost:5432' is being disposed after spending 9ms reading results.
+2026-07-08 22:50:28.636 +08:00 [DBG] Closing connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 22:50:28.639 +08:00 [DBG] Closed connection to database 'Test' on server 'tcp://localhost:5432' (3ms).
+2026-07-08 22:50:28.737 +08:00 [INF] Executed action SmartInventoryAPI.Controllers.AuthController.Login (SmartInventoryAPI) in 3337.5025ms
+2026-07-08 22:50:28.742 +08:00 [INF] Executed endpoint 'SmartInventoryAPI.Controllers.AuthController.Login (SmartInventoryAPI)'
+2026-07-08 22:50:35.937 +08:00 [ERR] An unhandled exception has occurred
+SmartInventoryAPI.Utilities.Exceptions.UnauthorizedException: Invalid credentials
+   at SmartInventoryAPI.Services.Implementations.AuthService.LoginAsync(LoginRequestDto request) in C:\Users\User\Documents\Hari\Unitar\Semester 6\Major Project\Smart Inventory System\SmartInventoryAPI\Services\Implementations\AuthService.cs:line 30
+   at SmartInventoryAPI.Controllers.AuthController.Login(LoginRequestDto request) in C:\Users\User\Documents\Hari\Unitar\Semester 6\Major Project\Smart Inventory System\SmartInventoryAPI\Controllers\AuthController.cs:line 27
+   at lambda_method23(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.AwaitableObjectResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|7_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at SmartInventoryAPI.Middleware.RequestLoggingMiddleware.InvokeAsync(HttpContext context) in C:\Users\User\Documents\Hari\Unitar\Semester 6\Major Project\Smart Inventory System\SmartInventoryAPI\Middleware\RequestLoggingMiddleware.cs:line 25
+   at SmartInventoryAPI.Middleware.ExceptionHandlingMiddleware.InvokeAsync(HttpContext context) in C:\Users\User\Documents\Hari\Unitar\Semester 6\Major Project\Smart Inventory System\SmartInventoryAPI\Middleware\ExceptionHandlingMiddleware.cs:line 23
+2026-07-08 22:50:35.988 +08:00 [DBG] 'SmartInventoryDbContext' disposed.
+2026-07-08 22:50:35.992 +08:00 [DBG] Disposing connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 22:50:35.996 +08:00 [DBG] Disposed connection to database 'Test' on server 'tcp://localhost:5432' (3ms).
+2026-07-08 22:50:36.001 +08:00 [INF] Request finished HTTP/2 POST https://localhost:62549/api/auth/login - 401 null application/json; charset=utf-8 10690.9313ms
+2026-07-08 22:50:59.494 +08:00 [DBG] Connection id "0HNMSVTKM3UDU" accepted.
+2026-07-08 22:50:59.496 +08:00 [DBG] Connection id "0HNMSVTKM3UDU" received FIN.
+2026-07-08 22:50:59.497 +08:00 [DBG] Connection id "0HNMSVTKM3UDU" started.
+2026-07-08 22:50:59.497 +08:00 [DBG] Connection id "0HNMSVTKM3UDV" accepted.
+2026-07-08 22:50:59.518 +08:00 [DBG] Failed to authenticate HTTPS connection.
+System.IO.IOException: Received an unexpected EOF or 0 bytes from the transport stream.
+   at System.Net.Security.SslStream.ReceiveHandshakeFrameAsync[TIOAdapter](CancellationToken cancellationToken)
+   at System.Net.Security.SslStream.ForceAuthenticationAsync[TIOAdapter](Boolean receiveFirst, Byte[] reAuthenticationData, CancellationToken cancellationToken)
+   at System.Net.Security.SslStream.ProcessAuthenticationWithTelemetryAsync(Boolean isAsync, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Https.Internal.HttpsConnectionMiddleware.OnConnectionAsync(ConnectionContext context)
+2026-07-08 22:50:59.522 +08:00 [DBG] Connection id "0HNMSVTKM3UDV" started.
+2026-07-08 22:50:59.530 +08:00 [DBG] Connection id "0HNMSVTKM3UDU" stopped.
+2026-07-08 22:50:59.536 +08:00 [DBG] Connection id "0HNMSVTKM3UDU" sending FIN because: "The Socket transport's send loop completed gracefully."
+2026-07-08 22:50:59.542 +08:00 [DBG] Connection 0HNMSVTKM3UDV established using the following protocol: "Tls13"
+2026-07-08 22:50:59.545 +08:00 [INF] Request starting HTTP/1.1 POST https://localhost:62549/api/auth/login - application/json 55
+2026-07-08 22:50:59.549 +08:00 [DBG] 1 candidate(s) found for the request path '/api/auth/login'
+2026-07-08 22:50:59.551 +08:00 [DBG] Endpoint 'SmartInventoryAPI.Controllers.AuthController.Login (SmartInventoryAPI)' with route pattern 'api/Auth/login' is valid for the request path '/api/auth/login'
+2026-07-08 22:50:59.553 +08:00 [DBG] Request matched endpoint 'SmartInventoryAPI.Controllers.AuthController.Login (SmartInventoryAPI)'
+2026-07-08 22:50:59.555 +08:00 [DBG] Static files was skipped as the request already matched an endpoint.
+2026-07-08 22:50:59.555 +08:00 [INF] Incoming request: POST /api/auth/login from ::1
+2026-07-08 22:50:59.557 +08:00 [DBG] AuthenticationScheme: Bearer was not authenticated.
+2026-07-08 22:50:59.559 +08:00 [INF] Executing endpoint 'SmartInventoryAPI.Controllers.AuthController.Login (SmartInventoryAPI)'
+2026-07-08 22:50:59.561 +08:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[SmartInventoryAPI.Models.DTOs.Response.ApiResponseDto`1[SmartInventoryAPI.Models.DTOs.Response.AuthResponseDto]]] Login(SmartInventoryAPI.Models.DTOs.Request.Auth.LoginRequestDto) on controller SmartInventoryAPI.Controllers.AuthController (SmartInventoryAPI).
+2026-07-08 22:50:59.563 +08:00 [DBG] Execution plan of authorization filters (in the following order): ["None"]
+2026-07-08 22:50:59.564 +08:00 [DBG] Execution plan of resource filters (in the following order): ["None"]
+2026-07-08 22:50:59.567 +08:00 [DBG] Execution plan of action filters (in the following order): ["Microsoft.AspNetCore.Mvc.ModelBinding.UnsupportedContentTypeFilter (Order: -3000)","Microsoft.AspNetCore.Mvc.Infrastructure.ModelStateInvalidFilter (Order: -2000)"]
+2026-07-08 22:50:59.569 +08:00 [DBG] Execution plan of exception filters (in the following order): ["None"]
+2026-07-08 22:50:59.571 +08:00 [DBG] Execution plan of result filters (in the following order): ["Microsoft.AspNetCore.Mvc.Infrastructure.ClientErrorResultFilter (Order: -2000)"]
+2026-07-08 22:50:59.573 +08:00 [DBG] Executing controller factory for controller SmartInventoryAPI.Controllers.AuthController (SmartInventoryAPI)
+2026-07-08 22:50:59.577 +08:00 [DBG] Executed controller factory for controller SmartInventoryAPI.Controllers.AuthController (SmartInventoryAPI)
+2026-07-08 22:50:59.579 +08:00 [DBG] Attempting to bind parameter 'request' of type 'SmartInventoryAPI.Models.DTOs.Request.Auth.LoginRequestDto' ...
+2026-07-08 22:50:59.581 +08:00 [DBG] Attempting to bind parameter 'request' of type 'SmartInventoryAPI.Models.DTOs.Request.Auth.LoginRequestDto' using the name '' in request data ...
+2026-07-08 22:50:59.583 +08:00 [DBG] Selected input formatter 'Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonInputFormatter' for content type 'application/json'.
+2026-07-08 22:50:59.586 +08:00 [DBG] Connection id "0HNMSVTKM3UDV", Request id "0HNMSVTKM3UDV:00000001": started reading request body.
+2026-07-08 22:50:59.587 +08:00 [DBG] Connection id "0HNMSVTKM3UDV", Request id "0HNMSVTKM3UDV:00000001": done reading request body.
+2026-07-08 22:50:59.589 +08:00 [DBG] JSON input formatter succeeded, deserializing to type 'SmartInventoryAPI.Models.DTOs.Request.Auth.LoginRequestDto'
+2026-07-08 22:50:59.590 +08:00 [DBG] Done attempting to bind parameter 'request' of type 'SmartInventoryAPI.Models.DTOs.Request.Auth.LoginRequestDto'.
+2026-07-08 22:50:59.592 +08:00 [DBG] Done attempting to bind parameter 'request' of type 'SmartInventoryAPI.Models.DTOs.Request.Auth.LoginRequestDto'.
+2026-07-08 22:50:59.594 +08:00 [DBG] Attempting to validate the bound parameter 'request' of type 'SmartInventoryAPI.Models.DTOs.Request.Auth.LoginRequestDto' ...
+2026-07-08 22:50:59.596 +08:00 [DBG] Done attempting to validate the bound parameter 'request' of type 'SmartInventoryAPI.Models.DTOs.Request.Auth.LoginRequestDto'.
+2026-07-08 22:51:01.058 +08:00 [DBG] Entity Framework Core 8.0.0 initialized 'SmartInventoryDbContext' using provider 'Npgsql.EntityFrameworkCore.PostgreSQL:8.0.0+2539d1f4bd0d429cbae20336d531d14938a54297' with options: None
+2026-07-08 22:51:01.068 +08:00 [DBG] Creating DbConnection.
+2026-07-08 22:51:01.070 +08:00 [DBG] Created DbConnection. (1ms).
+2026-07-08 22:51:01.072 +08:00 [DBG] Opening connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 22:51:01.074 +08:00 [DBG] Opened connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 22:51:01.077 +08:00 [DBG] Creating DbCommand for 'ExecuteReader'.
+2026-07-08 22:51:01.079 +08:00 [DBG] Created DbCommand for 'ExecuteReader' (2ms).
+2026-07-08 22:51:01.082 +08:00 [DBG] Initialized DbCommand for 'ExecuteReader' (5ms).
+2026-07-08 22:51:01.084 +08:00 [DBG] Executing DbCommand [Parameters=[@__username_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT u."ID", u."Creation_Date", u."Email", u."Full_Name", u."IC", u."Is_Deleted", u."Mobile_No", u."Password", u."Role", u."Staff_Code", u."Username"
+FROM "User" AS u
+WHERE u."Username" = @__username_0 AND u."Is_Deleted" = B'0'
+LIMIT 1
+2026-07-08 22:51:01.091 +08:00 [INF] Executed DbCommand (7ms) [Parameters=[@__username_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT u."ID", u."Creation_Date", u."Email", u."Full_Name", u."IC", u."Is_Deleted", u."Mobile_No", u."Password", u."Role", u."Staff_Code", u."Username"
+FROM "User" AS u
+WHERE u."Username" = @__username_0 AND u."Is_Deleted" = B'0'
+LIMIT 1
+2026-07-08 22:51:01.188 +08:00 [DBG] Context 'SmartInventoryDbContext' started tracking 'User' entity. Consider using 'DbContextOptionsBuilder.EnableSensitiveDataLogging' to see key values.
+2026-07-08 22:51:01.250 +08:00 [DBG] Closing data reader to 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 22:51:01.253 +08:00 [DBG] A data reader for 'Test' on server 'tcp://localhost:5432' is being disposed after spending 155ms reading results.
+2026-07-08 22:51:01.257 +08:00 [DBG] Closing connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 22:51:01.259 +08:00 [DBG] Closed connection to database 'Test' on server 'tcp://localhost:5432' (2ms).
+2026-07-08 22:51:03.393 +08:00 [INF] User hari12 logged in successfully
+2026-07-08 22:51:03.400 +08:00 [DBG] List of registered output formatters, in the following order: ["Microsoft.AspNetCore.Mvc.Formatters.HttpNoContentOutputFormatter","Microsoft.AspNetCore.Mvc.Formatters.StringOutputFormatter","Microsoft.AspNetCore.Mvc.Formatters.StreamOutputFormatter","Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonOutputFormatter"]
+2026-07-08 22:51:03.407 +08:00 [DBG] No information found on request to perform content negotiation.
+2026-07-08 22:51:03.409 +08:00 [DBG] Attempting to select an output formatter without using a content type as no explicit content types were specified for the response.
+2026-07-08 22:51:03.410 +08:00 [DBG] Attempting to select the first formatter in the output formatters list which can write the result.
+2026-07-08 22:51:03.413 +08:00 [DBG] Selected output formatter 'Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonOutputFormatter' and content type 'application/json' to write the response.
+2026-07-08 22:51:03.417 +08:00 [INF] Executing OkObjectResult, writing value of type 'SmartInventoryAPI.Models.DTOs.Response.ApiResponseDto`1[[SmartInventoryAPI.Models.DTOs.Response.AuthResponseDto, SmartInventoryAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-07-08 22:51:03.444 +08:00 [INF] Executed action SmartInventoryAPI.Controllers.AuthController.Login (SmartInventoryAPI) in 3870.9903ms
+2026-07-08 22:51:03.449 +08:00 [INF] Executed endpoint 'SmartInventoryAPI.Controllers.AuthController.Login (SmartInventoryAPI)'
+2026-07-08 22:51:03.451 +08:00 [INF] Response: POST /api/auth/login - Status: 200 - Duration: 3895.485ms
+2026-07-08 22:51:03.456 +08:00 [DBG] Connection id "0HNMSVTKM3UDV" completed keep alive response.
+2026-07-08 22:51:03.459 +08:00 [DBG] 'SmartInventoryDbContext' disposed.
+2026-07-08 22:51:03.461 +08:00 [DBG] Disposing connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 22:51:03.464 +08:00 [DBG] Disposed connection to database 'Test' on server 'tcp://localhost:5432' (3ms).
+2026-07-08 22:51:03.467 +08:00 [INF] Request finished HTTP/1.1 POST https://localhost:62549/api/auth/login - 200 null application/json; charset=utf-8 3922.3625ms
+2026-07-08 22:51:14.107 +08:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:62549/api/auth/login - null null
+2026-07-08 22:51:14.112 +08:00 [DBG] 1 candidate(s) found for the request path '/api/auth/login'
+2026-07-08 22:51:14.114 +08:00 [DBG] Request matched endpoint '405 HTTP Method Not Supported'
+2026-07-08 22:51:14.115 +08:00 [DBG] Static files was skipped as the request already matched an endpoint.
+2026-07-08 22:51:14.116 +08:00 [INF] Incoming request: OPTIONS /api/auth/login from ::1
+2026-07-08 22:51:14.118 +08:00 [DBG] The request has an origin header: 'http://localhost:3000'.
+2026-07-08 22:51:14.119 +08:00 [INF] CORS policy execution successful.
+2026-07-08 22:51:14.120 +08:00 [DBG] The request is a preflight request.
+2026-07-08 22:51:14.121 +08:00 [INF] Response: OPTIONS /api/auth/login - Status: 204 - Duration: 4.8258ms
+2026-07-08 22:51:14.123 +08:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:62549/api/auth/login - 204 null null 16.8183ms
+2026-07-08 22:51:14.125 +08:00 [INF] Request starting HTTP/2 POST https://localhost:62549/api/auth/login - application/json 39
+2026-07-08 22:51:14.132 +08:00 [DBG] 1 candidate(s) found for the request path '/api/auth/login'
+2026-07-08 22:51:14.133 +08:00 [DBG] Endpoint 'SmartInventoryAPI.Controllers.AuthController.Login (SmartInventoryAPI)' with route pattern 'api/Auth/login' is valid for the request path '/api/auth/login'
+2026-07-08 22:51:14.135 +08:00 [DBG] Request matched endpoint 'SmartInventoryAPI.Controllers.AuthController.Login (SmartInventoryAPI)'
+2026-07-08 22:51:14.137 +08:00 [DBG] Static files was skipped as the request already matched an endpoint.
+2026-07-08 22:51:14.138 +08:00 [INF] Incoming request: POST /api/auth/login from ::1
+2026-07-08 22:51:14.140 +08:00 [DBG] The request has an origin header: 'http://localhost:3000'.
+2026-07-08 22:51:14.141 +08:00 [INF] CORS policy execution successful.
+2026-07-08 22:51:14.143 +08:00 [DBG] AuthenticationScheme: Bearer was not authenticated.
+2026-07-08 22:51:14.145 +08:00 [INF] Executing endpoint 'SmartInventoryAPI.Controllers.AuthController.Login (SmartInventoryAPI)'
+2026-07-08 22:51:14.146 +08:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[SmartInventoryAPI.Models.DTOs.Response.ApiResponseDto`1[SmartInventoryAPI.Models.DTOs.Response.AuthResponseDto]]] Login(SmartInventoryAPI.Models.DTOs.Request.Auth.LoginRequestDto) on controller SmartInventoryAPI.Controllers.AuthController (SmartInventoryAPI).
+2026-07-08 22:51:14.148 +08:00 [DBG] Execution plan of authorization filters (in the following order): ["None"]
+2026-07-08 22:51:14.150 +08:00 [DBG] Execution plan of resource filters (in the following order): ["None"]
+2026-07-08 22:51:14.152 +08:00 [DBG] Execution plan of action filters (in the following order): ["Microsoft.AspNetCore.Mvc.ModelBinding.UnsupportedContentTypeFilter (Order: -3000)","Microsoft.AspNetCore.Mvc.Infrastructure.ModelStateInvalidFilter (Order: -2000)"]
+2026-07-08 22:51:14.154 +08:00 [DBG] Execution plan of exception filters (in the following order): ["None"]
+2026-07-08 22:51:14.157 +08:00 [DBG] Execution plan of result filters (in the following order): ["Microsoft.AspNetCore.Mvc.Infrastructure.ClientErrorResultFilter (Order: -2000)"]
+2026-07-08 22:51:14.159 +08:00 [DBG] Executing controller factory for controller SmartInventoryAPI.Controllers.AuthController (SmartInventoryAPI)
+2026-07-08 22:51:14.166 +08:00 [DBG] Executed controller factory for controller SmartInventoryAPI.Controllers.AuthController (SmartInventoryAPI)
+2026-07-08 22:51:14.168 +08:00 [DBG] Attempting to bind parameter 'request' of type 'SmartInventoryAPI.Models.DTOs.Request.Auth.LoginRequestDto' ...
+2026-07-08 22:51:14.171 +08:00 [DBG] Attempting to bind parameter 'request' of type 'SmartInventoryAPI.Models.DTOs.Request.Auth.LoginRequestDto' using the name '' in request data ...
+2026-07-08 22:51:14.173 +08:00 [DBG] Selected input formatter 'Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonInputFormatter' for content type 'application/json'.
+2026-07-08 22:51:14.175 +08:00 [DBG] Connection id "0HNMSVTKM3UDT", Request id "0HNMSVTKM3UDT:00000007": started reading request body.
+2026-07-08 22:51:14.176 +08:00 [DBG] Connection id "0HNMSVTKM3UDT", Request id "0HNMSVTKM3UDT:00000007": done reading request body.
+2026-07-08 22:51:14.178 +08:00 [DBG] JSON input formatter succeeded, deserializing to type 'SmartInventoryAPI.Models.DTOs.Request.Auth.LoginRequestDto'
+2026-07-08 22:51:14.179 +08:00 [DBG] Done attempting to bind parameter 'request' of type 'SmartInventoryAPI.Models.DTOs.Request.Auth.LoginRequestDto'.
+2026-07-08 22:51:14.181 +08:00 [DBG] Done attempting to bind parameter 'request' of type 'SmartInventoryAPI.Models.DTOs.Request.Auth.LoginRequestDto'.
+2026-07-08 22:51:14.183 +08:00 [DBG] Attempting to validate the bound parameter 'request' of type 'SmartInventoryAPI.Models.DTOs.Request.Auth.LoginRequestDto' ...
+2026-07-08 22:51:14.185 +08:00 [DBG] Done attempting to validate the bound parameter 'request' of type 'SmartInventoryAPI.Models.DTOs.Request.Auth.LoginRequestDto'.
+2026-07-08 22:51:15.630 +08:00 [DBG] Entity Framework Core 8.0.0 initialized 'SmartInventoryDbContext' using provider 'Npgsql.EntityFrameworkCore.PostgreSQL:8.0.0+2539d1f4bd0d429cbae20336d531d14938a54297' with options: None
+2026-07-08 22:51:15.637 +08:00 [DBG] Creating DbConnection.
+2026-07-08 22:51:15.640 +08:00 [DBG] Created DbConnection. (2ms).
+2026-07-08 22:51:15.643 +08:00 [DBG] Opening connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 22:51:15.648 +08:00 [DBG] Opened connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 22:51:15.651 +08:00 [DBG] Creating DbCommand for 'ExecuteReader'.
+2026-07-08 22:51:15.653 +08:00 [DBG] Created DbCommand for 'ExecuteReader' (2ms).
+2026-07-08 22:51:15.657 +08:00 [DBG] Initialized DbCommand for 'ExecuteReader' (6ms).
+2026-07-08 22:51:15.661 +08:00 [DBG] Executing DbCommand [Parameters=[@__username_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT u."ID", u."Creation_Date", u."Email", u."Full_Name", u."IC", u."Is_Deleted", u."Mobile_No", u."Password", u."Role", u."Staff_Code", u."Username"
+FROM "User" AS u
+WHERE u."Username" = @__username_0 AND u."Is_Deleted" = B'0'
+LIMIT 1
+2026-07-08 22:51:15.672 +08:00 [INF] Executed DbCommand (10ms) [Parameters=[@__username_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT u."ID", u."Creation_Date", u."Email", u."Full_Name", u."IC", u."Is_Deleted", u."Mobile_No", u."Password", u."Role", u."Staff_Code", u."Username"
+FROM "User" AS u
+WHERE u."Username" = @__username_0 AND u."Is_Deleted" = B'0'
+LIMIT 1
+2026-07-08 22:51:15.684 +08:00 [DBG] Context 'SmartInventoryDbContext' started tracking 'User' entity. Consider using 'DbContextOptionsBuilder.EnableSensitiveDataLogging' to see key values.
+2026-07-08 22:51:15.689 +08:00 [DBG] Closing data reader to 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 22:51:15.694 +08:00 [DBG] A data reader for 'Test' on server 'tcp://localhost:5432' is being disposed after spending 11ms reading results.
+2026-07-08 22:51:15.697 +08:00 [DBG] Closing connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 22:51:15.701 +08:00 [DBG] Closed connection to database 'Test' on server 'tcp://localhost:5432' (4ms).
+2026-07-08 22:51:17.115 +08:00 [INF] User hari12 logged in successfully
+2026-07-08 22:51:17.118 +08:00 [DBG] List of registered output formatters, in the following order: ["Microsoft.AspNetCore.Mvc.Formatters.HttpNoContentOutputFormatter","Microsoft.AspNetCore.Mvc.Formatters.StringOutputFormatter","Microsoft.AspNetCore.Mvc.Formatters.StreamOutputFormatter","Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonOutputFormatter"]
+2026-07-08 22:51:17.124 +08:00 [DBG] No information found on request to perform content negotiation.
+2026-07-08 22:51:17.125 +08:00 [DBG] Attempting to select an output formatter without using a content type as no explicit content types were specified for the response.
+2026-07-08 22:51:17.126 +08:00 [DBG] Attempting to select the first formatter in the output formatters list which can write the result.
+2026-07-08 22:51:17.128 +08:00 [DBG] Selected output formatter 'Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonOutputFormatter' and content type 'application/json' to write the response.
+2026-07-08 22:51:17.131 +08:00 [INF] Executing OkObjectResult, writing value of type 'SmartInventoryAPI.Models.DTOs.Response.ApiResponseDto`1[[SmartInventoryAPI.Models.DTOs.Response.AuthResponseDto, SmartInventoryAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-07-08 22:51:17.133 +08:00 [INF] Executed action SmartInventoryAPI.Controllers.AuthController.Login (SmartInventoryAPI) in 2973.6704ms
+2026-07-08 22:51:17.135 +08:00 [INF] Executed endpoint 'SmartInventoryAPI.Controllers.AuthController.Login (SmartInventoryAPI)'
+2026-07-08 22:51:17.136 +08:00 [INF] Response: POST /api/auth/login - Status: 200 - Duration: 2998.454ms
+2026-07-08 22:51:17.138 +08:00 [DBG] 'SmartInventoryDbContext' disposed.
+2026-07-08 22:51:17.141 +08:00 [DBG] Disposing connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 22:51:17.142 +08:00 [DBG] Disposed connection to database 'Test' on server 'tcp://localhost:5432' (1ms).
+2026-07-08 22:51:17.145 +08:00 [INF] Request finished HTTP/2 POST https://localhost:62549/api/auth/login - 200 null application/json; charset=utf-8 3019.6376ms
+2026-07-08 22:51:39.882 +08:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:62549/api/auth/login - null null
+2026-07-08 22:51:39.887 +08:00 [DBG] 1 candidate(s) found for the request path '/api/auth/login'
+2026-07-08 22:51:39.890 +08:00 [DBG] Request matched endpoint '405 HTTP Method Not Supported'
+2026-07-08 22:51:39.892 +08:00 [DBG] Static files was skipped as the request already matched an endpoint.
+2026-07-08 22:51:39.893 +08:00 [INF] Incoming request: OPTIONS /api/auth/login from ::1
+2026-07-08 22:51:39.896 +08:00 [DBG] The request has an origin header: 'http://localhost:3000'.
+2026-07-08 22:51:39.897 +08:00 [INF] CORS policy execution successful.
+2026-07-08 22:51:39.898 +08:00 [DBG] The request is a preflight request.
+2026-07-08 22:51:39.899 +08:00 [INF] Response: OPTIONS /api/auth/login - Status: 204 - Duration: 5.7939ms
+2026-07-08 22:51:39.902 +08:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:62549/api/auth/login - 204 null null 20.5418ms
+2026-07-08 22:51:39.905 +08:00 [INF] Request starting HTTP/2 POST https://localhost:62549/api/auth/login - application/json 39
+2026-07-08 22:51:39.911 +08:00 [DBG] 1 candidate(s) found for the request path '/api/auth/login'
+2026-07-08 22:51:39.912 +08:00 [DBG] Endpoint 'SmartInventoryAPI.Controllers.AuthController.Login (SmartInventoryAPI)' with route pattern 'api/Auth/login' is valid for the request path '/api/auth/login'
+2026-07-08 22:51:39.914 +08:00 [DBG] Request matched endpoint 'SmartInventoryAPI.Controllers.AuthController.Login (SmartInventoryAPI)'
+2026-07-08 22:51:39.915 +08:00 [DBG] Static files was skipped as the request already matched an endpoint.
+2026-07-08 22:51:39.916 +08:00 [INF] Incoming request: POST /api/auth/login from ::1
+2026-07-08 22:51:39.919 +08:00 [DBG] The request has an origin header: 'http://localhost:3000'.
+2026-07-08 22:51:39.920 +08:00 [INF] CORS policy execution successful.
+2026-07-08 22:51:39.921 +08:00 [DBG] AuthenticationScheme: Bearer was not authenticated.
+2026-07-08 22:51:39.922 +08:00 [INF] Executing endpoint 'SmartInventoryAPI.Controllers.AuthController.Login (SmartInventoryAPI)'
+2026-07-08 22:51:39.923 +08:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[SmartInventoryAPI.Models.DTOs.Response.ApiResponseDto`1[SmartInventoryAPI.Models.DTOs.Response.AuthResponseDto]]] Login(SmartInventoryAPI.Models.DTOs.Request.Auth.LoginRequestDto) on controller SmartInventoryAPI.Controllers.AuthController (SmartInventoryAPI).
+2026-07-08 22:51:39.926 +08:00 [DBG] Execution plan of authorization filters (in the following order): ["None"]
+2026-07-08 22:51:39.927 +08:00 [DBG] Execution plan of resource filters (in the following order): ["None"]
+2026-07-08 22:51:39.930 +08:00 [DBG] Execution plan of action filters (in the following order): ["Microsoft.AspNetCore.Mvc.ModelBinding.UnsupportedContentTypeFilter (Order: -3000)","Microsoft.AspNetCore.Mvc.Infrastructure.ModelStateInvalidFilter (Order: -2000)"]
+2026-07-08 22:51:39.932 +08:00 [DBG] Execution plan of exception filters (in the following order): ["None"]
+2026-07-08 22:51:39.934 +08:00 [DBG] Execution plan of result filters (in the following order): ["Microsoft.AspNetCore.Mvc.Infrastructure.ClientErrorResultFilter (Order: -2000)"]
+2026-07-08 22:51:39.936 +08:00 [DBG] Executing controller factory for controller SmartInventoryAPI.Controllers.AuthController (SmartInventoryAPI)
+2026-07-08 22:51:39.938 +08:00 [DBG] Executed controller factory for controller SmartInventoryAPI.Controllers.AuthController (SmartInventoryAPI)
+2026-07-08 22:51:39.940 +08:00 [DBG] Attempting to bind parameter 'request' of type 'SmartInventoryAPI.Models.DTOs.Request.Auth.LoginRequestDto' ...
+2026-07-08 22:51:39.942 +08:00 [DBG] Attempting to bind parameter 'request' of type 'SmartInventoryAPI.Models.DTOs.Request.Auth.LoginRequestDto' using the name '' in request data ...
+2026-07-08 22:51:39.944 +08:00 [DBG] Selected input formatter 'Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonInputFormatter' for content type 'application/json'.
+2026-07-08 22:51:39.946 +08:00 [DBG] Connection id "0HNMSVTKM3UDT", Request id "0HNMSVTKM3UDT:0000000B": started reading request body.
+2026-07-08 22:51:39.948 +08:00 [DBG] Connection id "0HNMSVTKM3UDT", Request id "0HNMSVTKM3UDT:0000000B": done reading request body.
+2026-07-08 22:51:39.950 +08:00 [DBG] JSON input formatter succeeded, deserializing to type 'SmartInventoryAPI.Models.DTOs.Request.Auth.LoginRequestDto'
+2026-07-08 22:51:39.951 +08:00 [DBG] Done attempting to bind parameter 'request' of type 'SmartInventoryAPI.Models.DTOs.Request.Auth.LoginRequestDto'.
+2026-07-08 22:51:39.953 +08:00 [DBG] Done attempting to bind parameter 'request' of type 'SmartInventoryAPI.Models.DTOs.Request.Auth.LoginRequestDto'.
+2026-07-08 22:51:39.954 +08:00 [DBG] Attempting to validate the bound parameter 'request' of type 'SmartInventoryAPI.Models.DTOs.Request.Auth.LoginRequestDto' ...
+2026-07-08 22:51:39.956 +08:00 [DBG] Done attempting to validate the bound parameter 'request' of type 'SmartInventoryAPI.Models.DTOs.Request.Auth.LoginRequestDto'.
+2026-07-08 22:51:41.902 +08:00 [DBG] Entity Framework Core 8.0.0 initialized 'SmartInventoryDbContext' using provider 'Npgsql.EntityFrameworkCore.PostgreSQL:8.0.0+2539d1f4bd0d429cbae20336d531d14938a54297' with options: None
+2026-07-08 22:51:41.908 +08:00 [DBG] Creating DbConnection.
+2026-07-08 22:51:41.910 +08:00 [DBG] Created DbConnection. (1ms).
+2026-07-08 22:51:41.911 +08:00 [DBG] Opening connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 22:51:41.914 +08:00 [DBG] Opened connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 22:51:41.917 +08:00 [DBG] Creating DbCommand for 'ExecuteReader'.
+2026-07-08 22:51:41.919 +08:00 [DBG] Created DbCommand for 'ExecuteReader' (1ms).
+2026-07-08 22:51:41.923 +08:00 [DBG] Initialized DbCommand for 'ExecuteReader' (5ms).
+2026-07-08 22:51:41.926 +08:00 [DBG] Executing DbCommand [Parameters=[@__username_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT u."ID", u."Creation_Date", u."Email", u."Full_Name", u."IC", u."Is_Deleted", u."Mobile_No", u."Password", u."Role", u."Staff_Code", u."Username"
+FROM "User" AS u
+WHERE u."Username" = @__username_0 AND u."Is_Deleted" = B'0'
+LIMIT 1
+2026-07-08 22:51:41.931 +08:00 [INF] Executed DbCommand (5ms) [Parameters=[@__username_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT u."ID", u."Creation_Date", u."Email", u."Full_Name", u."IC", u."Is_Deleted", u."Mobile_No", u."Password", u."Role", u."Staff_Code", u."Username"
+FROM "User" AS u
+WHERE u."Username" = @__username_0 AND u."Is_Deleted" = B'0'
+LIMIT 1
+2026-07-08 22:51:41.937 +08:00 [DBG] Context 'SmartInventoryDbContext' started tracking 'User' entity. Consider using 'DbContextOptionsBuilder.EnableSensitiveDataLogging' to see key values.
+2026-07-08 22:51:41.939 +08:00 [DBG] Closing data reader to 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 22:51:41.941 +08:00 [DBG] A data reader for 'Test' on server 'tcp://localhost:5432' is being disposed after spending 3ms reading results.
+2026-07-08 22:51:41.943 +08:00 [DBG] Closing connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 22:51:41.945 +08:00 [DBG] Closed connection to database 'Test' on server 'tcp://localhost:5432' (1ms).
+2026-07-08 22:51:43.203 +08:00 [INF] User hari12 logged in successfully
+2026-07-08 22:51:43.205 +08:00 [DBG] List of registered output formatters, in the following order: ["Microsoft.AspNetCore.Mvc.Formatters.HttpNoContentOutputFormatter","Microsoft.AspNetCore.Mvc.Formatters.StringOutputFormatter","Microsoft.AspNetCore.Mvc.Formatters.StreamOutputFormatter","Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonOutputFormatter"]
+2026-07-08 22:51:43.210 +08:00 [DBG] No information found on request to perform content negotiation.
+2026-07-08 22:51:43.211 +08:00 [DBG] Attempting to select an output formatter without using a content type as no explicit content types were specified for the response.
+2026-07-08 22:51:43.213 +08:00 [DBG] Attempting to select the first formatter in the output formatters list which can write the result.
+2026-07-08 22:51:43.214 +08:00 [DBG] Selected output formatter 'Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonOutputFormatter' and content type 'application/json' to write the response.
+2026-07-08 22:51:43.216 +08:00 [INF] Executing OkObjectResult, writing value of type 'SmartInventoryAPI.Models.DTOs.Response.ApiResponseDto`1[[SmartInventoryAPI.Models.DTOs.Response.AuthResponseDto, SmartInventoryAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-07-08 22:51:43.218 +08:00 [INF] Executed action SmartInventoryAPI.Controllers.AuthController.Login (SmartInventoryAPI) in 3282.1106ms
+2026-07-08 22:51:43.221 +08:00 [INF] Executed endpoint 'SmartInventoryAPI.Controllers.AuthController.Login (SmartInventoryAPI)'
+2026-07-08 22:51:43.222 +08:00 [INF] Response: POST /api/auth/login - Status: 200 - Duration: 3306.0873ms
+2026-07-08 22:51:43.226 +08:00 [DBG] 'SmartInventoryDbContext' disposed.
+2026-07-08 22:51:43.229 +08:00 [DBG] Disposing connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 22:51:43.231 +08:00 [DBG] Disposed connection to database 'Test' on server 'tcp://localhost:5432' (2ms).
+2026-07-08 22:51:43.235 +08:00 [INF] Request finished HTTP/2 POST https://localhost:62549/api/auth/login - 200 null application/json; charset=utf-8 3330.3966ms
+2026-07-08 22:52:29.988 +08:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:62549/api/auth/login - null null
+2026-07-08 22:52:29.998 +08:00 [DBG] 1 candidate(s) found for the request path '/api/auth/login'
+2026-07-08 22:52:30.000 +08:00 [DBG] Request matched endpoint '405 HTTP Method Not Supported'
+2026-07-08 22:52:30.001 +08:00 [DBG] Static files was skipped as the request already matched an endpoint.
+2026-07-08 22:52:30.002 +08:00 [INF] Incoming request: OPTIONS /api/auth/login from ::1
+2026-07-08 22:52:30.004 +08:00 [DBG] The request has an origin header: 'http://localhost:3000'.
+2026-07-08 22:52:30.005 +08:00 [INF] CORS policy execution successful.
+2026-07-08 22:52:30.006 +08:00 [DBG] The request is a preflight request.
+2026-07-08 22:52:30.008 +08:00 [INF] Response: OPTIONS /api/auth/login - Status: 204 - Duration: 5.6614ms
+2026-07-08 22:52:30.011 +08:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:62549/api/auth/login - 204 null null 23.0742ms
+2026-07-08 22:52:30.014 +08:00 [INF] Request starting HTTP/2 POST https://localhost:62549/api/auth/login - application/json 39
+2026-07-08 22:52:30.019 +08:00 [DBG] 1 candidate(s) found for the request path '/api/auth/login'
+2026-07-08 22:52:30.020 +08:00 [DBG] Endpoint 'SmartInventoryAPI.Controllers.AuthController.Login (SmartInventoryAPI)' with route pattern 'api/Auth/login' is valid for the request path '/api/auth/login'
+2026-07-08 22:52:30.022 +08:00 [DBG] Request matched endpoint 'SmartInventoryAPI.Controllers.AuthController.Login (SmartInventoryAPI)'
+2026-07-08 22:52:30.023 +08:00 [DBG] Static files was skipped as the request already matched an endpoint.
+2026-07-08 22:52:30.024 +08:00 [INF] Incoming request: POST /api/auth/login from ::1
+2026-07-08 22:52:30.027 +08:00 [DBG] The request has an origin header: 'http://localhost:3000'.
+2026-07-08 22:52:30.028 +08:00 [INF] CORS policy execution successful.
+2026-07-08 22:52:30.029 +08:00 [DBG] AuthenticationScheme: Bearer was not authenticated.
+2026-07-08 22:52:30.031 +08:00 [INF] Executing endpoint 'SmartInventoryAPI.Controllers.AuthController.Login (SmartInventoryAPI)'
+2026-07-08 22:52:30.032 +08:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[SmartInventoryAPI.Models.DTOs.Response.ApiResponseDto`1[SmartInventoryAPI.Models.DTOs.Response.AuthResponseDto]]] Login(SmartInventoryAPI.Models.DTOs.Request.Auth.LoginRequestDto) on controller SmartInventoryAPI.Controllers.AuthController (SmartInventoryAPI).
+2026-07-08 22:52:30.034 +08:00 [DBG] Execution plan of authorization filters (in the following order): ["None"]
+2026-07-08 22:52:30.036 +08:00 [DBG] Execution plan of resource filters (in the following order): ["None"]
+2026-07-08 22:52:30.037 +08:00 [DBG] Execution plan of action filters (in the following order): ["Microsoft.AspNetCore.Mvc.ModelBinding.UnsupportedContentTypeFilter (Order: -3000)","Microsoft.AspNetCore.Mvc.Infrastructure.ModelStateInvalidFilter (Order: -2000)"]
+2026-07-08 22:52:30.040 +08:00 [DBG] Execution plan of exception filters (in the following order): ["None"]
+2026-07-08 22:52:30.042 +08:00 [DBG] Execution plan of result filters (in the following order): ["Microsoft.AspNetCore.Mvc.Infrastructure.ClientErrorResultFilter (Order: -2000)"]
+2026-07-08 22:52:30.044 +08:00 [DBG] Executing controller factory for controller SmartInventoryAPI.Controllers.AuthController (SmartInventoryAPI)
+2026-07-08 22:52:30.047 +08:00 [DBG] Executed controller factory for controller SmartInventoryAPI.Controllers.AuthController (SmartInventoryAPI)
+2026-07-08 22:52:30.049 +08:00 [DBG] Attempting to bind parameter 'request' of type 'SmartInventoryAPI.Models.DTOs.Request.Auth.LoginRequestDto' ...
+2026-07-08 22:52:30.051 +08:00 [DBG] Attempting to bind parameter 'request' of type 'SmartInventoryAPI.Models.DTOs.Request.Auth.LoginRequestDto' using the name '' in request data ...
+2026-07-08 22:52:30.052 +08:00 [DBG] Selected input formatter 'Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonInputFormatter' for content type 'application/json'.
+2026-07-08 22:52:30.054 +08:00 [DBG] Connection id "0HNMSVTKM3UDT", Request id "0HNMSVTKM3UDT:0000000F": started reading request body.
+2026-07-08 22:52:30.056 +08:00 [DBG] Connection id "0HNMSVTKM3UDT", Request id "0HNMSVTKM3UDT:0000000F": done reading request body.
+2026-07-08 22:52:30.058 +08:00 [DBG] JSON input formatter succeeded, deserializing to type 'SmartInventoryAPI.Models.DTOs.Request.Auth.LoginRequestDto'
+2026-07-08 22:52:30.060 +08:00 [DBG] Done attempting to bind parameter 'request' of type 'SmartInventoryAPI.Models.DTOs.Request.Auth.LoginRequestDto'.
+2026-07-08 22:52:30.061 +08:00 [DBG] Done attempting to bind parameter 'request' of type 'SmartInventoryAPI.Models.DTOs.Request.Auth.LoginRequestDto'.
+2026-07-08 22:52:30.063 +08:00 [DBG] Attempting to validate the bound parameter 'request' of type 'SmartInventoryAPI.Models.DTOs.Request.Auth.LoginRequestDto' ...
+2026-07-08 22:52:30.064 +08:00 [DBG] Done attempting to validate the bound parameter 'request' of type 'SmartInventoryAPI.Models.DTOs.Request.Auth.LoginRequestDto'.
+2026-07-08 22:52:31.782 +08:00 [DBG] Entity Framework Core 8.0.0 initialized 'SmartInventoryDbContext' using provider 'Npgsql.EntityFrameworkCore.PostgreSQL:8.0.0+2539d1f4bd0d429cbae20336d531d14938a54297' with options: None
+2026-07-08 22:52:31.789 +08:00 [DBG] Creating DbConnection.
+2026-07-08 22:52:31.791 +08:00 [DBG] Created DbConnection. (2ms).
+2026-07-08 22:52:31.794 +08:00 [DBG] Opening connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 22:52:31.797 +08:00 [DBG] Opened connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 22:52:31.798 +08:00 [DBG] Creating DbCommand for 'ExecuteReader'.
+2026-07-08 22:52:31.800 +08:00 [DBG] Created DbCommand for 'ExecuteReader' (1ms).
+2026-07-08 22:52:31.801 +08:00 [DBG] Initialized DbCommand for 'ExecuteReader' (2ms).
+2026-07-08 22:52:31.803 +08:00 [DBG] Executing DbCommand [Parameters=[@__username_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT u."ID", u."Creation_Date", u."Email", u."Full_Name", u."IC", u."Is_Deleted", u."Mobile_No", u."Password", u."Role", u."Staff_Code", u."Username"
+FROM "User" AS u
+WHERE u."Username" = @__username_0 AND u."Is_Deleted" = B'0'
+LIMIT 1
+2026-07-08 22:52:31.809 +08:00 [INF] Executed DbCommand (5ms) [Parameters=[@__username_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT u."ID", u."Creation_Date", u."Email", u."Full_Name", u."IC", u."Is_Deleted", u."Mobile_No", u."Password", u."Role", u."Staff_Code", u."Username"
+FROM "User" AS u
+WHERE u."Username" = @__username_0 AND u."Is_Deleted" = B'0'
+LIMIT 1
+2026-07-08 22:52:31.814 +08:00 [DBG] Context 'SmartInventoryDbContext' started tracking 'User' entity. Consider using 'DbContextOptionsBuilder.EnableSensitiveDataLogging' to see key values.
+2026-07-08 22:52:31.815 +08:00 [DBG] Closing data reader to 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 22:52:31.817 +08:00 [DBG] A data reader for 'Test' on server 'tcp://localhost:5432' is being disposed after spending 3ms reading results.
+2026-07-08 22:52:31.820 +08:00 [DBG] Closing connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 22:52:31.821 +08:00 [DBG] Closed connection to database 'Test' on server 'tcp://localhost:5432' (1ms).
+2026-07-08 22:52:32.905 +08:00 [INF] User hari12 logged in successfully
+2026-07-08 22:52:32.907 +08:00 [DBG] List of registered output formatters, in the following order: ["Microsoft.AspNetCore.Mvc.Formatters.HttpNoContentOutputFormatter","Microsoft.AspNetCore.Mvc.Formatters.StringOutputFormatter","Microsoft.AspNetCore.Mvc.Formatters.StreamOutputFormatter","Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonOutputFormatter"]
+2026-07-08 22:52:32.910 +08:00 [DBG] No information found on request to perform content negotiation.
+2026-07-08 22:52:32.912 +08:00 [DBG] Attempting to select an output formatter without using a content type as no explicit content types were specified for the response.
+2026-07-08 22:52:32.914 +08:00 [DBG] Attempting to select the first formatter in the output formatters list which can write the result.
+2026-07-08 22:52:32.915 +08:00 [DBG] Selected output formatter 'Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonOutputFormatter' and content type 'application/json' to write the response.
+2026-07-08 22:52:32.916 +08:00 [INF] Executing OkObjectResult, writing value of type 'SmartInventoryAPI.Models.DTOs.Response.ApiResponseDto`1[[SmartInventoryAPI.Models.DTOs.Response.AuthResponseDto, SmartInventoryAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-07-08 22:52:32.919 +08:00 [INF] Executed action SmartInventoryAPI.Controllers.AuthController.Login (SmartInventoryAPI) in 2874.3463ms
+2026-07-08 22:52:32.921 +08:00 [INF] Executed endpoint 'SmartInventoryAPI.Controllers.AuthController.Login (SmartInventoryAPI)'
+2026-07-08 22:52:32.923 +08:00 [INF] Response: POST /api/auth/login - Status: 200 - Duration: 2898.5278ms
+2026-07-08 22:52:32.925 +08:00 [DBG] 'SmartInventoryDbContext' disposed.
+2026-07-08 22:52:32.927 +08:00 [DBG] Disposing connection to database 'Test' on server 'tcp://localhost:5432'.
+2026-07-08 22:52:32.930 +08:00 [DBG] Disposed connection to database 'Test' on server 'tcp://localhost:5432' (2ms).
+2026-07-08 22:52:32.932 +08:00 [INF] Request finished HTTP/2 POST https://localhost:62549/api/auth/login - 200 null application/json; charset=utf-8 2918.7417ms
+2026-07-08 23:08:10.884 +08:00 [DBG] Connection id "0HNMSVTKM3UDQ" received FIN.
+2026-07-08 23:08:10.899 +08:00 [DBG] Connection id "0HNMSVTKM3UDQ" is closed. The last processed stream ID was 1.
+2026-07-08 23:08:10.904 +08:00 [DBG] The connection queue processing loop for 0HNMSVTKM3UDQ completed.
+2026-07-08 23:08:10.916 +08:00 [DBG] Connection id "0HNMSVTKM3UDQ" sending FIN because: "The Socket transport's send loop completed gracefully."
+2026-07-08 23:08:10.932 +08:00 [DBG] Connection id "0HNMSVTKM3UDQ" stopped.
