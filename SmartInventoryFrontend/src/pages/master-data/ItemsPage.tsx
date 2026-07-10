@@ -36,47 +36,70 @@ export const ItemsPage = () => {
 
   const columns: Column<Item>[] = [
     {
-      key: 'Item_Code',
+      key: 'item_Code',
       label: 'Item Code',
       width: '120px',
     },
     {
-      key: 'Item_Name',
+      key: 'item_Name',
       label: 'Item Name',
       width: '200px',
     },
     {
-      key: 'Item_Category',
+      key: 'description',
+      label: 'Description',
+      width: '200px',
+    },
+    {
+      key: 'item_Category',
       label: 'Category',
       width: '150px',
     },
     {
-      key: 'Item_Brand',
+      key: 'item_Brand',
       label: 'Brand',
       width: '150px',
       render: (value) => value || '-',
     },
     {
-      key: 'Unit_Of_Measure',
+      key: 'unit_Of_Measure',
+      label: 'UOM',
+      width: '100px',
+      render: (value) => value || '-',
+    },
+    {
+      key: 'unit_Of_Measure',
       label: 'UOM',
       width: '100px',
     },
     {
-      key: 'Purchase_Cost',
+      key: 'purchase_Cost',
       label: 'Purchase Cost',
       width: '130px',
       align: 'right',
       render: (value) => `$${Number(value).toFixed(2)}`,
     },
     {
-      key: 'Unit_Cost',
+      key: 'unit_Cost',
       label: 'Unit Cost',
       width: '130px',
       align: 'right',
       render: (value) => `$${Number(value).toFixed(2)}`,
     },
     {
-      key: 'Is_Active',
+      key: 'tax_Percentage',
+      label: 'Tax %',
+      width: '100px',
+      align: 'right',
+      render: (value) => `${Number(value).toFixed(2)}%`,
+    },
+    {
+      key: 'tax_Type',
+      label: 'Tax Type',
+      width: '100px',
+    },
+    {
+      key: 'is_Active',
       label: 'Status',
       width: '100px',
       render: (value) => (
