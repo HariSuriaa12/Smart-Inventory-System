@@ -16,12 +16,12 @@ public class OrderFulfillmentRepository : GenericRepository<OrderFulfillmentHead
         return await _dbSet.Include(o => o.Items)
             .ThenInclude(i => i.Item)
             .Include(o => o.Customer)
-            .FirstOrDefaultAsync(o => o.ID == id && !o.IsDeleted);
+            .FirstOrDefaultAsync(o => o.ID == id && !o.Is_Deleted);
     }
 
     public async Task<IEnumerable<OrderFulfillmentHeader>> GetByCustomerAsync(long customerId, int skip = 0, int take = 10)
     {
-        return await _dbSet.Where(o => o.CustomerID == customerId && !o.IsDeleted)
+        return await _dbSet.Where(o => o.Customer_ID == customerId && !o.Is_Deleted)
             .Include(o => o.Customer)
             .Skip(skip)
             .Take(take)
@@ -30,7 +30,7 @@ public class OrderFulfillmentRepository : GenericRepository<OrderFulfillmentHead
 
     public async Task<IEnumerable<OrderFulfillmentHeader>> GetByLocationAsync(long locationId, int skip = 0, int take = 10)
     {
-        return await _dbSet.Where(o => o.LocationID == locationId && !o.IsDeleted)
+        return await _dbSet.Where(o => o.Location_ID == locationId && !o.Is_Deleted)
             .Include(o => o.Customer)
             .Skip(skip)
             .Take(take)
@@ -39,7 +39,7 @@ public class OrderFulfillmentRepository : GenericRepository<OrderFulfillmentHead
 
     public async Task<IEnumerable<OrderFulfillmentHeader>> GetByStatusAsync(int status, int skip = 0, int take = 10)
     {
-        return await _dbSet.Where(o => o.Status == status && !o.IsDeleted)
+        return await _dbSet.Where(o => o.Status == status && !o.Is_Deleted)
             .Include(o => o.Customer)
             .Skip(skip)
             .Take(take)

@@ -16,12 +16,12 @@ public class PurchaseOrderRepository : GenericRepository<PurchaseOrderHeader>, I
         return await _dbSet.Include(p => p.Items)
             .ThenInclude(i => i.Item)
             .Include(p => p.Vendor)
-            .FirstOrDefaultAsync(p => p.ID == id && !p.IsDeleted);
+            .FirstOrDefaultAsync(p => p.ID == id && !p.Is_Deleted);
     }
 
     public async Task<IEnumerable<PurchaseOrderHeader>> GetByVendorAsync(long vendorId, int skip = 0, int take = 10)
     {
-        return await _dbSet.Where(p => p.VendorID == vendorId && !p.IsDeleted)
+        return await _dbSet.Where(p => p.Vendor_ID == vendorId && !p.Is_Deleted)
             .Include(p => p.Vendor)
             .Skip(skip)
             .Take(take)
@@ -30,7 +30,7 @@ public class PurchaseOrderRepository : GenericRepository<PurchaseOrderHeader>, I
 
     public async Task<IEnumerable<PurchaseOrderHeader>> GetByLocationAsync(long locationId, int skip = 0, int take = 10)
     {
-        return await _dbSet.Where(p => p.LocationID == locationId && !p.IsDeleted)
+        return await _dbSet.Where(p => p.Location_ID == locationId && !p.Is_Deleted)
             .Include(p => p.Vendor)
             .Skip(skip)
             .Take(take)
@@ -39,7 +39,7 @@ public class PurchaseOrderRepository : GenericRepository<PurchaseOrderHeader>, I
 
     public async Task<IEnumerable<PurchaseOrderHeader>> GetByStatusAsync(int status, int skip = 0, int take = 10)
     {
-        return await _dbSet.Where(p => p.Status == status && !p.IsDeleted)
+        return await _dbSet.Where(p => p.Status == status && !p.Is_Deleted)
             .Include(p => p.Vendor)
             .Skip(skip)
             .Take(take)

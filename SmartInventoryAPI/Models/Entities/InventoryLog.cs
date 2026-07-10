@@ -3,14 +3,14 @@ namespace SmartInventoryAPI.Models.Entities;
 public class InventoryLog
 {
     public long ID { get; set; }
-    public long ItemID { get; set; }
-    public long LocationID { get; set; }
-    public decimal PreviousOnhandQuantity { get; set; }
-    public decimal NewOnhandQuantity { get; set; }
-    public decimal PreviousAvailableQuantity { get; set; }
-    public decimal NewAvailableQuantity { get; set; }
-    public long PerformedLogID { get; set; }
-    public bool IsDeleted { get; set; } = false;
+    public long Item_ID { get; set; }
+    public long Location_ID { get; set; }
+    public decimal Previous_Onhand_Quantity { get; set; }
+    public decimal New_Onhand_Quantity { get; set; }
+    public decimal Previous_Available_Quantity { get; set; }
+    public decimal New_Available_Quantity { get; set; }
+    public long Performed_Log_ID { get; set; }
+    public bool Is_Deleted { get; set; } = false;
 
     // Foreign keys
     public virtual Item? Item { get; set; }

@@ -26,8 +26,8 @@ public class ItemService : IItemService
     public async Task<ItemDto> CreateItemAsync(CreateItemRequestDto request)
     {
         var item = _mapper.Map<Item>(request);
-        item.IsActive = true;
-        item.CreationDate = DateTime.UtcNow;
+        item.Is_Active = true;
+        item.Creation_Date = DateTime.UtcNow;
 
         var createdItem = await _unitOfWork.Items.AddAsync(item);
         await _unitOfWork.SaveAsync();
@@ -38,17 +38,17 @@ public class ItemService : IItemService
             performedOutlet: 1, // Current outlet
             performModule: 1, // Item module
             operationType: 1, // Create operation
-            performRemark: $"Created item: {item.ItemCode}",
+            performRemark: $"Created item: {item.Item_Code}",
             operationId: createdItem.ID);
 
-        _logger.LogInformation("Item {ItemCode} created successfully", item.ItemCode);
+        _logger.LogInformation("Item {ItemCode} created successfully", item.Item_Code);
         return _mapper.Map<ItemDto>(createdItem);
     }
 
     public async Task<ItemDto> GetItemByIdAsync(long id)
     {
         var item = await _unitOfWork.Items.GetByIdAsync(id);
-        if (item == null || item.IsDeleted)
+        if (item == null || item.Is_Deleted)
             throw new NotFoundException("Item not found");
 
         return _mapper.Map<ItemDto>(item);
@@ -57,32 +57,32 @@ public class ItemService : IItemService
     public async Task<IEnumerable<ItemDto>> GetAllItemsAsync(int skip = 0, int take = 10)
     {
         var items = await _unitOfWork.Items.GetAllAsync(skip, take);
-        return _mapper.Map<IEnumerable<ItemDto>>(items.Where(i => !i.IsDeleted));
+        return _mapper.Map<IEnumerable<ItemDto>>(items.Where(i => !i.Is_Deleted));
     }
 
     public async Task<ItemDto> UpdateItemAsync(long id, UpdateItemRequestDto request)
     {
         var item = await _unitOfWork.Items.GetByIdAsync(id);
-        if (item == null || item.IsDeleted)
+        if (item == null || item.Is_Deleted)
             throw new NotFoundException("Item not found");
 
-        var previousPrice = item.UnitCost;
+        var previousPrice = item.Unit_Cost;
         _mapper.Map(request, item);
         await _unitOfWork.Items.UpdateAsync(item);
         await _unitOfWork.SaveAsync();
 
         // Log price change if unit cost changed
-        if (previousPrice != item.UnitCost)
+        if (previousPrice != item.Unit_Cost)
         {
             await _loggingService.LogPerformanceAsync(
                 performedBy: 1,
                 performedOutlet: 1,
                 performModule: 1, // Item module
                 operationType: 2, // Update operation
-                performRemark: $"Updated item {item.ItemCode}, price changed from {previousPrice} to {item.UnitCost}",
+                performRemark: $"Updated item {item.Item_Code}, price changed from {previousPrice} to {item.Unit_Cost}",
                 operationId: id);
 
-            await _loggingService.LogPriceChangeAsync(id, previousPrice, item.UnitCost, id);
+            await _loggingService.LogPriceChangeAsync(id, previousPrice, item.Unit_Cost, id);
         }
         else
         {
@@ -92,7 +92,7 @@ public class ItemService : IItemService
                 performedOutlet: 1,
                 performModule: 1,
                 operationType: 2,
-                performRemark: $"Updated item: {item.ItemCode}",
+                performRemark: $"Updated item: {item.Item_Code}",
                 operationId: id);
         }
 
@@ -106,7 +106,7 @@ public class ItemService : IItemService
         if (item == null)
             throw new NotFoundException("Item not found");
 
-        item.IsDeleted = true;
+        item.Is_Deleted = true;
         await _unitOfWork.Items.UpdateAsync(item);
         await _unitOfWork.SaveAsync();
 
@@ -116,7 +116,7 @@ public class ItemService : IItemService
             performedOutlet: 1,
             performModule: 1,
             operationType: 3, // Delete operation
-            performRemark: $"Deleted item: {item.ItemCode}",
+            performRemark: $"Deleted item: {item.Item_Code}",
             operationId: id);
 
         _logger.LogInformation("Item {ID} deleted successfully", id);

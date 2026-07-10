@@ -69,11 +69,27 @@ public class ExceptionHandlingMiddleware
                 context.Response.StatusCode = StatusCodes.Status500InternalServerError;
                 response.StatusCode = 500;
                 response.Success = false;
-                response.Message = $"An internal server error occurred. {exception.Message}";
+                response.Message = $"An internal server error occurred. {GetAllMessages(exception)}";
                 break;
         }
 
         var options = new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
         return context.Response.WriteAsJsonAsync(response, options);
+    }
+
+    public static string GetAllMessages(Exception exception)
+    {
+        if (exception == null) return string.Empty;
+
+        var messages = new List<string> { exception.Message };
+
+        var inner = exception.InnerException;
+        while (inner != null)
+        {
+            messages.Add(inner.Message);
+            inner = inner.InnerException;
+        }
+
+        return string.Join(" --> ", messages);
     }
 }

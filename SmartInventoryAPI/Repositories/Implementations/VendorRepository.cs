@@ -13,6 +13,6 @@ public class VendorRepository : GenericRepository<Vendor>, IVendorRepository
 
     public async Task<Vendor?> GetByVendorCodeAsync(string vendorCode)
     {
-        return await _dbSet.FirstOrDefaultAsync(v => v.VendorCode == vendorCode && !v.IsDeleted);
+        return await _dbSet.FirstOrDefaultAsync(v => v.Vendor_Code == vendorCode && !v.IsDeleted);
     }
 }

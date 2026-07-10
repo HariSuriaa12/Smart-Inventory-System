@@ -26,7 +26,7 @@ public class InventoryService : IInventoryService
     public async Task<InventoryDto> GetInventoryByIdAsync(long id)
     {
         var inventory = await _unitOfWork.Inventories.GetByIdAsync(id);
-        if (inventory == null || inventory.IsDeleted)
+        if (inventory == null || inventory.Is_Deleted)
             throw new NotFoundException("Inventory not found");
 
         return _mapper.Map<InventoryDto>(inventory);
@@ -46,15 +46,15 @@ public class InventoryService : IInventoryService
 
     public async Task<InventoryDto> AdjustInventoryAsync(AdjustInventoryRequestDto request)
     {
-        var inventory = await _unitOfWork.Inventories.GetByItemAndLocationAsync(request.ItemID, request.LocationID);
-        if (inventory == null || inventory.IsDeleted)
+        var inventory = await _unitOfWork.Inventories.GetByItemAndLocationAsync(request.Item_ID, request.Location_ID);
+        if (inventory == null || inventory.Is_Deleted)
             throw new NotFoundException("Inventory record not found");
 
-        var previousOnhand = inventory.OnHandQuantity;
-        var previousAvailable = inventory.AvailableQuantity;
+        var previousOnhand = inventory.On_Hand_Quantity;
+        var previousAvailable = inventory.Available_Quantity;
 
-        inventory.OnHandQuantity += request.QuantityAdjustment;
-        inventory.AvailableQuantity += request.QuantityAdjustment;
+        inventory.On_Hand_Quantity += request.QuantityAdjustment;
+        inventory.Available_Quantity += request.QuantityAdjustment;
 
         await _unitOfWork.Inventories.UpdateAsync(inventory);
         await _unitOfWork.SaveAsync();
@@ -62,68 +62,68 @@ public class InventoryService : IInventoryService
         // Log inventory adjustment
         await _loggingService.LogPerformanceAsync(
             performedBy: 1,
-            performedOutlet: request.LocationID,
+            performedOutlet: request.Location_ID,
             performModule: 2, // Inventory module
             operationType: 2, // Update operation
             performRemark: $"Stock adjustment: {request.Remark}",
             operationId: inventory.ID);
 
         await _loggingService.LogInventoryChangeAsync(
-            request.ItemID,
-            request.LocationID,
+            request.Item_ID,
+            request.Location_ID,
             previousOnhand,
-            inventory.OnHandQuantity,
+            inventory.On_Hand_Quantity,
             previousAvailable,
-            inventory.AvailableQuantity,
+            inventory.Available_Quantity,
             inventory.ID);
 
         _logger.LogInformation(
             "Inventory adjusted: Item {ItemID}, Location {LocationID}, Qty: {PreviousQty} -> {NewQty}",
-            request.ItemID, request.LocationID, previousOnhand, inventory.OnHandQuantity);
+            request.Item_ID, request.Location_ID, previousOnhand, inventory.On_Hand_Quantity);
 
         return _mapper.Map<InventoryDto>(inventory);
     }
 
     public async Task<InventoryDto> StockTransferAsync(StockTransferRequestDto request)
     {
-        var fromInventory = await _unitOfWork.Inventories.GetByItemAndLocationAsync(request.ItemID, request.FromLocationID);
-        if (fromInventory == null || fromInventory.IsDeleted)
+        var fromInventory = await _unitOfWork.Inventories.GetByItemAndLocationAsync(request.Item_ID, request.From_Location_ID);
+        if (fromInventory == null || fromInventory.Is_Deleted)
             throw new NotFoundException("Source inventory not found");
 
-        if (fromInventory.AvailableQuantity < request.TransferQuantity)
+        if (fromInventory.Available_Quantity < request.Transfer_Quantity)
             throw new BadRequestException("Insufficient stock for transfer");
 
-        var toInventory = await _unitOfWork.Inventories.GetByItemAndLocationAsync(request.ItemID, request.ToLocationID);
-        if (toInventory == null || toInventory.IsDeleted)
+        var toInventory = await _unitOfWork.Inventories.GetByItemAndLocationAsync(request.Item_ID, request.To_Location_ID);
+        if (toInventory == null || toInventory.Is_Deleted)
             throw new NotFoundException("Destination inventory not found");
 
         // Store previous values for logging
-        var fromPreviousOnhand = fromInventory.OnHandQuantity;
-        var fromPreviousAvailable = fromInventory.AvailableQuantity;
-        var toPreviousOnhand = toInventory.OnHandQuantity;
-        var toPreviousAvailable = toInventory.AvailableQuantity;
+        var fromPreviousOnhand = fromInventory.On_Hand_Quantity;
+        var fromPreviousAvailable = fromInventory.Available_Quantity;
+        var toPreviousOnhand = toInventory.On_Hand_Quantity;
+        var toPreviousAvailable = toInventory.Available_Quantity;
 
         // Deduct from source
-        fromInventory.AvailableQuantity -= request.TransferQuantity;
+        fromInventory.Available_Quantity -= request.Transfer_Quantity;
         await _unitOfWork.Inventories.UpdateAsync(fromInventory);
 
         // Add to destination
-        toInventory.OnHandQuantity += request.TransferQuantity;
-        toInventory.AvailableQuantity += request.TransferQuantity;
+        toInventory.On_Hand_Quantity += request.Transfer_Quantity;
+        toInventory.Available_Quantity += request.Transfer_Quantity;
         await _unitOfWork.Inventories.UpdateAsync(toInventory);
 
         // Create transfer record
         var transfer = new StockTransfer
         {
-            FromLocationID = request.FromLocationID,
-            ToLocationID = request.ToLocationID,
-            ItemID = request.ItemID,
-            TransferQuantity = request.TransferQuantity,
+            From_Location_ID = request.From_Location_ID,
+            To_Location_ID = request.To_Location_ID,
+            Item_ID = request.Item_ID,
+            Transfer_Quantity = request.Transfer_Quantity,
             Remark = request.Remark,
             Status = 1,
-            TransferDate = DateTime.UtcNow.Date,
-            TransferTime = DateTime.UtcNow.TimeOfDay,
-            SubTotal = 0
+            Transfer_Date = DateTime.UtcNow.Date,
+            Transfer_Time = DateTime.UtcNow.TimeOfDay,
+            Sub_Total = 0
         };
 
         await _unitOfWork.StockTransfers.AddAsync(transfer);
@@ -132,35 +132,35 @@ public class InventoryService : IInventoryService
         // Log performance
         await _loggingService.LogPerformanceAsync(
             performedBy: 1,
-            performedOutlet: request.FromLocationID,
+            performedOutlet: request.From_Location_ID,
             performModule: 2, // Inventory module
             operationType: 4, // Transfer operation
-            performRemark: $"Stock transfer: {request.TransferQuantity} units from Location {request.FromLocationID} to {request.ToLocationID}",
+            performRemark: $"Stock transfer: {request.Transfer_Quantity} units from Location {request.From_Location_ID} to {request.To_Location_ID}",
             operationId: transfer.ID);
 
         // Log inventory changes for source location
         await _loggingService.LogInventoryChangeAsync(
-            request.ItemID,
-            request.FromLocationID,
+            request.Item_ID,
+            request.From_Location_ID,
             fromPreviousOnhand,
-            fromInventory.OnHandQuantity,
+            fromInventory.On_Hand_Quantity,
             fromPreviousAvailable,
-            fromInventory.AvailableQuantity,
+            fromInventory.Available_Quantity,
             transfer.ID);
 
         // Log inventory changes for destination location
         await _loggingService.LogInventoryChangeAsync(
-            request.ItemID,
-            request.ToLocationID,
+            request.Item_ID,
+            request.To_Location_ID,
             toPreviousOnhand,
-            toInventory.OnHandQuantity,
+            toInventory.On_Hand_Quantity,
             toPreviousAvailable,
-            toInventory.AvailableQuantity,
+            toInventory.Available_Quantity,
             transfer.ID);
 
         _logger.LogInformation(
             "Stock transferred: Item {ItemID}, Qty {Qty}, From {FromLocation} to {ToLocation}",
-            request.ItemID, request.TransferQuantity, request.FromLocationID, request.ToLocationID);
+            request.Item_ID, request.Transfer_Quantity, request.From_Location_ID, request.To_Location_ID);
 
         return _mapper.Map<InventoryDto>(toInventory);
     }

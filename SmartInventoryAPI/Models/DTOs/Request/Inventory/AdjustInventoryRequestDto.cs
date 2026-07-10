@@ -2,17 +2,17 @@ namespace SmartInventoryAPI.Models.DTOs.Request.Inventory;
 
 public class AdjustInventoryRequestDto
 {
-    public long ItemID { get; set; }
-    public long LocationID { get; set; }
+    public long Item_ID { get; set; }
+    public long Location_ID { get; set; }
     public decimal QuantityAdjustment { get; set; }
     public string? Remark { get; set; }
 }
 
 public class StockTransferRequestDto
 {
-    public long FromLocationID { get; set; }
-    public long ToLocationID { get; set; }
-    public long ItemID { get; set; }
-    public decimal TransferQuantity { get; set; }
+    public long From_Location_ID { get; set; }
+    public long To_Location_ID { get; set; }
+    public long Item_ID { get; set; }
+    public decimal Transfer_Quantity { get; set; }
     public string? Remark { get; set; }
 }

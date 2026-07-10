@@ -3,14 +3,14 @@ namespace SmartInventoryAPI.Models.Entities;
 public class Sales
 {
     public long ID { get; set; }
-    public long LocationID { get; set; }
-    public int SalesStatus { get; set; }
-    public DateTime SalesDate { get; set; }
-    public TimeSpan SalesTime { get; set; }
-    public bool IsDeleted { get; set; } = false;
-    public bool IsReserved { get; set; }
-    public string? SalesNumber { get; set; }
-    public long? RefSalesNumber { get; set; }
+    public long Location_ID { get; set; }
+    public int Sales_Status { get; set; }
+    public DateTime Sales_Date { get; set; }
+    public TimeSpan Sales_Time { get; set; }
+    public bool Is_Deleted { get; set; } = false;
+    public bool Is_Reserved { get; set; }
+    public string? Sales_Number { get; set; }
+    public long? Ref_Sales_Number { get; set; }
 
     // Foreign keys
     public virtual Location? Location { get; set; }

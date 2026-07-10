@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { Card, Spinner, Badge } from '@/components'
+import { fetchAllLocations, selectLocation, setCurrentLocation } from '@/store/slices/locationSlice'
+import { Location } from '@/types/location';
 import {
   Package,
   MapPin,
@@ -13,8 +15,24 @@ import {
 } from 'lucide-react'
 
 export const DashboardPage = () => {
+  const [isOpen, setIsOpen] = useState(true);
   const dispatch = useAppDispatch()
-  const [loading, setLoading] = useState(false)
+  const { 
+    locations,
+    currentLocation,
+    loading,
+    error,
+    total
+        } = useAppSelector((state) => state.locations)
+
+  useEffect(() => {
+    dispatch(fetchAllLocations())
+  }, [dispatch])
+
+const handleSelectLocation = (location: Location) => {
+  console.log('Selected location:', location);
+  dispatch(setCurrentLocation(location)); 
+};
 
   // Sample data - in production, fetch from API
   const stats = [
@@ -118,6 +136,8 @@ export const DashboardPage = () => {
   const maxSales = Math.max(...salesData.map((d) => Math.max(d.sales, d.target)))
 
   return (
+  <div className="relative min-h-screen">
+    {/* Main Dashboard Content */}
     <div className="p-6 max-w-7xl mx-auto">
       {/* Header */}
       <div className="mb-8">
@@ -160,48 +180,28 @@ export const DashboardPage = () => {
               <table className="w-full">
                 <thead>
                   <tr className="border-b border-gray-200">
-                    <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700">
-                      Item
-                    </th>
-                    <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700">
-                      Location
-                    </th>
-                    <th className="text-right py-3 px-4 text-sm font-semibold text-gray-700">
-                      Forecasted
-                    </th>
-                    <th className="text-right py-3 px-4 text-sm font-semibold text-gray-700">
-                      Actual
-                    </th>
-                    <th className="text-right py-3 px-4 text-sm font-semibold text-gray-700">
-                      Accuracy
-                    </th>
-                    <th className="text-center py-3 px-4 text-sm font-semibold text-gray-700">
-                      Method
-                    </th>
+                    <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700">Item</th>
+                    <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700">Location</th>
+                    <th className="text-right py-3 px-4 text-sm font-semibold text-gray-700">Forecasted</th>
+                    <th className="text-right py-3 px-4 text-sm font-semibold text-gray-700">Actual</th>
+                    <th className="text-right py-3 px-4 text-sm font-semibold text-gray-700">Accuracy</th>
+                    <th className="text-center py-3 px-4 text-sm font-semibold text-gray-700">Method</th>
                   </tr>
                 </thead>
                 <tbody>
                   {forecasts.map((forecast, idx) => (
                     <tr key={idx} className="border-b border-gray-100 hover:bg-gray-50">
-                      <td className="py-3 px-4 text-sm text-gray-900 font-medium">
-                        {forecast.itemName}
-                      </td>
+                      <td className="py-3 px-4 text-sm text-gray-900 font-medium">{forecast.itemName}</td>
                       <td className="py-3 px-4 text-sm text-gray-600">{forecast.location}</td>
-                      <td className="py-3 px-4 text-sm text-right text-gray-900 font-medium">
-                        {forecast.forecasted}
-                      </td>
-                      <td className="py-3 px-4 text-sm text-right text-gray-600">
-                        {forecast.actual}
-                      </td>
+                      <td className="py-3 px-4 text-sm text-right text-gray-900 font-medium">{forecast.forecasted}</td>
+                      <td className="py-3 px-4 text-sm text-right text-gray-600">{forecast.actual}</td>
                       <td className="py-3 px-4 text-sm text-right">
                         <span className="inline-block bg-green-100 text-green-800 px-2 py-1 rounded font-semibold">
                           {forecast.accuracy.toFixed(1)}%
                         </span>
                       </td>
                       <td className="py-3 px-4 text-center">
-                        <Badge variant="info" size="sm">
-                          {forecast.method}
-                        </Badge>
+                        <Badge variant="info" size="sm">{forecast.method}</Badge>
                       </td>
                     </tr>
                   ))}
@@ -229,22 +229,10 @@ export const DashboardPage = () => {
                   <div className="flex items-start gap-2">
                     <div
                       className={`w-2 h-2 rounded-full mt-1.5 flex-shrink-0 ${
-                        alert.severity === 'error'
-                          ? 'bg-red-500'
-                          : alert.severity === 'warning'
-                            ? 'bg-yellow-500'
-                            : 'bg-blue-500'
+                        alert.severity === 'error' ? 'bg-red-500' : alert.severity === 'warning' ? 'bg-yellow-500' : 'bg-blue-500'
                       }`}
                     ></div>
-                    <p
-                      className={`text-sm ${
-                        alert.severity === 'error'
-                          ? 'text-red-800'
-                          : alert.severity === 'warning'
-                            ? 'text-yellow-800'
-                            : 'text-blue-800'
-                      }`}
-                    >
+                    <p className={`text-sm ${alert.severity === 'error' ? 'text-red-800' : alert.severity === 'warning' ? 'text-yellow-800' : 'text-blue-800'}`}>
                       {alert.message}
                     </p>
                   </div>
@@ -267,19 +255,11 @@ export const DashboardPage = () => {
                 </span>
               </div>
               <div className="flex gap-2">
-                {/* Actual Sales Bar */}
                 <div className="flex-1 bg-primary-100 rounded-full h-2 overflow-hidden">
-                  <div
-                    className="bg-primary-600 h-full transition-all"
-                    style={{ width: `${(data.sales / maxSales) * 100}%` }}
-                  ></div>
+                  <div className="bg-primary-600 h-full transition-all" style={{ width: `${(data.sales / maxSales) * 100}%` }}></div>
                 </div>
-                {/* Target Bar */}
                 <div className="flex-1 bg-gray-200 rounded-full h-2 overflow-hidden">
-                  <div
-                    className="bg-gray-400 h-full transition-all"
-                    style={{ width: `${(data.target / maxSales) * 100}%` }}
-                  ></div>
+                  <div className="bg-gray-400 h-full transition-all" style={{ width: `${(data.target / maxSales) * 100}%` }}></div>
                 </div>
               </div>
             </div>
@@ -297,5 +277,50 @@ export const DashboardPage = () => {
         </div>
       </Card>
     </div>
-  )
+
+    {/* Mini Page (Modal) Overlay */}
+    {isOpen && (
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-md px-4">
+        
+        {/* Background Click to Close */}
+        <div className="absolute inset-0 -z-10" onClick={() => setIsOpen(false)} />
+
+        {/* Mini Page Card Content */}
+        <div className="bg-white p-8 rounded-2xl shadow-2xl max-w-md w-full border border-gray-100">
+          <h2 className="text-2xl font-bold text-gray-900 mb-2">Select Outlet</h2>
+          <div className="overlay-content">
+          {loading ? (
+            <p>Loading locations...</p>
+          ) : (
+            console.log('Locations:', locations), // Debugging log
+            <ul className="location-list">
+              {locations.map((loc) => (
+                <li key={loc.outletCode} className="location-item">
+                  <button 
+                    onClick={() => {
+                      handleSelectLocation(loc); // 3. Trigger selection function
+                      setIsOpen(false); // Close overlay after selection
+                    }}
+                    className="location-selection-button"
+                  >
+                    <strong>{loc.locationName}</strong>
+                    <span className="outlet-code">Code: {loc.outletCode}</span>
+                    <p className="address">{loc.address}</p>
+                  </button>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+          {/* <button
+            onClick={() => setIsOpen(false)}
+            className="w-full py-2.5 px-4 bg-primary-600 text-white font-medium rounded-xl hover:bg-primary-700 transition-colors shadow-md"
+          >
+            Access Dashboard
+          </button> */}
+        </div>
+      </div>
+    )}
+  </div>
+)
 }

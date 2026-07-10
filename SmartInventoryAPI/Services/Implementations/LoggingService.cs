@@ -22,13 +22,13 @@ public class LoggingService : ILoggingService
         {
             var performLog = new PerformLog
             {
-                PerformedBy = performedBy,
-                PerformedOutlet = performedOutlet,
-                PerformModule = performModule,
-                OperationType = operationType,
-                PerformRemark = performRemark,
-                PerformDate = DateTime.UtcNow,
-                OperationID = operationId
+                Performed_By = performedBy,
+                Performed_Outlet = performedOutlet,
+                Perform_Module = performModule,
+                Operation_Type = operationType,
+                Perform_Remark = performRemark,
+                Perform_Date = DateTime.UtcNow,
+                Operation_ID = operationId
             };
 
             await _unitOfWork.SaveAsync();
@@ -47,10 +47,10 @@ public class LoggingService : ILoggingService
         {
             var priceLog = new PriceLog
             {
-                ItemID = itemId,
-                PreviousUnitPrice = previousPrice,
-                NewUnitPrice = newPrice,
-                PerformedLogID = performLogId
+                Item_ID = itemId,
+                Previous_Unit_Price = previousPrice,
+                New_Unit_Price = newPrice,
+                Performed_Log_ID = performLogId
             };
 
             await _unitOfWork.SaveAsync();
@@ -70,13 +70,13 @@ public class LoggingService : ILoggingService
         {
             var inventoryLog = new InventoryLog
             {
-                ItemID = itemId,
-                LocationID = locationId,
-                PreviousOnhandQuantity = previousOnhand,
-                NewOnhandQuantity = newOnhand,
-                PreviousAvailableQuantity = previousAvailable,
-                NewAvailableQuantity = newAvailable,
-                PerformedLogID = performLogId
+                Item_ID = itemId,
+                Location_ID = locationId,
+                Previous_Onhand_Quantity = previousOnhand,
+                New_Onhand_Quantity = newOnhand,
+                Previous_Available_Quantity = previousAvailable,
+                New_Available_Quantity = newAvailable,
+                Performed_Log_ID = performLogId
             };
 
             await _unitOfWork.SaveAsync();

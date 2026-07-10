@@ -22,10 +22,16 @@ public class LocationsController : ControllerBase
 
     [HttpGet]
     public async Task<ActionResult<ApiResponseDto<IEnumerable<LocationDto>>>> GetAllLocations(
-        [FromQuery] int skip = 0,
-        [FromQuery] int take = 10)
+        [FromQuery] int skip,
+        [FromQuery] int take)
     {
-        var locations = await _locationService.GetAllLocationsAsync(skip, take);
+        IEnumerable<LocationDto> locations;
+
+        if (take > 0)
+            locations = await _locationService.GetAllLocationsAsync(skip, take);
+        else
+            locations = await _locationService.GetAllLocationsAsync();
+
         return Ok(new ApiResponseDto<IEnumerable<LocationDto>>
         {
             Success = true,

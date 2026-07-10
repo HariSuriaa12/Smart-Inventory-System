@@ -834,8 +834,7 @@
             "in": "query",
             "schema": {
               "type": "integer",
-              "format": "int32",
-              "default": 0
+              "format": "int32"
             }
           },
           {
@@ -843,8 +842,7 @@
             "in": "query",
             "schema": {
               "type": "integer",
-              "format": "int32",
-              "default": 10
+              "format": "int32"
             }
           }
         ],
@@ -2580,11 +2578,11 @@
       "AdjustInventoryRequestDto": {
         "type": "object",
         "properties": {
-          "itemID": {
+          "item_ID": {
             "type": "integer",
             "format": "int64"
           },
-          "locationID": {
+          "location_ID": {
             "type": "integer",
             "format": "int64"
           },
@@ -2634,7 +2632,7 @@
             "type": "string",
             "nullable": true
           },
-          "fullName": {
+          "full_Name": {
             "type": "string",
             "nullable": true
           },
@@ -2687,11 +2685,11 @@
       "CreateCustomerRequestDto": {
         "type": "object",
         "properties": {
-          "companyName": {
+          "company_Name": {
             "type": "string",
             "nullable": true
           },
-          "customerCode": {
+          "customer_Code": {
             "type": "string",
             "nullable": true
           },
@@ -2699,7 +2697,7 @@
             "type": "string",
             "nullable": true
           },
-          "companyAddress": {
+          "company_Address": {
             "type": "string",
             "nullable": true
           },
@@ -2717,11 +2715,11 @@
       "CreateItemRequestDto": {
         "type": "object",
         "properties": {
-          "itemName": {
+          "item_Name": {
             "type": "string",
             "nullable": true
           },
-          "itemCode": {
+          "item_Code": {
             "type": "string",
             "nullable": true
           },
@@ -2729,23 +2727,23 @@
             "type": "string",
             "nullable": true
           },
-          "itemCategory": {
+          "item_Category": {
             "type": "string",
             "nullable": true
           },
-          "itemBrand": {
+          "item_Brand": {
             "type": "string",
             "nullable": true
           },
-          "purchaseCost": {
+          "purchase_Cost": {
             "type": "number",
             "format": "double"
           },
-          "unitCost": {
+          "unit_Cost": {
             "type": "number",
             "format": "double"
           },
-          "unitOfMeasure": {
+          "unit_Of_Measure": {
             "type": "string",
             "nullable": true
           },
@@ -2753,19 +2751,19 @@
             "type": "string",
             "nullable": true
           },
-          "itemImageURL": {
+          "item_Image_URL": {
             "type": "string",
             "nullable": true
           },
-          "taxPercentage": {
+          "tax_Percentage": {
             "type": "number",
             "format": "double"
           },
-          "taxType": {
+          "tax_Type": {
             "type": "string",
             "nullable": true
           },
-          "itemType": {
+          "item_Type": {
             "type": "string",
             "nullable": true
           }
@@ -2775,15 +2773,15 @@
       "CreateLocationRequestDto": {
         "type": "object",
         "properties": {
-          "locationName": {
+          "location_Name": {
             "type": "string",
             "nullable": true
           },
-          "outletCode": {
+          "outlet_Code": {
             "type": "string",
             "nullable": true
           },
-          "locationType": {
+          "location_Type": {
             "type": "integer",
             "format": "int32"
           },
@@ -2797,11 +2795,11 @@
       "CreatePurchaseOrderRequestDto": {
         "type": "object",
         "properties": {
-          "locationID": {
+          "location_ID": {
             "type": "integer",
             "format": "int64"
           },
-          "vendorID": {
+          "vendor_ID": {
             "type": "integer",
             "format": "int64"
           },
@@ -2822,7 +2820,7 @@
       "CreateUserRequestDto": {
         "type": "object",
         "properties": {
-          "fullName": {
+          "full_Name": {
             "type": "string",
             "nullable": true
           },
@@ -2842,7 +2840,7 @@
             "type": "string",
             "nullable": true
           },
-          "mobileNo": {
+          "mobile_No": {
             "type": "string",
             "nullable": true
           },
@@ -2850,7 +2848,7 @@
             "type": "string",
             "nullable": true
           },
-          "staffCode": {
+          "staff_Code": {
             "type": "string",
             "nullable": true
           }
@@ -2860,15 +2858,15 @@
       "CreateVendorRequestDto": {
         "type": "object",
         "properties": {
-          "companyName": {
+          "company_Name": {
             "type": "string",
             "nullable": true
           },
-          "vendorCode": {
+          "vendor_Code": {
             "type": "string",
             "nullable": true
           },
-          "companyAddress": {
+          "company_Address": {
             "type": "string",
             "nullable": true
           },
@@ -2890,11 +2888,11 @@
             "type": "integer",
             "format": "int64"
           },
-          "companyName": {
+          "company_Name": {
             "type": "string",
             "nullable": true
           },
-          "customerCode": {
+          "customer_Code": {
             "type": "string",
             "nullable": true
           },
@@ -2902,11 +2900,11 @@
             "type": "string",
             "nullable": true
           },
-          "creationDate": {
+          "creation_Date": {
             "type": "string",
             "format": "date-time"
           },
-          "companyAddress": {
+          "company_Address": {
             "type": "string",
             "nullable": true
           },
@@ -2986,27 +2984,27 @@
             "type": "integer",
             "format": "int64"
           },
-          "itemID": {
+          "item_ID": {
             "type": "integer",
             "format": "int64"
           },
-          "locationID": {
+          "location_ID": {
             "type": "integer",
             "format": "int64"
           },
-          "itemName": {
+          "item_Name": {
             "type": "string",
             "nullable": true
           },
-          "locationName": {
+          "location_Name": {
             "type": "string",
             "nullable": true
           },
-          "onHandQuantity": {
+          "onHand_Quantity": {
             "type": "number",
             "format": "double"
           },
-          "availableQuantity": {
+          "available_Quantity": {
             "type": "number",
             "format": "double"
           }
@@ -3078,11 +3076,11 @@
             "type": "integer",
             "format": "int64"
           },
-          "itemName": {
+          "item_Name": {
             "type": "string",
             "nullable": true
           },
-          "itemCode": {
+          "item_Code": {
             "type": "string",
             "nullable": true
           },
@@ -3090,26 +3088,26 @@
             "type": "string",
             "nullable": true
           },
-          "itemCategory": {
+          "item_Category": {
             "type": "string",
             "nullable": true
           },
-          "itemBrand": {
+          "item_Brand": {
             "type": "string",
             "nullable": true
           },
-          "purchaseCost": {
+          "purchase_Cost": {
             "type": "number",
             "format": "double"
           },
-          "unitCost": {
+          "unit_Cost": {
             "type": "number",
             "format": "double"
           },
-          "isActive": {
+          "is_Active": {
             "type": "boolean"
           },
-          "unitOfMeasure": {
+          "unit_Of_Measure": {
             "type": "string",
             "nullable": true
           },
@@ -3117,23 +3115,23 @@
             "type": "string",
             "nullable": true
           },
-          "creationDate": {
+          "creation_Date": {
             "type": "string",
             "format": "date-time"
           },
-          "itemImageURL": {
+          "item_Image_URL": {
             "type": "string",
             "nullable": true
           },
-          "taxPercentage": {
+          "tax_Percentage": {
             "type": "number",
             "format": "double"
           },
-          "taxType": {
+          "tax_Type": {
             "type": "string",
             "nullable": true
           },
-          "itemType": {
+          "item_Type": {
             "type": "string",
             "nullable": true
           }
@@ -3205,15 +3203,15 @@
             "type": "integer",
             "format": "int64"
           },
-          "locationName": {
+          "location_Name": {
             "type": "string",
             "nullable": true
           },
-          "outletCode": {
+          "outlet_Code": {
             "type": "string",
             "nullable": true
           },
-          "locationType": {
+          "location_Type": {
             "type": "integer",
             "format": "int32"
           },
@@ -3221,7 +3219,7 @@
             "type": "string",
             "nullable": true
           },
-          "creationDate": {
+          "creation_Date": {
             "type": "string",
             "format": "date-time"
           }
@@ -3336,27 +3334,27 @@
             "type": "integer",
             "format": "int64"
           },
-          "locationID": {
+          "location_ID": {
             "type": "integer",
             "format": "int64"
           },
-          "orderDate": {
+          "order_Date": {
             "type": "string",
             "format": "date-time"
           },
-          "customerID": {
+          "customer_ID": {
             "type": "integer",
             "format": "int64"
           },
-          "customerName": {
+          "customer_Name": {
             "type": "string",
             "nullable": true
           },
-          "shipmentCity": {
+          "shipment_City": {
             "type": "string",
             "nullable": true
           },
-          "shipmentState": {
+          "shipment_State": {
             "type": "string",
             "nullable": true
           },
@@ -3364,7 +3362,7 @@
             "type": "integer",
             "format": "int32"
           },
-          "totalAmount": {
+          "total_Amount": {
             "type": "number",
             "format": "double"
           },
@@ -3412,19 +3410,19 @@
             "type": "integer",
             "format": "int64"
           },
-          "locationID": {
+          "location_ID": {
             "type": "integer",
             "format": "int64"
           },
-          "orderDate": {
+          "order_Date": {
             "type": "string",
             "format": "date-time"
           },
-          "customerID": {
+          "customer_ID": {
             "type": "integer",
             "format": "int64"
           },
-          "customerName": {
+          "customer_Name": {
             "type": "string",
             "nullable": true
           },
@@ -3436,7 +3434,7 @@
             "type": "string",
             "nullable": true
           },
-          "totalAmount": {
+          "total_Amount": {
             "type": "number",
             "format": "double"
           }
@@ -3481,19 +3479,19 @@
             "type": "integer",
             "format": "int64"
           },
-          "itemID": {
+          "item_ID": {
             "type": "integer",
             "format": "int64"
           },
-          "itemName": {
+          "item_Name": {
             "type": "string",
             "nullable": true
           },
-          "requestQuantity": {
+          "request_Quantity": {
             "type": "number",
             "format": "double"
           },
-          "unitPrice": {
+          "unit_Price": {
             "type": "number",
             "format": "double"
           },
@@ -3501,11 +3499,11 @@
             "type": "integer",
             "format": "int32"
           },
-          "subTotal": {
+          "sub_Total": {
             "type": "number",
             "format": "double"
           },
-          "shippedQuantity": {
+          "shipped_Quantity": {
             "type": "number",
             "format": "double"
           }
@@ -3515,15 +3513,15 @@
       "OrderFulfillmentItemRequestDto": {
         "type": "object",
         "properties": {
-          "itemID": {
+          "item_ID": {
             "type": "integer",
             "format": "int64"
           },
-          "requestQuantity": {
+          "request_Quantity": {
             "type": "number",
             "format": "double"
           },
-          "unitPrice": {
+          "unit_Price": {
             "type": "number",
             "format": "double"
           }
@@ -3537,23 +3535,23 @@
             "type": "integer",
             "format": "int64"
           },
-          "poRefenceNo": {
+          "pO_Refence_No": {
             "type": "string",
             "nullable": true
           },
-          "locationID": {
+          "location_ID": {
             "type": "integer",
             "format": "int64"
           },
-          "purchaseDate": {
+          "purchase_Date": {
             "type": "string",
             "format": "date-time"
           },
-          "vendorID": {
+          "vendor_ID": {
             "type": "integer",
             "format": "int64"
           },
-          "vendorName": {
+          "vendor_Name": {
             "type": "string",
             "nullable": true
           },
@@ -3565,7 +3563,7 @@
             "type": "string",
             "nullable": true
           },
-          "totalAmount": {
+          "total_Amount": {
             "type": "number",
             "format": "double"
           },
@@ -3613,23 +3611,23 @@
             "type": "integer",
             "format": "int64"
           },
-          "poRefenceNo": {
+          "pO_Refence_No": {
             "type": "string",
             "nullable": true
           },
-          "locationID": {
+          "location_ID": {
             "type": "integer",
             "format": "int64"
           },
-          "purchaseDate": {
+          "purchase_Date": {
             "type": "string",
             "format": "date-time"
           },
-          "vendorID": {
+          "vendor_ID": {
             "type": "integer",
             "format": "int64"
           },
-          "vendorName": {
+          "vendor_Name": {
             "type": "string",
             "nullable": true
           },
@@ -3641,11 +3639,11 @@
             "type": "string",
             "nullable": true
           },
-          "totalAmount": {
+          "total_Amount": {
             "type": "number",
             "format": "double"
           },
-          "creationDate": {
+          "creation_Date": {
             "type": "string",
             "format": "date-time"
           }
@@ -3690,19 +3688,19 @@
             "type": "integer",
             "format": "int64"
           },
-          "itemID": {
+          "item_ID": {
             "type": "integer",
             "format": "int64"
           },
-          "itemName": {
+          "item_Name": {
             "type": "string",
             "nullable": true
           },
-          "orderQuantity": {
+          "order_Quantity": {
             "type": "number",
             "format": "double"
           },
-          "unitPrice": {
+          "unit_Price": {
             "type": "number",
             "format": "double"
           },
@@ -3710,11 +3708,11 @@
             "type": "integer",
             "format": "int32"
           },
-          "subTotal": {
+          "sub_Total": {
             "type": "number",
             "format": "double"
           },
-          "receivedQuantity": {
+          "received_Quantity": {
             "type": "number",
             "format": "double"
           }
@@ -3724,15 +3722,15 @@
       "PurchaseOrderItemRequestDto": {
         "type": "object",
         "properties": {
-          "itemID": {
+          "item_ID": {
             "type": "integer",
             "format": "int64"
           },
-          "orderQuantity": {
+          "order_Quantity": {
             "type": "number",
             "format": "double"
           },
-          "unitPrice": {
+          "unit_Price": {
             "type": "number",
             "format": "double"
           }
@@ -3742,39 +3740,39 @@
       "ReceiveOrderFulfillmentRequestDto": {
         "type": "object",
         "properties": {
-          "locationID": {
+          "location_ID": {
             "type": "integer",
             "format": "int64"
           },
-          "customerID": {
+          "customer_ID": {
             "type": "integer",
             "format": "int64"
           },
-          "orderDate": {
+          "order_Date": {
             "type": "string",
             "format": "date-time"
           },
-          "shipmentAddressLine1": {
+          "shipment_Address_Line_1": {
             "type": "string",
             "nullable": true
           },
-          "shipmentAddressLine2": {
+          "shipment_Address_Line_2": {
             "type": "string",
             "nullable": true
           },
-          "shipmentCity": {
+          "shipment_City": {
             "type": "string",
             "nullable": true
           },
-          "shipmentState": {
+          "shipment_State": {
             "type": "string",
             "nullable": true
           },
-          "shipmentPostCode": {
+          "shipment_PostCode": {
             "type": "string",
             "nullable": true
           },
-          "shipmentCountryCode": {
+          "shipment_Country_Code": {
             "type": "string",
             "nullable": true
           },
@@ -3795,19 +3793,19 @@
       "ReceiveSalesRequestDto": {
         "type": "object",
         "properties": {
-          "locationID": {
+          "location_ID": {
             "type": "integer",
             "format": "int64"
           },
-          "salesDate": {
+          "sales_Date": {
             "type": "string",
             "format": "date-time"
           },
-          "salesNumber": {
+          "sales_Number": {
             "type": "string",
             "nullable": true
           },
-          "salesStatus": {
+          "sales_Status": {
             "type": "integer",
             "format": "int32"
           },
@@ -3828,23 +3826,23 @@
             "type": "integer",
             "format": "int64"
           },
-          "locationID": {
+          "location_ID": {
             "type": "integer",
             "format": "int64"
           },
-          "locationName": {
+          "location_Name": {
             "type": "string",
             "nullable": true
           },
-          "salesStatus": {
+          "sales_Status": {
             "type": "integer",
             "format": "int32"
           },
-          "salesDate": {
+          "sales_Date": {
             "type": "string",
             "format": "date-time"
           },
-          "salesNumber": {
+          "sales_Number": {
             "type": "string",
             "nullable": true
           },
@@ -3892,27 +3890,27 @@
             "type": "integer",
             "format": "int64"
           },
-          "locationID": {
+          "location_ID": {
             "type": "integer",
             "format": "int64"
           },
-          "locationName": {
+          "location_Name": {
             "type": "string",
             "nullable": true
           },
-          "salesStatus": {
+          "sales_Status": {
             "type": "integer",
             "format": "int32"
           },
-          "salesDate": {
+          "sales_Date": {
             "type": "string",
             "format": "date-time"
           },
-          "salesNumber": {
+          "sales_Number": {
             "type": "string",
             "nullable": true
           },
-          "totalAmount": {
+          "total_Amount": {
             "type": "number",
             "format": "double"
           }
@@ -3957,26 +3955,26 @@
             "type": "integer",
             "format": "int64"
           },
-          "itemID": {
+          "item_ID": {
             "type": "integer",
             "format": "int64"
           },
-          "itemName": {
+          "item_Name": {
             "type": "string",
             "nullable": true
           },
-          "soldQuantity": {
+          "sold_Quantity": {
             "type": "number",
             "format": "double"
           },
-          "subTotal": {
+          "sub_Total": {
             "type": "number",
             "format": "double"
           },
-          "isPromotion": {
+          "is_Promotion": {
             "type": "boolean"
           },
-          "discountPercentage": {
+          "discount_Percentage": {
             "type": "number",
             "format": "double"
           }
@@ -3986,22 +3984,22 @@
       "SalesItemRequestDto": {
         "type": "object",
         "properties": {
-          "itemID": {
+          "item_ID": {
             "type": "integer",
             "format": "int64"
           },
-          "soldQuantity": {
+          "sold_Quantity": {
             "type": "number",
             "format": "double"
           },
-          "unitPrice": {
+          "unit_Price": {
             "type": "number",
             "format": "double"
           },
-          "isPromotion": {
+          "is_Promotion": {
             "type": "boolean"
           },
-          "discountPercentage": {
+          "discount_Percentage": {
             "type": "number",
             "format": "double"
           }
@@ -4011,19 +4009,19 @@
       "StockTransferRequestDto": {
         "type": "object",
         "properties": {
-          "fromLocationID": {
+          "from_Location_ID": {
             "type": "integer",
             "format": "int64"
           },
-          "toLocationID": {
+          "to_Location_ID": {
             "type": "integer",
             "format": "int64"
           },
-          "itemID": {
+          "item_ID": {
             "type": "integer",
             "format": "int64"
           },
-          "transferQuantity": {
+          "transfer_Quantity": {
             "type": "number",
             "format": "double"
           },
@@ -4037,7 +4035,7 @@
       "UpdateCustomerRequestDto": {
         "type": "object",
         "properties": {
-          "companyName": {
+          "company_Name": {
             "type": "string",
             "nullable": true
           },
@@ -4045,7 +4043,7 @@
             "type": "string",
             "nullable": true
           },
-          "companyAddress": {
+          "company_Address": {
             "type": "string",
             "nullable": true
           },
@@ -4063,7 +4061,7 @@
       "UpdateItemRequestDto": {
         "type": "object",
         "properties": {
-          "itemName": {
+          "item_Name": {
             "type": "string",
             "nullable": true
           },
@@ -4071,23 +4069,23 @@
             "type": "string",
             "nullable": true
           },
-          "itemCategory": {
+          "item_Category": {
             "type": "string",
             "nullable": true
           },
-          "itemBrand": {
+          "item_Brand": {
             "type": "string",
             "nullable": true
           },
-          "purchaseCost": {
+          "purchase_Cost": {
             "type": "number",
             "format": "double"
           },
-          "unitCost": {
+          "unit_Cost": {
             "type": "number",
             "format": "double"
           },
-          "unitOfMeasure": {
+          "unit_Of_Measure": {
             "type": "string",
             "nullable": true
           },
@@ -4095,15 +4093,15 @@
             "type": "string",
             "nullable": true
           },
-          "itemImageURL": {
+          "item_Image_URL": {
             "type": "string",
             "nullable": true
           },
-          "taxPercentage": {
+          "tax_Percentage": {
             "type": "number",
             "format": "double"
           },
-          "isActive": {
+          "is_Active": {
             "type": "boolean"
           }
         },
@@ -4112,7 +4110,11 @@
       "UpdateLocationRequestDto": {
         "type": "object",
         "properties": {
-          "locationName": {
+          "location_Name": {
+            "type": "string",
+            "nullable": true
+          },
+          "outlet_Code": {
             "type": "string",
             "nullable": true
           },
@@ -4120,7 +4122,7 @@
             "type": "string",
             "nullable": true
           },
-          "locationType": {
+          "location_Type": {
             "type": "integer",
             "format": "int32"
           }
@@ -4158,7 +4160,7 @@
       "UpdateUserRequestDto": {
         "type": "object",
         "properties": {
-          "fullName": {
+          "full_Name": {
             "type": "string",
             "nullable": true
           },
@@ -4166,7 +4168,7 @@
             "type": "string",
             "nullable": true
           },
-          "mobileNo": {
+          "mobile_No": {
             "type": "string",
             "nullable": true
           },
@@ -4180,11 +4182,11 @@
       "UpdateVendorRequestDto": {
         "type": "object",
         "properties": {
-          "companyName": {
+          "company_Name": {
             "type": "string",
             "nullable": true
           },
-          "companyAddress": {
+          "company_Address": {
             "type": "string",
             "nullable": true
           },
@@ -4206,7 +4208,7 @@
             "type": "integer",
             "format": "int64"
           },
-          "fullName": {
+          "full_Name": {
             "type": "string",
             "nullable": true
           },
@@ -4218,7 +4220,7 @@
             "type": "integer",
             "format": "int32"
           },
-          "creationDate": {
+          "creation_Date": {
             "type": "string",
             "format": "date-time"
           },
@@ -4226,7 +4228,7 @@
             "type": "string",
             "nullable": true
           },
-          "mobileNo": {
+          "mobile_No": {
             "type": "string",
             "nullable": true
           },
@@ -4234,7 +4236,7 @@
             "type": "string",
             "nullable": true
           },
-          "staffCode": {
+          "staff_Code": {
             "type": "string",
             "nullable": true
           }
@@ -4306,19 +4308,19 @@
             "type": "integer",
             "format": "int64"
           },
-          "companyName": {
+          "company_Name": {
             "type": "string",
             "nullable": true
           },
-          "vendorCode": {
+          "vendor_Code": {
             "type": "string",
             "nullable": true
           },
-          "creationDate": {
+          "creation_Date": {
             "type": "string",
             "format": "date-time"
           },
-          "companyAddress": {
+          "company_Address": {
             "type": "string",
             "nullable": true
           },

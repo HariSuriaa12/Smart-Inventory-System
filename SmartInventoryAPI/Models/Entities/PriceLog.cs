@@ -3,11 +3,11 @@ namespace SmartInventoryAPI.Models.Entities;
 public class PriceLog
 {
     public long ID { get; set; }
-    public long ItemID { get; set; }
-    public decimal PreviousUnitPrice { get; set; }
-    public decimal NewUnitPrice { get; set; }
-    public long PerformedLogID { get; set; }
-    public bool IsDeleted { get; set; } = false;
+    public long Item_ID { get; set; }
+    public decimal Previous_Unit_Price { get; set; }
+    public decimal New_Unit_Price { get; set; }
+    public long Performed_Log_ID { get; set; }
+    public bool Is_Deleted { get; set; } = false;
 
     // Foreign keys
     public virtual Item? Item { get; set; }

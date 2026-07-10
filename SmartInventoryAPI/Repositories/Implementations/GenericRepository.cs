@@ -25,6 +25,11 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
         return await _dbSet.Skip(skip).Take(take).ToListAsync();
     }
 
+    public virtual async Task<IEnumerable<T>> GetAllAsync()
+    {
+        return await _dbSet.ToListAsync();
+    }
+
     public virtual async Task<T> AddAsync(T entity)
     {
         await _dbSet.AddAsync(entity);

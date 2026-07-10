@@ -3,14 +3,14 @@ namespace SmartInventoryAPI.Models.Entities;
 public class OrderFulfillmentItem
 {
     public long ID { get; set; }
-    public long FulfillmentID { get; set; }
-    public long ItemID { get; set; }
-    public decimal RequestQuantity { get; set; }
-    public decimal UnitPrice { get; set; }
+    public long Fulfillment_ID { get; set; }
+    public long Item_ID { get; set; }
+    public decimal Request_Quantity { get; set; }
+    public decimal Unit_Price { get; set; }
     public int Status { get; set; }
-    public bool IsDeleted { get; set; } = false;
-    public decimal SubTotal { get; set; }
-    public decimal ShippedQuantity { get; set; }
+    public bool Is_Deleted { get; set; } = false;
+    public decimal Sub_Total { get; set; }
+    public decimal Shipped_Quantity { get; set; }
 
     // Foreign keys
     public virtual OrderFulfillmentHeader? OrderFulfillment { get; set; }

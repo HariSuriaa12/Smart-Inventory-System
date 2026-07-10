@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import { createSlice, createAsyncThunk, PayloadAction  } from '@reduxjs/toolkit'
 import { locationService } from '@/services/locationService'
 import { Location, CreateLocationRequest, UpdateLocationRequest, LocationState } from '@/types/location'
 
@@ -12,12 +12,24 @@ const initialState: LocationState = {
   take: 10,
 }
 
+export const selectLocation = (state: { locations: LocationState }) => state.locations.currentLocation
+
 export const fetchLocations = createAsyncThunk('locations/fetchLocations',
   async ({ skip = 0, take = 10 }: { skip?: number; take?: number }, { rejectWithValue }) => {
     try {
-      return (await locationService.getLocations(skip, take)).data
+      return (await locationService.getLocations(skip, take))
     } catch (error: any) {
       return rejectWithValue(error.message)
+    }
+  }
+)
+
+export const fetchAllLocations = createAsyncThunk('locations/fetchAllLocations',
+  async () => {
+    try {
+      return (await locationService.getAllLocations())
+    } catch (error: any) {
+      return error.message
     }
   }
 )
@@ -25,7 +37,7 @@ export const fetchLocations = createAsyncThunk('locations/fetchLocations',
 export const fetchLocationById = createAsyncThunk('locations/fetchLocationById',
   async (id: number, { rejectWithValue }) => {
     try {
-      return (await locationService.getLocationById(id)).data
+      return (await locationService.getLocationById(id))
     } catch (error: any) {
       return rejectWithValue(error.message)
     }
@@ -35,7 +47,7 @@ export const fetchLocationById = createAsyncThunk('locations/fetchLocationById',
 export const createLocation = createAsyncThunk('locations/createLocation',
   async (data: CreateLocationRequest, { rejectWithValue }) => {
     try {
-      return (await locationService.createLocation(data)).data
+      return (await locationService.createLocation(data))
     } catch (error: any) {
       return rejectWithValue(error.message)
     }
@@ -45,7 +57,7 @@ export const createLocation = createAsyncThunk('locations/createLocation',
 export const updateLocation = createAsyncThunk('locations/updateLocation',
   async ({ id, data }: { id: number; data: UpdateLocationRequest }, { rejectWithValue }) => {
     try {
-      return (await locationService.updateLocation(id, data)).data
+      return (await locationService.updateLocation(id, data))
     } catch (error: any) {
       return rejectWithValue(error.message)
     }
@@ -70,6 +82,9 @@ const locationSlice = createSlice({
     clearError: (state) => {
       state.error = null
     },
+    setCurrentLocation: (state, action: PayloadAction<Location | null>) => {
+      state.currentLocation = action.payload
+    },
   },
   extraReducers: (builder) => {
     const setCrudStates = (action: string, thunk: any) => {
@@ -81,6 +96,25 @@ const locationSlice = createSlice({
     }
     
     builder
+      .addCase(fetchAllLocations.pending, (state) => {
+        state.loading = true
+        state.error = null
+      })
+      .addCase(fetchAllLocations.fulfilled, (state, action) => {
+        console.log('Fetched all locations:', action.payload); // Debugging log
+        console.log('Fetched all locations d:', action.payload.data); // Debugging log
+        state.loading = false
+        state.locations = action.payload.data || []
+        state.total = action.payload.total || 0
+      })
+      .addCase(fetchAllLocations.rejected, (state, action) => {
+        state.loading = false
+        state.error = action.payload as string
+      })
+      .addCase(fetchLocations.pending, (state) => {
+        state.loading = true
+        state.error = null
+      })
       .addCase(fetchLocations.fulfilled, (state, action) => {
         state.loading = false
         state.locations = action.payload?.data || []
@@ -106,5 +140,5 @@ const locationSlice = createSlice({
   },
 })
 
-export const { clearError } = locationSlice.actions
+export const { clearError, setCurrentLocation } = locationSlice.actions
 export default locationSlice.reducer

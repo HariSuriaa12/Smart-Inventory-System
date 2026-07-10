@@ -13,7 +13,7 @@ public class StockTransferRepository : GenericRepository<StockTransfer>, IStockT
 
     public async Task<IEnumerable<StockTransfer>> GetByFromLocationAsync(long locationId, int skip = 0, int take = 10)
     {
-        return await _dbSet.Where(s => s.FromLocationID == locationId && !s.IsDeleted)
+        return await _dbSet.Where(s => s.From_Location_ID == locationId && !s.Is_Deleted)
             .Include(s => s.Item)
             .Include(s => s.FromLocation)
             .Include(s => s.ToLocation)
@@ -24,7 +24,7 @@ public class StockTransferRepository : GenericRepository<StockTransfer>, IStockT
 
     public async Task<IEnumerable<StockTransfer>> GetByToLocationAsync(long locationId, int skip = 0, int take = 10)
     {
-        return await _dbSet.Where(s => s.ToLocationID == locationId && !s.IsDeleted)
+        return await _dbSet.Where(s => s.To_Location_ID == locationId && !s.Is_Deleted)
             .Include(s => s.Item)
             .Include(s => s.FromLocation)
             .Include(s => s.ToLocation)
@@ -35,7 +35,7 @@ public class StockTransferRepository : GenericRepository<StockTransfer>, IStockT
 
     public async Task<IEnumerable<StockTransfer>> GetByStatusAsync(int status, int skip = 0, int take = 10)
     {
-        return await _dbSet.Where(s => s.Status == status && !s.IsDeleted)
+        return await _dbSet.Where(s => s.Status == status && !s.Is_Deleted)
             .Include(s => s.Item)
             .Skip(skip)
             .Take(take)
@@ -44,7 +44,7 @@ public class StockTransferRepository : GenericRepository<StockTransfer>, IStockT
 
     public async Task<IEnumerable<StockTransfer>> GetByItemAsync(long itemId, int skip = 0, int take = 10)
     {
-        return await _dbSet.Where(s => s.ItemID == itemId && !s.IsDeleted)
+        return await _dbSet.Where(s => s.Item_ID == itemId && !s.Is_Deleted)
             .Include(s => s.FromLocation)
             .Include(s => s.ToLocation)
             .Skip(skip)

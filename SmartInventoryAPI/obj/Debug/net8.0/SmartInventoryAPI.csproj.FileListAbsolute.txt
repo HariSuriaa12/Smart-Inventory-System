@@ -259,3 +259,4 @@ C:\Users\User\Documents\Hari\Unitar\Semester 6\Major Project\Smart Inventory Sys
 C:\Users\User\Documents\Hari\Unitar\Semester 6\Major Project\Smart Inventory System\SmartInventoryAPI\obj\Debug\net8.0\SmartInventoryAPI.pdb
 C:\Users\User\Documents\Hari\Unitar\Semester 6\Major Project\Smart Inventory System\SmartInventoryAPI\obj\Debug\net8.0\SmartInventoryAPI.genruntimeconfig.cache
 C:\Users\User\Documents\Hari\Unitar\Semester 6\Major Project\Smart Inventory System\SmartInventoryAPI\obj\Debug\net8.0\ref\SmartInventoryAPI.dll
+C:\Users\User\Documents\Hari\Unitar\Semester 6\Major Project\Smart Inventory System\SmartInventoryAPI\obj\Debug\net8.0\SmartInventoryAPI.sourcelink.json

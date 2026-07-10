@@ -15,12 +15,12 @@ public class InventoryRepository : GenericRepository<Inventory>, IInventoryRepos
     {
         return await _dbSet.Include(i => i.Item)
             .Include(i => i.Location)
-            .FirstOrDefaultAsync(i => i.ItemID == itemId && i.LocationID == locationId && !i.IsDeleted);
+            .FirstOrDefaultAsync(i => i.Item_ID == itemId && i.Location_ID == locationId && !i.Is_Deleted);
     }
 
     public async Task<IEnumerable<Inventory>> GetByLocationAsync(long locationId, int skip = 0, int take = 10)
     {
-        return await _dbSet.Where(i => i.LocationID == locationId && !i.IsDeleted)
+        return await _dbSet.Where(i => i.Location_ID == locationId && !i.Is_Deleted)
             .Include(i => i.Item)
             .Skip(skip)
             .Take(take)
@@ -29,7 +29,7 @@ public class InventoryRepository : GenericRepository<Inventory>, IInventoryRepos
 
     public async Task<IEnumerable<Inventory>> GetByItemAsync(long itemId, int skip = 0, int take = 10)
     {
-        return await _dbSet.Where(i => i.ItemID == itemId && !i.IsDeleted)
+        return await _dbSet.Where(i => i.Item_ID == itemId && !i.Is_Deleted)
             .Include(i => i.Location)
             .Skip(skip)
             .Take(take)
@@ -38,7 +38,7 @@ public class InventoryRepository : GenericRepository<Inventory>, IInventoryRepos
 
     public async Task<decimal> GetTotalAvailableQuantityAsync(long itemId)
     {
-        return await _dbSet.Where(i => i.ItemID == itemId && !i.IsDeleted)
-            .SumAsync(i => i.AvailableQuantity);
+        return await _dbSet.Where(i => i.Item_ID == itemId && !i.Is_Deleted)
+            .SumAsync(i => i.Available_Quantity);
     }
 }

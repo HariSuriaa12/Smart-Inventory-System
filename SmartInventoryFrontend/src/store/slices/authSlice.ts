@@ -10,6 +10,8 @@ const initialState: AuthState = {
   error: null,
 }
 
+console.log('Initial Auth State:', initialState)
+
 export const login = createAsyncThunk(
   'auth/login',
   async (credentials: LoginRequest, { rejectWithValue }) => {

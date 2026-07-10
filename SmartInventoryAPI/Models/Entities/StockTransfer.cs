@@ -3,17 +3,17 @@ namespace SmartInventoryAPI.Models.Entities;
 public class StockTransfer
 {
     public long ID { get; set; }
-    public long FromLocationID { get; set; }
-    public long ToLocationID { get; set; }
-    public DateTime TransferDate { get; set; }
-    public TimeSpan TransferTime { get; set; }
-    public long ItemID { get; set; }
-    public decimal TransferQuantity { get; set; }
+    public long From_Location_ID { get; set; }
+    public long To_Location_ID { get; set; }
+    public DateTime Transfer_Date { get; set; }
+    public TimeSpan Transfer_Time { get; set; }
+    public long Item_ID { get; set; }
+    public decimal Transfer_Quantity { get; set; }
     public string? Remark { get; set; }
     public int Status { get; set; }
-    public decimal SubTotal { get; set; }
-    public bool IsDeleted { get; set; } = false;
-    public long PerformedBy { get; set; }
+    public decimal Sub_Total { get; set; }
+    public bool Is_Deleted { get; set; } = false;
+    public long Performed_By { get; set; }
 
     // Foreign keys
     public virtual Location? FromLocation { get; set; }

@@ -24,34 +24,40 @@ public class LocationService : ILocationService
     public async Task<LocationDto> CreateLocationAsync(CreateLocationRequestDto request)
     {
         var location = _mapper.Map<Location>(request);
-        location.CreationDate = DateTime.UtcNow;
+        location.Creation_Date = DateTime.UtcNow;
 
         var createdLocation = await _unitOfWork.Locations.AddAsync(location);
         await _unitOfWork.SaveAsync();
 
-        _logger.LogInformation("Location {OutletCode} created successfully", location.OutletCode);
+        _logger.LogInformation("Location {OutletCode} created successfully", location.Outlet_Code);
         return _mapper.Map<LocationDto>(createdLocation);
     }
 
     public async Task<LocationDto> GetLocationByIdAsync(long id)
     {
         var location = await _unitOfWork.Locations.GetByIdAsync(id);
-        if (location == null || location.IsDeleted)
+        if (location == null || location.Is_Deleted)
             throw new NotFoundException("Location not found");
 
         return _mapper.Map<LocationDto>(location);
     }
 
-    public async Task<IEnumerable<LocationDto>> GetAllLocationsAsync(int skip = 0, int take = 10)
+    public async Task<IEnumerable<LocationDto>> GetAllLocationsAsync(int skip, int take)
     {
         var locations = await _unitOfWork.Locations.GetAllAsync(skip, take);
-        return _mapper.Map<IEnumerable<LocationDto>>(locations.Where(l => !l.IsDeleted));
+        return _mapper.Map<IEnumerable<LocationDto>>(locations.Where(l => !l.Is_Deleted));
+    }
+
+    public async Task<IEnumerable<LocationDto>> GetAllLocationsAsync()
+    {
+        var locations = await _unitOfWork.Locations.GetAllAsync();
+        return _mapper.Map<IEnumerable<LocationDto>>(locations.Where(l => !l.Is_Deleted));
     }
 
     public async Task<LocationDto> UpdateLocationAsync(long id, UpdateLocationRequestDto request)
     {
         var location = await _unitOfWork.Locations.GetByIdAsync(id);
-        if (location == null || location.IsDeleted)
+        if (location == null || location.Is_Deleted)
             throw new NotFoundException("Location not found");
 
         _mapper.Map(request, location);
@@ -68,7 +74,7 @@ public class LocationService : ILocationService
         if (location == null)
             throw new NotFoundException("Location not found");
 
-        location.IsDeleted = true;
+        location.Is_Deleted = true;
         await _unitOfWork.Locations.UpdateAsync(location);
         await _unitOfWork.SaveAsync();
 

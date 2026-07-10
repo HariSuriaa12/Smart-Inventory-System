@@ -23,18 +23,18 @@ public class SalesService : ISalesService
 
     public async Task<SalesDetailDto> ReceiveSalesAsync(ReceiveSalesRequestDto request)
     {
-        var location = await _unitOfWork.Locations.GetByIdAsync(request.LocationID);
-        if (location == null || location.IsDeleted)
+        var location = await _unitOfWork.Locations.GetByIdAsync(request.Location_ID);
+        if (location == null || location.Is_Deleted)
             throw new NotFoundException("Location not found");
 
         var sales = new Sales
         {
-            LocationID = request.LocationID,
-            SalesDate = request.SalesDate,
-            SalesTime = DateTime.UtcNow.TimeOfDay,
-            SalesNumber = request.SalesNumber,
-            SalesStatus = request.SalesStatus,
-            IsReserved = false
+            Location_ID = request.Location_ID,
+            Sales_Date = request.Sales_Date,
+            Sales_Time = DateTime.UtcNow.TimeOfDay,
+            Sales_Number = request.Sales_Number,
+            Sales_Status = request.Sales_Status,
+            Is_Reserved = false
         };
 
         var createdSales = await _unitOfWork.Sales.AddAsync(sales);
@@ -45,12 +45,12 @@ public class SalesService : ISalesService
             {
                 var salesItem = new SalesItem
                 {
-                    SalesID = createdSales.ID,
-                    ItemID = item.ItemID,
-                    SoldQuantity = item.SoldQuantity,
-                    SubTotal = item.SoldQuantity * item.UnitPrice,
-                    IsPromotion = item.IsPromotion,
-                    DiscountPercentage = item.DiscountPercentage
+                    Sales_ID = createdSales.ID,
+                    Item_ID = item.Item_ID,
+                    Sold_Quantity = item.Sold_Quantity,
+                    Sub_Total = item.Sold_Quantity * item.Unit_Price,
+                    Is_Promotion = item.Is_Promotion,
+                    Discount_Percentage = item.Discount_Percentage
                 };
                 await _unitOfWork.Sales.AddAsync(createdSales);
             }
@@ -58,7 +58,7 @@ public class SalesService : ISalesService
 
         await _unitOfWork.SaveAsync();
 
-        _logger.LogInformation("Sales {SalesNumber} received from Location {LocationID}", request.SalesNumber, request.LocationID);
+        _logger.LogInformation("Sales {SalesNumber} received from Location {LocationID}", request.Sales_Number, request.Location_ID);
 
         return await GetSalesByIdAsync(createdSales.ID);
     }
@@ -66,7 +66,7 @@ public class SalesService : ISalesService
     public async Task<SalesDetailDto> GetSalesByIdAsync(long id)
     {
         var sales = await _unitOfWork.Sales.GetWithItemsAsync(id);
-        if (sales == null || sales.IsDeleted)
+        if (sales == null || sales.Is_Deleted)
             throw new NotFoundException("Sales record not found");
 
         return _mapper.Map<SalesDetailDto>(sales);
@@ -75,7 +75,7 @@ public class SalesService : ISalesService
     public async Task<IEnumerable<SalesDto>> GetAllSalesAsync(int skip = 0, int take = 10)
     {
         var sales = await _unitOfWork.Sales.GetAllAsync(skip, take);
-        return _mapper.Map<IEnumerable<SalesDto>>(sales.Where(s => !s.IsDeleted));
+        return _mapper.Map<IEnumerable<SalesDto>>(sales.Where(s => !s.Is_Deleted));
     }
 
     public async Task<IEnumerable<SalesDto>> GetByLocationAsync(long locationId, int skip = 0, int take = 10)

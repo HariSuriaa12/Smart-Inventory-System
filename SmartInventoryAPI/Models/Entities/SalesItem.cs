@@ -3,13 +3,13 @@ namespace SmartInventoryAPI.Models.Entities;
 public class SalesItem
 {
     public long ID { get; set; }
-    public long SalesID { get; set; }
-    public long ItemID { get; set; }
-    public decimal SoldQuantity { get; set; }
-    public decimal SubTotal { get; set; }
-    public bool IsDeleted { get; set; } = false;
-    public bool IsPromotion { get; set; }
-    public decimal DiscountPercentage { get; set; }
+    public long Sales_ID { get; set; }
+    public long Item_ID { get; set; }
+    public decimal Sold_Quantity { get; set; }
+    public decimal Sub_Total { get; set; }
+    public bool Is_Deleted { get; set; } = false;
+    public bool Is_Promotion { get; set; }
+    public decimal Discount_Percentage { get; set; }
 
     // Foreign keys
     public virtual Sales? Sales { get; set; }

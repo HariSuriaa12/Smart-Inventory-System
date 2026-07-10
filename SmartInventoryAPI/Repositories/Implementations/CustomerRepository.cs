@@ -13,6 +13,6 @@ public class CustomerRepository : GenericRepository<Customer>, ICustomerReposito
 
     public async Task<Customer?> GetByCustomerCodeAsync(string customerCode)
     {
-        return await _dbSet.FirstOrDefaultAsync(c => c.CustomerCode == customerCode && !c.IsDeleted);
+        return await _dbSet.FirstOrDefaultAsync(c => c.Customer_Code == customerCode && !c.IsDeleted);
     }
 }

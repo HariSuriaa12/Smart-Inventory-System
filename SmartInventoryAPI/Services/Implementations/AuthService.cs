@@ -47,7 +47,7 @@ public class AuthService : IAuthService
         {
             UserID = user.ID,
             Username = user.Username,
-            FullName = user.Full_Name,
+            Full_Name = user.Full_Name,
             Email = user.Email,
             Token = token,
             Role = user.Role,

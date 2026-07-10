@@ -23,25 +23,25 @@ public class PurchaseOrderService : IPurchaseOrderService
 
     public async Task<PurchaseOrderDetailDto> CreatePurchaseOrderAsync(CreatePurchaseOrderRequestDto request)
     {
-        var vendor = await _unitOfWork.Vendors.GetByIdAsync(request.VendorID);
+        var vendor = await _unitOfWork.Vendors.GetByIdAsync(request.Vendor_ID);
         if (vendor == null || vendor.IsDeleted)
             throw new NotFoundException("Vendor not found");
 
-        var location = await _unitOfWork.Locations.GetByIdAsync(request.LocationID);
-        if (location == null || location.IsDeleted)
+        var location = await _unitOfWork.Locations.GetByIdAsync(request.Location_ID);
+        if (location == null || location.Is_Deleted)
             throw new NotFoundException("Location not found");
 
         var po = new PurchaseOrderHeader
         {
-            PORefenceNo = $"PO-{DateTime.UtcNow:yyyyMMddHHmmss}",
-            LocationID = request.LocationID,
-            VendorID = request.VendorID,
-            PurchaseDate = DateTime.UtcNow.Date,
-            PurchaseTime = DateTime.UtcNow.TimeOfDay,
+            PO_Refence_No = $"PO-{DateTime.UtcNow:yyyyMMddHHmmss}",
+            Location_ID = request.Location_ID,
+            Vendor_ID = request.Vendor_ID,
+            Purchase_Date = DateTime.UtcNow.Date,
+            Purchase_Time = DateTime.UtcNow.TimeOfDay,
             Status = 1,
             Remark = request.Remark,
-            PerformedBy = 1,
-            TotalAmount = 0
+            Performed_By = 1,
+            Total_Amount = 0
         };
 
         var createdPO = await _unitOfWork.PurchaseOrders.AddAsync(po);
@@ -53,24 +53,24 @@ public class PurchaseOrderService : IPurchaseOrderService
             {
                 var poItem = new PurchaseOrderItem
                 {
-                    POID = createdPO.ID,
-                    ItemID = item.ItemID,
-                    OrderQuantity = item.OrderQuantity,
-                    UnitPrice = item.UnitPrice,
+                    PO_ID = createdPO.ID,
+                    Item_ID = item.Item_ID,
+                    Order_Quantity = item.Order_Quantity,
+                    Unit_Price = item.Unit_Price,
                     Status = 1,
-                    SubTotal = item.OrderQuantity * item.UnitPrice,
-                    ReceivedQuantity = 0
+                    Sub_Total = item.Order_Quantity * item.Unit_Price,
+                    Received_Quantity = 0
                 };
                 await _unitOfWork.PurchaseOrders.AddAsync(createdPO);
-                totalAmount += poItem.SubTotal;
+                totalAmount += poItem.Sub_Total;
             }
         }
 
-        createdPO.TotalAmount = totalAmount;
+        createdPO.Total_Amount = totalAmount;
         await _unitOfWork.PurchaseOrders.UpdateAsync(createdPO);
         await _unitOfWork.SaveAsync();
 
-        _logger.LogInformation("Purchase Order {PONo} created for Vendor {VendorID}", createdPO.PORefenceNo, request.VendorID);
+        _logger.LogInformation("Purchase Order {PONo} created for Vendor {VendorID}", createdPO.PO_Refence_No, request.Vendor_ID);
 
         var detail = await GetPurchaseOrderByIdAsync(createdPO.ID);
         return detail;
@@ -79,7 +79,7 @@ public class PurchaseOrderService : IPurchaseOrderService
     public async Task<PurchaseOrderDetailDto> GetPurchaseOrderByIdAsync(long id)
     {
         var po = await _unitOfWork.PurchaseOrders.GetWithItemsAsync(id);
-        if (po == null || po.IsDeleted)
+        if (po == null || po.Is_Deleted)
             throw new NotFoundException("Purchase Order not found");
 
         return _mapper.Map<PurchaseOrderDetailDto>(po);
@@ -88,13 +88,13 @@ public class PurchaseOrderService : IPurchaseOrderService
     public async Task<IEnumerable<PurchaseOrderDto>> GetAllPurchaseOrdersAsync(int skip = 0, int take = 10)
     {
         var pos = await _unitOfWork.PurchaseOrders.GetAllAsync(skip, take);
-        return _mapper.Map<IEnumerable<PurchaseOrderDto>>(pos.Where(p => !p.IsDeleted));
+        return _mapper.Map<IEnumerable<PurchaseOrderDto>>(pos.Where(p => !p.Is_Deleted));
     }
 
     public async Task<PurchaseOrderDetailDto> UpdatePurchaseOrderAsync(long id, UpdatePurchaseOrderRequestDto request)
     {
         var po = await _unitOfWork.PurchaseOrders.GetByIdAsync(id);
-        if (po == null || po.IsDeleted)
+        if (po == null || po.Is_Deleted)
             throw new NotFoundException("Purchase Order not found");
 
         po.Status = request.Status;
@@ -114,7 +114,7 @@ public class PurchaseOrderService : IPurchaseOrderService
         if (po == null)
             throw new NotFoundException("Purchase Order not found");
 
-        po.IsDeleted = true;
+        po.Is_Deleted = true;
         await _unitOfWork.PurchaseOrders.UpdateAsync(po);
         await _unitOfWork.SaveAsync();
 

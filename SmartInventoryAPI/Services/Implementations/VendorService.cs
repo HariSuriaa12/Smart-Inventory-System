@@ -24,12 +24,12 @@ public class VendorService : IVendorService
     public async Task<VendorDto> CreateVendorAsync(CreateVendorRequestDto request)
     {
         var vendor = _mapper.Map<Vendor>(request);
-        vendor.CreationDate = DateTime.UtcNow;
+        vendor.Creation_Date = DateTime.UtcNow;
 
         var createdVendor = await _unitOfWork.Vendors.AddAsync(vendor);
         await _unitOfWork.SaveAsync();
 
-        _logger.LogInformation("Vendor {VendorCode} created successfully", vendor.VendorCode);
+        _logger.LogInformation("Vendor {VendorCode} created successfully", vendor.Vendor_Code);
         return _mapper.Map<VendorDto>(createdVendor);
     }
 

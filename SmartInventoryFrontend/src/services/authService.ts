@@ -26,7 +26,7 @@ export const authService = {
 
   getUser: () => {
     const user = localStorage.getItem('user')
-    return user ? JSON.parse(user) : null
+    return user && user !== "undefined" ? JSON.parse(user) : null
   },
 
   isAuthenticated: () => !!localStorage.getItem('token'),

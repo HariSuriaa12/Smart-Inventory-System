@@ -23,29 +23,29 @@ public class OrderFulfillmentService : IOrderFulfillmentService
 
     public async Task<OrderFulfillmentDetailDto> ReceiveOrderFulfillmentAsync(ReceiveOrderFulfillmentRequestDto request)
     {
-        var customer = await _unitOfWork.Customers.GetByIdAsync(request.CustomerID);
+        var customer = await _unitOfWork.Customers.GetByIdAsync(request.Customer_ID);
         if (customer == null || customer.IsDeleted)
             throw new NotFoundException("Customer not found");
 
-        var location = await _unitOfWork.Locations.GetByIdAsync(request.LocationID);
-        if (location == null || location.IsDeleted)
+        var location = await _unitOfWork.Locations.GetByIdAsync(request.Location_ID);
+        if (location == null || location.Is_Deleted)
             throw new NotFoundException("Location not found");
 
         var order = new OrderFulfillmentHeader
         {
-            LocationID = request.LocationID,
-            CustomerID = request.CustomerID,
-            OrderDate = request.OrderDate,
-            OrderTime = DateTime.UtcNow.TimeOfDay,
-            ShipmentAddressLine1 = request.ShipmentAddressLine1,
-            ShipmentAddressLine2 = request.ShipmentAddressLine2,
-            ShipmentCity = request.ShipmentCity,
-            ShipmentState = request.ShipmentState,
-            ShipmentPostCode = request.ShipmentPostCode,
-            ShipmentCountryCode = request.ShipmentCountryCode,
+            Location_ID = request.Location_ID,
+            Customer_ID = request.Customer_ID,
+            Order_Date = request.Order_Date,
+            Order_Time = DateTime.UtcNow.TimeOfDay,
+            Shipment_Address_Line_1 = request.Shipment_Address_Line_1,
+            Shipment_Address_Line_2 = request.Shipment_Address_Line_2,
+            Shipment_City = request.Shipment_City,
+            Shipment_State = request.Shipment_State,
+            Shipment_PostCode = request.Shipment_PostCode,
+            Shipment_Country_Code = request.Shipment_Country_Code,
             Status = 1,
-            VerifiedBy = 1,
-            TotalAmount = 0
+            Verified_By = 1,
+            Total_Amount = 0
         };
 
         var createdOrder = await _unitOfWork.OrderFulfillments.AddAsync(order);
@@ -57,24 +57,24 @@ public class OrderFulfillmentService : IOrderFulfillmentService
             {
                 var orderItem = new OrderFulfillmentItem
                 {
-                    FulfillmentID = createdOrder.ID,
-                    ItemID = item.ItemID,
-                    RequestQuantity = item.RequestQuantity,
-                    UnitPrice = item.UnitPrice,
+                    Fulfillment_ID = createdOrder.ID,
+                    Item_ID = item.Item_ID,
+                    Request_Quantity = item.Request_Quantity,
+                    Unit_Price = item.Unit_Price,
                     Status = 1,
-                    SubTotal = item.RequestQuantity * item.UnitPrice,
-                    ShippedQuantity = 0
+                    Sub_Total = item.Request_Quantity * item.Unit_Price,
+                    Shipped_Quantity = 0
                 };
                 await _unitOfWork.OrderFulfillments.AddAsync(createdOrder);
-                totalAmount += orderItem.SubTotal;
+                totalAmount += orderItem.Sub_Total;
             }
         }
 
-        createdOrder.TotalAmount = totalAmount;
+        createdOrder.Total_Amount = totalAmount;
         await _unitOfWork.OrderFulfillments.UpdateAsync(createdOrder);
         await _unitOfWork.SaveAsync();
 
-        _logger.LogInformation("Order Fulfillment received for Customer {CustomerID}", request.CustomerID);
+        _logger.LogInformation("Order Fulfillment received for Customer {CustomerID}", request.Customer_ID);
 
         return await GetOrderFulfillmentByIdAsync(createdOrder.ID);
     }
@@ -82,7 +82,7 @@ public class OrderFulfillmentService : IOrderFulfillmentService
     public async Task<OrderFulfillmentDetailDto> GetOrderFulfillmentByIdAsync(long id)
     {
         var order = await _unitOfWork.OrderFulfillments.GetWithItemsAsync(id);
-        if (order == null || order.IsDeleted)
+        if (order == null || order.Is_Deleted)
             throw new NotFoundException("Order Fulfillment not found");
 
         return _mapper.Map<OrderFulfillmentDetailDto>(order);
@@ -91,13 +91,13 @@ public class OrderFulfillmentService : IOrderFulfillmentService
     public async Task<IEnumerable<OrderFulfillmentDto>> GetAllOrderFulfillmentsAsync(int skip = 0, int take = 10)
     {
         var orders = await _unitOfWork.OrderFulfillments.GetAllAsync(skip, take);
-        return _mapper.Map<IEnumerable<OrderFulfillmentDto>>(orders.Where(o => !o.IsDeleted));
+        return _mapper.Map<IEnumerable<OrderFulfillmentDto>>(orders.Where(o => !o.Is_Deleted));
     }
 
     public async Task<OrderFulfillmentDetailDto> UpdateOrderFulfillmentAsync(long id, UpdateOrderFulfillmentRequestDto request)
     {
         var order = await _unitOfWork.OrderFulfillments.GetByIdAsync(id);
-        if (order == null || order.IsDeleted)
+        if (order == null || order.Is_Deleted)
             throw new NotFoundException("Order Fulfillment not found");
 
         order.Status = request.Status;
@@ -117,7 +117,7 @@ public class OrderFulfillmentService : IOrderFulfillmentService
         if (order == null)
             throw new NotFoundException("Order Fulfillment not found");
 
-        order.IsDeleted = true;
+        order.Is_Deleted = true;
         await _unitOfWork.OrderFulfillments.UpdateAsync(order);
         await _unitOfWork.SaveAsync();
 

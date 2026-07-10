@@ -11,128 +11,134 @@ public class SmartInventoryDbContext : DbContext
     }
 
     public DbSet<User> User { get; set; }
-    public DbSet<Item> Items { get; set; }
-    public DbSet<Location> Locations { get; set; }
-    public DbSet<Vendor> Vendors { get; set; }
-    public DbSet<Customer> Customers { get; set; }
-    public DbSet<Inventory> Inventories { get; set; }
-    public DbSet<PurchaseOrderHeader> PurchaseOrderHeaders { get; set; }
-    public DbSet<PurchaseOrderItem> PurchaseOrderItems { get; set; }
-    public DbSet<OrderFulfillmentHeader> OrderFulfillmentHeaders { get; set; }
-    public DbSet<OrderFulfillmentItem> OrderFulfillmentItems { get; set; }
+    public DbSet<Item> Item { get; set; }
+    public DbSet<Location> Location { get; set; }
+    public DbSet<Vendor> Vendor { get; set; }
+    public DbSet<Customer> Customer { get; set; }
+    public DbSet<Inventory> Inventory { get; set; }
+    public DbSet<PurchaseOrderHeader> PurchaseOrderHeader { get; set; }
+    public DbSet<PurchaseOrderItem> PurchaseOrderItem { get; set; }
+    public DbSet<OrderFulfillmentHeader> OrderFulfillmentHeader { get; set; }
+    public DbSet<OrderFulfillmentItem> OrderFulfillmentItem { get; set; }
     public DbSet<Sales> Sales { get; set; }
-    public DbSet<SalesItem> SalesItems { get; set; }
-    public DbSet<StockTransfer> StockTransfers { get; set; }
-    public DbSet<PerformLog> PerformLogs { get; set; }
-    public DbSet<PriceLog> PriceLogs { get; set; }
-    public DbSet<InventoryLog> InventoryLogs { get; set; }
-    public DbSet<ForecastedResult> ForecastedResults { get; set; }
+    public DbSet<SalesItem> Sales_Item { get; set; }
+    public DbSet<StockTransfer> Stock_Transfers { get; set; }
+    public DbSet<PerformLog> Perform_Log { get; set; }
+    public DbSet<PriceLog> Price_Log { get; set; }
+    public DbSet<InventoryLog> Inventory_Log { get; set; }
+    public DbSet<ForecastedResult> Forecasted_Result { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
 
-        modelBuilder.Entity<User>()
-            .Property(u => u.Is_Deleted)
-            .HasColumnType("bit(1)")
-            .HasConversion(
-                // When saving to DB: convert bool to a 1-element BitArray
-                v => new BitArray(new[] { v }),
-                // When reading from DB: get the first boolean value out of the BitArray
-                v => v.Get(0)
-            );
+        foreach (var entityType in modelBuilder.Model.GetEntityTypes())
+        {
+            var properties = entityType.GetProperties()
+                .Where(p => p.ClrType == typeof(bool) || p.ClrType == typeof(bool?));
+                //.Where(p => p.ClrType == typeof(bool) && p.Name.Equals("Is_Deleted"));
+
+            foreach (var property in properties)
+            {
+                property.SetColumnType("bit(1)");
+                property.SetValueConverter(new Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter<bool, System.Collections.BitArray>(
+                    v => new System.Collections.BitArray(new[] { v }),
+                    v => v.Get(0)
+                ));
+            }
+        }
 
         // Configure decimal precision
         modelBuilder.Entity<Item>()
-            .Property(x => x.PurchaseCost)
+            .Property(x => x.Purchase_Cost)
             .HasPrecision(14, 2);
         modelBuilder.Entity<Item>()
-            .Property(x => x.UnitCost)
+            .Property(x => x.Unit_Cost)
             .HasPrecision(14, 2);
         modelBuilder.Entity<Item>()
-            .Property(x => x.TaxPercentage)
+            .Property(x => x.Tax_Percentage)
             .HasPrecision(14, 2);
 
         modelBuilder.Entity<Inventory>()
-            .Property(x => x.OnHandQuantity)
+            .Property(x => x.On_Hand_Quantity)
             .HasPrecision(14, 2);
         modelBuilder.Entity<Inventory>()
-            .Property(x => x.AvailableQuantity)
+            .Property(x => x.Available_Quantity)
             .HasPrecision(14, 2);
 
         modelBuilder.Entity<PurchaseOrderHeader>()
-            .Property(x => x.TotalAmount)
+            .Property(x => x.Total_Amount)
             .HasPrecision(14, 2);
 
         modelBuilder.Entity<PurchaseOrderItem>()
-            .Property(x => x.OrderQuantity)
+            .Property(x => x.Order_Quantity)
             .HasPrecision(14, 2);
         modelBuilder.Entity<PurchaseOrderItem>()
-            .Property(x => x.UnitPrice)
+            .Property(x => x.Unit_Price)
             .HasPrecision(14, 2);
         modelBuilder.Entity<PurchaseOrderItem>()
-            .Property(x => x.SubTotal)
+            .Property(x => x.Sub_Total)
             .HasPrecision(14, 2);
         modelBuilder.Entity<PurchaseOrderItem>()
-            .Property(x => x.ReceivedQuantity)
+            .Property(x => x.Received_Quantity)
             .HasPrecision(14, 2);
 
         modelBuilder.Entity<OrderFulfillmentHeader>()
-            .Property(x => x.TotalAmount)
+            .Property(x => x.Total_Amount)
             .HasPrecision(14, 2);
 
         modelBuilder.Entity<OrderFulfillmentItem>()
-            .Property(x => x.RequestQuantity)
+            .Property(x => x.Request_Quantity)
             .HasPrecision(14, 2);
         modelBuilder.Entity<OrderFulfillmentItem>()
-            .Property(x => x.UnitPrice)
+            .Property(x => x.Unit_Price)
             .HasPrecision(14, 2);
         modelBuilder.Entity<OrderFulfillmentItem>()
-            .Property(x => x.SubTotal)
+            .Property(x => x.Sub_Total)
             .HasPrecision(14, 2);
         modelBuilder.Entity<OrderFulfillmentItem>()
-            .Property(x => x.ShippedQuantity)
+            .Property(x => x.Shipped_Quantity)
             .HasPrecision(14, 2);
 
         modelBuilder.Entity<SalesItem>()
-            .Property(x => x.SoldQuantity)
+            .Property(x => x.Sold_Quantity)
             .HasPrecision(14, 2);
         modelBuilder.Entity<SalesItem>()
-            .Property(x => x.SubTotal)
+            .Property(x => x.Sub_Total)
             .HasPrecision(14, 2);
         modelBuilder.Entity<SalesItem>()
-            .Property(x => x.DiscountPercentage)
+            .Property(x => x.Discount_Percentage)
             .HasPrecision(14, 2);
 
         modelBuilder.Entity<StockTransfer>()
-            .Property(x => x.TransferQuantity)
+            .Property(x => x.Transfer_Quantity)
             .HasPrecision(14, 2);
         modelBuilder.Entity<StockTransfer>()
-            .Property(x => x.SubTotal)
+            .Property(x => x.Sub_Total)
             .HasPrecision(14, 2);
 
         modelBuilder.Entity<ForecastedResult>()
-            .Property(x => x.ForecastedQuantity)
+            .Property(x => x.Forecasted_Quantity)
             .HasPrecision(14, 2);
 
         modelBuilder.Entity<PriceLog>()
-            .Property(x => x.PreviousUnitPrice)
+            .Property(x => x.Previous_Unit_Price)
             .HasPrecision(14, 2);
         modelBuilder.Entity<PriceLog>()
-            .Property(x => x.NewUnitPrice)
+            .Property(x => x.New_Unit_Price)
             .HasPrecision(14, 2);
 
         modelBuilder.Entity<InventoryLog>()
-            .Property(x => x.PreviousOnhandQuantity)
+            .Property(x => x.Previous_Onhand_Quantity)
             .HasPrecision(14, 2);
         modelBuilder.Entity<InventoryLog>()
-            .Property(x => x.NewOnhandQuantity)
+            .Property(x => x.New_Onhand_Quantity)
             .HasPrecision(14, 2);
         modelBuilder.Entity<InventoryLog>()
-            .Property(x => x.PreviousAvailableQuantity)
+            .Property(x => x.Previous_Available_Quantity)
             .HasPrecision(14, 2);
         modelBuilder.Entity<InventoryLog>()
-            .Property(x => x.NewAvailableQuantity)
+            .Property(x => x.New_Available_Quantity)
             .HasPrecision(14, 2);
     }
 }

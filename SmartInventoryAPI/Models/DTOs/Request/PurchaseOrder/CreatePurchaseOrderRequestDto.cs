@@ -2,17 +2,17 @@ namespace SmartInventoryAPI.Models.DTOs.Request.PurchaseOrder;
 
 public class CreatePurchaseOrderRequestDto
 {
-    public long LocationID { get; set; }
-    public long VendorID { get; set; }
+    public long Location_ID { get; set; }
+    public long Vendor_ID { get; set; }
     public string? Remark { get; set; }
     public List<PurchaseOrderItemRequestDto>? Items { get; set; }
 }
 
 public class PurchaseOrderItemRequestDto
 {
-    public long ItemID { get; set; }
-    public decimal OrderQuantity { get; set; }
-    public decimal UnitPrice { get; set; }
+    public long Item_ID { get; set; }
+    public decimal Order_Quantity { get; set; }
+    public decimal Unit_Price { get; set; }
 }
 
 public class UpdatePurchaseOrderRequestDto

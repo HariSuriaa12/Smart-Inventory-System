@@ -24,12 +24,12 @@ public class CustomerService : ICustomerService
     public async Task<CustomerDto> CreateCustomerAsync(CreateCustomerRequestDto request)
     {
         var customer = _mapper.Map<Customer>(request);
-        customer.CreationDate = DateTime.UtcNow;
+        customer.Creation_Date = DateTime.UtcNow;
 
         var createdCustomer = await _unitOfWork.Customers.AddAsync(customer);
         await _unitOfWork.SaveAsync();
 
-        _logger.LogInformation("Customer {CustomerCode} created successfully", customer.CustomerCode);
+        _logger.LogInformation("Customer {CustomerCode} created successfully", customer.Customer_Code);
         return _mapper.Map<CustomerDto>(createdCustomer);
     }
 
