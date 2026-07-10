@@ -65,12 +65,6 @@ export const ItemsPage = () => {
       key: 'unit_Of_Measure',
       label: 'UOM',
       width: '100px',
-      render: (value) => value || '-',
-    },
-    {
-      key: 'unit_Of_Measure',
-      label: 'UOM',
-      width: '100px',
     },
     {
       key: 'purchase_Cost',
