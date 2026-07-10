@@ -2773,6 +2773,9 @@
           "item_Type": {
             "type": "string",
             "nullable": true
+          },
+          "is_Active": {
+            "type": "boolean"
           }
         },
         "additionalProperties": false

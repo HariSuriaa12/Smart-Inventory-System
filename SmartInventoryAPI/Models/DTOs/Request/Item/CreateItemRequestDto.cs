@@ -15,6 +15,7 @@ public class CreateItemRequestDto
     public decimal Tax_Percentage { get; set; }
     public string? Tax_Type { get; set; }
     public string? Item_Type { get; set; }
+    public bool Is_Active { get; set; }
 }
 
 public class UpdateItemRequestDto

@@ -26,7 +26,7 @@ public class ItemService : IItemService
     public async Task<ItemDto> CreateItemAsync(CreateItemRequestDto request)
     {
         var item = _mapper.Map<Item>(request);
-        item.Is_Active = true;
+        //item.Is_Active = true;
         item.Creation_Date = DateTime.UtcNow;
 
         var createdItem = await _unitOfWork.Items.AddAsync(item);
