@@ -3,6 +3,7 @@ import { useAuth } from '@/hooks'
 import { MainLayout } from '@/components/layout/MainLayout'
 import { LoginPage } from '@/pages/auth/LoginPage'
 import { DashboardPage } from '@/pages/dashboard/DashboardPage'
+import { ItemsPage } from '@/pages/master-data/ItemsPage'
 import { Card, Badge } from '@/components'
 import { LocationModalProvider } from '@/context/LocationModalContext'
 
@@ -39,7 +40,7 @@ function App() {
               <Route path="/app/dashboard" element={<DashboardPage />} />
 
               {/* Master Data Routes */}
-              <Route path="/app/master-data/items" element={<PlaceholderPage title="Items Management" />} />
+              <Route path="/app/master-data/items" element={<ItemsPage />} />
               <Route path="/app/master-data/locations" element={<PlaceholderPage title="Locations Management" />} />
               <Route path="/app/master-data/vendors" element={<PlaceholderPage title="Vendors Management" />} />
               <Route path="/app/master-data/customers" element={<PlaceholderPage title="Customers Management" />} />
