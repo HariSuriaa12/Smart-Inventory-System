@@ -27,7 +27,7 @@ public class ItemService : IItemService
     {
         var item = _mapper.Map<Item>(request);
         //item.Is_Active = true;
-        item.Creation_Date = DateTime.UtcNow;
+        item.Creation_Date = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Utc);
 
         var createdItem = await _unitOfWork.Items.AddAsync(item);
         await _unitOfWork.SaveAsync();
@@ -96,6 +96,13 @@ public class ItemService : IItemService
 
         var previousPrice = item.Unit_Cost;
         _mapper.Map(request, item);
+
+        // Ensure DateTime is UTC kind
+        if (item.Creation_Date.Kind == DateTimeKind.Unspecified)
+        {
+            item.Creation_Date = DateTime.SpecifyKind(item.Creation_Date, DateTimeKind.Utc);
+        }
+
         await _unitOfWork.Items.UpdateAsync(item);
         await _unitOfWork.SaveAsync();
 
@@ -135,6 +142,12 @@ public class ItemService : IItemService
             throw new NotFoundException("Item not found");
 
         item.Is_Deleted = true;
+        // Ensure deletion timestamp is UTC
+        if (item.Creation_Date.Kind == DateTimeKind.Unspecified)
+        {
+            item.Creation_Date = DateTime.SpecifyKind(item.Creation_Date, DateTimeKind.Utc);
+        }
+
         await _unitOfWork.Items.UpdateAsync(item);
         await _unitOfWork.SaveAsync();
 
