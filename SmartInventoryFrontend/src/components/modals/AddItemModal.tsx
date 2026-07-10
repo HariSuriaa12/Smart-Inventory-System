@@ -29,20 +29,19 @@ const TAX_TYPES = [
 
 export const AddItemModal = ({ isOpen, onClose, onSubmit, isLoading = false }: AddItemModalProps) => {
   const [formData, setFormData] = useState<CreateItemRequest>({
-    Item_Name: '',
-    Item_Code: '',
-    Description: '',
-    Item_Category: '',
-    Item_Brand: '',
-    Purchase_Cost: 0,
-    Unit_Cost: 0,
-    Is_Active: true,
-    Unit_Of_Measure: 'Pieces',
-    Remark: '',
-    Item_Image_Url: '',
-    Tax_Percentage: 0,
-    Tax_Type: 'GST',
-    Item_Type: ''
+    item_Name: '',
+    item_Code: '',
+    description: '',
+    item_Category: '',
+    item_Brand: '',
+    purchase_Cost: 0,
+    unit_Cost: 0,
+    is_Active: true,
+    unit_Of_Measure: 'Pieces',
+    remark: '',
+    tax_Percentage: 0,
+    tax_Type: 'GST',
+    item_Type: ''
   })
 
   const [errors, setErrors] = useState<Record<string, string>>({})
@@ -50,13 +49,13 @@ export const AddItemModal = ({ isOpen, onClose, onSubmit, isLoading = false }: A
   const validateForm = useCallback(() => {
     const newErrors: Record<string, string> = {}
 
-    if (!formData.Item_Name.trim()) newErrors.Item_Name = 'Item name is required'
-    if (!formData.Item_Code.trim()) newErrors.Item_Code = 'Item code is required'
-    if (!formData.Item_Category) newErrors.Item_Category = 'Category is required'
-    if (formData.Purchase_Cost < 0) newErrors.Purchase_Cost = 'Purchase cost cannot be negative'
-    if (formData.Unit_Cost < 0) newErrors.Unit_Cost = 'Unit cost cannot be negative'
-    if (formData.Tax_Percentage < 0 || formData.Tax_Percentage > 100) {
-      newErrors.Tax_Percentage = 'Tax percentage must be between 0 and 100'
+    if (!formData.item_Name.trim()) newErrors.item_Name = 'Item name is required'
+    if (!formData.item_Code.trim()) newErrors.item_Code = 'Item code is required'
+    if (!formData.item_Category) newErrors.item_Category = 'Category is required'
+    if (formData.purchase_Cost < 0) newErrors.purchase_Cost = 'Purchase cost cannot be negative'
+    if (formData.unit_Cost < 0) newErrors.unit_Cost = 'Unit cost cannot be negative'
+    if (formData.tax_Percentage < 0 || formData.tax_Percentage > 100) {
+      newErrors.tax_Percentage = 'Tax percentage must be between 0 and 100'
     }
 
     setErrors(newErrors)
@@ -71,20 +70,19 @@ export const AddItemModal = ({ isOpen, onClose, onSubmit, isLoading = false }: A
     try {
       await onSubmit(formData)
       setFormData({
-        Item_Name: '',
-        Item_Code: '',
-        Description: '',
-        Item_Category: '',
-        Item_Brand: '',
-        Purchase_Cost: 0,
-        Unit_Cost: 0,
-        Is_Active: true,
-        Unit_Of_Measure: 'Pieces',
-        Remark: '',
-        Item_Image_Url: '',
-        Tax_Percentage: 0,
-        Tax_Type: 'GST',
-        Item_Type: ''
+        item_Name: '',
+        item_Code: '',
+        description: '',
+        item_Category: '',
+        item_Brand: '',
+        purchase_Cost: 0,
+        unit_Cost: 0,
+        is_Active: true,
+        unit_Of_Measure: 'Pieces',
+        remark: '',
+        tax_Percentage: 0,
+        tax_Type: 'GST',
+        item_Type: ''
       })
       setErrors({})
       onClose()
@@ -134,10 +132,10 @@ export const AddItemModal = ({ isOpen, onClose, onSubmit, isLoading = false }: A
               </label>
               <Input
                 type="text"
-                value={formData.Item_Code}
-                onChange={(e) => handleInputChange('Item_Code', e.target.value)}
+                value={formData.item_Code}
+                onChange={(e) => handleInputChange('item_Code', e.target.value)}
                 placeholder="e.g., WID-001"
-                error={errors.Item_Code}
+                error={errors.item_Code}
                 disabled={isLoading}
               />
             </div>
@@ -147,10 +145,10 @@ export const AddItemModal = ({ isOpen, onClose, onSubmit, isLoading = false }: A
               </label>
               <Input
                 type="text"
-                value={formData.Item_Name}
-                onChange={(e) => handleInputChange('Item_Name', e.target.value)}
+                value={formData.item_Name}
+                onChange={(e) => handleInputChange('item_Name', e.target.value)}
                 placeholder="e.g., Widget A"
-                error={errors.Item_Name}
+                error={errors.item_Name}
                 disabled={isLoading}
               />
             </div>
@@ -163,11 +161,11 @@ export const AddItemModal = ({ isOpen, onClose, onSubmit, isLoading = false }: A
                 Category <span className="text-red-500">*</span>
               </label>
               <select
-                value={formData.Item_Category}
-                onChange={(e) => handleInputChange('Item_Category', e.target.value)}
+                value={formData.item_Category}
+                onChange={(e) => handleInputChange('item_Category', e.target.value)}
                 disabled={isLoading}
                 className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-0 bg-white transition-colors ${
-                  errors.Item_Category
+                  errors.item_Category
                     ? 'border-red-500 focus:ring-red-500'
                     : 'border-gray-300 focus:ring-primary-500 focus:border-transparent'
                 } disabled:bg-gray-100 disabled:cursor-not-allowed`}
@@ -179,14 +177,14 @@ export const AddItemModal = ({ isOpen, onClose, onSubmit, isLoading = false }: A
                   </option>
                 ))}
               </select>
-              {errors.Item_Category && <p className="text-red-500 text-sm mt-1">{errors.Item_Category}</p>}
+              {errors.item_Category && <p className="text-red-500 text-sm mt-1">{errors.item_Category}</p>}
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Brand</label>
               <Input
                 type="text"
-                value={formData.Item_Brand}
-                onChange={(e) => handleInputChange('Item_Brand', e.target.value)}
+                value={formData.item_Brand}
+                onChange={(e) => handleInputChange('item_Brand', e.target.value)}
                 placeholder="e.g., Acme Corp"
                 disabled={isLoading}
               />
@@ -197,8 +195,8 @@ export const AddItemModal = ({ isOpen, onClose, onSubmit, isLoading = false }: A
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
             <textarea
-              value={formData.Description}
-              onChange={(e) => handleInputChange('Description', e.target.value)}
+              value={formData.description}
+              onChange={(e) => handleInputChange('description', e.target.value)}
               placeholder="Item description..."
               rows={3}
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
@@ -216,10 +214,10 @@ export const AddItemModal = ({ isOpen, onClose, onSubmit, isLoading = false }: A
                 type="number"
                 step="0.01"
                 min="0"
-                value={formData.Purchase_Cost}
-                onChange={(e) => handleInputChange('Purchase_Cost', parseFloat(e.target.value) || 0)}
+                value={formData.purchase_Cost}
+                onChange={(e) => handleInputChange('purchase_Cost', parseFloat(e.target.value) || 0)}
                 placeholder="0.00"
-                error={errors.Purchase_Cost}
+                error={errors.item_Purchase_Cost}
                 disabled={isLoading}
               />
             </div>
@@ -231,10 +229,10 @@ export const AddItemModal = ({ isOpen, onClose, onSubmit, isLoading = false }: A
                 type="number"
                 step="0.01"
                 min="0"
-                value={formData.Unit_Cost}
-                onChange={(e) => handleInputChange('Unit_Cost', parseFloat(e.target.value) || 0)}
+                value={formData.unit_Cost}
+                onChange={(e) => handleInputChange('unit_Cost', parseFloat(e.target.value) || 0)}
                 placeholder="0.00"
-                error={errors.Unit_Cost}
+                error={errors.unit_Cost}
                 disabled={isLoading}
               />
             </div>
@@ -246,8 +244,8 @@ export const AddItemModal = ({ isOpen, onClose, onSubmit, isLoading = false }: A
               <label className="block text-sm font-medium text-gray-700 mb-1">Unit of Measure</label>
               <Input
                 type="text"
-                value={formData.Unit_Of_Measure}
-                onChange={(e) => handleInputChange('Unit_Of_Measure', e.target.value)}
+                value={formData.unit_Of_Measure}
+                onChange={(e) => handleInputChange('unit_Of_Measure', e.target.value)}
                 placeholder="e.g., Pieces, KG, Liter"
                 disabled={isLoading}
               />
@@ -259,10 +257,10 @@ export const AddItemModal = ({ isOpen, onClose, onSubmit, isLoading = false }: A
                 step="0.01"
                 min="0"
                 max="100"
-                value={formData.Tax_Percentage}
-                onChange={(e) => handleInputChange('Tax_Percentage', parseFloat(e.target.value) || 0)}
+                value={formData.tax_Percentage}
+                onChange={(e) => handleInputChange('tax_Percentage', parseFloat(e.target.value) || 0)}
                 placeholder="0.00"
-                error={errors.Tax_Percentage}
+                error={errors.tax_Percentage}
                 disabled={isLoading}
               />
             </div>
@@ -273,8 +271,8 @@ export const AddItemModal = ({ isOpen, onClose, onSubmit, isLoading = false }: A
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Tax Type</label>
               <select
-                value={formData.Tax_Type}
-                onChange={(e) => handleInputChange('Tax_Type', e.target.value)}
+                value={formData.tax_Type}
+                onChange={(e) => handleInputChange('tax_Type', e.target.value)}
                 disabled={isLoading}
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-primary-500 focus:border-transparent bg-white transition-colors disabled:bg-gray-100 disabled:cursor-not-allowed"
               >
@@ -289,8 +287,8 @@ export const AddItemModal = ({ isOpen, onClose, onSubmit, isLoading = false }: A
               <label className="block text-sm font-medium text-gray-700 mb-1">Item Type</label>
               <Input
                 type="text"
-                value={formData.Item_Type}
-                onChange={(e) => handleInputChange('Item_Type', e.target.value)}
+                value={formData.item_Type}
+                onChange={(e) => handleInputChange('item_Type', e.target.value)}
                 placeholder="e.g., Product, Service"
                 disabled={isLoading}
               />
@@ -303,22 +301,22 @@ export const AddItemModal = ({ isOpen, onClose, onSubmit, isLoading = false }: A
               <label className="block text-sm font-medium text-gray-700 mb-1">Remarks</label>
               <Input
                 type="text"
-                value={formData.Remark}
-                onChange={(e) => handleInputChange('Remark', e.target.value)}
+                value={formData.remark}
+                onChange={(e) => handleInputChange('remark', e.target.value)}
                 placeholder="Any additional remarks"
                 disabled={isLoading}
               />
             </div>
-            <div>
+            {/* <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Image URL</label>
               <Input
                 type="url"
-                value={formData.Item_Image_Url}
-                onChange={(e) => handleInputChange('Item_Image_Url', e.target.value)}
+                value={formData.item_Image_Url}
+                onChange={(e) => handleInputChange('item_Image_Url', e.target.value)}
                 placeholder="https://example.com/image.jpg"
                 disabled={isLoading}
               />
-            </div>
+            </div> */}
           </div>
 
           {/* Active Status */}
@@ -326,8 +324,8 @@ export const AddItemModal = ({ isOpen, onClose, onSubmit, isLoading = false }: A
             <input
               type="checkbox"
               id="is_active"
-              checked={formData.Is_Active}
-              onChange={(e) => handleInputChange('Is_Active', e.target.checked)}
+              checked={formData.is_Active}
+              onChange={(e) => handleInputChange('is_Active', e.target.checked)}
               disabled={isLoading}
               className="rounded"
             />
