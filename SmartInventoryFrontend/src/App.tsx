@@ -4,6 +4,7 @@ import { MainLayout } from '@/components/layout/MainLayout'
 import { LoginPage } from '@/pages/auth/LoginPage'
 import { DashboardPage } from '@/pages/dashboard/DashboardPage'
 import { Card, Badge } from '@/components'
+import { LocationModalProvider } from '@/context/LocationModalContext'
 
 function App() {
   const { isAuthenticated } = useAuth()
@@ -21,8 +22,9 @@ function App() {
   )
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Routes>
+    <LocationModalProvider>
+      <div className="min-h-screen bg-gray-50">
+        <Routes>
         {/* Auth Routes - Without Layout */}
         {!isAuthenticated ? (
           <>
@@ -60,7 +62,8 @@ function App() {
           </>
         )}
       </Routes>
-    </div>
+      </div>
+    </LocationModalProvider>
   )
 }
 

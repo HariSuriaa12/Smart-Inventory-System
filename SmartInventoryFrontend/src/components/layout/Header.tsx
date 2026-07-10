@@ -1,10 +1,11 @@
 import { useState } from 'react'
 import { useAuth } from '@/hooks'
-import { useAppDispatch } from '@/store/hooks'
+import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { logout } from '@/store/slices/authSlice'
 import { useNavigate } from 'react-router-dom'
-import { Bell, LogOut, User, Settings, Menu } from 'lucide-react'
+import { Bell, LogOut, User, Settings, Menu, MapPin } from 'lucide-react'
 import cn from 'classnames'
+import { useLocationModal } from '@/context/LocationModalContext'
 
 interface HeaderProps {
   onMenuClick?: () => void
@@ -17,6 +18,9 @@ export const Header: React.FC<HeaderProps> = ({ onMenuClick, sidebarOpen }) => {
   const navigate = useNavigate()
   const [showNotifications, setShowNotifications] = useState(false)
   const [showUserMenu, setShowUserMenu] = useState(false)
+  const [showLocationTooltip, setShowLocationTooltip] = useState(false)
+  const { currentLocation } = useAppSelector((state) => state.locations)
+  const { openLocationModal } = useLocationModal()
 
   const handleLogout = () => {
     dispatch(logout())
@@ -50,8 +54,33 @@ export const Header: React.FC<HeaderProps> = ({ onMenuClick, sidebarOpen }) => {
           </div>
         </div>
 
-        {/* Right Side - Notifications & User Menu */}
-        <div className="flex items-center gap-4">
+        {/* Right Side - Location, Notifications & User Menu */}
+        <div className="flex items-center gap-6">
+          {/* Current Location */}
+          {currentLocation && (
+            <div className="relative">
+              <button
+                onClick={openLocationModal}
+                onMouseEnter={() => setShowLocationTooltip(true)}
+                onMouseLeave={() => setShowLocationTooltip(false)}
+                className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-gray-100 transition-colors group"
+              >
+                <MapPin size={18} className="text-primary-600 group-hover:text-primary-700" />
+                <span className="text-sm font-medium text-gray-900 hidden sm:inline max-w-[150px] truncate">
+                  {currentLocation.locationName}
+                </span>
+              </button>
+
+              {/* Location Tooltip */}
+              {showLocationTooltip && (
+                <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-1.5 bg-gray-900 text-white text-xs rounded-md whitespace-nowrap pointer-events-none z-50">
+                  Click here to switch outlet
+                  <div className="absolute top-full left-1/2 transform -translate-x-1/2 border-4 border-transparent border-t-gray-900"></div>
+                </div>
+              )}
+            </div>
+          )}
+
           {/* Notifications */}
           <div className="relative">
             <button
