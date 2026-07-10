@@ -19,9 +19,9 @@ export interface PaginatedResponse<T> {
 }
 
 export interface Entity {
-  id: number
-  creationDate?: string | Date
-  isDeleted?: boolean
+  ID: number
+  Creation_Date?: string | Date
+  Is_Deleted?: boolean
 }
 
 export interface LoadingState {

@@ -1,25 +1,25 @@
 import { Entity } from './common'
 
 export interface Vendor extends Entity {
-  companyName: string
-  vendorCode: string
-  companyAddress: string
+  company_Name: string
+  vendor_Code: string
+  company_Address: string
   email: string
   mobile: string
 }
 
 export interface CreateVendorRequest {
-  companyName: string
-  vendorCode: string
-  companyAddress: string
+  company_Name: string
+  vendor_Code: string
+  company_Address: string
   email: string
   mobile: string
 }
 
 export interface UpdateVendorRequest {
-  companyName?: string
-  vendorCode?: string
-  companyAddress?: string
+  company_Name?: string
+  vendor_Code?: string
+  company_Address?: string
   email?: string
   mobile?: string
 }

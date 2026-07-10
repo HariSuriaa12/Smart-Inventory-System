@@ -61,6 +61,11 @@ builder.Services.AddAutoMapper(config =>
 // Register custom services and repositories
 builder.Services.AddApplicationServices();
 
+////Response first letter will be smaller letter
+//builder.Services.AddControllers().AddJsonOptions(options => {
+//    options.JsonSerializerOptions.PropertyNamingPolicy = null;
+//});
+
 // Add Swagger/OpenAPI
 builder.Services.AddSwaggerGen(c =>
 {

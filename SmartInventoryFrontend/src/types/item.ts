@@ -1,54 +1,54 @@
 import { Entity } from './common'
 
 export interface Item extends Entity {
-  itemName: string
-  itemCode: string
-  description?: string
-  itemCategory: string
-  itemBrand?: string
-  purchaseCost: number
-  unitCost: number
-  isActive: boolean
-  unitOfMeasure: string
-  remark?: string
-  itemImageUrl?: string
-  taxPercentage?: number
-  taxType?: string
-  itemType?: string
+  Item_Name: string
+  Item_Code: string
+  Description?: string
+  Item_Category: string
+  Item_Brand?: string
+  Purchase_Cost: number
+  Unit_Cost: number
+  Is_Active: boolean
+  Unit_Of_Measure: string
+  Remark?: string
+  Item_Image_Url?: string
+  Tax_Percentage?: number
+  Tax_Type?: string
+  Item_Type?: string
 }
 
 export interface CreateItemRequest {
-  itemName: string
-  itemCode: string
-  description?: string
-  itemCategory: string
-  itemBrand?: string
-  purchaseCost: number
-  unitCost: number
-  isActive: boolean
-  unitOfMeasure: string
-  remark?: string
-  itemImageUrl?: string
-  taxPercentage?: number
-  taxType?: string
-  itemType?: string
+  Item_Name: string
+  Item_Code: string
+  Description?: string
+  Item_Category: string
+  Item_Brand?: string
+  Purchase_Cost: number
+  Unit_Cost: number
+  Is_Active: boolean
+  Unit_Of_Measure: string
+  Remark?: string
+  Item_Image_Url?: string
+  Tax_Percentage?: number
+  Tax_Type?: string
+  Item_Type?: string
 }
 
 export interface UpdateItemRequest {
-  itemName?: string
-  itemCode?: string
-  description?: string
-  itemCategory?: string
-  itemBrand?: string
-  purchaseCost?: number
-  unitCost?: number
-  isActive?: boolean
-  unitOfMeasure?: string
-  remark?: string
-  itemImageUrl?: string
-  taxPercentage?: number
-  taxType?: string
-  itemType?: string
+  Item_Name: string
+  Item_Code: string
+  Description?: string
+  Item_Category: string
+  Item_Brand?: string
+  Purchase_Cost: number
+  Unit_Cost: number
+  Is_Active: boolean
+  Unit_Of_Measure: string
+  Remark?: string
+  Item_Image_Url?: string
+  Tax_Percentage?: number
+  Tax_Type?: string
+  Item_Type?: string
 }
 
 export interface ItemFilters {

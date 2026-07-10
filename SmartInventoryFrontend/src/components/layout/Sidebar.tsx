@@ -122,7 +122,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ open, collapsed = false, onTog
               'w-full flex items-center justify-between px-4 py-3 rounded-lg transition-colors text-sm font-medium',
               'text-gray-700 hover:bg-gray-100',
               level > 0 && 'ml-4',
-              collapsed && 'px-2 justify-center'
+              collapsed && 'px-5 justify-center'
             )}
             title={collapsed ? item.title : undefined}
           >
@@ -187,7 +187,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ open, collapsed = false, onTog
       )}
     >
       {/* Sidebar Header */}
-      <div className="sticky top-0 px-4 py-4 border-b border-gray-200 bg-white flex items-center justify-between">
+      <div className="sticky top-3 px-4 py-4 bg-white flex items-center justify-between">
         {!collapsed && <h2 className="text-lg font-bold text-gray-900">Menu</h2>}
         <button
           onClick={onToggleCollapse}

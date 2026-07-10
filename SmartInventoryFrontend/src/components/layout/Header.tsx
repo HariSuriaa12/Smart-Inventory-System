@@ -67,7 +67,8 @@ export const Header: React.FC<HeaderProps> = ({ onMenuClick, sidebarOpen }) => {
               >
                 <MapPin size={18} className="text-primary-600 group-hover:text-primary-700 flex-shrink-0" />
                 <span className="text-sm font-medium text-gray-900 inline max-w-[150px] truncate">
-                  {currentLocation.locationName}
+                  {console.log('Current Location Top Bar:', currentLocation)} {/* Debugging log */}
+                  {currentLocation.location_Name}
                 </span>
               </button>
 

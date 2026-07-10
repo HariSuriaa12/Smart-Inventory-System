@@ -331,7 +331,7 @@ const handleSelectLocation = (location: Location) => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {locations.map((loc) => (
                   <button
-                    key={loc.outletCode}
+                    key={loc.outlet_Code}
                     onClick={() => {
                       handleSelectLocation(loc);
                       closeLocationModal();
@@ -340,7 +340,7 @@ const handleSelectLocation = (location: Location) => {
                   >
                     <div className="flex items-start gap-3">
                       <div className="mt-1">
-                        {currentLocation?.outletCode === loc.outletCode ? (
+                        {currentLocation?.outlet_Code === loc.outlet_Code ? (
                           <CheckCircle size={20} className="text-green-600 flex-shrink-0" />
                         ) : (
                           <div className="w-5 h-5 rounded-full border-2 border-gray-300 group-hover:border-primary-500 flex-shrink-0" />
@@ -348,10 +348,10 @@ const handleSelectLocation = (location: Location) => {
                       </div>
                       <div className="flex-1 min-w-0">
                         <h3 className="font-semibold text-gray-900 group-hover:text-primary-700 transition-colors text-base">
-                          {loc.locationName}
+                          {loc.location_Name}
                         </h3>
                         <p className="text-xs font-medium text-gray-500 group-hover:text-primary-600 mt-0.5">
-                          {loc.outletCode}
+                          {loc.outlet_Code}
                         </p>
                         <p className="text-sm text-gray-600 group-hover:text-gray-700 mt-2 leading-relaxed">
                           {loc.address}

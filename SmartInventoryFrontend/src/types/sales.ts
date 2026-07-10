@@ -15,41 +15,41 @@ export const SalesStatusLabel: Record<SalesStatus, string> = {
 }
 
 export interface SalesItem extends Entity {
-  salesId: number
-  itemId: number
-  soldQuantity: number
-  subTotal: number
-  isPromotion: boolean
-  discountPercentage: number
+  Sales_Id: number
+  Item_Id: number
+  Sold_Quantity: number
+  Sub_Total: number
+  Is_Promotion: boolean
+  Discount_Percentage: number
   item?: Item
 }
 
 export interface Sales extends Entity {
-  locationId: number
-  salesStatus: SalesStatus
-  salesDate: string | Date
-  salesTime: string
-  isReserved: boolean
-  salesNumber: string
-  refSalesNumber?: number
+  Location_Id: number
+  Sales_Status: SalesStatus
+  Sales_Date: string | Date
+  Sales_Time: string
+  Is_Reserved: boolean
+  Sales_Number: string
+  Ref_Sales_Number?: number
   items?: SalesItem[]
   location?: Location
 }
 
 export interface ReceiveSalesRequest {
   salesData: {
-    locationId: number
-    salesStatus: SalesStatus
-    salesDate: string | Date
-    salesTime: string
-    isReserved: boolean
-    salesNumber: string
+    Location_Id: number
+    Sales_Status: SalesStatus
+    Sales_Date: string | Date
+    Sales_Time: string
+    Is_Reserved: boolean
+    Sales_Number: string
     items: {
-      itemId: number
-      soldQuantity: number
-      subTotal: number
-      isPromotion: boolean
-      discountPercentage: number
+      Item_Id: number
+      Sold_Quantity: number
+      Sub_Total: number
+      Is_Promotion: boolean
+      Discount_Percentage: number
     }[]
   }[]
 }

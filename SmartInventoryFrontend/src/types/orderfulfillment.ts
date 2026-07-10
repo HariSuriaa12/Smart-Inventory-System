@@ -23,40 +23,40 @@ export const OrderFulfillmentStatusLabel: Record<OrderFulfillmentStatus, string>
 }
 
 export interface OrderFulfillmentItem extends Entity {
-  fulfillmentId: number
-  itemId: number
-  requestQuantity: number
-  unitPrice: number
-  status: OrderFulfillmentStatus
-  subTotal: number
-  shippedQuantity: number
-  item?: Item
+  Fulfillment_Id: number
+  Item_Id: number
+  Request_Quantity: number
+  Unit_Price: number
+  Status: OrderFulfillmentStatus
+  Sub_Total: number
+  Shipped_Quantity: number
+  Item?: Item
 }
 
 export interface OrderFulfillment extends Entity {
-  locationId: number
-  orderDate: string | Date
-  orderTime: string
-  shipmentAddressLine1: string
-  shipmentAddressLine2?: string
-  shipmentCity: string
-  shipmentState: string
-  shipmentPostCode: string
-  shipmentCountryCode: string
-  remark?: string
-  status: OrderFulfillmentStatus
-  verifiedBy: number
-  totalAmount: number
-  customerId: number
-  items?: OrderFulfillmentItem[]
-  location?: Location
-  customer?: Customer
-  verifiedByUser?: User
+  Location_Id: number
+  Order_Date: string | Date
+  Order_Time: string
+  Shipment_Address_Line_1: string
+  Shipment_Address_Line_2?: string
+  Shipment_City: string
+  Shipment_State: string
+  Shipment_PostCode: string
+  Shipment_Country_Code: string
+  Remark?: string
+  Status: OrderFulfillmentStatus
+  Verified_By: number
+  Total_Amount: number
+  Customer_Id: number
+  Items?: OrderFulfillmentItem[]
+  Location?: Location
+  Customer?: Customer
+  Verified_ByUser?: User
 }
 
 export interface ReceiveOrderFulfillmentRequest {
-  itemId: number
-  shippedQuantity: number
+  Item_Id: number
+  Shipped_Quantity: number
 }
 
 export interface OrderFulfillmentFilters {

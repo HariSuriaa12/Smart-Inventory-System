@@ -3,12 +3,12 @@ import { Item } from './item'
 import { Location } from './location'
 
 export interface Inventory extends Entity {
-  itemId: number
-  locationId: number
-  onHandQuantity: number
-  availableQuantity: number
-  item?: Item
-  location?: Location
+  Item_Id: number
+  Location_Id: number
+  On_Hand_Quantity: number
+  Available_Quantity: number
+  Item?: Item
+  Location?: Location
 }
 
 export interface AdjustInventoryRequest {

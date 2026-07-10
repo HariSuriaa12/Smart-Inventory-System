@@ -13,22 +13,22 @@ export const ForecastMethodLabel: Record<ForecastMethod, string> = {
 }
 
 export interface ForecastedResult extends Entity {
-  itemId: number
-  locationId: number
-  forecastedPeriodInDays: number
-  forecastedQuantity: number
-  forecastMethod: ForecastMethod
-  modelVersion: string
-  item?: Item
-  location?: Location
+  Item_Id: number
+  Location_Id: number
+  Forecasted_Period_In_Days: number
+  Forecasted_Quantity: number
+  Forecast_Method: ForecastMethod
+  Model_Version: string
+  Item?: Item
+  Location?: Location
 }
 
 export interface ForecastingFilters {
   skip: number
   take: number
-  itemId?: number
-  locationId?: number
-  method?: ForecastMethod
+  Item_Id?: number
+  Location_Id?: number
+  Method?: ForecastMethod
   dateFrom?: string
   dateTo?: string
 }
