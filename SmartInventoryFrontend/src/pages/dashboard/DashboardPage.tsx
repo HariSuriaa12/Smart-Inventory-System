@@ -291,7 +291,7 @@ const handleSelectLocation = (location: Location) => {
     {isLocationModalOpen && (
       <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm px-4">
         {/* Modal Card */}
-        <div className="bg-white rounded-3xl shadow-2xl max-w-2xl w-full border border-gray-200 overflow-hidden animate-in fade-in zoom-in duration-300">
+        <div className="bg-white rounded-3xl shadow-2xl max-w-2xl w-full border border-gray-200 overflow-y-auto h-[45rem] animate-in fade-in zoom-in duration-300">
           {/* Header */}
           <div className="bg-gradient-to-br from-primary-600 via-primary-600 to-primary-700 px-8 py-10">
             <div className="flex items-start justify-between">

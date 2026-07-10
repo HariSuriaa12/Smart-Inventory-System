@@ -66,7 +66,7 @@ export const Header: React.FC<HeaderProps> = ({ onMenuClick, sidebarOpen }) => {
                 className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-gray-100 transition-colors group"
               >
                 <MapPin size={18} className="text-primary-600 group-hover:text-primary-700" />
-                <span className="text-sm font-medium text-gray-900 hidden sm:inline max-w-[150px] truncate">
+                <span className="text-sm font-medium text-black hidden sm:inline max-w-[150px] truncate">
                   {currentLocation.locationName}
                 </span>
               </button>
