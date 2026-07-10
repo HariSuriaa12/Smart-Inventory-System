@@ -37,4 +37,41 @@ public class ItemRepository : GenericRepository<Item>, IItemRepository
             .Take(take)
             .ToListAsync();
     }
+
+    public async Task<IEnumerable<Item>> SearchAsync(string? searchQuery, int skip = 0, int take = 10)
+    {
+        var query = _dbSet.Where(i => !i.Is_Deleted);
+
+        if (!string.IsNullOrWhiteSpace(searchQuery))
+        {
+            var lowerQuery = searchQuery.ToLower().Trim();
+            query = query.Where(i =>
+                i.Item_Code.ToLower().Contains(lowerQuery) ||
+                i.Item_Name.ToLower().Contains(lowerQuery) ||
+                (i.Item_Brand != null && i.Item_Brand.ToLower().Contains(lowerQuery)) ||
+                (i.Description != null && i.Description.ToLower().Contains(lowerQuery)));
+        }
+
+        return await query
+            .Skip(skip)
+            .Take(take)
+            .ToListAsync();
+    }
+
+    public async Task<int> CountSearchAsync(string? searchQuery)
+    {
+        var query = _dbSet.Where(i => !i.Is_Deleted);
+
+        if (!string.IsNullOrWhiteSpace(searchQuery))
+        {
+            var lowerQuery = searchQuery.ToLower().Trim();
+            query = query.Where(i =>
+                i.Item_Code.ToLower().Contains(lowerQuery) ||
+                i.Item_Name.ToLower().Contains(lowerQuery) ||
+                (i.Item_Brand != null && i.Item_Brand.ToLower().Contains(lowerQuery)) ||
+                (i.Description != null && i.Description.ToLower().Contains(lowerQuery)));
+        }
+
+        return await query.CountAsync();
+    }
 }

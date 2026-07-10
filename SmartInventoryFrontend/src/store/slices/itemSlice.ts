@@ -10,14 +10,15 @@ const initialState: ItemState = {
   total: 0,
   skip: 0,
   take: 10,
+  searchQuery: null,
 }
 
 export const fetchItems = createAsyncThunk(
   'items/fetchItems',
-  async ({ skip = 0, take = 10 }: { skip?: number; take?: number }, { rejectWithValue }) => {
+  async ({ skip = 0, take = 10, searchQuery }: { skip?: number; take?: number; searchQuery?: string }, { rejectWithValue }) => {
     try {
-      const response = await itemService.getItems(skip, take)
-      return response.data
+      const response = await itemService.getItems(skip, take, searchQuery)
+      return { ...response.data, searchQuery }
     } catch (error: any) {
       return rejectWithValue(error.message)
     }
@@ -110,6 +111,7 @@ const itemSlice = createSlice({
         state.total = action.payload.total || 0
         state.skip = action.payload.skip || 0
         state.take = action.payload.take || 10
+        state.searchQuery = action.payload.searchQuery || null
       })
       .addCase(fetchItems.rejected, (state, action) => {
         state.loading = false

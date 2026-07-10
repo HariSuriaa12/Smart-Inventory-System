@@ -23,13 +23,16 @@ public class ItemsController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<ApiResponseDto<PaginatedResponseDto<ItemDto>>>> GetAllItems(
         [FromQuery] int skip = 0,
-        [FromQuery] int take = 10)
+        [FromQuery] int take = 10,
+        [FromQuery] string? searchQuery = null)
     {
-        var items = await _itemService.GetAllItemsAsync(skip, take);
+        var items = await _itemService.GetAllItemsAsync(skip, take, searchQuery);
         return Ok(new ApiResponseDto<PaginatedResponseDto<ItemDto>>
         {
             Success = true,
-            Message = "Items retrieved successfully",
+            Message = searchQuery != null
+                ? $"Items matching '{searchQuery}' retrieved successfully"
+                : "Items retrieved successfully",
             Data = items,
             StatusCode = 200
         });

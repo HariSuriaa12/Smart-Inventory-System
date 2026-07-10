@@ -67,4 +67,5 @@ export interface ItemState {
   total: number
   skip: number
   take: number
+  searchQuery: string | null
 }

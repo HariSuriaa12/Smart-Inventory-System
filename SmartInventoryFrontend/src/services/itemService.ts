@@ -3,8 +3,8 @@ import { ApiResponse, PaginatedResponse } from '@/types/common'
 import { Item, CreateItemRequest, UpdateItemRequest } from '@/types/item'
 
 export const itemService = {
-  getItems: async (skip: number = 0, take: number = 10) =>
-    (await api.get<ApiResponse<PaginatedResponse<Item>>>('/api/items', { params: { skip, take } })).data,
+  getItems: async (skip: number = 0, take: number = 10, searchQuery?: string) =>
+    (await api.get<ApiResponse<PaginatedResponse<Item>>>('/api/items', { params: { skip, take, searchQuery } })).data,
 
   getItemById: async (id: number) =>
     (await api.get<ApiResponse<Item>>(`/api/items/${id}`)).data,

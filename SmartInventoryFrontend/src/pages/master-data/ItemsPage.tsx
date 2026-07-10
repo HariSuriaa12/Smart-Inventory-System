@@ -1,21 +1,38 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { fetchItems } from '@/store/slices/itemSlice'
-import { DataGrid, Card, Column } from '@/components'
+import { DataGrid, Card, Column, Input } from '@/components'
 import { Item } from '@/types/item'
-import { Plus } from 'lucide-react'
+import { Plus, Search, X } from 'lucide-react'
 
 const PAGE_SIZE = 10
 
 export const ItemsPage = () => {
   const dispatch = useAppDispatch()
   const [currentPage, setCurrentPage] = useState(1)
-  const { items, loading, total } = useAppSelector((state) => state.items)
+  const [searchInput, setSearchInput] = useState('')
+  const { items, loading, total, searchQuery } = useAppSelector((state) => state.items)
 
   useEffect(() => {
     const skip = (currentPage - 1) * PAGE_SIZE
-    dispatch(fetchItems({ skip, take: PAGE_SIZE }) as any)
-  }, [currentPage, dispatch])
+    dispatch(fetchItems({ skip, take: PAGE_SIZE, searchQuery: searchQuery || undefined }) as any)
+  }, [currentPage, dispatch, searchQuery])
+
+  const handleSearch = useCallback((query: string) => {
+    setSearchInput(query)
+    setCurrentPage(1)
+    if (query.trim()) {
+      dispatch(fetchItems({ skip: 0, take: PAGE_SIZE, searchQuery: query.trim() }) as any)
+    } else {
+      dispatch(fetchItems({ skip: 0, take: PAGE_SIZE }) as any)
+    }
+  }, [dispatch])
+
+  const handleClearSearch = useCallback(() => {
+    setSearchInput('')
+    setCurrentPage(1)
+    dispatch(fetchItems({ skip: 0, take: PAGE_SIZE }) as any)
+  }, [dispatch])
 
   const columns: Column<Item>[] = [
     {
@@ -84,6 +101,29 @@ export const ItemsPage = () => {
           <Plus size={20} />
           Add Item
         </button>
+      </div>
+
+      {/* Search Bar */}
+      <div className="flex-shrink-0">
+        <div className="relative">
+          <Search size={18} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+          <input
+            type="text"
+            placeholder="Search by item code, name, brand..."
+            value={searchInput}
+            onChange={(e) => handleSearch(e.target.value)}
+            className="w-full pl-10 pr-10 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+          />
+          {searchInput && (
+            <button
+              onClick={handleClearSearch}
+              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
+              aria-label="Clear search"
+            >
+              <X size={18} />
+            </button>
+          )}
+        </div>
       </div>
 
       {/* Data Grid Card */}

@@ -54,12 +54,23 @@ public class ItemService : IItemService
         return _mapper.Map<ItemDto>(item);
     }
 
-    public async Task<PaginatedResponseDto<ItemDto>> GetAllItemsAsync(int skip = 0, int take = 10)
+    public async Task<PaginatedResponseDto<ItemDto>> GetAllItemsAsync(int skip = 0, int take = 10, string? searchQuery = null)
     {
-        var items = await _unitOfWork.Items.GetAllAsync(skip, take);
-        var total = await _unitOfWork.Items.CountAsync();
+        IEnumerable<Item> items;
+        int total;
+
+        if (!string.IsNullOrWhiteSpace(searchQuery))
+        {
+            items = await _unitOfWork.Items.SearchAsync(searchQuery, skip, take);
+            total = await _unitOfWork.Items.CountSearchAsync(searchQuery);
+        }
+        else
+        {
+            items = await _unitOfWork.Items.GetAllAsync(skip, take);
+            total = await _unitOfWork.Items.CountAsync();
+        }
+
         var activeItems = items.Where(i => !i.Is_Deleted).ToList();
-        var activeTotal = activeItems.Count;
 
         var page = (skip / take) + 1;
         var totalPages = (int)Math.Ceiling((double)total / take);
