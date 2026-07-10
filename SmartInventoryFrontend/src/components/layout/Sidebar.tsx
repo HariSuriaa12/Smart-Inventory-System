@@ -11,6 +11,8 @@ import {
   TrendingUp,
   Settings,
   ChevronDown,
+  ChevronLeft,
+  ChevronRight,
 } from 'lucide-react'
 import cn from 'classnames'
 import { useState } from 'react'
@@ -25,9 +27,11 @@ interface NavItem {
 
 interface SidebarProps {
   open: boolean
+  collapsed?: boolean
+  onToggleCollapse?: () => void
 }
 
-export const Sidebar: React.FC<SidebarProps> = ({ open }) => {
+export const Sidebar: React.FC<SidebarProps> = ({ open, collapsed = false, onToggleCollapse }) => {
   const location = useLocation()
   const [expandedMenus, setExpandedMenus] = useState<string[]>(['master-data'])
 
@@ -117,19 +121,23 @@ export const Sidebar: React.FC<SidebarProps> = ({ open }) => {
             className={cn(
               'w-full flex items-center justify-between px-4 py-3 rounded-lg transition-colors text-sm font-medium',
               'text-gray-700 hover:bg-gray-100',
-              level > 0 && 'ml-4'
+              level > 0 && 'ml-4',
+              collapsed && 'px-2 justify-center'
             )}
+            title={collapsed ? item.title : undefined}
           >
-            <div className="flex items-center gap-3">
+            <div className={cn('flex items-center gap-3', collapsed && 'gap-0')}>
               <span className="text-gray-600">{item.icon}</span>
-              <span>{item.title}</span>
+              {!collapsed && <span>{item.title}</span>}
             </div>
-            <ChevronDown
-              size={16}
-              className={cn('transition-transform', isExpanded && 'rotate-180')}
-            />
+            {!collapsed && (
+              <ChevronDown
+                size={16}
+                className={cn('transition-transform', isExpanded && 'rotate-180')}
+              />
+            )}
           </button>
-          {isExpanded && (
+          {isExpanded && !collapsed && (
             <div className="ml-4 space-y-1">
               {item.submenu!.map((subitem) => renderNavItem(subitem, level + 1))}
             </div>
@@ -148,17 +156,23 @@ export const Sidebar: React.FC<SidebarProps> = ({ open }) => {
           isActive(item.href)
             ? 'bg-primary-100 text-primary-700'
             : 'text-gray-700 hover:bg-gray-100',
-          level > 0 && 'ml-4'
+          level > 0 && 'ml-4',
+          collapsed && 'px-2 justify-center'
         )}
+        title={collapsed ? item.title : undefined}
       >
         <span className={isActive(item.href) ? 'text-primary-600' : 'text-gray-600'}>
           {item.icon}
         </span>
-        <span>{item.title}</span>
-        {item.badge && (
-          <span className="ml-auto bg-red-500 text-white text-xs font-bold rounded-full px-2 py-1">
-            {item.badge}
-          </span>
+        {!collapsed && (
+          <>
+            <span>{item.title}</span>
+            {item.badge && (
+              <span className="ml-auto bg-red-500 text-white text-xs font-bold rounded-full px-2 py-1">
+                {item.badge}
+              </span>
+            )}
+          </>
         )}
       </Link>
     )
@@ -167,30 +181,40 @@ export const Sidebar: React.FC<SidebarProps> = ({ open }) => {
   return (
     <aside
       className={cn(
-        'fixed lg:sticky top-0 left-0 z-30 w-64 h-screen bg-white border-r border-gray-200 overflow-y-auto transition-transform duration-300 lg:translate-x-0',
+        'fixed lg:sticky top-0 left-0 z-30 h-screen bg-white border-r border-gray-200 overflow-y-auto transition-all duration-300 lg:translate-x-0',
+        collapsed ? 'w-20' : 'w-64',
         open ? 'translate-x-0' : '-translate-x-full'
       )}
     >
       {/* Sidebar Header */}
-      <div className="sticky top-0 px-6 py-4 border-b border-gray-200 bg-white">
-        <h2 className="text-lg font-bold text-gray-900">Menu</h2>
+      <div className="sticky top-0 px-4 py-4 border-b border-gray-200 bg-white flex items-center justify-between">
+        {!collapsed && <h2 className="text-lg font-bold text-gray-900">Menu</h2>}
+        <button
+          onClick={onToggleCollapse}
+          className="p-1.5 hover:bg-gray-100 rounded-lg transition-colors hidden lg:flex"
+          title={collapsed ? 'Expand menu' : 'Collapse menu'}
+        >
+          {collapsed ? <ChevronRight size={18} /> : <ChevronLeft size={18} />}
+        </button>
       </div>
 
       {/* Navigation Items */}
-      <nav className="px-3 py-6 space-y-1">
+      <nav className={cn('py-6 space-y-1', collapsed ? 'px-2' : 'px-3')}>
         {navItems.map((item) => renderNavItem(item))}
       </nav>
 
       {/* Sidebar Footer */}
-      <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-gray-200 bg-gray-50">
-        <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
-          <p className="text-xs text-blue-900">
-            <span className="font-semibold">Version 1.0.0</span>
-            <br />
-            Smart Inventory System
-          </p>
+      {!collapsed && (
+        <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-gray-200 bg-gray-50">
+          <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
+            <p className="text-xs text-blue-900">
+              <span className="font-semibold">Version 1.0.0</span>
+              <br />
+              Smart Inventory System
+            </p>
+          </div>
         </div>
-      </div>
+      )}
     </aside>
   )
 }

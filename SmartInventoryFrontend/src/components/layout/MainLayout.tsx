@@ -5,16 +5,17 @@ import { Sidebar } from './Sidebar'
 
 export const MainLayout: React.FC = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false)
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false)
 
   return (
-    <div className="flex h-screen bg-gray-50 flex-col">
-      {/* Header - Full Width */}
-      <Header onMenuClick={() => setSidebarOpen(!sidebarOpen)} sidebarOpen={sidebarOpen} />
+    <div className="flex h-screen bg-gray-50">
+      {/* Sidebar */}
+      <Sidebar open={sidebarOpen} collapsed={sidebarCollapsed} onToggleCollapse={() => setSidebarCollapsed(!sidebarCollapsed)} />
 
-      {/* Main Content Area */}
-      <div className="flex flex-1 overflow-hidden">
-        {/* Sidebar */}
-        <Sidebar open={sidebarOpen} />
+      {/* Main Content Area - Flex Column */}
+      <div className="flex-1 flex flex-col overflow-hidden">
+        {/* Header */}
+        <Header onMenuClick={() => setSidebarOpen(!sidebarOpen)} sidebarOpen={sidebarOpen} />
 
         {/* Page Content */}
         <main className="flex-1 overflow-y-auto lg:ml-0">

@@ -37,7 +37,7 @@ export const Header: React.FC<HeaderProps> = ({ onMenuClick, sidebarOpen }) => {
   const unreadCount = notifications.filter((n) => !n.read).length
 
   return (
-    <header className="bg-white border-b border-gray-200 sticky top-0 z-40 shadow-sm">
+    <header className="bg-white border-b border-gray-200 sticky top-0 z-40">
       <div className="px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
         {/* Left Side - Logo & Menu */}
         <div className="flex items-center gap-4">
@@ -65,17 +65,17 @@ export const Header: React.FC<HeaderProps> = ({ onMenuClick, sidebarOpen }) => {
                 onMouseLeave={() => setShowLocationTooltip(false)}
                 className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-gray-100 transition-colors group"
               >
-                <MapPin size={18} className="text-primary-600 group-hover:text-primary-700" />
-                <span className="text-sm font-medium text-black hidden sm:inline max-w-[150px] truncate">
+                <MapPin size={18} className="text-primary-600 group-hover:text-primary-700 flex-shrink-0" />
+                <span className="text-sm font-medium text-gray-900 inline max-w-[150px] truncate">
                   {currentLocation.locationName}
                 </span>
               </button>
 
               {/* Location Tooltip */}
               {showLocationTooltip && (
-                <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-1.5 bg-gray-900 text-white text-xs rounded-md whitespace-nowrap pointer-events-none z-50">
+                <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 px-3 py-1.5 bg-gray-900 text-white text-xs rounded-md whitespace-nowrap pointer-events-none z-50">
                   Click here to switch outlet
-                  <div className="absolute top-full left-1/2 transform -translate-x-1/2 border-4 border-transparent border-t-gray-900"></div>
+                  <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 border-4 border-transparent border-b-gray-900"></div>
                 </div>
               )}
             </div>
