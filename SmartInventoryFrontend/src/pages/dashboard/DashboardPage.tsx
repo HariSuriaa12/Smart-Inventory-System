@@ -278,46 +278,62 @@ const handleSelectLocation = (location: Location) => {
       </Card>
     </div>
 
-    {/* Mini Page (Modal) Overlay */}
+    {/* Location Selection Modal Overlay */}
     {isOpen && (
       <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-md px-4">
-        
-        {/* Background Click to Close */}
-        <div className="absolute inset-0 -z-10" onClick={() => setIsOpen(false)} />
+        {/* Modal Card */}
+        <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full border border-gray-100 overflow-hidden">
+          {/* Header */}
+          <div className="bg-gradient-to-r from-primary-600 to-primary-700 px-8 py-8">
+            <div className="flex items-center gap-3 mb-2">
+              <MapPin className="text-white" size={28} />
+              <h2 className="text-2xl font-bold text-white">Select Location</h2>
+            </div>
+            <p className="text-primary-100 text-sm">Choose a location to access your dashboard</p>
+          </div>
 
-        {/* Mini Page Card Content */}
-        <div className="bg-white p-8 rounded-2xl shadow-2xl max-w-md w-full border border-gray-100">
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">Select Outlet</h2>
-          <div className="overlay-content">
-          {loading ? (
-            <p>Loading locations...</p>
-          ) : (
-            console.log('Locations:', locations), // Debugging log
-            <ul className="location-list">
-              {locations.map((loc) => (
-                <li key={loc.outletCode} className="location-item">
-                  <button 
+          {/* Content */}
+          <div className="p-6">
+            {loading ? (
+              <div className="flex flex-col items-center justify-center py-12">
+                <Spinner size="lg" className="mb-4" />
+                <p className="text-gray-600 text-sm">Loading locations...</p>
+              </div>
+            ) : error ? (
+              <div className="bg-red-50 border border-red-200 rounded-lg p-4 text-center">
+                <p className="text-red-700 text-sm font-medium">Failed to load locations</p>
+                <p className="text-red-600 text-xs mt-1">{error}</p>
+              </div>
+            ) : locations.length === 0 ? (
+              <div className="text-center py-8">
+                <MapPin size={40} className="text-gray-300 mx-auto mb-3" />
+                <p className="text-gray-600 font-medium">No locations found</p>
+              </div>
+            ) : (
+              <div className="space-y-3 max-h-96 overflow-y-auto">
+                {locations.map((loc) => (
+                  <button
+                    key={loc.outletCode}
                     onClick={() => {
-                      handleSelectLocation(loc); // 3. Trigger selection function
-                      setIsOpen(false); // Close overlay after selection
+                      handleSelectLocation(loc);
+                      setIsOpen(false);
                     }}
-                    className="location-selection-button"
+                    className="w-full text-left p-4 rounded-lg border-2 border-gray-200 hover:border-primary-500 hover:bg-primary-50 transition-all duration-200 group"
                   >
-                    <strong>{loc.locationName}</strong>
-                    <span className="outlet-code">Code: {loc.outletCode}</span>
-                    <p className="address">{loc.address}</p>
+                    <div className="flex items-start justify-between mb-2">
+                      <h3 className="font-semibold text-gray-900 group-hover:text-primary-700 transition-colors">
+                        {loc.locationName}
+                      </h3>
+                      <Badge variant="outline" size="sm" className="text-gray-600 group-hover:text-primary-600">
+                        {loc.outletCode}
+                      </Badge>
+                    </div>
+                    <p className="text-sm text-gray-600 group-hover:text-gray-700">{loc.address}</p>
                   </button>
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
-          {/* <button
-            onClick={() => setIsOpen(false)}
-            className="w-full py-2.5 px-4 bg-primary-600 text-white font-medium rounded-xl hover:bg-primary-700 transition-colors shadow-md"
-          >
-            Access Dashboard
-          </button> */}
+                ))}
+              </div>
+            )}
+          </div>
         </div>
       </div>
     )}
