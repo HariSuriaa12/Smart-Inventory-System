@@ -44,5 +44,50 @@
             Delete user (soft delete)
             </summary>
         </member>
+        <member name="T:SmartInventoryAPI.Models.DTOs.Response.PaginatedResponseDto`1">
+            <summary>
+            Generic paginated response DTO that wraps data with pagination metadata
+            </summary>
+        </member>
+        <member name="P:SmartInventoryAPI.Models.DTOs.Response.PaginatedResponseDto`1.Data">
+            <summary>
+            The actual data items for the current page
+            </summary>
+        </member>
+        <member name="P:SmartInventoryAPI.Models.DTOs.Response.PaginatedResponseDto`1.Total">
+            <summary>
+            Total number of items in the database (excluding deleted items)
+            </summary>
+        </member>
+        <member name="P:SmartInventoryAPI.Models.DTOs.Response.PaginatedResponseDto`1.Skip">
+            <summary>
+            Number of items skipped (offset)
+            </summary>
+        </member>
+        <member name="P:SmartInventoryAPI.Models.DTOs.Response.PaginatedResponseDto`1.Take">
+            <summary>
+            Number of items per page
+            </summary>
+        </member>
+        <member name="P:SmartInventoryAPI.Models.DTOs.Response.PaginatedResponseDto`1.Page">
+            <summary>
+            Current page number (1-indexed)
+            </summary>
+        </member>
+        <member name="P:SmartInventoryAPI.Models.DTOs.Response.PaginatedResponseDto`1.TotalPages">
+            <summary>
+            Total number of pages
+            </summary>
+        </member>
+        <member name="P:SmartInventoryAPI.Models.DTOs.Response.PaginatedResponseDto`1.HasNextPage">
+            <summary>
+            Whether there are more pages after the current one
+            </summary>
+        </member>
+        <member name="P:SmartInventoryAPI.Models.DTOs.Response.PaginatedResponseDto`1.HasPreviousPage">
+            <summary>
+            Whether there are pages before the current one
+            </summary>
+        </member>
     </members>
 </doc>

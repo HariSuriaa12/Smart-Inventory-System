@@ -567,17 +567,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/ItemDtoIEnumerableApiResponseDto"
+                  "$ref": "#/components/schemas/ItemDtoPaginatedResponseDtoApiResponseDto"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ItemDtoIEnumerableApiResponseDto"
+                  "$ref": "#/components/schemas/ItemDtoPaginatedResponseDtoApiResponseDto"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ItemDtoIEnumerableApiResponseDto"
+                  "$ref": "#/components/schemas/ItemDtoPaginatedResponseDtoApiResponseDto"
                 }
               }
             }
@@ -805,17 +805,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/ItemDtoIEnumerableApiResponseDto"
+                  "$ref": "#/components/schemas/ItemDtoPaginatedResponseDtoApiResponseDto"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ItemDtoIEnumerableApiResponseDto"
+                  "$ref": "#/components/schemas/ItemDtoPaginatedResponseDtoApiResponseDto"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ItemDtoIEnumerableApiResponseDto"
+                  "$ref": "#/components/schemas/ItemDtoPaginatedResponseDtoApiResponseDto"
                 }
               }
             }
@@ -3165,7 +3165,46 @@
         },
         "additionalProperties": false
       },
-      "ItemDtoIEnumerableApiResponseDto": {
+      "ItemDtoPaginatedResponseDto": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ItemDto"
+            },
+            "nullable": true
+          },
+          "total": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "skip": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "take": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "page": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "hasNextPage": {
+            "type": "boolean"
+          },
+          "hasPreviousPage": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ItemDtoPaginatedResponseDtoApiResponseDto": {
         "type": "object",
         "properties": {
           "success": {
@@ -3176,11 +3215,7 @@
             "nullable": true
           },
           "data": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/ItemDto"
-            },
-            "nullable": true
+            "$ref": "#/components/schemas/ItemDtoPaginatedResponseDto"
           },
           "statusCode": {
             "type": "integer",
