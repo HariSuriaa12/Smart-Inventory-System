@@ -53,19 +53,19 @@ export const EditItemModal = ({ isOpen, item, onClose, onUpdate, onDelete, isLoa
   useEffect(() => {
     if (item) {
       setFormData({
-        item_Name: item.Item_Name || '',
-        item_Code: item.Item_Code || '',
-        description: item.Description || '',
-        item_Category: item.Item_Category || '',
-        item_Brand: item.Item_Brand || '',
-        purchase_Cost: item.Purchase_Cost || 0,
-        unit_Cost: item.Unit_Cost || 0,
-        is_Active: item.Is_Active ?? true,
-        unit_Of_Measure: item.Unit_Of_Measure || 'Pieces',
-        remark: item.Remark || '',
-        tax_Percentage: item.Tax_Percentage || 0,
-        tax_Type: item.Tax_Type || 'GST',
-        item_Type: item.Item_Type || ''
+        item_Name: item.item_Name || '',
+        item_Code: item.item_Code || '',
+        description: item.description || '',
+        item_Category: item.item_Category || '',
+        item_Brand: item.item_Brand || '',
+        purchase_Cost: item.purchase_Cost || 0,
+        unit_Cost: item.unit_Cost || 0,
+        is_Active: item.is_Active ?? true,
+        unit_Of_Measure: item.unit_Of_Measure || 'Pieces',
+        remark: item.remark || '',
+        tax_Percentage: item.tax_Percentage || 0,
+        tax_Type: item.tax_Type || 'GST',
+        item_Type: item.item_Type || ''
       })
       setErrors({})
     }
@@ -78,19 +78,19 @@ export const EditItemModal = ({ isOpen, item, onClose, onUpdate, onDelete, isLoa
     const changes: Partial<UpdateItemRequest> = {}
 
     const fieldMap: Record<string, keyof Item> = {
-      item_Name: 'Item_Name',
-      item_Code: 'Item_Code',
-      description: 'Description',
-      item_Category: 'Item_Category',
-      item_Brand: 'Item_Brand',
-      purchase_Cost: 'Purchase_Cost',
-      unit_Cost: 'Unit_Cost',
-      is_Active: 'Is_Active',
-      unit_Of_Measure: 'Unit_Of_Measure',
-      remark: 'Remark',
-      tax_Percentage: 'Tax_Percentage',
-      tax_Type: 'Tax_Type',
-      item_Type: 'Item_Type'
+      item_Name: 'item_Name',
+      item_Code: 'item_Code',
+      description: 'description',
+      item_Category: 'item_Category',
+      item_Brand: 'item_Brand',
+      purchase_Cost: 'purchase_Cost',
+      unit_Cost: 'unit_Cost',
+      is_Active: 'is_Active',
+      unit_Of_Measure: 'unit_Of_Measure',
+      remark: 'remark',
+      tax_Percentage: 'tax_Percentage',
+      tax_Type: 'tax_Type',
+      item_Type: 'item_Type'
     }
 
     Object.entries(fieldMap).forEach(([formKey, itemKey]) => {
