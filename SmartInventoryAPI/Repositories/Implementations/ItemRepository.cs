@@ -74,4 +74,9 @@ public class ItemRepository : GenericRepository<Item>, IItemRepository
 
         return await query.CountAsync();
     }
+
+    public async Task<int> CountNonDeletedAsync()
+    {
+        return await _dbSet.Where(i => !i.Is_Deleted).CountAsync();
+    }
 }

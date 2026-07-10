@@ -1,9 +1,10 @@
 import { useEffect, useState, useCallback } from 'react'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
-import { fetchItems, createItem } from '@/store/slices/itemSlice'
+import { fetchItems, createItem, updateItem, deleteItem } from '@/store/slices/itemSlice'
 import { DataGrid, Card, Column, Input } from '@/components'
 import { AddItemModal } from '@/components/modals/AddItemModal'
-import { Item, CreateItemRequest } from '@/types/item'
+import { EditItemModal } from '@/components/modals/EditItemModal'
+import { Item, CreateItemRequest, UpdateItemRequest } from '@/types/item'
 import { Plus, Search, X } from 'lucide-react'
 
 const PAGE_SIZE = 10
@@ -13,6 +14,8 @@ export const ItemsPage = () => {
   const [currentPage, setCurrentPage] = useState(1)
   const [searchInput, setSearchInput] = useState('')
   const [isAddItemOpen, setIsAddItemOpen] = useState(false)
+  const [isEditItemOpen, setIsEditItemOpen] = useState(false)
+  const [selectedItem, setSelectedItem] = useState<Item | null>(null)
   const { items, loading, total, searchQuery, error } = useAppSelector((state) => state.items)
 
   // Debounced search effect
@@ -50,6 +53,36 @@ export const ItemsPage = () => {
       throw err
     }
   }, [dispatch, searchQuery])
+
+  const handleRowDoubleClick = useCallback((item: Item) => {
+    setSelectedItem(item)
+    setIsEditItemOpen(true)
+  }, [])
+
+  const handleUpdateItem = useCallback(async (formData: UpdateItemRequest) => {
+    if (!selectedItem) return
+    try {
+      await dispatch(updateItem({ id: selectedItem.id, data: formData }) as any)
+      // Refresh the list
+      dispatch(fetchItems({ skip: (currentPage - 1) * PAGE_SIZE, take: PAGE_SIZE, searchQuery: searchQuery || undefined }) as any)
+    } catch (err) {
+      console.error('Failed to update item:', err)
+      throw err
+    }
+  }, [dispatch, selectedItem, currentPage, searchQuery])
+
+  const handleDeleteItem = useCallback(async () => {
+    if (!selectedItem) return
+    try {
+      await dispatch(deleteItem(selectedItem.id) as any)
+      // Refresh the list
+      dispatch(fetchItems({ skip: 0, take: PAGE_SIZE, searchQuery: searchQuery || undefined }) as any)
+      setCurrentPage(1)
+    } catch (err) {
+      console.error('Failed to delete item:', err)
+      throw err
+    }
+  }, [dispatch, selectedItem, searchQuery])
 
   const columns: Column<Item>[] = [
     {
@@ -173,6 +206,7 @@ export const ItemsPage = () => {
           pageSize={PAGE_SIZE}
           totalItems={total}
           onPageChange={setCurrentPage}
+          onRowDoubleClick={handleRowDoubleClick}
           rowKey="id"
           emptyMessage="No items found"
         />
@@ -183,6 +217,19 @@ export const ItemsPage = () => {
         isOpen={isAddItemOpen}
         onClose={() => setIsAddItemOpen(false)}
         onSubmit={handleAddItem}
+        isLoading={loading}
+      />
+
+      {/* Edit Item Modal */}
+      <EditItemModal
+        isOpen={isEditItemOpen}
+        item={selectedItem}
+        onClose={() => {
+          setIsEditItemOpen(false)
+          setSelectedItem(null)
+        }}
+        onUpdate={handleUpdateItem}
+        onDelete={handleDeleteItem}
         isLoading={loading}
       />
     </div>

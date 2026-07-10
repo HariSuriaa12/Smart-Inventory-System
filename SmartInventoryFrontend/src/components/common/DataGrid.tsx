@@ -19,6 +19,7 @@ interface DataGridProps<T> {
   pageSize?: number
   totalItems?: number
   onPageChange?: (page: number) => void
+  onRowDoubleClick?: (row: T) => void
   rowKey: keyof T
   className?: string
   emptyMessage?: string
@@ -32,6 +33,7 @@ export const DataGrid = <T,>({
   pageSize = 10,
   totalItems = 0,
   onPageChange,
+  onRowDoubleClick,
   rowKey,
   className,
   emptyMessage = 'No data available',
@@ -98,7 +100,11 @@ export const DataGrid = <T,>({
               </tr>
             ) : (
               data.map((item, idx) => (
-                <tr key={String(item[rowKey])} className="border-b border-gray-100 hover:bg-gray-50 transition-colors">
+                <tr
+                  key={String(item[rowKey])}
+                  onDoubleClick={() => onRowDoubleClick?.(item)}
+                  className="border-b border-gray-100 hover:bg-gray-50 transition-colors cursor-pointer"
+                >
                   {columns.map((col) => {
                     const value = item[col.key]
                     const rendered = col.render ? col.render(value, item) : value

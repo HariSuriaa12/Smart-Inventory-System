@@ -67,7 +67,7 @@ public class ItemService : IItemService
         else
         {
             items = await _unitOfWork.Items.GetAllAsync(skip, take);
-            total = await _unitOfWork.Items.CountAsync();
+            total = await _unitOfWork.Items.CountNonDeletedAsync();
         }
 
         var activeItems = items.Where(i => !i.Is_Deleted).ToList();
