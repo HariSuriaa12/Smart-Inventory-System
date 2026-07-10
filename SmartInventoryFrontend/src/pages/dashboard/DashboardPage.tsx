@@ -279,7 +279,7 @@ const handleSelectLocation = (location: Location) => {
     </div>
 
     {/* Location Selection Modal Overlay */}
-    {isOpen && (
+    {isOpen && !currentLocation && (
       <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-md px-4">
         {/* Modal Card */}
         <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full border border-gray-100 overflow-hidden">

@@ -3,16 +3,16 @@
   "WorkspaceRootPath": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{74672F46-6E60-E07D-20D6-A7C4B76E2B01}|SmartInventoryAPI.csproj|c:\\users\\user\\documents\\hari\\unitar\\semester 6\\major project\\smart inventory system\\smartinventoryapi\\controllers\\locationscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{74672F46-6E60-E07D-20D6-A7C4B76E2B01}|SmartInventoryAPI.csproj|solutionrelative:controllers\\locationscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{74672F46-6E60-E07D-20D6-A7C4B76E2B01}|SmartInventoryAPI.csproj|c:\\users\\user\\documents\\hari\\unitar\\semester 6\\major project\\smart inventory system\\smartinventoryapi\\services\\implementations\\locationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{74672F46-6E60-E07D-20D6-A7C4B76E2B01}|SmartInventoryAPI.csproj|solutionrelative:services\\implementations\\locationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{74672F46-6E60-E07D-20D6-A7C4B76E2B01}|SmartInventoryAPI.csproj|c:\\users\\user\\documents\\hari\\unitar\\semester 6\\major project\\smart inventory system\\smartinventoryapi\\repositories\\interfaces\\iunitofwork.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{74672F46-6E60-E07D-20D6-A7C4B76E2B01}|SmartInventoryAPI.csproj|solutionrelative:repositories\\interfaces\\iunitofwork.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{74672F46-6E60-E07D-20D6-A7C4B76E2B01}|SmartInventoryAPI.csproj|c:\\users\\user\\documents\\hari\\unitar\\semester 6\\major project\\smart inventory system\\smartinventoryapi\\controllers\\locationscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{74672F46-6E60-E07D-20D6-A7C4B76E2B01}|SmartInventoryAPI.csproj|solutionrelative:controllers\\locationscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{74672F46-6E60-E07D-20D6-A7C4B76E2B01}|SmartInventoryAPI.csproj|c:\\users\\user\\documents\\hari\\unitar\\semester 6\\major project\\smart inventory system\\smartinventoryapi\\configuration\\mapperprofile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -382,7 +382,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 8,
+          "SelectedChildIndex": 5,
           "Children": [
             {
               "$type": "Bookmark",
@@ -442,13 +442,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 0,
               "Title": "LocationsController.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Controllers\\LocationsController.cs",
               "RelativeDocumentMoniker": "Controllers\\LocationsController.cs",
               "ToolTip": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Controllers\\LocationsController.cs",
               "RelativeToolTip": "Controllers\\LocationsController.cs",
-              "ViewState": "AgIAADIAAAAAAAAAAAAgwEsAAABBAAAAAAAAAA==",
+              "ViewState": "AgIAABQAAAAAAAAAAAAawB0AAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-07-09T13:59:22.328Z",
               "EditorCaption": ""
@@ -481,7 +481,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "LocationService.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Services\\Implementations\\LocationService.cs",
               "RelativeDocumentMoniker": "Services\\Implementations\\LocationService.cs",
@@ -494,7 +494,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "IUnitOfWork.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Repositories\\Interfaces\\IUnitOfWork.cs",
               "RelativeDocumentMoniker": "Repositories\\Interfaces\\IUnitOfWork.cs",

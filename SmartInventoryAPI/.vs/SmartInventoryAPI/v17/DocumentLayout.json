@@ -382,25 +382,8 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 2,
           "Children": [
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "CreateLocationRequestDto.cs",
-              "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Models\\DTOs\\Request\\Location\\CreateLocationRequestDto.cs",
-              "RelativeDocumentMoniker": "Models\\DTOs\\Request\\Location\\CreateLocationRequestDto.cs",
-              "ToolTip": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Models\\DTOs\\Request\\Location\\CreateLocationRequestDto.cs",
-              "RelativeToolTip": "Models\\DTOs\\Request\\Location\\CreateLocationRequestDto.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAuwAsAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-09T13:19:00.067Z",
-              "EditorCaption": ""
-            },
             {
               "$type": "Document",
               "DocumentIndex": 4,
@@ -411,8 +394,7 @@
               "RelativeToolTip": "Middleware\\ExceptionHandlingMiddleware.cs",
               "ViewState": "AgIAACoAAAAAAAAAAAAYwEQAAAAQAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-07T15:41:22.89Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-07T15:41:22.89Z"
             },
             {
               "$type": "Document",
@@ -424,8 +406,36 @@
               "RelativeToolTip": "Models\\Entities\\Location.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAuwAkAAAATAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-09T12:40:02.472Z",
+              "WhenOpened": "2026-07-09T12:40:02.472Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "LocationsController.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Controllers\\LocationsController.cs",
+              "RelativeDocumentMoniker": "Controllers\\LocationsController.cs",
+              "ToolTip": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Controllers\\LocationsController.cs",
+              "RelativeToolTip": "Controllers\\LocationsController.cs",
+              "ViewState": "AgIAABQAAAAAAAAAAAAawC0AAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-09T13:59:22.328Z",
               "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "CreateLocationRequestDto.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Models\\DTOs\\Request\\Location\\CreateLocationRequestDto.cs",
+              "RelativeDocumentMoniker": "Models\\DTOs\\Request\\Location\\CreateLocationRequestDto.cs",
+              "ToolTip": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Models\\DTOs\\Request\\Location\\CreateLocationRequestDto.cs",
+              "RelativeToolTip": "Models\\DTOs\\Request\\Location\\CreateLocationRequestDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAuwAsAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-09T13:19:00.067Z"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
             },
             {
               "$type": "Document",
@@ -437,21 +447,7 @@
               "RelativeToolTip": "Data\\SmartInventoryDbContext.cs",
               "ViewState": "AgIAABkAAAAAAAAAAAAUwB4AAABGAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-07T14:27:18.207Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "LocationsController.cs",
-              "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Controllers\\LocationsController.cs",
-              "RelativeDocumentMoniker": "Controllers\\LocationsController.cs",
-              "ToolTip": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Controllers\\LocationsController.cs",
-              "RelativeToolTip": "Controllers\\LocationsController.cs",
-              "ViewState": "AgIAABQAAAAAAAAAAAAawB0AAAAIAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-09T13:59:22.328Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-07T14:27:18.207Z"
             },
             {
               "$type": "Document",
@@ -463,8 +459,7 @@
               "RelativeToolTip": "Services\\Implementations\\PurchaseOrderService.cs",
               "ViewState": "AgIAAAkAAAAAAAAAAAAkwB4AAAApAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-07T14:21:03.616Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-07T14:21:03.616Z"
             },
             {
               "$type": "Document",
@@ -476,8 +471,7 @@
               "RelativeToolTip": "Configuration\\MapperProfile.cs",
               "ViewState": "AgIAAEAAAAAAAAAAAAAQwFkAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-07T14:57:11.809Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-07T14:57:11.809Z"
             },
             {
               "$type": "Document",
@@ -489,8 +483,7 @@
               "RelativeToolTip": "Services\\Implementations\\LocationService.cs",
               "ViewState": "AgIAACIAAAAAAAAAAADgvzcAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-09T12:53:33.34Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-09T12:53:33.34Z"
             },
             {
               "$type": "Document",
@@ -502,8 +495,7 @@
               "RelativeToolTip": "Repositories\\Interfaces\\IUnitOfWork.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAYAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-07T15:19:34.613Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-07T15:19:34.613Z"
             },
             {
               "$type": "Document",
@@ -515,8 +507,7 @@
               "RelativeToolTip": "Models\\DTOs\\Response\\LocationDto.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAuwAsAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-09T13:21:19.514Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-09T13:21:19.514Z"
             },
             {
               "$type": "Document",
@@ -528,8 +519,7 @@
               "RelativeToolTip": "Services\\Implementations\\OrderFulfillmentService.cs",
               "ViewState": "AgIAAAkAAAAAAAAAAAAkwB4AAAAsAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-09T12:51:34.837Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-09T12:51:34.837Z"
             },
             {
               "$type": "Document",
@@ -541,8 +531,7 @@
               "RelativeToolTip": "Repositories\\Implementations\\GenericRepository.cs",
               "ViewState": "AgIAAAIAAAAAAAAAAIAwwB8AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-07T14:57:31.974Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-07T14:57:31.974Z"
             },
             {
               "$type": "Document",
@@ -554,8 +543,7 @@
               "RelativeToolTip": "Repositories\\Interfaces\\IGenericRepository.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-09T14:21:22.792Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-09T14:21:22.792Z"
             },
             {
               "$type": "Document",
@@ -567,8 +555,7 @@
               "RelativeToolTip": "Controllers\\ItemsController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAjAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-07T14:27:35.144Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-07T14:27:35.144Z"
             },
             {
               "$type": "Document",
@@ -580,8 +567,7 @@
               "RelativeToolTip": "Services\\Interfaces\\ILocationService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAuwAcAAABMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-09T14:20:45.624Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-09T14:20:45.624Z"
             },
             {
               "$type": "Document",
@@ -593,8 +579,7 @@
               "RelativeToolTip": "Repositories\\Implementations\\LocationRepository.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAgwBAAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-09T12:52:31.662Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-09T12:52:31.662Z"
             },
             {
               "$type": "Document",
@@ -606,8 +591,7 @@
               "RelativeToolTip": "Services\\Implementations\\SalesService.cs",
               "ViewState": "AgIAAAUAAAAAAAAAAAAkwBoAAAAsAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-07T14:33:50.962Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-07T14:33:50.962Z"
             },
             {
               "$type": "Document",
@@ -619,8 +603,7 @@
               "RelativeToolTip": "Models\\DTOs\\Request\\OrderFulfillment\\ReceiveOrderFulfillmentRequestDto.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAuwAsAAAAgAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-09T13:19:08.564Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-09T13:19:08.564Z"
             },
             {
               "$type": "Document",
@@ -632,8 +615,7 @@
               "RelativeToolTip": "Controllers\\AuthController.cs",
               "ViewState": "AgIAAAcAAAAAAAAAAAAswBMAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-07T14:55:31.296Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-07T14:55:31.296Z"
             },
             {
               "$type": "Document",
@@ -645,8 +627,7 @@
               "RelativeToolTip": "Utilities\\Helpers\\PasswordHelper.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAZAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-07T14:57:00.11Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-07T14:57:00.11Z"
             },
             {
               "$type": "Document",
@@ -658,8 +639,7 @@
               "RelativeToolTip": "Services\\Implementations\\UserService.cs",
               "ViewState": "AgIAAAEAAAAAAAAAAAAnwEEAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-07T13:46:33.123Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-07T13:46:33.123Z"
             },
             {
               "$type": "Document",
@@ -671,8 +651,7 @@
               "RelativeToolTip": "Controllers\\UsersController.cs",
               "ViewState": "AgIAACwAAAAAAAAAAAA3wFEAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-07T13:45:41.791Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-07T13:45:41.791Z"
             },
             {
               "$type": "Document",
@@ -684,8 +663,7 @@
               "RelativeToolTip": "Program.cs",
               "ViewState": "AgIAAFgAAAAAAAAAAAAhwJUAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-07T13:45:03.653Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-07T13:45:03.653Z"
             },
             {
               "$type": "Document",
@@ -697,8 +675,7 @@
               "RelativeToolTip": "Models\\DTOs\\Response\\InventoryDto.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAuwAcAAAATAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-09T13:20:48.404Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-09T13:20:48.404Z"
             },
             {
               "$type": "Document",
@@ -710,8 +687,7 @@
               "RelativeToolTip": "Models\\Entities\\User.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAuwAIAAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-07T15:35:54.981Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-07T15:35:54.981Z"
             },
             {
               "$type": "Document",
@@ -723,8 +699,7 @@
               "RelativeToolTip": "Services\\Implementations\\AuthService.cs",
               "ViewState": "AgIAABwAAAAAAAAAAADwvzEAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-07T13:49:21.016Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-07T13:49:21.016Z"
             },
             {
               "$type": "Document",
@@ -736,8 +711,7 @@
               "RelativeToolTip": "Services\\Interfaces\\IUserService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAASAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-09T13:34:34.904Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-09T13:34:34.904Z"
             },
             {
               "$type": "Document",
@@ -749,8 +723,7 @@
               "RelativeToolTip": "Controllers\\CustomersController.cs",
               "ViewState": "AgIAACEAAAAAAAAAAAAAwDMAAABzAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-07T14:55:39.544Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-07T14:55:39.544Z"
             },
             {
               "$type": "Document",
@@ -762,8 +735,7 @@
               "RelativeToolTip": "Models\\DTOs\\Request\\Inventory\\AdjustInventoryRequestDto.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAuwA0AAAAcAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-09T13:18:09.517Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-09T13:18:09.517Z"
             },
             {
               "$type": "Document",
@@ -775,8 +747,7 @@
               "RelativeToolTip": "Services\\Implementations\\InventoryService.cs",
               "ViewState": "AgIAAB0AAAAAAAAAAAAowDAAAABpAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-07T14:21:00.139Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-07T14:21:00.139Z"
             },
             {
               "$type": "Document",
@@ -788,8 +759,7 @@
               "RelativeToolTip": "Models\\DTOs\\Response\\ApiResponseDto.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-09T13:20:16.183Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-09T13:20:16.183Z"
             },
             {
               "$type": "Document",
@@ -801,8 +771,7 @@
               "RelativeToolTip": "Models\\DTOs\\Response\\AuthResponseDto.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAYAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-09T13:20:18.726Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-09T13:20:18.726Z"
             },
             {
               "$type": "Document",
@@ -814,8 +783,7 @@
               "RelativeToolTip": "Models\\DTOs\\Response\\CustomerDto.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAbAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-09T13:20:25.158Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-09T13:20:25.158Z"
             },
             {
               "$type": "Document",
@@ -827,8 +795,7 @@
               "RelativeToolTip": "Models\\DTOs\\Response\\ItemDto.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAYAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-09T13:20:58.796Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-09T13:20:58.796Z"
             },
             {
               "$type": "Document",
@@ -840,8 +807,7 @@
               "RelativeToolTip": "Models\\DTOs\\Response\\OrderFulfillmentDto.cs",
               "ViewState": "AgIAABEAAAAAAAAAAAAUwCQAAAAZAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-09T13:21:26.373Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-09T13:21:26.373Z"
             },
             {
               "$type": "Document",
@@ -853,8 +819,7 @@
               "RelativeToolTip": "Models\\DTOs\\Response\\PurchaseOrderDto.cs",
               "ViewState": "AgIAABAAAAAAAAAAAAA2wCYAAAAZAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-09T13:21:54.313Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-09T13:21:54.313Z"
             },
             {
               "$type": "Document",
@@ -866,8 +831,7 @@
               "RelativeToolTip": "Models\\DTOs\\Response\\SalesDto.cs",
               "ViewState": "AgIAAAkAAAAAAAAAAAAowB8AAAAZAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-09T13:22:24.777Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-09T13:22:24.777Z"
             },
             {
               "$type": "Document",
@@ -879,8 +843,7 @@
               "RelativeToolTip": "Models\\DTOs\\Response\\UserDto.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAZAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-09T13:22:47.805Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-09T13:22:47.805Z"
             },
             {
               "$type": "Document",
@@ -892,8 +855,7 @@
               "RelativeToolTip": "Models\\DTOs\\Response\\VendorDto.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAmAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-09T13:22:56.177Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-09T13:22:56.177Z"
             },
             {
               "$type": "Document",
@@ -905,8 +867,7 @@
               "RelativeToolTip": "Models\\DTOs\\Request\\Vendor\\CreateVendorRequestDto.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAbAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-09T13:20:08.388Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-09T13:20:08.388Z"
             },
             {
               "$type": "Document",
@@ -918,8 +879,7 @@
               "RelativeToolTip": "Models\\DTOs\\Request\\User\\CreateUserRequestDto.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAaAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-09T13:15:13.969Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-09T13:15:13.969Z"
             },
             {
               "$type": "Document",
@@ -931,8 +891,7 @@
               "RelativeToolTip": "Models\\DTOs\\Request\\Sales\\ReceiveSalesRequestDto.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAcAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-09T13:19:37.034Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-09T13:19:37.034Z"
             },
             {
               "$type": "Document",
@@ -944,8 +903,7 @@
               "RelativeToolTip": "Models\\DTOs\\Request\\PurchaseOrder\\CreatePurchaseOrderRequestDto.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAYAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-09T13:19:29.12Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-09T13:19:29.12Z"
             },
             {
               "$type": "Document",
@@ -957,8 +915,7 @@
               "RelativeToolTip": "Models\\DTOs\\Response\\ForecastDto.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAdAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-09T13:17:20.677Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-09T13:17:20.677Z"
             },
             {
               "$type": "Document",
@@ -970,8 +927,7 @@
               "RelativeToolTip": "Models\\DTOs\\Request\\Customer\\CreateCustomerRequestDto.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAbAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-09T13:17:54.802Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-09T13:17:54.802Z"
             },
             {
               "$type": "Document",
@@ -983,8 +939,7 @@
               "RelativeToolTip": "Models\\DTOs\\Request\\Auth\\LoginRequestDto.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-09T13:17:53.259Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-09T13:17:53.259Z"
             },
             {
               "$type": "Document",
@@ -996,8 +951,7 @@
               "RelativeToolTip": "Models\\DTOs\\Request\\Item\\CreateItemRequestDto.cs",
               "ViewState": "AgIAAA4AAAAAAAAAAAAUwB8AAAATAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-09T13:17:45.359Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-09T13:17:45.359Z"
             },
             {
               "$type": "Document",
@@ -1009,8 +963,7 @@
               "RelativeToolTip": "Repositories\\Implementations\\InventoryRepository.cs",
               "ViewState": "AgIAACEAAAAAAAAAAAAAwCkAAAAnAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-07T14:57:38.677Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-07T14:57:38.677Z"
             },
             {
               "$type": "Document",
@@ -1022,8 +975,7 @@
               "RelativeToolTip": "Repositories\\Implementations\\UnitOfWork.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAAEAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-07T14:57:46.145Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-07T14:57:46.145Z"
             },
             {
               "$type": "Document",
@@ -1035,8 +987,7 @@
               "RelativeToolTip": "Repositories\\Implementations\\CustomerRepository.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAABMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-07T14:19:57.051Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-07T14:19:57.051Z"
             },
             {
               "$type": "Document",
@@ -1048,8 +999,7 @@
               "RelativeToolTip": "Repositories\\Implementations\\PurchaseOrderRepository.cs",
               "ViewState": "AgIAAAkAAAAAAAAAAIAzwBcAAABQAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-07T13:52:31.311Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-07T13:52:31.311Z"
             },
             {
               "$type": "Document",
@@ -1061,8 +1011,7 @@
               "RelativeToolTip": "Services\\Implementations\\CustomerService.cs",
               "ViewState": "AgIAABAAAAAAAAAAAIA1wB8AAABYAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-07T14:58:17.368Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-07T14:58:17.368Z"
             },
             {
               "$type": "Document",
@@ -1074,8 +1023,7 @@
               "RelativeToolTip": "Services\\Implementations\\LoggingService.cs",
               "ViewState": "AgIAADoAAAAAAAAAAAAawEkAAAAQAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-09T12:50:14.942Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-09T12:50:14.942Z"
             },
             {
               "$type": "Document",
@@ -1087,8 +1035,7 @@
               "RelativeToolTip": "Repositories\\Implementations\\SalesRepository.cs",
               "ViewState": "AgIAABAAAAAAAAAAAAAhwCkAAAAvAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-07T14:33:59.317Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-07T14:33:59.317Z"
             },
             {
               "$type": "Document",
@@ -1100,8 +1047,7 @@
               "RelativeToolTip": "Services\\Implementations\\StockTransferService.cs",
               "ViewState": "AgIAACkAAAAAAAAAAAAawDgAAAAOAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-09T12:46:27.064Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-09T12:46:27.064Z"
             },
             {
               "$type": "Document",
@@ -1113,8 +1059,7 @@
               "RelativeToolTip": "Repositories\\Implementations\\StockTransferRepository.cs",
               "ViewState": "AgIAAAIAAAAAAAAAAAAEwA8AAAApAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-09T12:48:25.723Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-09T12:48:25.723Z"
             },
             {
               "$type": "Document",
@@ -1126,8 +1071,7 @@
               "RelativeToolTip": "Services\\Implementations\\VendorService.cs",
               "ViewState": "AgIAAAwAAAAAAAAAAAASwBoAAAAPAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-09T12:45:38.494Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-09T12:45:38.494Z"
             },
             {
               "$type": "Document",
@@ -1139,8 +1083,7 @@
               "RelativeToolTip": "Repositories\\Implementations\\OrderFulfillmentRepository.cs",
               "ViewState": "AgIAAAkAAAAAAAAAAIAzwBcAAABJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-07T13:52:53.558Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-07T13:52:53.558Z"
             },
             {
               "$type": "Document",
@@ -1152,8 +1095,7 @@
               "RelativeToolTip": "Repositories\\Implementations\\VendorRepository.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAA+AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-09T12:45:35.398Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-09T12:45:35.398Z"
             },
             {
               "$type": "Document",
@@ -1165,8 +1107,7 @@
               "RelativeToolTip": "Models\\Entities\\ForecastedResult.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAlAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-09T12:45:07.048Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-09T12:45:07.048Z"
             },
             {
               "$type": "Document",
@@ -1178,8 +1119,7 @@
               "RelativeToolTip": "Models\\Entities\\InventoryLog.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAATAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-09T12:44:15.183Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-09T12:44:15.183Z"
             },
             {
               "$type": "Document",
@@ -1191,8 +1131,7 @@
               "RelativeToolTip": "Models\\Entities\\PriceLog.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAATAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-09T12:43:59.991Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-09T12:43:59.991Z"
             },
             {
               "$type": "Document",
@@ -1204,8 +1143,7 @@
               "RelativeToolTip": "Models\\Entities\\PerformLog.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAATAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-09T12:43:45.744Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-09T12:43:45.744Z"
             },
             {
               "$type": "Document",
@@ -1217,8 +1155,7 @@
               "RelativeToolTip": "Models\\Entities\\StockTransfer.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAaAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-09T12:43:28.767Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-09T12:43:28.767Z"
             },
             {
               "$type": "Document",
@@ -1230,8 +1167,7 @@
               "RelativeToolTip": "Models\\Entities\\SalesItem.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAcAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-09T12:43:15.802Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-09T12:43:15.802Z"
             },
             {
               "$type": "Document",
@@ -1243,8 +1179,7 @@
               "RelativeToolTip": "Models\\Entities\\OrderFulfillmentItem.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAbAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-09T12:42:39.801Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-09T12:42:39.801Z"
             },
             {
               "$type": "Document",
@@ -1256,8 +1191,7 @@
               "RelativeToolTip": "Models\\Entities\\OrderFulfillmentHeader.cs",
               "ViewState": "AgIAAAYAAAAAAAAAAAAYwBMAAAAZAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-09T12:42:02.12Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-09T12:42:02.12Z"
             },
             {
               "$type": "Document",
@@ -1269,8 +1203,7 @@
               "RelativeToolTip": "Models\\Entities\\PurchaseOrderItem.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAATAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-09T12:41:44.378Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-09T12:41:44.378Z"
             },
             {
               "$type": "Document",
@@ -1282,8 +1215,7 @@
               "RelativeToolTip": "Models\\Entities\\PurchaseOrderHeader.cs",
               "ViewState": "AgIAAAIAAAAAAAAAAAAxwA4AAAAZAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-09T12:41:15.465Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-09T12:41:15.465Z"
             },
             {
               "$type": "Document",
@@ -1295,8 +1227,7 @@
               "RelativeToolTip": "Models\\Entities\\Vendor.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAbAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-09T12:40:19.024Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-09T12:40:19.024Z"
             },
             {
               "$type": "Document",
@@ -1308,8 +1239,7 @@
               "RelativeToolTip": "Models\\Entities\\Inventory.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAuwAkAAAATAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-07T15:21:44.591Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-07T15:21:44.591Z"
             },
             {
               "$type": "Document",
@@ -1321,8 +1251,7 @@
               "RelativeToolTip": "Models\\Entities\\Sales.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAbAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-07T15:38:28.027Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-07T15:38:28.027Z"
             },
             {
               "$type": "Document",
@@ -1334,8 +1263,7 @@
               "RelativeToolTip": "Models\\Entities\\Item.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAQwAgAAAAuAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-07T15:22:05.088Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-07T15:22:05.088Z"
             },
             {
               "$type": "Document",
@@ -1347,8 +1275,7 @@
               "RelativeToolTip": "Services\\Implementations\\ItemService.cs",
               "ViewState": "AgIAAA8AAAAAAAAAAAASwB0AAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-07T14:34:47.994Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-07T14:34:47.994Z"
             },
             {
               "$type": "Document",
@@ -1360,8 +1287,7 @@
               "RelativeToolTip": "Models\\Entities\\Customer.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAuwAoAAAAbAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-09T12:31:45.421Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-09T12:31:45.421Z"
             },
             {
               "$type": "Document",
@@ -1373,8 +1299,7 @@
               "RelativeToolTip": "Repositories\\Implementations\\ItemRepository.cs",
               "ViewState": "AgIAAAIAAAAAAAAAAAAEwA8AAABTAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-07T13:52:30.117Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-07T13:52:30.117Z"
             },
             {
               "$type": "Document",
@@ -1446,8 +1371,7 @@
               "RelativeToolTip": "Configuration\\JwtSettings.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAPAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-07T14:55:11.696Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-07T14:55:11.696Z"
             },
             {
               "$type": "Document",
