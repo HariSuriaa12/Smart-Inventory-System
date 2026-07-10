@@ -1,8 +1,9 @@
 import { useEffect, useState, useCallback } from 'react'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
-import { fetchItems } from '@/store/slices/itemSlice'
+import { fetchItems, createItem } from '@/store/slices/itemSlice'
 import { DataGrid, Card, Column, Input } from '@/components'
-import { Item } from '@/types/item'
+import { AddItemModal } from '@/components/modals/AddItemModal'
+import { Item, CreateItemRequest } from '@/types/item'
 import { Plus, Search, X } from 'lucide-react'
 
 const PAGE_SIZE = 10
@@ -11,28 +12,44 @@ export const ItemsPage = () => {
   const dispatch = useAppDispatch()
   const [currentPage, setCurrentPage] = useState(1)
   const [searchInput, setSearchInput] = useState('')
-  const { items, loading, total, searchQuery } = useAppSelector((state) => state.items)
+  const [isAddItemOpen, setIsAddItemOpen] = useState(false)
+  const { items, loading, total, searchQuery, error } = useAppSelector((state) => state.items)
+
+  // Debounced search effect
+  useEffect(() => {
+    const debounceTimer = setTimeout(() => {
+      setCurrentPage(1)
+      if (searchInput.trim()) {
+        dispatch(fetchItems({ skip: 0, take: PAGE_SIZE, searchQuery: searchInput.trim() }) as any)
+      } else {
+        dispatch(fetchItems({ skip: 0, take: PAGE_SIZE }) as any)
+      }
+    }, 500) // 500ms delay
+
+    return () => clearTimeout(debounceTimer)
+  }, [searchInput, dispatch])
 
   useEffect(() => {
     const skip = (currentPage - 1) * PAGE_SIZE
     dispatch(fetchItems({ skip, take: PAGE_SIZE, searchQuery: searchQuery || undefined }) as any)
   }, [currentPage, dispatch, searchQuery])
 
-  const handleSearch = useCallback((query: string) => {
-    setSearchInput(query)
-    setCurrentPage(1)
-    if (query.trim()) {
-      dispatch(fetchItems({ skip: 0, take: PAGE_SIZE, searchQuery: query.trim() }) as any)
-    } else {
-      dispatch(fetchItems({ skip: 0, take: PAGE_SIZE }) as any)
-    }
-  }, [dispatch])
-
   const handleClearSearch = useCallback(() => {
     setSearchInput('')
     setCurrentPage(1)
-    dispatch(fetchItems({ skip: 0, take: PAGE_SIZE }) as any)
-  }, [dispatch])
+  }, [])
+
+  const handleAddItem = useCallback(async (formData: CreateItemRequest) => {
+    try {
+      await dispatch(createItem(formData) as any)
+      // Refresh the list
+      dispatch(fetchItems({ skip: 0, take: PAGE_SIZE, searchQuery: searchQuery || undefined }) as any)
+      setCurrentPage(1)
+    } catch (err) {
+      console.error('Failed to create item:', err)
+      throw err
+    }
+  }, [dispatch, searchQuery])
 
   const columns: Column<Item>[] = [
     {
@@ -114,7 +131,10 @@ export const ItemsPage = () => {
           <h1 className="text-3xl font-bold text-gray-900 mb-2">Items Management</h1>
           <p className="text-gray-600">Manage your inventory items</p>
         </div>
-        <button className="flex items-center gap-2 px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors">
+        <button
+          onClick={() => setIsAddItemOpen(true)}
+          className="flex items-center gap-2 px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors"
+        >
           <Plus size={20} />
           Add Item
         </button>
@@ -128,7 +148,7 @@ export const ItemsPage = () => {
             type="text"
             placeholder="Search by item code, name, brand..."
             value={searchInput}
-            onChange={(e) => handleSearch(e.target.value)}
+            onChange={(e) => setSearchInput(e.target.value)}
             className="w-full pl-10 pr-10 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
           />
           {searchInput && (
@@ -157,6 +177,14 @@ export const ItemsPage = () => {
           emptyMessage="No items found"
         />
       </Card>
+
+      {/* Add Item Modal */}
+      <AddItemModal
+        isOpen={isAddItemOpen}
+        onClose={() => setIsAddItemOpen(false)}
+        onSubmit={handleAddItem}
+        isLoading={loading}
+      />
     </div>
   )
 }
