@@ -24,6 +24,18 @@ export const fetchItems = createAsyncThunk(
   }
 )
 
+export const fetchItemsByCategory = createAsyncThunk(
+  'items/fetchItemsByCategory',
+  async ({ category, skip = 0, take = 10 }: { category: string; skip?: number; take?: number }, { rejectWithValue }) => {
+    try {
+      const response = await itemService.getByCategory(category)
+      return response.data
+    } catch (error: any) {
+      return rejectWithValue(error.message)
+    }
+  }
+)
+
 export const fetchItemById = createAsyncThunk(
   'items/fetchItemById',
   async (id: number, { rejectWithValue }) => {
@@ -94,10 +106,10 @@ const itemSlice = createSlice({
       })
       .addCase(fetchItems.fulfilled, (state, action) => {
         state.loading = false
-        state.items = action.payload?.data || []
-        state.total = action.payload?.total || 0
-        state.skip = action.payload?.skip || 0
-        state.take = action.payload?.take || 10
+        state.items = action.payload.data || []
+        state.total = action.payload.total || 0
+        state.skip = action.payload.skip || 0
+        state.take = action.payload.take || 10
       })
       .addCase(fetchItems.rejected, (state, action) => {
         state.loading = false
@@ -157,6 +169,21 @@ const itemSlice = createSlice({
         }
       })
       .addCase(deleteItem.rejected, (state, action) => {
+        state.loading = false
+        state.error = action.payload as string
+      })
+      .addCase(fetchItemsByCategory.pending, (state) => {
+        state.loading = true
+        state.error = null
+      })
+      .addCase(fetchItemsByCategory.fulfilled, (state, action) => {
+        state.loading = false
+        state.items = action.payload.data || []
+        state.total = action.payload.total || 0
+        state.skip = action.payload.skip || 0
+        state.take = action.payload.take || 10
+      })
+      .addCase(fetchItemsByCategory.rejected, (state, action) => {
         state.loading = false
         state.error = action.payload as string
       })

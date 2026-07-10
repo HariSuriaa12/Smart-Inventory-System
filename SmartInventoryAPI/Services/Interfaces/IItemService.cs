@@ -7,8 +7,8 @@ public interface IItemService
 {
     Task<ItemDto> CreateItemAsync(CreateItemRequestDto request);
     Task<ItemDto> GetItemByIdAsync(long id);
-    Task<IEnumerable<ItemDto>> GetAllItemsAsync(int skip = 0, int take = 10);
+    Task<PaginatedResponseDto<ItemDto>> GetAllItemsAsync(int skip = 0, int take = 10);
     Task<ItemDto> UpdateItemAsync(long id, UpdateItemRequestDto request);
     Task DeleteItemAsync(long id);
-    Task<IEnumerable<ItemDto>> GetByCategoryAsync(string category, int skip = 0, int take = 10);
+    Task<PaginatedResponseDto<ItemDto>> GetByCategoryAsync(string category, int skip = 0, int take = 10);
 }

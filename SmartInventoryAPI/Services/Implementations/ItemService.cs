@@ -54,10 +54,27 @@ public class ItemService : IItemService
         return _mapper.Map<ItemDto>(item);
     }
 
-    public async Task<IEnumerable<ItemDto>> GetAllItemsAsync(int skip = 0, int take = 10)
+    public async Task<PaginatedResponseDto<ItemDto>> GetAllItemsAsync(int skip = 0, int take = 10)
     {
         var items = await _unitOfWork.Items.GetAllAsync(skip, take);
-        return _mapper.Map<IEnumerable<ItemDto>>(items.Where(i => !i.Is_Deleted));
+        var total = await _unitOfWork.Items.CountAsync();
+        var activeItems = items.Where(i => !i.Is_Deleted).ToList();
+        var activeTotal = activeItems.Count;
+
+        var page = (skip / take) + 1;
+        var totalPages = (int)Math.Ceiling((double)total / take);
+
+        return new PaginatedResponseDto<ItemDto>
+        {
+            Data = _mapper.Map<IEnumerable<ItemDto>>(activeItems),
+            Total = total,
+            Skip = skip,
+            Take = take,
+            Page = page,
+            TotalPages = totalPages,
+            HasNextPage = skip + take < total,
+            HasPreviousPage = skip > 0
+        };
     }
 
     public async Task<ItemDto> UpdateItemAsync(long id, UpdateItemRequestDto request)
@@ -122,9 +139,24 @@ public class ItemService : IItemService
         _logger.LogInformation("Item {ID} deleted successfully", id);
     }
 
-    public async Task<IEnumerable<ItemDto>> GetByCategoryAsync(string category, int skip = 0, int take = 10)
+    public async Task<PaginatedResponseDto<ItemDto>> GetByCategoryAsync(string category, int skip = 0, int take = 10)
     {
         var items = await _unitOfWork.Items.GetByCategoryAsync(category, skip, take);
-        return _mapper.Map<IEnumerable<ItemDto>>(items);
+        var total = await _unitOfWork.Items.CountByCategoryAsync(category);
+
+        var page = (skip / take) + 1;
+        var totalPages = (int)Math.Ceiling((double)total / take);
+
+        return new PaginatedResponseDto<ItemDto>
+        {
+            Data = _mapper.Map<IEnumerable<ItemDto>>(items),
+            Total = total,
+            Skip = skip,
+            Take = take,
+            Page = page,
+            TotalPages = totalPages,
+            HasNextPage = skip + take < total,
+            HasPreviousPage = skip > 0
+        };
     }
 }

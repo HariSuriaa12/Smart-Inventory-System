@@ -24,6 +24,12 @@ public class ItemRepository : GenericRepository<Item>, IItemRepository
             .ToListAsync();
     }
 
+    public async Task<int> CountByCategoryAsync(string category)
+    {
+        return await _dbSet.Where(i => i.Item_Category == category && !i.Is_Deleted)
+            .CountAsync();
+    }
+
     public async Task<IEnumerable<Item>> GetActiveItemsAsync(int skip = 0, int take = 10)
     {
         return await _dbSet.Where(i => i.Is_Active && !i.Is_Deleted)

@@ -18,6 +18,6 @@ export const itemService = {
   deleteItem: async (id: number) =>
     (await api.delete<ApiResponse<void>>(`/api/items/${id}`)).data,
 
-  getByCategory: async (category: string) =>
-    (await api.get<ApiResponse<Item[]>>(`/api/items/category/${category}`)).data,
+  getByCategory: async (category: string, skip: number = 0, take: number = 10) =>
+    (await api.get<ApiResponse<PaginatedResponse<Item>>>(`/api/items/category/${category}`, { params: { skip, take } })).data,
 }

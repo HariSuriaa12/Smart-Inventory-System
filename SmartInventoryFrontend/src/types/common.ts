@@ -16,6 +16,10 @@ export interface PaginatedResponse<T> {
   total: number
   skip: number
   take: number
+  page?: number
+  totalPages?: number
+  hasNextPage?: boolean
+  hasPreviousPage?: boolean
 }
 
 export interface Entity {

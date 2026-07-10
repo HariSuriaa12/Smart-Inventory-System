@@ -21,12 +21,12 @@ public class ItemsController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<ApiResponseDto<IEnumerable<ItemDto>>>> GetAllItems(
+    public async Task<ActionResult<ApiResponseDto<PaginatedResponseDto<ItemDto>>>> GetAllItems(
         [FromQuery] int skip = 0,
         [FromQuery] int take = 10)
     {
         var items = await _itemService.GetAllItemsAsync(skip, take);
-        return Ok(new ApiResponseDto<IEnumerable<ItemDto>>
+        return Ok(new ApiResponseDto<PaginatedResponseDto<ItemDto>>
         {
             Success = true,
             Message = "Items retrieved successfully",
@@ -90,13 +90,13 @@ public class ItemsController : ControllerBase
     }
 
     [HttpGet("category/{category}")]
-    public async Task<ActionResult<ApiResponseDto<IEnumerable<ItemDto>>>> GetByCategory(
+    public async Task<ActionResult<ApiResponseDto<PaginatedResponseDto<ItemDto>>>> GetByCategory(
         string category,
         [FromQuery] int skip = 0,
         [FromQuery] int take = 10)
     {
         var items = await _itemService.GetByCategoryAsync(category, skip, take);
-        return Ok(new ApiResponseDto<IEnumerable<ItemDto>>
+        return Ok(new ApiResponseDto<PaginatedResponseDto<ItemDto>>
         {
             Success = true,
             Message = "Items retrieved by category successfully",
