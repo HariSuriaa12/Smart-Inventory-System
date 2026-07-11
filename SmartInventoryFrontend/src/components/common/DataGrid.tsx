@@ -1,5 +1,5 @@
-import { useMemo } from 'react'
-import { ChevronLeft, ChevronRight } from 'lucide-react'
+import { useMemo, useState } from 'react'
+import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from 'lucide-react'
 import cn from 'classnames'
 
 export interface Column<T> {
@@ -39,11 +39,12 @@ export const DataGrid = <T,>({
   emptyMessage = 'No data available',
 }: DataGridProps<T>) => {
   const totalPages = useMemo(() => Math.ceil(totalItems / pageSize), [totalItems, pageSize])
+  const maxButtons = 5
+  const [paginationStartPage, setPaginationStartPage] = useState(1)
 
   const paginationItems = useMemo(() => {
     const items = []
-    const maxButtons = 5
-    let startPage = Math.max(1, currentPage - Math.floor(maxButtons / 2))
+    let startPage = paginationStartPage
     let endPage = Math.min(totalPages, startPage + maxButtons - 1)
 
     if (endPage - startPage + 1 < maxButtons) {
@@ -55,7 +56,27 @@ export const DataGrid = <T,>({
     }
 
     return items
-  }, [currentPage, totalPages])
+  }, [paginationStartPage, totalPages])
+
+  const handlePrevPage = () => {
+    const newStart = Math.max(1, paginationStartPage - maxButtons)
+    setPaginationStartPage(newStart)
+  }
+
+  const handleNextPage = () => {
+    const newStart = Math.min(Math.max(1, totalPages - maxButtons + 1), paginationStartPage + maxButtons)
+    setPaginationStartPage(newStart)
+  }
+
+  const handleFirstPage = () => {
+    setPaginationStartPage(1)
+    onPageChange?.(1)
+  }
+
+  const handleLastPage = () => {
+    setPaginationStartPage(Math.max(1, totalPages - maxButtons + 1))
+    onPageChange?.(totalPages)
+  }
 
   return (
     <div className={cn('flex flex-col h-full', className)}>
@@ -139,7 +160,7 @@ export const DataGrid = <T,>({
 
           <div className="flex items-center gap-2">
             <button
-              onClick={() => onPageChange?.(Math.max(1, currentPage - 1))}
+              onClick={handleFirstPage}
               disabled={currentPage === 1}
               className={cn(
                 'p-2 rounded-lg transition-colors',
@@ -147,7 +168,23 @@ export const DataGrid = <T,>({
                   ? 'text-gray-400 cursor-not-allowed'
                   : 'text-gray-600 hover:bg-gray-100'
               )}
-              aria-label="Previous page"
+              aria-label="First page"
+              title="First page"
+            >
+              <ChevronsLeft size={20} />
+            </button>
+
+            <button
+              onClick={handlePrevPage}
+              disabled={paginationStartPage === 1}
+              className={cn(
+                'p-2 rounded-lg transition-colors',
+                paginationStartPage === 1
+                  ? 'text-gray-400 cursor-not-allowed'
+                  : 'text-gray-600 hover:bg-gray-100'
+              )}
+              aria-label="Previous page list"
+              title="Previous page list"
             >
               <ChevronLeft size={20} />
             </button>
@@ -155,7 +192,10 @@ export const DataGrid = <T,>({
             {paginationItems.map((page) => (
               <button
                 key={page}
-                onClick={() => onPageChange?.(page)}
+                onClick={() => {
+                  onPageChange?.(page)
+                  setPaginationStartPage(page - Math.floor(maxButtons / 2))
+                }}
                 className={cn(
                   'px-3 py-2 rounded-lg text-sm font-medium transition-colors',
                   currentPage === page
@@ -168,7 +208,22 @@ export const DataGrid = <T,>({
             ))}
 
             <button
-              onClick={() => onPageChange?.(Math.min(totalPages, currentPage + 1))}
+              onClick={handleNextPage}
+              disabled={paginationStartPage >= totalPages - maxButtons + 1}
+              className={cn(
+                'p-2 rounded-lg transition-colors',
+                paginationStartPage >= totalPages - maxButtons + 1
+                  ? 'text-gray-400 cursor-not-allowed'
+                  : 'text-gray-600 hover:bg-gray-100'
+              )}
+              aria-label="Next page list"
+              title="Next page list"
+            >
+              <ChevronRight size={20} />
+            </button>
+
+            <button
+              onClick={handleLastPage}
               disabled={currentPage === totalPages}
               className={cn(
                 'p-2 rounded-lg transition-colors',
@@ -176,9 +231,10 @@ export const DataGrid = <T,>({
                   ? 'text-gray-400 cursor-not-allowed'
                   : 'text-gray-600 hover:bg-gray-100'
               )}
-              aria-label="Next page"
+              aria-label="Last page"
+              title="Last page"
             >
-              <ChevronRight size={20} />
+              <ChevronsRight size={20} />
             </button>
           </div>
         </div>
