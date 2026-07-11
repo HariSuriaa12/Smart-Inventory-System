@@ -4106,6 +4106,10 @@
       "UpdateItemRequestDto": {
         "type": "object",
         "properties": {
+          "item_Code": {
+            "type": "string",
+            "nullable": true
+          },
           "item_Name": {
             "type": "string",
             "nullable": true

@@ -20,6 +20,7 @@ public class CreateItemRequestDto
 
 public class UpdateItemRequestDto
 {
+    public string? Item_Code { get; set; }
     public string? Item_Name { get; set; }
     public string? Description { get; set; }
     public string? Item_Category { get; set; }
