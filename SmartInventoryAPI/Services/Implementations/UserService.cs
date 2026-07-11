@@ -49,10 +49,25 @@ public class UserService : IUserService
         return _mapper.Map<UserDto>(user);
     }
 
-    public async Task<IEnumerable<UserDto>> GetAllUsersAsync(int skip = 0, int take = 10)
+    public async Task<PaginatedResponseDto<UserDto>> GetAllUsersAsync(int skip = 0, int take = 10)
     {
         var users = await _unitOfWork.User.GetActiveUsersAsync(skip, take);
-        return _mapper.Map<IEnumerable<UserDto>>(users);
+        var total = await _unitOfWork.User.CountNonDeletedAsync();
+
+        var page = (skip / take) + 1;
+        var totalPages = (int)Math.Ceiling((double)total / take);
+
+        return new PaginatedResponseDto<UserDto>
+        {
+            Data = _mapper.Map<IEnumerable<UserDto>>(users),
+            Total = total,
+            Skip = skip,
+            Take = take,
+            Page = page,
+            TotalPages = totalPages,
+            HasNextPage = skip + take < total,
+            HasPreviousPage = skip > 0
+        };
     }
 
     public async Task<UserDto> UpdateUserAsync(long id, UpdateUserRequestDto request)

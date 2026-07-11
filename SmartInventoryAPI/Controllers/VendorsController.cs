@@ -21,12 +21,12 @@ public class VendorsController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<ApiResponseDto<IEnumerable<VendorDto>>>> GetAllVendors(
+    public async Task<ActionResult<ApiResponseDto<PaginatedResponseDto<VendorDto>>>> GetAllVendors(
         [FromQuery] int skip = 0,
         [FromQuery] int take = 10)
     {
         var vendors = await _vendorService.GetAllVendorsAsync(skip, take);
-        return Ok(new ApiResponseDto<IEnumerable<VendorDto>>
+        return Ok(new ApiResponseDto<PaginatedResponseDto<VendorDto>>
         {
             Success = true,
             Message = "Vendors retrieved successfully",
