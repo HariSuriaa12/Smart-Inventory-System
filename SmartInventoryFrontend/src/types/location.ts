@@ -1,24 +1,24 @@
 import { Entity } from './common'
 
 export interface Location extends Entity {
-  Location_Name: string
-  Outlet_Code: string
-  Location_Type: number
-  Address: string
+  location_Name: string
+  outlet_Code: string
+  location_Type: number
+  address: string
 }
 
 export interface CreateLocationRequest {
-  Location_Name: string
-  Outlet_Code: string
-  Location_Type: number
-  Address: string
+  location_Name: string
+  outlet_Code: string
+  location_Type: number
+  address: string
 }
 
 export interface UpdateLocationRequest {
-  Location_Name?: string
-  Outlet_Code?: string
-  Location_Type?: number
-  Address?: string
+  location_Name?: string
+  outlet_Code?: string
+  location_Type?: number
+  address?: string
 }
 
 export interface LocationState {

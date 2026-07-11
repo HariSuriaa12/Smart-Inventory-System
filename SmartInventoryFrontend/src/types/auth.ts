@@ -12,13 +12,14 @@ export interface AuthResponse {
 }
 
 export interface User extends Entity {
-  fullName: string
+  full_Name: string
   username: string
   email: string
   role: UserRole
-  mobileNo?: string
-  staffCode?: string
+  mobile_No?: string
+  staff_Code?: string
   ic?: string
+  creation_Date?: Date
 }
 
 export enum UserRole {
@@ -47,8 +48,8 @@ export interface CreateUserRequest {
   password: string
   email: string
   role: UserRole
-  mobileNo?: string
-  staffCode?: string
+  mobile_No?: string
+  staff_Code?: string
   ic?: string
 }
 
@@ -57,7 +58,7 @@ export interface UpdateUserRequest {
   username?: string
   email?: string
   role?: UserRole
-  mobileNo?: string
-  staffCode?: string
+  mobile_No?: string
+  staff_Code?: string
   ic?: string
 }

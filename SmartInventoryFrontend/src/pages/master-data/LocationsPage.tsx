@@ -83,27 +83,27 @@ export const LocationsPage = () => {
 
   const columns: Column<Location>[] = [
     {
-      key: 'Outlet_Code',
+      key: 'outlet_Code',
       label: 'Outlet Code',
       width: '150px',
     },
     {
-      key: 'Location_Name',
+      key: 'location_Name',
       label: 'Location Name',
       width: '200px',
     },
     {
-      key: 'Location_Type',
+      key: 'location_Type',
       label: 'Location Type',
       width: '150px',
     },
     {
-      key: 'Address',
+      key: 'address',
       label: 'Address',
       width: '300px',
     },
     {
-      key: 'Creation_Date',
+      key: 'creation_Date',
       label: 'Creation Date',
       width: '150px',
       render: (value) => value ? new Date(value).toLocaleDateString() : '-',

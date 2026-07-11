@@ -106,6 +106,7 @@ const itemSlice = createSlice({
         state.error = null
       })
       .addCase(fetchItems.fulfilled, (state, action) => {
+        console.log('Fetched items:', action.payload)
         state.loading = false
         state.items = action.payload.data || []
         state.total = action.payload.total || 0

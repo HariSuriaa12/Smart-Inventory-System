@@ -88,7 +88,7 @@ export const UsersPage = () => {
       width: '150px',
     },
     {
-      key: 'fullName',
+      key: 'full_Name',
       label: 'Full Name',
       width: '200px',
     },
@@ -104,19 +104,19 @@ export const UsersPage = () => {
       render: (value) => UserRoleLabel[value] || value,
     },
     {
-      key: 'staffCode',
+      key: 'staff_Code',
       label: 'Staff Code',
       width: '120px',
       render: (value) => value || '-',
     },
     {
-      key: 'mobileNo',
+      key: 'mobile_No',
       label: 'Mobile No',
       width: '150px',
       render: (value) => value || '-',
     },
     {
-      key: 'Creation_Date',
+      key: 'creation_Date',
       label: 'Creation Date',
       width: '150px',
       render: (value) => value ? new Date(value).toLocaleDateString() : '-',
