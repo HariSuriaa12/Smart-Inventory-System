@@ -24,12 +24,12 @@ public class UsersController : ControllerBase
     /// Get all users with pagination
     /// </summary>
     [HttpGet]
-    public async Task<ActionResult<ApiResponseDto<IEnumerable<UserDto>>>> GetAllUsers(
+    public async Task<ActionResult<ApiResponseDto<PaginatedResponseDto<UserDto>>>> GetAllUsers(
         [FromQuery] int skip = 0,
         [FromQuery] int take = 10)
     {
         var users = await _userService.GetAllUsersAsync(skip, take);
-        return Ok(new ApiResponseDto<IEnumerable<UserDto>>
+        return Ok(new ApiResponseDto<PaginatedResponseDto<UserDto>>
         {
             Success = true,
             Message = "Users retrieved successfully",

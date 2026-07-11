@@ -42,10 +42,27 @@ public class VendorService : IVendorService
         return _mapper.Map<VendorDto>(vendor);
     }
 
-    public async Task<IEnumerable<VendorDto>> GetAllVendorsAsync(int skip = 0, int take = 10)
+    public async Task<PaginatedResponseDto<VendorDto>> GetAllVendorsAsync(int skip = 0, int take = 10)
     {
         var vendors = await _unitOfWork.Vendors.GetAllAsync(skip, take);
-        return _mapper.Map<IEnumerable<VendorDto>>(vendors.Where(v => !v.IsDeleted));
+        var total = await _unitOfWork.Vendors.CountNonDeletedAsync();
+
+        var activeVendors = vendors.Where(v => !v.IsDeleted).ToList();
+
+        var page = (skip / take) + 1;
+        var totalPages = (int)Math.Ceiling((double)total / take);
+
+        return new PaginatedResponseDto<VendorDto>
+        {
+            Data = _mapper.Map<IEnumerable<VendorDto>>(activeVendors),
+            Total = total,
+            Skip = skip,
+            Take = take,
+            Page = page,
+            TotalPages = totalPages,
+            HasNextPage = skip + take < total,
+            HasPreviousPage = skip > 0
+        };
     }
 
     public async Task<VendorDto> UpdateVendorAsync(long id, UpdateVendorRequestDto request)

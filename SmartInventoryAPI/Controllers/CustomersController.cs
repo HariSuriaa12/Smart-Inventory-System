@@ -21,12 +21,12 @@ public class CustomersController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<ApiResponseDto<IEnumerable<CustomerDto>>>> GetAllCustomers(
+    public async Task<ActionResult<ApiResponseDto<PaginatedResponseDto<CustomerDto>>>> GetAllCustomers(
         [FromQuery] int skip = 0,
         [FromQuery] int take = 10)
     {
         var customers = await _customerService.GetAllCustomersAsync(skip, take);
-        return Ok(new ApiResponseDto<IEnumerable<CustomerDto>>
+        return Ok(new ApiResponseDto<PaginatedResponseDto<CustomerDto>>
         {
             Success = true,
             Message = "Customers retrieved successfully",

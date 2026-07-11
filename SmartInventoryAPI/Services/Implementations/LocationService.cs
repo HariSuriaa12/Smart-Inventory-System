@@ -42,16 +42,27 @@ public class LocationService : ILocationService
         return _mapper.Map<LocationDto>(location);
     }
 
-    public async Task<IEnumerable<LocationDto>> GetAllLocationsAsync(int skip, int take)
+    public async Task<PaginatedResponseDto<LocationDto>> GetAllLocationsAsync(int skip = 0, int take = 10)
     {
         var locations = await _unitOfWork.Locations.GetAllAsync(skip, take);
-        return _mapper.Map<IEnumerable<LocationDto>>(locations.Where(l => !l.Is_Deleted));
-    }
+        var total = await _unitOfWork.Locations.CountNonDeletedAsync();
 
-    public async Task<IEnumerable<LocationDto>> GetAllLocationsAsync()
-    {
-        var locations = await _unitOfWork.Locations.GetAllAsync();
-        return _mapper.Map<IEnumerable<LocationDto>>(locations.Where(l => !l.Is_Deleted));
+        var activeLocations = locations.Where(l => !l.Is_Deleted).ToList();
+
+        var page = (skip / take) + 1;
+        var totalPages = (int)Math.Ceiling((double)total / take);
+
+        return new PaginatedResponseDto<LocationDto>
+        {
+            Data = _mapper.Map<IEnumerable<LocationDto>>(activeLocations),
+            Total = total,
+            Skip = skip,
+            Take = take,
+            Page = page,
+            TotalPages = totalPages,
+            HasNextPage = skip + take < total,
+            HasPreviousPage = skip > 0
+        };
     }
 
     public async Task<LocationDto> UpdateLocationAsync(long id, UpdateLocationRequestDto request)

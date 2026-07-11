@@ -42,10 +42,27 @@ public class CustomerService : ICustomerService
         return _mapper.Map<CustomerDto>(customer);
     }
 
-    public async Task<IEnumerable<CustomerDto>> GetAllCustomersAsync(int skip = 0, int take = 10)
+    public async Task<PaginatedResponseDto<CustomerDto>> GetAllCustomersAsync(int skip = 0, int take = 10)
     {
         var customers = await _unitOfWork.Customers.GetAllAsync(skip, take);
-        return _mapper.Map<IEnumerable<CustomerDto>>(customers.Where(c => !c.IsDeleted));
+        var total = await _unitOfWork.Customers.CountNonDeletedAsync();
+
+        var activeCustomers = customers.Where(c => !c.IsDeleted).ToList();
+
+        var page = (skip / take) + 1;
+        var totalPages = (int)Math.Ceiling((double)total / take);
+
+        return new PaginatedResponseDto<CustomerDto>
+        {
+            Data = _mapper.Map<IEnumerable<CustomerDto>>(activeCustomers),
+            Total = total,
+            Skip = skip,
+            Take = take,
+            Page = page,
+            TotalPages = totalPages,
+            HasNextPage = skip + take < total,
+            HasPreviousPage = skip > 0
+        };
     }
 
     public async Task<CustomerDto> UpdateCustomerAsync(long id, UpdateCustomerRequestDto request)
