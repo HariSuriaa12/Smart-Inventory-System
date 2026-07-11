@@ -4,6 +4,10 @@ import { MainLayout } from '@/components/layout/MainLayout'
 import { LoginPage } from '@/pages/auth/LoginPage'
 import { DashboardPage } from '@/pages/dashboard/DashboardPage'
 import { ItemsPage } from '@/pages/master-data/ItemsPage'
+import { LocationsPage } from '@/pages/master-data/LocationsPage'
+import { VendorsPage } from '@/pages/master-data/VendorsPage'
+import { CustomersPage } from '@/pages/master-data/CustomersPage'
+import { UsersPage } from '@/pages/master-data/UsersPage'
 import { Card, Badge } from '@/components'
 import { LocationModalProvider } from '@/context/LocationModalContext'
 
@@ -41,10 +45,10 @@ function App() {
 
               {/* Master Data Routes */}
               <Route path="/app/master-data/items" element={<ItemsPage />} />
-              <Route path="/app/master-data/locations" element={<PlaceholderPage title="Locations Management" />} />
-              <Route path="/app/master-data/vendors" element={<PlaceholderPage title="Vendors Management" />} />
-              <Route path="/app/master-data/customers" element={<PlaceholderPage title="Customers Management" />} />
-              <Route path="/app/master-data/users" element={<PlaceholderPage title="Users Management" />} />
+              <Route path="/app/master-data/locations" element={<LocationsPage />} />
+              <Route path="/app/master-data/vendors" element={<VendorsPage />} />
+              <Route path="/app/master-data/customers" element={<CustomersPage />} />
+              <Route path="/app/master-data/users" element={<UsersPage />} />
 
               {/* Transactional Routes */}
               <Route path="/app/inventory" element={<PlaceholderPage title="Inventory Management" />} />
