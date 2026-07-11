@@ -68,14 +68,12 @@ export const DataGrid = <T,>({
     setPaginationStartPage(newStart)
   }
 
-  const handleFirstPage = () => {
+  const handleFirstPageWindow = () => {
     setPaginationStartPage(1)
-    onPageChange?.(1)
   }
 
-  const handleLastPage = () => {
+  const handleLastPageWindow = () => {
     setPaginationStartPage(Math.max(1, totalPages - maxButtons + 1))
-    onPageChange?.(totalPages)
   }
 
   return (
@@ -160,16 +158,16 @@ export const DataGrid = <T,>({
 
           <div className="flex items-center gap-2">
             <button
-              onClick={handleFirstPage}
-              disabled={currentPage === 1}
+              onClick={handleFirstPageWindow}
+              disabled={paginationStartPage === 1}
               className={cn(
                 'p-2 rounded-lg transition-colors',
-                currentPage === 1
+                paginationStartPage === 1
                   ? 'text-gray-400 cursor-not-allowed'
                   : 'text-gray-600 hover:bg-gray-100'
               )}
-              aria-label="First page"
-              title="First page"
+              aria-label="First page window"
+              title="First page list"
             >
               <ChevronsLeft size={20} />
             </button>
@@ -223,16 +221,16 @@ export const DataGrid = <T,>({
             </button>
 
             <button
-              onClick={handleLastPage}
-              disabled={currentPage === totalPages}
+              onClick={handleLastPageWindow}
+              disabled={paginationStartPage >= totalPages - maxButtons + 1}
               className={cn(
                 'p-2 rounded-lg transition-colors',
-                currentPage === totalPages
+                paginationStartPage >= totalPages - maxButtons + 1
                   ? 'text-gray-400 cursor-not-allowed'
                   : 'text-gray-600 hover:bg-gray-100'
               )}
-              aria-label="Last page"
-              title="Last page"
+              aria-label="Last page window"
+              title="Last page list"
             >
               <ChevronsRight size={20} />
             </button>
