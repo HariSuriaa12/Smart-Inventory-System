@@ -13,27 +13,70 @@ public class InventoryRepository : GenericRepository<Inventory>, IInventoryRepos
 
     public async Task<Inventory?> GetByItemAndLocationAsync(long itemId, long locationId)
     {
-        return await _dbSet.Include(i => i.Item)
-            .Include(i => i.Location)
+        var inventory = await _dbSet
             .FirstOrDefaultAsync(i => i.Item_ID == itemId && i.Location_ID == locationId && !i.Is_Deleted);
+
+        if (inventory != null)
+        {
+            inventory.Item = await _context.Set<Item>().FirstOrDefaultAsync(x => x.ID == itemId);
+            inventory.Location = await _context.Set<Location>().FirstOrDefaultAsync(x => x.ID == locationId);
+        }
+
+        return inventory;
     }
 
     public async Task<IEnumerable<Inventory>> GetByLocationAsync(long locationId, int skip = 0, int take = 10)
     {
-        return await _dbSet.Where(i => i.Location_ID == locationId && !i.Is_Deleted)
-            .Include(i => i.Item)
+        var inventories = await _dbSet
+            .Where(i => i.Location_ID == locationId && !i.Is_Deleted)
             .Skip(skip)
             .Take(take)
             .ToListAsync();
+
+        // Manually load related entities to avoid include issues
+        var itemIds = inventories.Select(i => i.Item_ID).Distinct().ToList();
+        var items = await _context.Set<Item>()
+            .Where(x => itemIds.Contains(x.ID))
+            .ToListAsync();
+
+        var locations = await _context.Set<Location>()
+            .Where(x => x.ID == locationId)
+            .ToListAsync();
+
+        foreach (var inv in inventories)
+        {
+            inv.Item = items.FirstOrDefault(x => x.ID == inv.Item_ID);
+            inv.Location = locations.FirstOrDefault(x => x.ID == inv.Location_ID);
+        }
+
+        return inventories;
     }
 
     public async Task<IEnumerable<Inventory>> GetByItemAsync(long itemId, int skip = 0, int take = 10)
     {
-        return await _dbSet.Where(i => i.Item_ID == itemId && !i.Is_Deleted)
-            .Include(i => i.Location)
+        var inventories = await _dbSet
+            .Where(i => i.Item_ID == itemId && !i.Is_Deleted)
             .Skip(skip)
             .Take(take)
             .ToListAsync();
+
+        // Manually load related entities
+        var locationIds = inventories.Select(i => i.Location_ID).Distinct().ToList();
+        var locations = await _context.Set<Location>()
+            .Where(x => locationIds.Contains(x.ID))
+            .ToListAsync();
+
+        var items = await _context.Set<Item>()
+            .Where(x => x.ID == itemId)
+            .ToListAsync();
+
+        foreach (var inv in inventories)
+        {
+            inv.Item = items.FirstOrDefault(x => x.ID == inv.Item_ID);
+            inv.Location = locations.FirstOrDefault(x => x.ID == inv.Location_ID);
+        }
+
+        return inventories;
     }
 
     public async Task<decimal> GetTotalAvailableQuantityAsync(long itemId)
