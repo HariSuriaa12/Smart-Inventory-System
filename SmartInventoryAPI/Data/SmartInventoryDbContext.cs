@@ -121,6 +121,19 @@ public class SmartInventoryDbContext : DbContext
             .Property(x => x.Forecasted_Quantity)
             .HasPrecision(14, 2);
 
+        // Configure Inventory relationships
+        modelBuilder.Entity<Inventory>()
+            .HasOne(i => i.Item)
+            .WithMany()
+            .HasForeignKey(i => i.Item_ID)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<Inventory>()
+            .HasOne(i => i.Location)
+            .WithMany()
+            .HasForeignKey(i => i.Location_ID)
+            .OnDelete(DeleteBehavior.Restrict);
+
         modelBuilder.Entity<PriceLog>()
             .Property(x => x.Previous_Unit_Price)
             .HasPrecision(14, 2);
