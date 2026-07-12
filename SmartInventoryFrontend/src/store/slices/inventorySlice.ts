@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { inventoryService } from '@/services/inventoryService'
-import { Inventory, AdjustInventoryRequest, InventoryState } from '@/types/inventory'
+import { Inventory, AdjustInventoryRequest, StockTransferRequest, InventoryState } from '@/types/inventory'
 
 const initialState: InventoryState = {
   inventory: [],
@@ -12,29 +12,53 @@ const initialState: InventoryState = {
   take: 10,
 }
 
-export const fetchInventory = createAsyncThunk('inventory/fetch', async ({ skip = 0, take = 10 }: any, { rejectWithValue }) => {
-  try {
-    return (await inventoryService.getInventory(skip, take)).data
-  } catch (error: any) {
-    return rejectWithValue(error.message)
+export const fetchInventoryByLocation = createAsyncThunk(
+  'inventory/fetchByLocation',
+  async ({ locationId, skip = 0, take = 10 }: any, { rejectWithValue }) => {
+    try {
+      const response = await inventoryService.getInventoryByLocation(locationId, skip, take)
+      return response.data
+    } catch (error: any) {
+      return rejectWithValue(error.message)
+    }
   }
-})
+)
 
-export const fetchInventoryByLocation = createAsyncThunk('inventory/fetchByLocation', async ({ locationId, skip = 0, take = 10 }: any, { rejectWithValue }) => {
-  try {
-    return (await inventoryService.getInventoryByLocation(locationId, skip, take)).data
-  } catch (error: any) {
-    return rejectWithValue(error.message)
+export const fetchInventoryByItem = createAsyncThunk(
+  'inventory/fetchByItem',
+  async ({ itemId, skip = 0, take = 10 }: any, { rejectWithValue }) => {
+    try {
+      const response = await inventoryService.getInventoryByItem(itemId, skip, take)
+      return response.data
+    } catch (error: any) {
+      return rejectWithValue(error.message)
+    }
   }
-})
+)
 
-export const adjustInventory = createAsyncThunk('inventory/adjust', async ({ id, data }: any, { rejectWithValue }) => {
-  try {
-    return (await inventoryService.adjustInventory(id, data)).data
-  } catch (error: any) {
-    return rejectWithValue(error.message)
+export const adjustInventory = createAsyncThunk(
+  'inventory/adjust',
+  async (data: AdjustInventoryRequest, { rejectWithValue }) => {
+    try {
+      const response = await inventoryService.adjustInventory(data)
+      return response.data
+    } catch (error: any) {
+      return rejectWithValue(error.message)
+    }
   }
-})
+)
+
+export const transferStock = createAsyncThunk(
+  'inventory/transfer',
+  async (data: StockTransferRequest, { rejectWithValue }) => {
+    try {
+      const response = await inventoryService.transferStock(data)
+      return response.data
+    } catch (error: any) {
+      return rejectWithValue(error.message)
+    }
+  }
+)
 
 const inventorySlice = createSlice({
   name: 'inventory',
@@ -44,19 +68,27 @@ const inventorySlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchInventory.pending, (state) => { state.loading = true })
-      .addCase(fetchInventory.fulfilled, (state, action) => {
+      .addCase(fetchInventoryByLocation.pending, (state) => { state.loading = true })
+      .addCase(fetchInventoryByLocation.fulfilled, (state, action) => {
         state.loading = false
-        state.inventory = action.payload?.data || []
-        state.total = action.payload?.total || 0
+        state.inventory = action.payload || []
+        state.total = Array.isArray(action.payload) ? action.payload.length : 0
       })
-      .addCase(fetchInventory.rejected, (state, action) => {
+      .addCase(fetchInventoryByLocation.rejected, (state, action) => {
         state.loading = false
         state.error = action.payload as string
       })
       .addCase(adjustInventory.fulfilled, (state, action) => {
-        const idx = state.inventory.findIndex((i) => i.id === action.payload.id)
-        if (idx !== -1) state.inventory[idx] = action.payload
+        const idx = state.inventory.findIndex((i) => i.ID === action.payload.ID)
+        if (idx !== -1) {
+          state.inventory[idx] = action.payload
+        }
+      })
+      .addCase(transferStock.fulfilled, (state, action) => {
+        const idx = state.inventory.findIndex((i) => i.ID === action.payload.ID)
+        if (idx !== -1) {
+          state.inventory[idx] = action.payload
+        }
       })
   },
 })

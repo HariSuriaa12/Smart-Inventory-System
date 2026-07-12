@@ -8,6 +8,7 @@ import { LocationsPage } from '@/pages/master-data/LocationsPage'
 import { VendorsPage } from '@/pages/master-data/VendorsPage'
 import { CustomersPage } from '@/pages/master-data/CustomersPage'
 import { UsersPage } from '@/pages/master-data/UsersPage'
+import { InventoryPage } from '@/pages/inventory/InventoryPage'
 import { Card, Badge } from '@/components'
 import { LocationModalProvider } from '@/context/LocationModalContext'
 
@@ -51,7 +52,7 @@ function App() {
               <Route path="/app/master-data/users" element={<UsersPage />} />
 
               {/* Transactional Routes */}
-              <Route path="/app/inventory" element={<PlaceholderPage title="Inventory Management" />} />
+              <Route path="/app/inventory" element={<InventoryPage />} />
               <Route path="/app/purchase-orders" element={<PlaceholderPage title="Purchase Orders" />} />
               <Route path="/app/order-fulfillment" element={<PlaceholderPage title="Order Fulfillment" />} />
               <Route path="/app/sales" element={<PlaceholderPage title="Sales Management" />} />
