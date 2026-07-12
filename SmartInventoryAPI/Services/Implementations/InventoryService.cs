@@ -148,7 +148,7 @@ public class InventoryService : IInventoryService
         return _mapper.Map<InventoryDto>(inventory);
     }
 
-    public async Task<InventoryDto> StockTransferAsync(StockTransferRequestDto request, long userId = 1)
+    public async Task<InventoryDto> StockTransferAsync(StockTransferRequestDto request, long userId)
     {
         var fromInventory = await _unitOfWork.Inventories.GetByItemAndLocationAsync(request.Item_ID, request.From_Location_ID);
         if (fromInventory == null || fromInventory.Is_Deleted)
@@ -187,7 +187,8 @@ public class InventoryService : IInventoryService
             Status = 1,
             Transfer_Date = DateTime.UtcNow.Date,
             Transfer_Time = DateTime.UtcNow.TimeOfDay,
-            Sub_Total = 0
+            Sub_Total = 0,
+            Performed_By = userId
         };
 
         await _unitOfWork.StockTransfers.AddAsync(transfer);
