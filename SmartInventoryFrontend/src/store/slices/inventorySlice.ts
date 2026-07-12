@@ -71,8 +71,8 @@ const inventorySlice = createSlice({
       .addCase(fetchInventoryByLocation.pending, (state) => { state.loading = true })
       .addCase(fetchInventoryByLocation.fulfilled, (state, action) => {
         state.loading = false
-        state.inventory = action.payload || []
-        state.total = Array.isArray(action.payload) ? action.payload.length : 0
+        state.inventory = action.payload?.data || []
+        state.total = action.payload?.total || 0
       })
       .addCase(fetchInventoryByLocation.rejected, (state, action) => {
         state.loading = false

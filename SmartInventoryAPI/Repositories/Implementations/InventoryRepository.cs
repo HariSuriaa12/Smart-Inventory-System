@@ -84,4 +84,16 @@ public class InventoryRepository : GenericRepository<Inventory>, IInventoryRepos
         return await _dbSet.Where(i => i.Item_ID == itemId && !i.Is_Deleted)
             .SumAsync(i => i.Available_Quantity);
     }
+
+    public async Task<int> CountByLocationAsync(long locationId)
+    {
+        return await _dbSet.Where(i => i.Location_ID == locationId && !i.Is_Deleted)
+            .CountAsync();
+    }
+
+    public async Task<int> CountByItemAsync(long itemId)
+    {
+        return await _dbSet.Where(i => i.Item_ID == itemId && !i.Is_Deleted)
+            .CountAsync();
+    }
 }
