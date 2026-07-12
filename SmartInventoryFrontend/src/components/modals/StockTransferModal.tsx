@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { transferStock } from '@/store/slices/inventorySlice'
-import { fetchLocations } from '@/store/slices/locationSlice'
+import { fetchAllLocations } from '@/store/slices/locationSlice'
 import { Inventory, StockTransferRequest } from '@/types/inventory'
 import { X, AlertCircle } from 'lucide-react'
 
@@ -30,7 +30,7 @@ export const StockTransferModal = ({
 
   useEffect(() => {
     if (isOpen && locations.length === 0) {
-      dispatch(fetchLocations({ skip: 0, take: 100 }) as any)
+      dispatch(fetchAllLocations() as any)
     }
   }, [isOpen, locations.length, dispatch])
 
