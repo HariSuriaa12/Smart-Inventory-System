@@ -1,15 +1,44 @@
 import { Entity } from './common'
-import { Item } from './item'
-import { Location } from './location'
 
-export interface Inventory extends Entity {
+export interface Inventory {
   ID: number
   Item_ID: number
   Location_ID: number
   OnHand_Quantity: number
   Available_Quantity: number
+  Is_Deleted: boolean
+  Item?: InventoryItemDetail
+  Location?: InventoryLocationDetail
+}
+
+export interface InventoryItemDetail {
+  ID: number
   Item_Name?: string
+  Item_Code?: string
+  Description?: string
+  Item_Category?: string
+  Item_Brand?: string
+  Purchase_Cost: number
+  Unit_Cost: number
+  Is_Active: boolean
+  Unit_Of_Measure?: string
+  Remark?: string
+  Creation_Date: string
+  Is_Deleted: boolean
+  Item_Image_URL?: string
+  Tax_Percentage: number
+  Tax_Type?: string
+  Item_Type?: string
+}
+
+export interface InventoryLocationDetail {
+  ID: number
   Location_Name?: string
+  Outlet_Code?: string
+  Location_Type: number
+  Address?: string
+  Creation_Date: string
+  Is_Deleted: boolean
 }
 
 export interface AdjustInventoryRequest {

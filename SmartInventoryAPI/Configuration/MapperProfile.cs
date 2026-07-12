@@ -93,6 +93,10 @@ public class MapperProfile : Profile
             .ForMember(dest => dest.Item_Name, opt => opt.MapFrom(src => src.Item != null ? src.Item.Item_Name : ""))
             .ForMember(dest => dest.Location_Name, opt => opt.MapFrom(src => src.Location != null ? src.Location.Location_Name : ""));
 
+        CreateMap<Inventory, InventoryDetailDto>();
+        CreateMap<Item, ItemDetailDto>();
+        CreateMap<Location, LocationDetailDto>();
+
         // PurchaseOrder mappings
         CreateMap<PurchaseOrderHeader, PurchaseOrderDto>()
             .ForMember(dest => dest.Vendor_Name, opt => opt.MapFrom(src => src.Vendor != null ? src.Vendor.Company_Name : ""))

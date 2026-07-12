@@ -111,7 +111,7 @@ export const StockTransferModal = ({
           {/* Item Info */}
           <div className="p-3 bg-gray-50 rounded-lg border border-gray-200">
             <p className="text-sm text-gray-600">Item</p>
-            <p className="text-base font-semibold text-gray-900">{inventory?.Item_Name}</p>
+            <p className="text-base font-semibold text-gray-900">{inventory?.Item?.Item_Name || '-'}</p>
           </div>
 
           {/* Available Quantity */}
