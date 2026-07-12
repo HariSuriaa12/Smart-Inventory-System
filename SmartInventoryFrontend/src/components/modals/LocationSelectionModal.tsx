@@ -19,7 +19,8 @@ export const LocationSelectionModal = () => {
 
   const handleSelectLocation = (location: Location) => {
     dispatch(setCurrentLocation(location))
-    if (onLocationConfirmed) {
+    // Only execute callback if location actually changed
+    if (onLocationConfirmed && currentLocation && location.id !== currentLocation.id) {
       onLocationConfirmed(location)
     }
     closeLocationModal()
