@@ -3,17 +3,28 @@ import { Item } from './item'
 import { Location } from './location'
 
 export interface Inventory extends Entity {
-  Item_Id: number
-  Location_Id: number
-  On_Hand_Quantity: number
+  ID: number
+  Item_ID: number
+  Location_ID: number
+  OnHand_Quantity: number
   Available_Quantity: number
-  Item?: Item
-  Location?: Location
+  Item_Name?: string
+  Location_Name?: string
 }
 
 export interface AdjustInventoryRequest {
-  adjustment: number
-  remark?: string
+  Item_ID: number
+  Location_ID: number
+  QuantityAdjustment: number
+  Remark?: string
+}
+
+export interface StockTransferRequest {
+  From_Location_ID: number
+  To_Location_ID: number
+  Item_ID: number
+  Transfer_Quantity: number
+  Remark?: string
 }
 
 export interface InventoryFilters {

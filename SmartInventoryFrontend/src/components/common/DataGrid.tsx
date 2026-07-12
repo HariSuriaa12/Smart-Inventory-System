@@ -192,7 +192,7 @@ export const DataGrid = <T,>({
                 key={page}
                 onClick={() => {
                   onPageChange?.(page)
-                  setPaginationStartPage(page - Math.floor(maxButtons / 2))
+                  setPaginationStartPage(Math.max(1, page - Math.floor(maxButtons / 2)))
                 }}
                 className={cn(
                   'px-3 py-2 rounded-lg text-sm font-medium transition-colors',
