@@ -1,47 +1,32 @@
 import { useEffect, useState, useCallback } from 'react'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { fetchInventoryByLocation, clearError } from '@/store/slices/inventorySlice'
-import { fetchLocations } from '@/store/slices/locationSlice'
 import { DataGrid, Card, Column } from '@/components'
 import { AdjustInventoryModal } from '@/components/modals/AdjustInventoryModal'
 import { StockTransferModal } from '@/components/modals/StockTransferModal'
 import { Inventory } from '@/types/inventory'
-import { Location } from '@/types/location'
-import { Search, X, ArrowRightLeft, Edit2 } from 'lucide-react'
+import { Search, X, ArrowRightLeft, Edit2, AlertCircle } from 'lucide-react'
 
 const PAGE_SIZE = 10
 
 export const InventoryPage = () => {
   const dispatch = useAppDispatch()
   const [currentPage, setCurrentPage] = useState(1)
-  const [selectedLocation, setSelectedLocation] = useState<number | null>(null)
   const [searchInput, setSearchInput] = useState('')
   const [isAdjustOpen, setIsAdjustOpen] = useState(false)
   const [isTransferOpen, setIsTransferOpen] = useState(false)
   const [selectedInventory, setSelectedInventory] = useState<Inventory | null>(null)
 
   const { inventory, loading, error } = useAppSelector((state) => state.inventory)
-  const { locations } = useAppSelector((state) => state.locations)
-
-  // Fetch locations on mount
-  useEffect(() => {
-    dispatch(fetchLocations({ skip: 0, take: 100 }) as any)
-  }, [dispatch])
+  const { currentLocation } = useAppSelector((state) => state.locations)
 
   // Fetch inventory when location or page changes
   useEffect(() => {
-    if (selectedLocation) {
+    if (currentLocation) {
       const skip = (currentPage - 1) * PAGE_SIZE
-      dispatch(fetchInventoryByLocation({ locationId: selectedLocation, skip, take: PAGE_SIZE }) as any)
+      dispatch(fetchInventoryByLocation({ locationId: currentLocation.id, skip, take: PAGE_SIZE }) as any)
     }
-  }, [selectedLocation, currentPage, dispatch])
-
-  const handleLocationChange = useCallback((e: React.ChangeEvent<HTMLSelectElement>) => {
-    const locId = e.target.value ? parseInt(e.target.value) : null
-    setSelectedLocation(locId)
-    setCurrentPage(1)
-    setSearchInput('')
-  }, [])
+  }, [currentLocation, currentPage, dispatch])
 
   const handleAdjustClick = useCallback((inventory: Inventory) => {
     setSelectedInventory(inventory)
@@ -56,18 +41,18 @@ export const InventoryPage = () => {
   const handleAdjustSuccess = useCallback(() => {
     setIsAdjustOpen(false)
     setSelectedInventory(null)
-    if (selectedLocation) {
-      dispatch(fetchInventoryByLocation({ locationId: selectedLocation, skip: 0, take: PAGE_SIZE }) as any)
+    if (currentLocation) {
+      dispatch(fetchInventoryByLocation({ locationId: currentLocation.id, skip: 0, take: PAGE_SIZE }) as any)
     }
-  }, [selectedLocation, dispatch])
+  }, [currentLocation, dispatch])
 
   const handleTransferSuccess = useCallback(() => {
     setIsTransferOpen(false)
     setSelectedInventory(null)
-    if (selectedLocation) {
-      dispatch(fetchInventoryByLocation({ locationId: selectedLocation, skip: 0, take: PAGE_SIZE }) as any)
+    if (currentLocation) {
+      dispatch(fetchInventoryByLocation({ locationId: currentLocation.id, skip: 0, take: PAGE_SIZE }) as any)
     }
-  }, [selectedLocation, dispatch])
+  }, [currentLocation, dispatch])
 
   const filteredInventory = searchInput.trim()
     ? inventory.filter((item) =>
@@ -97,12 +82,31 @@ export const InventoryPage = () => {
     },
   ]
 
+  if (!currentLocation) {
+    return (
+      <div className="p-6 space-y-6 h-full flex flex-col">
+        <div>
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">Inventory Management</h1>
+          <p className="text-gray-600">View and manage inventory for selected location</p>
+        </div>
+        <Card className="flex-1 flex items-center justify-center p-6">
+          <div className="flex flex-col items-center gap-3">
+            <AlertCircle size={48} className="text-gray-400" />
+            <p className="text-gray-500 text-lg">Please select a location from the top bar</p>
+          </div>
+        </Card>
+      </div>
+    )
+  }
+
   return (
     <div className="p-6 space-y-6 h-full flex flex-col">
       {/* Header */}
       <div>
         <h1 className="text-3xl font-bold text-gray-900 mb-2">Inventory Management</h1>
-        <p className="text-gray-600">View and manage inventory by location</p>
+        <p className="text-gray-600">
+          Viewing inventory for <span className="font-semibold text-primary-600">{currentLocation.location_Name}</span>
+        </p>
       </div>
 
       {/* Error Alert */}
@@ -118,50 +122,30 @@ export const InventoryPage = () => {
         </div>
       )}
 
-      {/* Location Selection */}
+      {/* Search Bar */}
       <div className="flex-shrink-0">
-        <label className="block text-sm font-medium text-gray-700 mb-2">Select Location</label>
-        <select
-          value={selectedLocation || ''}
-          onChange={handleLocationChange}
-          className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-        >
-          <option value="">-- Choose a location --</option>
-          {locations.map((loc) => (
-            <option key={loc.id} value={loc.id}>
-              {loc.location_Name}
-            </option>
-          ))}
-        </select>
+        <div className="relative">
+          <Search size={18} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+          <input
+            type="text"
+            placeholder="Search by item name..."
+            value={searchInput}
+            onChange={(e) => setSearchInput(e.target.value)}
+            className="w-full pl-10 pr-10 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+          />
+          {searchInput && (
+            <button
+              onClick={() => setSearchInput('')}
+              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+            >
+              <X size={18} />
+            </button>
+          )}
+        </div>
       </div>
 
-      {/* Search Bar */}
-      {selectedLocation && (
-        <div className="flex-shrink-0">
-          <div className="relative">
-            <Search size={18} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-            <input
-              type="text"
-              placeholder="Search by item name..."
-              value={searchInput}
-              onChange={(e) => setSearchInput(e.target.value)}
-              className="w-full pl-10 pr-10 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-            />
-            {searchInput && (
-              <button
-                onClick={() => setSearchInput('')}
-                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
-              >
-                <X size={18} />
-              </button>
-            )}
-          </div>
-        </div>
-      )}
-
       {/* Data Grid */}
-      {selectedLocation ? (
-        <Card className="flex-1 flex flex-col overflow-hidden p-6">
+      <Card className="flex-1 flex flex-col overflow-hidden p-6">
           <div className="flex-1 overflow-auto border border-gray-200 rounded-lg">
             <table className="w-full border-collapse">
               <thead className="sticky top-0 bg-gray-50 border-b border-gray-200 z-10">
@@ -241,11 +225,6 @@ export const InventoryPage = () => {
             </table>
           </div>
         </Card>
-      ) : (
-        <Card className="flex-1 flex items-center justify-center p-6">
-          <p className="text-gray-500">Please select a location to view inventory</p>
-        </Card>
-      )}
 
       {/* Adjust Inventory Modal */}
       <AdjustInventoryModal
@@ -262,7 +241,7 @@ export const InventoryPage = () => {
       <StockTransferModal
         isOpen={isTransferOpen}
         inventory={selectedInventory}
-        currentLocation={selectedLocation}
+        currentLocation={currentLocation?.id || null}
         onClose={() => {
           setIsTransferOpen(false)
           setSelectedInventory(null)
