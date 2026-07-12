@@ -61,8 +61,8 @@ public class InventoryService : IInventoryService
 
         // Log inventory adjustment
         var adjustRemark = string.IsNullOrEmpty(request.Remark)
-            ? "Price Adjust : "
-            : $"Price Adjust : {request.Remark}";
+            ? "Stock Adjust : "
+            : $"Stock Adjust : {request.Remark}";
 
         await _loggingService.LogPerformanceAsync(
             performedBy: 1,
