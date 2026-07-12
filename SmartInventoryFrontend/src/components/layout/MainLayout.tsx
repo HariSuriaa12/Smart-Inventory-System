@@ -2,6 +2,8 @@ import { useState } from 'react'
 import { Outlet } from 'react-router-dom'
 import { Header } from './Header'
 import { Sidebar } from './Sidebar'
+import { LocationSelectionModal } from '../modals/LocationSelectionModal'
+import { LocationSwitchWarningDialog } from '../modals/LocationSwitchWarningDialog'
 
 export const MainLayout: React.FC = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false)
@@ -30,6 +32,12 @@ export const MainLayout: React.FC = () => {
           onClick={() => setSidebarOpen(false)}
         ></div>
       )}
+
+      {/* Location Selection Modal */}
+      <LocationSelectionModal />
+
+      {/* Location Switch Warning Dialog */}
+      <LocationSwitchWarningDialog />
     </div>
   )
 }
