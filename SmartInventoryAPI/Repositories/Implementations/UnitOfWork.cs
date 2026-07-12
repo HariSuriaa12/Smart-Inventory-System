@@ -16,6 +16,9 @@ public class UnitOfWork : IUnitOfWork
     private IOrderFulfillmentRepository? _orderFulfillmentRepository;
     private ISalesRepository? _salesRepository;
     private IStockTransferRepository? _stockTransferRepository;
+    private IPerformLogRepository? _performLogRepository;
+    private IPriceLogRepository? _priceLogRepository;
+    private IInventoryLogRepository? _inventoryLogRepository;
 
     public UnitOfWork(SmartInventoryDbContext context)
     {
@@ -32,6 +35,9 @@ public class UnitOfWork : IUnitOfWork
     public IOrderFulfillmentRepository OrderFulfillments => _orderFulfillmentRepository ??= new OrderFulfillmentRepository(_context);
     public ISalesRepository Sales => _salesRepository ??= new SalesRepository(_context);
     public IStockTransferRepository StockTransfers => _stockTransferRepository ??= new StockTransferRepository(_context);
+    public IPerformLogRepository PerformLogs => _performLogRepository ??= new LoggingService(_context);
+    public IPriceLogRepository PriceLogs => _priceLogRepository ??= new PriceLogRepository(_context);
+    public IInventoryLogRepository InventoryLogs => _inventoryLogRepository ??= new InventoryLogRepository(_context);
 
     public async Task SaveAsync()
     {

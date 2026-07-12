@@ -11,22 +11,26 @@ import { Search, X, ArrowRightLeft, Edit2, AlertCircle, Columns3 } from 'lucide-
 
 const PAGE_SIZE = 10
 
-// Define all available columns
-const AVAILABLE_COLUMNS = [
-  { key: 'Item_ID', label: 'Item Name', defaultVisible: true },
-  { key: 'item_code', label: 'Item Code', defaultVisible: false },
-  { key: 'item_category', label: 'Category', defaultVisible: false },
-  { key: 'item_brand', label: 'Brand', defaultVisible: false },
-  { key: 'item_uom', label: 'Unit of Measure', defaultVisible: false },
-  { key: 'OnHand_Quantity', label: 'On Hand', defaultVisible: true },
-  { key: 'Available_Quantity', label: 'Available', defaultVisible: true },
-  { key: 'purchase_cost', label: 'Purchase Cost', defaultVisible: false },
-  { key: 'unit_cost', label: 'Unit Cost', defaultVisible: false },
-  { key: 'tax_percentage', label: 'Tax %', defaultVisible: false },
-  { key: 'location_name', label: 'Location', defaultVisible: false },
-  { key: 'location_address', label: 'Location Address', defaultVisible: false },
-  { key: 'location_type', label: 'Location Type', defaultVisible: false },
+// Mandatory columns that users cannot remove
+const MANDATORY_COLUMNS = [
+  { key: 'Item_ID', label: 'Item Name' },
+  { key: 'item_code', label: 'Item Code' },
+  { key: 'item_uom', label: 'Unit of Measure' },
+  { key: 'OnHand_Quantity', label: 'On Hand' },
+  { key: 'Available_Quantity', label: 'Available' },
 ]
+
+// Optional columns that users can toggle
+const OPTIONAL_COLUMNS = [
+  { key: 'item_category', label: 'Category' },
+  { key: 'item_brand', label: 'Brand' },
+  { key: 'purchase_cost', label: 'Purchase Cost' },
+  { key: 'unit_cost', label: 'Unit Cost' },
+  { key: 'tax_percentage', label: 'Tax %' },
+]
+
+// All available columns for selector
+const AVAILABLE_COLUMNS = OPTIONAL_COLUMNS
 
 const STORAGE_KEY = 'inventory_visible_columns'
 
@@ -43,7 +47,7 @@ export const InventoryPage = () => {
     if (stored) {
       return new Set(JSON.parse(stored))
     }
-    return new Set(AVAILABLE_COLUMNS.filter(c => c.defaultVisible).map(c => c.key))
+    return new Set()
   })
 
   const { inventory, loading, error } = useAppSelector((state) => state.inventory)
@@ -180,13 +184,20 @@ export const InventoryPage = () => {
     },
   }), [])
 
-  const columns = useMemo(() =>
-    AVAILABLE_COLUMNS
+  const columns = useMemo(() => {
+    // Always include mandatory columns first
+    const mandatoryCols = MANDATORY_COLUMNS
+      .map(col => allColumnDefinitions[col.key])
+      .filter(Boolean)
+
+    // Then add selected optional columns
+    const optionalCols = AVAILABLE_COLUMNS
       .filter(col => visibleColumns.has(col.key))
       .map(col => allColumnDefinitions[col.key])
-      .filter(Boolean),
-    [visibleColumns, allColumnDefinitions]
-  )
+      .filter(Boolean)
+
+    return [...mandatoryCols, ...optionalCols]
+  }, [visibleColumns, allColumnDefinitions])
 
   if (!currentLocation) {
     return (
@@ -338,6 +349,65 @@ export const InventoryPage = () => {
               </tbody>
             </table>
           </div>
+
+          {/* Pagination */}
+          {inventory.length > 0 && (
+            <div className="mt-4 flex items-center justify-between">
+              <div className="text-sm text-gray-600">
+                Showing {Math.min((currentPage - 1) * PAGE_SIZE + 1, inventory.length)} to{' '}
+                {Math.min(currentPage * PAGE_SIZE, inventory.length)} of {inventory.length} results
+              </div>
+
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => setCurrentPage(1)}
+                  disabled={currentPage === 1}
+                  className="px-3 py-2 text-sm border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  First
+                </button>
+                <button
+                  onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+                  disabled={currentPage === 1}
+                  className="px-3 py-2 text-sm border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  Previous
+                </button>
+
+                <div className="flex items-center gap-1">
+                  <span className="text-sm text-gray-600">Page</span>
+                  <input
+                    type="number"
+                    min="1"
+                    value={currentPage}
+                    onChange={(e) => {
+                      const page = parseInt(e.target.value)
+                      if (page > 0) setCurrentPage(page)
+                    }}
+                    className="w-12 px-2 py-1 text-sm border border-gray-300 rounded text-center"
+                  />
+                  <span className="text-sm text-gray-600">
+                    of {Math.ceil(inventory.length / PAGE_SIZE)}
+                  </span>
+                </div>
+
+                <button
+                  onClick={() => setCurrentPage(p => p + 1)}
+                  disabled={currentPage >= Math.ceil(inventory.length / PAGE_SIZE)}
+                  className="px-3 py-2 text-sm border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  Next
+                </button>
+                <button
+                  onClick={() => setCurrentPage(Math.ceil(inventory.length / PAGE_SIZE))}
+                  disabled={currentPage >= Math.ceil(inventory.length / PAGE_SIZE)}
+                  className="px-3 py-2 text-sm border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  Last
+                </button>
+              </div>
+            </div>
+          )}
         </Card>
 
       {/* Column Selector Modal */}

@@ -12,6 +12,9 @@ public interface IUnitOfWork : IDisposable
     IOrderFulfillmentRepository OrderFulfillments { get; }
     ISalesRepository Sales { get; }
     IStockTransferRepository StockTransfers { get; }
+    IPerformLogRepository PerformLogs { get; }
+    IPriceLogRepository PriceLogs { get; }
+    IInventoryLogRepository InventoryLogs { get; }
 
     Task SaveAsync();
 }
