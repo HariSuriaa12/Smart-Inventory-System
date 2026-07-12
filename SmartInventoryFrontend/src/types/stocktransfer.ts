@@ -18,35 +18,36 @@ export const StockTransferStatusLabel: Record<StockTransferStatus, string> = {
 }
 
 export interface StockTransfer extends Entity {
-  From_Location_Id: number
-  To_Location_Id: number
-  Transfer_Date: string | Date
-  Transfer_Time: string
-  Item_Id: number
-  Transfer_Quantity: number
-  Remark?: string
-  Status: StockTransferStatus
-  Sub_Total: number
-  Performed_By: number
-  FromLocation?: Location
-  ToLocation?: Location
-  Item?: Item
-  Performed_ByUser?: User
+  from_Location_Id: number
+  to_Location_Id: number
+  transfer_Date: string | Date
+  transfer_Time: string
+  item_Id: number
+  transfer_Quantity: number
+  remark?: string
+  status: StockTransferStatus
+  sub_Total: number
+  performed_By: number
+  fromLocation?: Location
+  toLocation?: Location
+  item?: Item
+  performed_ByUser?: User
 }
 
 export interface CreateStockTransferRequest {
-  From_Location_Id: number
-  To_Location_Id: number
-  Item_Id: number
-  Transfer_Quantity: number
-  Transfer_Date: string | Date
-  Transfer_Time: string
-  Remark?: string
+  from_Location_Id: number
+  to_Location_Id: number
+  item_Id: number
+  transfer_Quantity: number
+  transfer_Date: string | Date
+  transfer_Time: string
+  remark?: string
+  performed_By: number
 }
 
 export interface UpdateStockTransferRequest {
-  Status?: StockTransferStatus
-  Remark?: string
+  status?: StockTransferStatus
+  remark?: string
 }
 
 export interface StockTransferFilters {

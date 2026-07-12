@@ -6,8 +6,8 @@ namespace SmartInventoryAPI.Services.Interfaces;
 public interface IInventoryService
 {
     Task<InventoryDto> GetInventoryByIdAsync(long id);
-    Task<PaginatedResponseDto<InventoryDetailDto>> GetByLocationAsync(long locationId, int skip = 0, int take = 10);
-    Task<PaginatedResponseDto<InventoryDetailDto>> GetByItemAsync(long itemId, int skip = 0, int take = 10);
+    Task<PaginatedResponseDto<InventoryDetailDto>> GetByLocationAsync(long locationId, int skip = 0, int take = 10, string? searchQuery = null);
+    Task<PaginatedResponseDto<InventoryDetailDto>> GetByItemAsync(long itemId, int skip = 0, int take = 10, string? searchQuery = null);
     Task<InventoryDto> AdjustInventoryAsync(AdjustInventoryRequestDto request);
     Task<InventoryDto> StockTransferAsync(StockTransferRequestDto request);
 }

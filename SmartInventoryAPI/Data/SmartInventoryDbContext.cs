@@ -22,7 +22,7 @@ public class SmartInventoryDbContext : DbContext
     public DbSet<OrderFulfillmentItem> OrderFulfillmentItem { get; set; }
     public DbSet<Sales> Sales { get; set; }
     public DbSet<SalesItem> Sales_Item { get; set; }
-    public DbSet<StockTransfer> Stock_Transfers { get; set; }
+    public DbSet<StockTransfer> Stock_Transfer { get; set; }
     public DbSet<PerformLog> Perform_Log { get; set; }
     public DbSet<PriceLog> Price_Log { get; set; }
     public DbSet<InventoryLog> Inventory_Log { get; set; }
@@ -175,6 +175,31 @@ public class SmartInventoryDbContext : DbContext
             .HasOne(p => p.PerformLog)
             .WithMany()
             .HasForeignKey(p => p.Performed_Log_ID)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        //Stock Transfer Relations
+        modelBuilder.Entity<StockTransfer>()
+            .HasOne(p => p.FromLocation)
+            .WithMany()
+            .HasForeignKey(p => p.From_Location_ID)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<StockTransfer>()
+            .HasOne(p => p.ToLocation)
+            .WithMany()
+            .HasForeignKey(p => p.To_Location_ID)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<StockTransfer>()
+            .HasOne(p => p.Item)
+            .WithMany()
+            .HasForeignKey(p => p.Item_ID)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<StockTransfer>()
+            .HasOne(p => p.User)
+            .WithMany()
+            .HasForeignKey(p => p.Performed_By)
             .OnDelete(DeleteBehavior.Restrict);
 
         modelBuilder.Entity<PriceLog>()
