@@ -36,9 +36,7 @@ export const Header: React.FC<HeaderProps> = ({ onMenuClick, sidebarOpen }) => {
     if (isDashboard) {
       openLocationModal()
     } else {
-      setOnLocationConfirmed(() => {
-        navigate('/app/dashboard', { replace: true })
-      })
+      // Only set the navigation callback, don't open modal yet
       openWarningDialog(currentLocation!)
     }
   }

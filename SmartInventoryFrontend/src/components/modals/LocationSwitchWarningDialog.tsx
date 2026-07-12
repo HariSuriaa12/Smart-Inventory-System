@@ -1,8 +1,20 @@
+import { useNavigate } from 'react-router-dom'
 import { useLocationModal } from '@/context/LocationModalContext'
 import { AlertCircle } from 'lucide-react'
 
 export const LocationSwitchWarningDialog = () => {
-  const { isWarningDialogOpen, closeWarningDialog, confirmLocationChange, cancelLocationChange } = useLocationModal()
+  const navigate = useNavigate()
+  const { isWarningDialogOpen, closeWarningDialog, confirmLocationChange, cancelLocationChange, setOnLocationConfirmed } =
+    useLocationModal()
+
+  const handleConfirm = () => {
+    // Set the callback to navigate after location selection
+    setOnLocationConfirmed(() => {
+      navigate('/app/dashboard', { replace: true })
+    })
+    // Then open the location selection modal
+    confirmLocationChange()
+  }
 
   if (!isWarningDialogOpen) return null
 
@@ -33,7 +45,7 @@ export const LocationSwitchWarningDialog = () => {
               No, Stay Here
             </button>
             <button
-              onClick={confirmLocationChange}
+              onClick={handleConfirm}
               className="flex-1 px-4 py-2.5 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors font-medium text-sm"
             >
               Yes, Switch Outlet
