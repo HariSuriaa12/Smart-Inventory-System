@@ -49,8 +49,21 @@ export const InventoryPage = () => {
     return new Set()
   })
 
-  const { inventory, loading, error } = useAppSelector((state) => state.inventory)
+  const { inventory, loading, error, total } = useAppSelector((state) => state.inventory)
   const { currentLocation } = useAppSelector((state) => state.locations)
+
+  // Debounced search effect
+  useEffect(() => {
+    const debounceTimer = setTimeout(() => {
+      setCurrentPage(1)
+      if (currentLocation) {
+        const skip = 0
+        dispatch(fetchInventoryByLocation({ locationId: currentLocation.id, skip, take: PAGE_SIZE }) as any)
+      }
+    }, 500)
+
+    return () => clearTimeout(debounceTimer)
+  }, [searchInput, currentLocation, dispatch])
 
   // Fetch inventory when location or page changes
   useEffect(() => {
@@ -90,12 +103,6 @@ export const InventoryPage = () => {
     setVisibleColumns(newVisibleColumns)
     localStorage.setItem(STORAGE_KEY, JSON.stringify(Array.from(newVisibleColumns)))
   }, [])
-
-  const filteredInventory = searchInput.trim()
-    ? inventory.filter((item) =>
-        item.Item?.Item_Name?.toLowerCase().includes(searchInput.toLowerCase())
-      )
-    : inventory
 
   const allColumnDefinitions: Record<string, Column<Inventory>> = useMemo(() => ({
     Item_ID: {
@@ -277,11 +284,11 @@ export const InventoryPage = () => {
               </div>
             ),
           }]}
-          data={filteredInventory}
+          data={inventory}
           loading={loading}
           currentPage={currentPage}
           pageSize={PAGE_SIZE}
-          totalItems={filteredInventory.length}
+          totalItems={total}
           onPageChange={setCurrentPage}
           rowKey="ID"
           emptyMessage="No inventory found"
