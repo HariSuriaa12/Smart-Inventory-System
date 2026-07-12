@@ -269,146 +269,43 @@ export const InventoryPage = () => {
         </button>
       </div>
 
-      {/* Data Grid */}
+      {/* Data Grid Card */}
       <Card className="flex-1 flex flex-col overflow-hidden p-6">
-          <div className="flex-1 overflow-auto border border-gray-200 rounded-lg">
-            <table className="w-full border-collapse">
-              <thead className="sticky top-0 bg-gray-50 border-b border-gray-200 z-10">
-                <tr>
-                  {columns.map((col) => (
-                    <th
-                      key={String(col.key)}
-                      className={`px-4 py-3 text-sm font-semibold text-gray-700 whitespace-nowrap ${
-                        col.align === 'right' ? 'text-right' : ''
-                      }`}
-                      style={col.width ? { width: col.width, minWidth: col.width } : {}}
-                    >
-                      {col.label}
-                    </th>
-                  ))}
-                  <th className="px-4 py-3 text-sm font-semibold text-gray-700 whitespace-nowrap w-32 text-center">
-                    Actions
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {loading ? (
-                  <tr>
-                    <td colSpan={columns.length + 1} className="px-4 py-8 text-center text-gray-500">
-                      <div className="flex items-center justify-center gap-2">
-                        <div className="w-4 h-4 border-2 border-primary-600 border-t-transparent rounded-full animate-spin"></div>
-                        Loading...
-                      </div>
-                    </td>
-                  </tr>
-                ) : filteredInventory.length === 0 ? (
-                  <tr>
-                    <td colSpan={columns.length + 1} className="px-4 py-8 text-center text-gray-500">
-                      No inventory found
-                    </td>
-                  </tr>
-                ) : (
-                  filteredInventory.map((item) => (
-                    <tr key={item.ID} className="border-b border-gray-100 hover:bg-gray-50 transition-colors">
-                      {columns.map((col) => {
-                        const value = item[col.key as keyof Inventory]
-                        const rendered = col.render ? col.render(value, item) : value
-                        return (
-                          <td
-                            key={String(col.key)}
-                            className={`px-4 py-3 text-sm text-gray-900 whitespace-nowrap overflow-hidden text-ellipsis ${
-                              col.align === 'right' ? 'text-right' : ''
-                            }`}
-                            title={typeof rendered === 'string' ? rendered : undefined}
-                          >
-                            {rendered}
-                          </td>
-                        )
-                      })}
-                      <td className="px-4 py-3 text-sm whitespace-nowrap text-center">
-                        <div className="flex items-center justify-center gap-2">
-                          <button
-                            onClick={() => handleAdjustClick(item)}
-                            className="p-2 text-primary-600 hover:bg-primary-50 rounded-lg transition-colors"
-                            title="Adjust Inventory"
-                          >
-                            <Edit2 size={16} />
-                          </button>
-                          <button
-                            onClick={() => handleTransferClick(item)}
-                            className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
-                            title="Transfer Stock"
-                          >
-                            <ArrowRightLeft size={16} />
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                  ))
-                )}
-              </tbody>
-            </table>
-          </div>
-
-          {/* Pagination */}
-          {inventory.length > 0 && (
-            <div className="mt-4 flex items-center justify-between">
-              <div className="text-sm text-gray-600">
-                Showing {Math.min((currentPage - 1) * PAGE_SIZE + 1, inventory.length)} to{' '}
-                {Math.min(currentPage * PAGE_SIZE, inventory.length)} of {inventory.length} results
-              </div>
-
-              <div className="flex items-center gap-2">
+        <DataGrid<Inventory>
+          columns={[...columns, {
+            key: 'actions' as any,
+            label: 'Actions',
+            width: '120px',
+            align: 'center',
+            render: (_, item) => (
+              <div className="flex items-center justify-center gap-2">
                 <button
-                  onClick={() => setCurrentPage(1)}
-                  disabled={currentPage === 1}
-                  className="px-3 py-2 text-sm border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                  onClick={() => handleAdjustClick(item)}
+                  className="p-2 text-primary-600 hover:bg-primary-50 rounded-lg transition-colors"
+                  title="Adjust Inventory"
                 >
-                  First
+                  <Edit2 size={16} />
                 </button>
                 <button
-                  onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
-                  disabled={currentPage === 1}
-                  className="px-3 py-2 text-sm border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                  onClick={() => handleTransferClick(item)}
+                  className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                  title="Transfer Stock"
                 >
-                  Previous
-                </button>
-
-                <div className="flex items-center gap-1">
-                  <span className="text-sm text-gray-600">Page</span>
-                  <input
-                    type="number"
-                    min="1"
-                    value={currentPage}
-                    onChange={(e) => {
-                      const page = parseInt(e.target.value)
-                      if (page > 0) setCurrentPage(page)
-                    }}
-                    className="w-12 px-2 py-1 text-sm border border-gray-300 rounded text-center"
-                  />
-                  <span className="text-sm text-gray-600">
-                    of {Math.ceil(inventory.length / PAGE_SIZE)}
-                  </span>
-                </div>
-
-                <button
-                  onClick={() => setCurrentPage(p => p + 1)}
-                  disabled={currentPage >= Math.ceil(inventory.length / PAGE_SIZE)}
-                  className="px-3 py-2 text-sm border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  Next
-                </button>
-                <button
-                  onClick={() => setCurrentPage(Math.ceil(inventory.length / PAGE_SIZE))}
-                  disabled={currentPage >= Math.ceil(inventory.length / PAGE_SIZE)}
-                  className="px-3 py-2 text-sm border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  Last
+                  <ArrowRightLeft size={16} />
                 </button>
               </div>
-            </div>
-          )}
-        </Card>
+            ),
+          }]}
+          data={filteredInventory}
+          loading={loading}
+          currentPage={currentPage}
+          pageSize={PAGE_SIZE}
+          totalItems={filteredInventory.length}
+          onPageChange={setCurrentPage}
+          rowKey="ID"
+          emptyMessage="No inventory found"
+        />
+      </Card>
 
       {/* Column Selector Modal */}
       <ColumnSelectorModal
