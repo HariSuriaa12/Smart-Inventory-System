@@ -31,6 +31,7 @@ public class LoggingService : ILoggingService
                 Operation_ID = operationId
             };
 
+            await _unitOfWork.PerformLogs.AddAsync(performLog);
             await _unitOfWork.SaveAsync();
             _logger.LogInformation("Performance logged: Module {Module}, Operation {Operation}, ID {OperationId}",
                 performModule, operationType, operationId);
@@ -53,6 +54,7 @@ public class LoggingService : ILoggingService
                 Performed_Log_ID = performLogId
             };
 
+            await _unitOfWork.PriceLogs.AddAsync(priceLog);
             await _unitOfWork.SaveAsync();
             _logger.LogInformation("Price change logged: Item {ItemId}, {OldPrice} -> {NewPrice}",
                 itemId, previousPrice, newPrice);
@@ -79,6 +81,7 @@ public class LoggingService : ILoggingService
                 Performed_Log_ID = performLogId
             };
 
+            await _unitOfWork.InventoryLogs.AddAsync(inventoryLog);
             await _unitOfWork.SaveAsync();
             _logger.LogInformation("Inventory change logged: Item {ItemId}, Location {LocationId}, {OldQty} -> {NewQty}",
                 itemId, locationId, previousOnhand, newOnhand);

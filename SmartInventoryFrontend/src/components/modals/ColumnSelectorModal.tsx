@@ -87,25 +87,24 @@ export const ColumnSelectorModal = ({
 
           {/* Column List */}
           <div className="space-y-2 max-h-96 overflow-y-auto">
-            {columns.map((column) => (
-              <label
-                key={column.key}
-                className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors"
-              >
-                <input
-                  type="checkbox"
-                  checked={selectedColumns.has(column.key)}
-                  onChange={() => handleToggleColumn(column.key)}
-                  className="w-4 h-4 text-primary-600 rounded focus:ring-2 focus:ring-primary-500"
-                />
-                <span className="text-sm text-gray-700 flex-1">{column.label}</span>
-                {column.defaultVisible && (
-                  <span className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">
-                    Default
-                  </span>
-                )}
-              </label>
-            ))}
+            {columns.length === 0 ? (
+              <p className="text-sm text-gray-500 text-center py-4">No optional columns available</p>
+            ) : (
+              columns.map((column) => (
+                <label
+                  key={column.key}
+                  className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors"
+                >
+                  <input
+                    type="checkbox"
+                    checked={selectedColumns.has(column.key)}
+                    onChange={() => handleToggleColumn(column.key)}
+                    className="w-4 h-4 text-primary-600 rounded focus:ring-2 focus:ring-primary-500"
+                  />
+                  <span className="text-sm text-gray-700 flex-1">{column.label}</span>
+                </label>
+              ))
+            )}
           </div>
         </div>
 
