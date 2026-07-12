@@ -32,10 +32,26 @@ public class InventoryService : IInventoryService
         return _mapper.Map<InventoryDto>(inventory);
     }
 
-    public async Task<PaginatedResponseDto<InventoryDetailDto>> GetByLocationAsync(long locationId, int skip = 0, int take = 10)
+    public async Task<PaginatedResponseDto<InventoryDetailDto>> GetByLocationAsync(long locationId, int skip = 0, int take = 10, string? searchQuery = null)
     {
         var inventories = await _unitOfWork.Inventories.GetByLocationAsync(locationId, skip, take);
         var total = await _unitOfWork.Inventories.CountByLocationAsync(locationId);
+
+        // Apply search filter if provided
+        if (!string.IsNullOrWhiteSpace(searchQuery))
+        {
+            var searchLower = searchQuery.ToLower();
+            inventories = inventories.Where(i =>
+                (i.Item?.Item_Name?.ToLower().Contains(searchLower) ?? false) ||
+                (i.Item?.Item_Code?.ToLower().Contains(searchLower) ?? false) ||
+                (i.Item?.Item_Category?.ToLower().Contains(searchLower) ?? false) ||
+                (i.Item?.Item_Brand?.ToLower().Contains(searchLower) ?? false)
+            ).ToList();
+
+            total = inventories.Count();
+            inventories = inventories.Skip(skip).Take(take).ToList();
+        }
+
         var page = (skip / take) + 1;
         var totalPages = (total + take - 1) / take;
 
@@ -52,10 +68,26 @@ public class InventoryService : IInventoryService
         };
     }
 
-    public async Task<PaginatedResponseDto<InventoryDetailDto>> GetByItemAsync(long itemId, int skip = 0, int take = 10)
+    public async Task<PaginatedResponseDto<InventoryDetailDto>> GetByItemAsync(long itemId, int skip = 0, int take = 10, string? searchQuery = null)
     {
         var inventories = await _unitOfWork.Inventories.GetByItemAsync(itemId, skip, take);
         var total = await _unitOfWork.Inventories.CountByItemAsync(itemId);
+
+        // Apply search filter if provided
+        if (!string.IsNullOrWhiteSpace(searchQuery))
+        {
+            var searchLower = searchQuery.ToLower();
+            inventories = inventories.Where(i =>
+                (i.Item?.Item_Name?.ToLower().Contains(searchLower) ?? false) ||
+                (i.Item?.Item_Code?.ToLower().Contains(searchLower) ?? false) ||
+                (i.Item?.Item_Category?.ToLower().Contains(searchLower) ?? false) ||
+                (i.Item?.Item_Brand?.ToLower().Contains(searchLower) ?? false)
+            ).ToList();
+
+            total = inventories.Count();
+            inventories = inventories.Skip(skip).Take(take).ToList();
+        }
+
         var page = (skip / take) + 1;
         var totalPages = (total + take - 1) / take;
 

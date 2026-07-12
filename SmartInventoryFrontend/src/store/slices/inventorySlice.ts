@@ -14,9 +14,9 @@ const initialState: InventoryState = {
 
 export const fetchInventoryByLocation = createAsyncThunk(
   'inventory/fetchByLocation',
-  async ({ locationId, skip = 0, take = 10 }: any, { rejectWithValue }) => {
+  async ({ locationId, skip = 0, take = 10, searchQuery }: any, { rejectWithValue }) => {
     try {
-      const response = await inventoryService.getInventoryByLocation(locationId, skip, take)
+      const response = await inventoryService.getInventoryByLocation(locationId, skip, take, searchQuery)
       return response.data
     } catch (error: any) {
       return rejectWithValue(error.message)
