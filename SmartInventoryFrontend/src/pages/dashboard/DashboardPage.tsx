@@ -13,7 +13,6 @@ import {
 } from 'lucide-react'
 
 export const DashboardPage = () => {
-  const dispatch = useAppDispatch()
   const { openLocationModal } = useLocationModal()
   const { currentLocation } = useAppSelector((state) => state.locations)
 
