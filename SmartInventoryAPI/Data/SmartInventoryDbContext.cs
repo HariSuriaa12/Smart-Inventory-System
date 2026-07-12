@@ -147,6 +147,36 @@ public class SmartInventoryDbContext : DbContext
             .HasForeignKey(p => p.Performed_Outlet)
             .OnDelete(DeleteBehavior.Restrict);
 
+        modelBuilder.Entity<InventoryLog>()
+            .HasOne(p => p.Item)
+            .WithMany()
+            .HasForeignKey(p => p.Item_ID)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<InventoryLog>()
+            .HasOne(p => p.Location)
+            .WithMany()
+            .HasForeignKey(p => p.Location_ID)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<InventoryLog>()
+            .HasOne(p => p.PerformLog)
+            .WithMany()
+            .HasForeignKey(p => p.Performed_Log_ID)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<PriceLog>()
+            .HasOne(p => p.Item)
+            .WithMany()
+            .HasForeignKey(p => p.Item_ID)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<PriceLog>()
+            .HasOne(p => p.PerformLog)
+            .WithMany()
+            .HasForeignKey(p => p.Performed_Log_ID)
+            .OnDelete(DeleteBehavior.Restrict);
+
         modelBuilder.Entity<PriceLog>()
             .Property(x => x.Previous_Unit_Price)
             .HasPrecision(14, 2);
