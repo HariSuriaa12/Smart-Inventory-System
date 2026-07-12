@@ -1,4 +1,5 @@
 using SmartInventoryAPI.Data;
+using SmartInventoryAPI.Models.Entities;
 using SmartInventoryAPI.Repositories.Interfaces;
 
 namespace SmartInventoryAPI.Repositories.Implementations;
@@ -16,9 +17,9 @@ public class UnitOfWork : IUnitOfWork
     private IOrderFulfillmentRepository? _orderFulfillmentRepository;
     private ISalesRepository? _salesRepository;
     private IStockTransferRepository? _stockTransferRepository;
-    private IPerformLogRepository? _performLogRepository;
-    private IPriceLogRepository? _priceLogRepository;
-    private IInventoryLogRepository? _inventoryLogRepository;
+    private IGenericRepository<PerformLog>? _performLogRepository;
+    private IGenericRepository<PriceLog>? _priceLogRepository;
+    private IGenericRepository<InventoryLog>? _inventoryLogRepository;
 
     public UnitOfWork(SmartInventoryDbContext context)
     {
@@ -35,9 +36,9 @@ public class UnitOfWork : IUnitOfWork
     public IOrderFulfillmentRepository OrderFulfillments => _orderFulfillmentRepository ??= new OrderFulfillmentRepository(_context);
     public ISalesRepository Sales => _salesRepository ??= new SalesRepository(_context);
     public IStockTransferRepository StockTransfers => _stockTransferRepository ??= new StockTransferRepository(_context);
-    public IPerformLogRepository PerformLogs => _performLogRepository ??= new LoggingService(_context);
-    public IPriceLogRepository PriceLogs => _priceLogRepository ??= new PriceLogRepository(_context);
-    public IInventoryLogRepository InventoryLogs => _inventoryLogRepository ??= new InventoryLogRepository(_context);
+    public IGenericRepository<PerformLog> PerformLogs => _performLogRepository ??= new GenericRepository<PerformLog>(_context);
+    public IGenericRepository<PriceLog> PriceLogs => _priceLogRepository ??= new GenericRepository<PriceLog>(_context);
+    public IGenericRepository<InventoryLog> InventoryLogs => _inventoryLogRepository ??= new GenericRepository<InventoryLog>(_context);
 
     public async Task SaveAsync()
     {

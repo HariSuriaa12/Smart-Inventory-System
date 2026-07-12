@@ -1,3 +1,5 @@
+using SmartInventoryAPI.Models.Entities;
+
 namespace SmartInventoryAPI.Repositories.Interfaces;
 
 public interface IUnitOfWork : IDisposable
@@ -12,9 +14,9 @@ public interface IUnitOfWork : IDisposable
     IOrderFulfillmentRepository OrderFulfillments { get; }
     ISalesRepository Sales { get; }
     IStockTransferRepository StockTransfers { get; }
-    IPerformLogRepository PerformLogs { get; }
-    IPriceLogRepository PriceLogs { get; }
-    IInventoryLogRepository InventoryLogs { get; }
+    IGenericRepository<PerformLog> PerformLogs { get; }
+    IGenericRepository<PriceLog> PriceLogs { get; }
+    IGenericRepository<InventoryLog> InventoryLogs { get; }
 
     Task SaveAsync();
 }
