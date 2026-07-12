@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SmartInventoryAPI.Models.DTOs.Request.Inventory;
@@ -18,6 +19,14 @@ public class InventoryController : ControllerBase
     {
         _inventoryService = inventoryService;
         _logger = logger;
+    }
+
+    private long GetCurrentUserId()
+    {
+        var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? User.FindFirst("sub")?.Value;
+        if (long.TryParse(userIdClaim, out var userId))
+            return userId;
+        return 1;
     }
 
     [HttpGet("{id}")]
@@ -74,7 +83,8 @@ public class InventoryController : ControllerBase
     [HttpPut("adjust")]
     public async Task<ActionResult<ApiResponseDto<InventoryDto>>> AdjustInventory([FromBody] AdjustInventoryRequestDto request)
     {
-        var inventory = await _inventoryService.AdjustInventoryAsync(request);
+        var userId = GetCurrentUserId();
+        var inventory = await _inventoryService.AdjustInventoryAsync(request, userId);
         return Ok(new ApiResponseDto<InventoryDto>
         {
             Success = true,
@@ -87,7 +97,8 @@ public class InventoryController : ControllerBase
     [HttpPost("transfer")]
     public async Task<ActionResult<ApiResponseDto<InventoryDto>>> StockTransfer([FromBody] StockTransferRequestDto request)
     {
-        var inventory = await _inventoryService.StockTransferAsync(request);
+        var userId = GetCurrentUserId();
+        var inventory = await _inventoryService.StockTransferAsync(request, userId);
         return Ok(new ApiResponseDto<InventoryDto>
         {
             Success = true,

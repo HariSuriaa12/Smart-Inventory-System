@@ -104,7 +104,7 @@ public class InventoryService : IInventoryService
         };
     }
 
-    public async Task<InventoryDto> AdjustInventoryAsync(AdjustInventoryRequestDto request)
+    public async Task<InventoryDto> AdjustInventoryAsync(AdjustInventoryRequestDto request, long userId = 1)
     {
         var inventory = await _unitOfWork.Inventories.GetByItemAndLocationAsync(request.Item_ID, request.Location_ID);
         if (inventory == null || inventory.Is_Deleted)
@@ -125,7 +125,7 @@ public class InventoryService : IInventoryService
             : $"Stock Adjust : {request.Remark}";
 
         await _loggingService.LogPerformanceAsync(
-            performedBy: 1,
+            performedBy: userId,
             performedOutlet: request.Location_ID,
             performModule: 2, // Inventory module
             operationType: 2, // Update operation
@@ -148,7 +148,7 @@ public class InventoryService : IInventoryService
         return _mapper.Map<InventoryDto>(inventory);
     }
 
-    public async Task<InventoryDto> StockTransferAsync(StockTransferRequestDto request)
+    public async Task<InventoryDto> StockTransferAsync(StockTransferRequestDto request, long userId = 1)
     {
         var fromInventory = await _unitOfWork.Inventories.GetByItemAndLocationAsync(request.Item_ID, request.From_Location_ID);
         if (fromInventory == null || fromInventory.Is_Deleted)
@@ -199,7 +199,7 @@ public class InventoryService : IInventoryService
             : $"Stock Transfer : {request.Remark}";
 
         await _loggingService.LogPerformanceAsync(
-            performedBy: 1,
+            performedBy: userId,
             performedOutlet: request.From_Location_ID,
             performModule: 2, // Inventory module
             operationType: 4, // Transfer operation
