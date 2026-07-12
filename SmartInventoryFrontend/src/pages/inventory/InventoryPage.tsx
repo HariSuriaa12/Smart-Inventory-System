@@ -1,13 +1,34 @@
-import { useEffect, useState, useCallback } from 'react'
+import { useEffect, useState, useCallback, useMemo } from 'react'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { fetchInventoryByLocation, clearError } from '@/store/slices/inventorySlice'
 import { DataGrid, Card, Column } from '@/components'
 import { AdjustInventoryModal } from '@/components/modals/AdjustInventoryModal'
 import { StockTransferModal } from '@/components/modals/StockTransferModal'
+import { ColumnSelectorModal } from '@/components/modals/ColumnSelectorModal'
 import { Inventory } from '@/types/inventory'
-import { Search, X, ArrowRightLeft, Edit2, AlertCircle } from 'lucide-react'
+import { LocationTypeLabel } from '@/types/location'
+import { Search, X, ArrowRightLeft, Edit2, AlertCircle, Columns3 } from 'lucide-react'
 
 const PAGE_SIZE = 10
+
+// Define all available columns
+const AVAILABLE_COLUMNS = [
+  { key: 'Item_ID', label: 'Item Name', defaultVisible: true },
+  { key: 'item_code', label: 'Item Code', defaultVisible: false },
+  { key: 'item_category', label: 'Category', defaultVisible: false },
+  { key: 'item_brand', label: 'Brand', defaultVisible: false },
+  { key: 'item_uom', label: 'Unit of Measure', defaultVisible: false },
+  { key: 'OnHand_Quantity', label: 'On Hand', defaultVisible: true },
+  { key: 'Available_Quantity', label: 'Available', defaultVisible: true },
+  { key: 'purchase_cost', label: 'Purchase Cost', defaultVisible: false },
+  { key: 'unit_cost', label: 'Unit Cost', defaultVisible: false },
+  { key: 'tax_percentage', label: 'Tax %', defaultVisible: false },
+  { key: 'location_name', label: 'Location', defaultVisible: false },
+  { key: 'location_address', label: 'Location Address', defaultVisible: false },
+  { key: 'location_type', label: 'Location Type', defaultVisible: false },
+]
+
+const STORAGE_KEY = 'inventory_visible_columns'
 
 export const InventoryPage = () => {
   const dispatch = useAppDispatch()
@@ -15,7 +36,15 @@ export const InventoryPage = () => {
   const [searchInput, setSearchInput] = useState('')
   const [isAdjustOpen, setIsAdjustOpen] = useState(false)
   const [isTransferOpen, setIsTransferOpen] = useState(false)
+  const [isColumnSelectorOpen, setIsColumnSelectorOpen] = useState(false)
   const [selectedInventory, setSelectedInventory] = useState<Inventory | null>(null)
+  const [visibleColumns, setVisibleColumns] = useState<Set<string>>(() => {
+    const stored = localStorage.getItem(STORAGE_KEY)
+    if (stored) {
+      return new Set(JSON.parse(stored))
+    }
+    return new Set(AVAILABLE_COLUMNS.filter(c => c.defaultVisible).map(c => c.key))
+  })
 
   const { inventory, loading, error } = useAppSelector((state) => state.inventory)
   const { currentLocation } = useAppSelector((state) => state.locations)
@@ -54,33 +83,110 @@ export const InventoryPage = () => {
     }
   }, [currentLocation, dispatch])
 
+  const handleSaveVisibleColumns = useCallback((newVisibleColumns: Set<string>) => {
+    setVisibleColumns(newVisibleColumns)
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(Array.from(newVisibleColumns)))
+  }, [])
+
   const filteredInventory = searchInput.trim()
     ? inventory.filter((item) =>
-        item.Item_Name?.toLowerCase().includes(searchInput.toLowerCase())
+        item.item?.item_Name?.toLowerCase().includes(searchInput.toLowerCase())
       )
     : inventory
 
-  const columns: Column<Inventory>[] = [
-    {
-      key: 'item_Code',
-      label: 'Item Code',
-      width: '220px',
+  const allColumnDefinitions: Record<string, Column<Inventory>> = useMemo(() => ({
+    Item_ID: {
+      key: 'Item_ID',
+      label: 'Item Name',
+      width: '200px',
+      render: (value, item) => item.item?.item_Name || '-',
     },
-    {
-      key: 'on_Hand_Quantity',
+    item_code: {
+      key: 'item_code',
+      label: 'Item Code',
+      width: '150px',
+      render: (value, item) => item.item?.item_Code || '-',
+    },
+    item_category: {
+      key: 'item_category',
+      label: 'Category',
+      width: '150px',
+      render: (value, item) => item.item?.item_Category || '-',
+    },
+    item_brand: {
+      key: 'item_brand',
+      label: 'Brand',
+      width: '150px',
+      render: (value, item) => item.item?.item_Brand || '-',
+    },
+    item_uom: {
+      key: 'item_uom',
+      label: 'Unit of Measure',
+      width: '130px',
+      render: (value, item) => item.item?.unit_Of_Measure || '-',
+    },
+    OnHand_Quantity: {
+      key: 'onHand_Quantity',
       label: 'On Hand',
       width: '120px',
       align: 'right',
       render: (value) => value?.toFixed(2) || '0.00',
     },
-    {
+    Available_Quantity: {
       key: 'available_Quantity',
       label: 'Available',
       width: '120px',
       align: 'right',
       render: (value) => value?.toFixed(2) || '0.00',
     },
-  ]
+    purchase_cost: {
+      key: 'purchase_cost',
+      label: 'Purchase Cost',
+      width: '130px',
+      align: 'right',
+      render: (value, item) => `$${item.item?.purchase_Cost?.toFixed(2) || '0.00'}`,
+    },
+    unit_cost: {
+      key: 'unit_cost',
+      label: 'Unit Cost',
+      width: '130px',
+      align: 'right',
+      render: (value, item) => `$${item.item?.unit_Cost?.toFixed(2) || '0.00'}`,
+    },
+    tax_percentage: {
+      key: 'tax_percentage',
+      label: 'Tax %',
+      width: '100px',
+      align: 'right',
+      render: (value, item) => `${item.item?.tax_Percentage?.toFixed(2) || '0.00'}%`,
+    },
+    location_name: {
+      key: 'location_name',
+      label: 'Location Name',
+      width: '150px',
+      render: (value, item) => item.location?.location_Name || '-',
+    },
+    location_address: {
+      key: 'location_address',
+      label: 'Location Address',
+      width: '200px',
+      render: (value, item) => item.location?.address || '-',
+    },
+    location_type: {
+      key: 'location_type',
+      label: 'Location Type',
+      width: '150px',
+      render: (value, item) => LocationTypeLabel[item.location?.location_Type] || '-',
+    },
+  }), [])
+
+  const columns = useMemo(() =>
+    AVAILABLE_COLUMNS
+      .filter(col => visibleColumns.has(col.key))
+      .map(col => allColumnDefinitions[col.key])
+      .filter(Boolean),
+    [visibleColumns, allColumnDefinitions]
+  )
 
   if (!currentLocation) {
     return (
@@ -122,9 +228,9 @@ export const InventoryPage = () => {
         </div>
       )}
 
-      {/* Search Bar */}
-      <div className="flex-shrink-0">
-        <div className="relative">
+      {/* Search Bar & Column Selector */}
+      <div className="flex-shrink-0 flex gap-3">
+        <div className="relative flex-1">
           <Search size={18} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
           <input
             type="text"
@@ -142,6 +248,14 @@ export const InventoryPage = () => {
             </button>
           )}
         </div>
+        <button
+          onClick={() => setIsColumnSelectorOpen(true)}
+          className="flex items-center gap-2 px-4 py-2.5 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors whitespace-nowrap"
+          title="Select columns to display"
+        >
+          <Columns3 size={18} />
+          <span className="text-sm font-medium">Columns</span>
+        </button>
       </div>
 
       {/* Data Grid */}
@@ -225,6 +339,15 @@ export const InventoryPage = () => {
             </table>
           </div>
         </Card>
+
+      {/* Column Selector Modal */}
+      <ColumnSelectorModal
+        isOpen={isColumnSelectorOpen}
+        columns={AVAILABLE_COLUMNS}
+        visibleColumns={visibleColumns}
+        onClose={() => setIsColumnSelectorOpen(false)}
+        onSave={handleSaveVisibleColumns}
+      />
 
       {/* Adjust Inventory Modal */}
       <AdjustInventoryModal

@@ -32,16 +32,16 @@ public class InventoryService : IInventoryService
         return _mapper.Map<InventoryDto>(inventory);
     }
 
-    public async Task<IEnumerable<InventoryDto>> GetByLocationAsync(long locationId, int skip = 0, int take = 10)
+    public async Task<IEnumerable<InventoryDetailDto>> GetByLocationAsync(long locationId, int skip = 0, int take = 10)
     {
         var inventories = await _unitOfWork.Inventories.GetByLocationAsync(locationId, skip, take);
-        return _mapper.Map<IEnumerable<InventoryDto>>(inventories);
+        return _mapper.Map<IEnumerable<InventoryDetailDto>>(inventories);
     }
 
-    public async Task<IEnumerable<InventoryDto>> GetByItemAsync(long itemId, int skip = 0, int take = 10)
+    public async Task<IEnumerable<InventoryDetailDto>> GetByItemAsync(long itemId, int skip = 0, int take = 10)
     {
         var inventories = await _unitOfWork.Inventories.GetByItemAsync(itemId, skip, take);
-        return _mapper.Map<IEnumerable<InventoryDto>>(inventories);
+        return _mapper.Map<IEnumerable<InventoryDetailDto>>(inventories);
     }
 
     public async Task<InventoryDto> AdjustInventoryAsync(AdjustInventoryRequestDto request)
@@ -60,12 +60,16 @@ public class InventoryService : IInventoryService
         await _unitOfWork.SaveAsync();
 
         // Log inventory adjustment
+        var adjustRemark = string.IsNullOrEmpty(request.Remark)
+            ? "Price Adjust : "
+            : $"Price Adjust : {request.Remark}";
+
         await _loggingService.LogPerformanceAsync(
             performedBy: 1,
             performedOutlet: request.Location_ID,
             performModule: 2, // Inventory module
             operationType: 2, // Update operation
-            performRemark: $"Stock adjustment: {request.Remark}",
+            performRemark: adjustRemark,
             operationId: inventory.ID);
 
         await _loggingService.LogInventoryChangeAsync(
@@ -130,12 +134,16 @@ public class InventoryService : IInventoryService
         await _unitOfWork.SaveAsync();
 
         // Log performance
+        var transferRemark = string.IsNullOrEmpty(request.Remark)
+            ? "Stock Transfer : "
+            : $"Stock Transfer : {request.Remark}";
+
         await _loggingService.LogPerformanceAsync(
             performedBy: 1,
             performedOutlet: request.From_Location_ID,
             performModule: 2, // Inventory module
             operationType: 4, // Transfer operation
-            performRemark: $"Stock transfer: {request.Transfer_Quantity} units from Location {request.From_Location_ID} to {request.To_Location_ID}",
+            performRemark: transferRemark,
             operationId: transfer.ID);
 
         // Log inventory changes for source location

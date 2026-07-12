@@ -3,24 +3,24 @@
   "WorkspaceRootPath": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{74672F46-6E60-E07D-20D6-A7C4B76E2B01}|SmartInventoryAPI.csproj|c:\\users\\user\\documents\\hari\\unitar\\semester 6\\major project\\smart inventory system\\smartinventoryapi\\models\\dtos\\response\\inventorydto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{74672F46-6E60-E07D-20D6-A7C4B76E2B01}|SmartInventoryAPI.csproj|solutionrelative:models\\dtos\\response\\inventorydto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{74672F46-6E60-E07D-20D6-A7C4B76E2B01}|SmartInventoryAPI.csproj|c:\\users\\user\\documents\\hari\\unitar\\semester 6\\major project\\smart inventory system\\smartinventoryapi\\services\\implementations\\inventoryservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{74672F46-6E60-E07D-20D6-A7C4B76E2B01}|SmartInventoryAPI.csproj|solutionrelative:services\\implementations\\inventoryservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{74672F46-6E60-E07D-20D6-A7C4B76E2B01}|SmartInventoryAPI.csproj|c:\\users\\user\\documents\\hari\\unitar\\semester 6\\major project\\smart inventory system\\smartinventoryapi\\repositories\\implementations\\inventoryrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{74672F46-6E60-E07D-20D6-A7C4B76E2B01}|SmartInventoryAPI.csproj|solutionrelative:repositories\\implementations\\inventoryrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{74672F46-6E60-E07D-20D6-A7C4B76E2B01}|SmartInventoryAPI.csproj|c:\\users\\user\\documents\\hari\\unitar\\semester 6\\major project\\smart inventory system\\smartinventoryapi\\models\\entities\\item.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{74672F46-6E60-E07D-20D6-A7C4B76E2B01}|SmartInventoryAPI.csproj|solutionrelative:models\\entities\\item.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{74672F46-6E60-E07D-20D6-A7C4B76E2B01}|SmartInventoryAPI.csproj|c:\\users\\user\\documents\\hari\\unitar\\semester 6\\major project\\smart inventory system\\smartinventoryapi\\models\\entities\\inventory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{74672F46-6E60-E07D-20D6-A7C4B76E2B01}|SmartInventoryAPI.csproj|solutionrelative:models\\entities\\inventory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{74672F46-6E60-E07D-20D6-A7C4B76E2B01}|SmartInventoryAPI.csproj|c:\\users\\user\\documents\\hari\\unitar\\semester 6\\major project\\smart inventory system\\smartinventoryapi\\repositories\\implementations\\inventoryrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{74672F46-6E60-E07D-20D6-A7C4B76E2B01}|SmartInventoryAPI.csproj|solutionrelative:repositories\\implementations\\inventoryrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{74672F46-6E60-E07D-20D6-A7C4B76E2B01}|SmartInventoryAPI.csproj|c:\\users\\user\\documents\\hari\\unitar\\semester 6\\major project\\smart inventory system\\smartinventoryapi\\models\\dtos\\response\\inventorydto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{74672F46-6E60-E07D-20D6-A7C4B76E2B01}|SmartInventoryAPI.csproj|solutionrelative:models\\dtos\\response\\inventorydto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{74672F46-6E60-E07D-20D6-A7C4B76E2B01}|SmartInventoryAPI.csproj|c:\\users\\user\\documents\\hari\\unitar\\semester 6\\major project\\smart inventory system\\smartinventoryapi\\services\\implementations\\inventoryservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{74672F46-6E60-E07D-20D6-A7C4B76E2B01}|SmartInventoryAPI.csproj|solutionrelative:services\\implementations\\inventoryservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{74672F46-6E60-E07D-20D6-A7C4B76E2B01}|SmartInventoryAPI.csproj|c:\\users\\user\\documents\\hari\\unitar\\semester 6\\major project\\smart inventory system\\smartinventoryapi\\models\\dtos\\response\\apiresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -402,7 +402,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Bookmark",
@@ -416,7 +416,7 @@
               "RelativeDocumentMoniker": "Repositories\\Implementations\\InventoryRepository.cs",
               "ToolTip": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Repositories\\Implementations\\InventoryRepository.cs",
               "RelativeToolTip": "Repositories\\Implementations\\InventoryRepository.cs",
-              "ViewState": "AgIAAAgAAAAAAAAAAAAAwDQAAAAEAAAAAAAAAA==",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAAwBsAAAArAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-07-07T14:57:38.677Z",
               "EditorCaption": ""
@@ -435,20 +435,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 0,
               "Title": "Item.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Models\\Entities\\Item.cs",
               "RelativeDocumentMoniker": "Models\\Entities\\Item.cs",
               "ToolTip": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Models\\Entities\\Item.cs",
               "RelativeToolTip": "Models\\Entities\\Item.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAANAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAuwAYAAAAqAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-07-07T15:22:05.088Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 4,
               "Title": "InventoryService.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Services\\Implementations\\InventoryService.cs",
               "RelativeDocumentMoniker": "Services\\Implementations\\InventoryService.cs",
@@ -461,7 +461,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 3,
               "Title": "InventoryDto.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Models\\DTOs\\Response\\InventoryDto.cs",
               "RelativeDocumentMoniker": "Models\\DTOs\\Response\\InventoryDto.cs",
@@ -525,7 +525,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 1,
               "Title": "Inventory.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Models\\Entities\\Inventory.cs",
               "RelativeDocumentMoniker": "Models\\Entities\\Inventory.cs",

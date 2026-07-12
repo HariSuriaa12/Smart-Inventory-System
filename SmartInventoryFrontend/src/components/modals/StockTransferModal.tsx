@@ -56,12 +56,12 @@ export const StockTransferModal = ({
       return
     }
 
-    if (qty > (inventory?.Available_Quantity || 0)) {
-      setError(`Cannot transfer more than available quantity (${inventory?.Available_Quantity?.toFixed(2)})`)
+    if (qty > (inventory?.available_Quantity || 0)) {
+      setError(`Cannot transfer more than available quantity (${inventory?.available_Quantity?.toFixed(2)})`)
       return
     }
 
-    if (parseInt(toLocation) === inventory.Location_ID) {
+    if (parseInt(toLocation) === inventory.location_ID) {
       setError('Cannot transfer to the same location')
       return
     }
@@ -71,9 +71,9 @@ export const StockTransferModal = ({
 
     try {
       const request: StockTransferRequest = {
-        From_Location_ID: inventory.Location_ID,
+        From_Location_ID: inventory.location_ID,
         To_Location_ID: parseInt(toLocation),
-        Item_ID: inventory.Item_ID,
+        Item_ID: inventory.item_ID,
         Transfer_Quantity: qty,
         Remark: remark || undefined,
       }
@@ -111,14 +111,14 @@ export const StockTransferModal = ({
           {/* Item Info */}
           <div className="p-3 bg-gray-50 rounded-lg border border-gray-200">
             <p className="text-sm text-gray-600">Item</p>
-            <p className="text-base font-semibold text-gray-900">{inventory?.Item_Name}</p>
+            <p className="text-base font-semibold text-gray-900">{inventory?.item?.item_Code || '-'}</p>
           </div>
 
           {/* Available Quantity */}
           <div className="p-3 bg-blue-50 rounded-lg border border-blue-200">
             <p className="text-xs text-blue-600 uppercase">Available to Transfer</p>
             <p className="text-lg font-semibold text-blue-900">
-              {inventory?.Available_Quantity?.toFixed(2) || '0.00'}
+              {inventory?.available_Quantity?.toFixed(2) || '0.00'}
             </p>
           </div>
 
@@ -161,7 +161,7 @@ export const StockTransferModal = ({
               type="number"
               step="0.01"
               min="0"
-              max={inventory?.Available_Quantity || 0}
+              max={inventory?.available_Quantity || 0}
               value={quantity}
               onChange={(e) => setQuantity(e.target.value)}
               placeholder="Enter quantity"

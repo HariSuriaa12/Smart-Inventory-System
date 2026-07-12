@@ -49,8 +49,8 @@ export const AdjustInventoryModal = ({
 
     try {
       const request: AdjustInventoryRequest = {
-        Item_ID: inventory.Item_ID,
-        Location_ID: inventory.Location_ID,
+        Item_ID: inventory.item_ID,
+        Location_ID: inventory.location_ID,
         QuantityAdjustment: qty,
         Remark: remark || undefined,
       }
@@ -86,7 +86,7 @@ export const AdjustInventoryModal = ({
           {/* Item Info */}
           <div className="p-3 bg-gray-50 rounded-lg border border-gray-200">
             <p className="text-sm text-gray-600">Item</p>
-            <p className="text-base font-semibold text-gray-900">{inventory?.Item_Name}</p>
+            <p className="text-base font-semibold text-gray-900">{inventory?.item?.item_Code || '-'}</p>
           </div>
 
           {/* Current Quantities */}
@@ -94,13 +94,13 @@ export const AdjustInventoryModal = ({
             <div className="p-3 bg-gray-50 rounded-lg border border-gray-200">
               <p className="text-xs text-gray-600 uppercase">On Hand</p>
               <p className="text-lg font-semibold text-gray-900">
-                {inventory?.OnHand_Quantity?.toFixed(2) || '0.00'}
+                {inventory?.onHand_Quantity?.toFixed(2) || '0.00'}
               </p>
             </div>
             <div className="p-3 bg-gray-50 rounded-lg border border-gray-200">
               <p className="text-xs text-gray-600 uppercase">Available</p>
               <p className="text-lg font-semibold text-gray-900">
-                {inventory?.Available_Quantity?.toFixed(2) || '0.00'}
+                {inventory?.available_Quantity?.toFixed(2) || '0.00'}
               </p>
             </div>
           </div>
