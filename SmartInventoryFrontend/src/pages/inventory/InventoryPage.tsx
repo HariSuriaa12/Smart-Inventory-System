@@ -59,7 +59,12 @@ export const InventoryPage = () => {
       setCurrentPage(1)
       if (currentLocation) {
         const skip = 0
-        dispatch(fetchInventoryByLocation({ locationId: currentLocation.id, skip, take: PAGE_SIZE }) as any)
+        dispatch(fetchInventoryByLocation({
+          locationId: currentLocation.id,
+          skip,
+          take: PAGE_SIZE,
+          searchQuery: searchInput.trim() || undefined
+        }) as any)
       }
     }, 500)
 
@@ -70,9 +75,14 @@ export const InventoryPage = () => {
   useEffect(() => {
     if (currentLocation) {
       const skip = (currentPage - 1) * PAGE_SIZE
-      dispatch(fetchInventoryByLocation({ locationId: currentLocation.id, skip, take: PAGE_SIZE }) as any)
+      dispatch(fetchInventoryByLocation({
+        locationId: currentLocation.id,
+        skip,
+        take: PAGE_SIZE,
+        searchQuery: searchInput.trim() || undefined
+      }) as any)
     }
-  }, [currentLocation, currentPage, dispatch])
+  }, [currentLocation, currentPage, dispatch, searchInput])
 
   const handleAdjustClick = useCallback((inventory: Inventory) => {
     setSelectedInventory(inventory)
@@ -141,14 +151,22 @@ export const InventoryPage = () => {
       label: 'On Hand',
       width: '120px',
       align: 'right',
-      render: (value) => value?.toFixed(2) || '0.00',
+      render: (value) => (
+        <span className="inline-block px-3 py-1 bg-blue-100 text-blue-900 rounded font-medium">
+          {value?.toFixed(2) || '0.00'}
+        </span>
+      ),
     },
     Available_Quantity: {
       key: 'available_Quantity',
       label: 'Available',
       width: '120px',
       align: 'right',
-      render: (value) => value?.toFixed(2) || '0.00',
+      render: (value) => (
+        <span className="inline-block px-3 py-1 bg-green-100 text-green-900 rounded font-medium">
+          {value?.toFixed(2) || '0.00'}
+        </span>
+      ),
     },
     purchase_cost: {
       key: 'purchase_cost',

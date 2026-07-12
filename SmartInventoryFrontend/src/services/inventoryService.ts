@@ -3,14 +3,14 @@ import { ApiResponse, PaginatedResponse } from '@/types/common'
 import { Inventory, AdjustInventoryRequest, StockTransferRequest } from '@/types/inventory'
 
 export const inventoryService = {
-  getInventoryByLocation: async (locationId: number, skip: number = 0, take: number = 10) =>
+  getInventoryByLocation: async (locationId: number, skip: number = 0, take: number = 10, searchQuery?: string) =>
     (await api.get<ApiResponse<PaginatedResponse<Inventory>>>(`/api/inventory/location/${locationId}`, {
-      params: { skip, take },
+      params: { skip, take, searchQuery },
     })).data,
 
-  getInventoryByItem: async (itemId: number, skip: number = 0, take: number = 10) =>
+  getInventoryByItem: async (itemId: number, skip: number = 0, take: number = 10, searchQuery?: string) =>
     (await api.get<ApiResponse<PaginatedResponse<Inventory>>>(`/api/inventory/item/${itemId}`, {
-      params: { skip, take },
+      params: { skip, take, searchQuery },
     })).data,
 
   getInventoryById: async (id: number) =>

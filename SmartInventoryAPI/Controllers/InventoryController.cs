@@ -37,13 +37,16 @@ public class InventoryController : ControllerBase
     public async Task<ActionResult<ApiResponseDto<PaginatedResponseDto<InventoryDetailDto>>>> GetByLocation(
         long locationId,
         [FromQuery] int skip = 0,
-        [FromQuery] int take = 10)
+        [FromQuery] int take = 10,
+        [FromQuery] string? searchQuery = null)
     {
-        var inventories = await _inventoryService.GetByLocationAsync(locationId, skip, take);
+        var inventories = await _inventoryService.GetByLocationAsync(locationId, skip, take, searchQuery);
         return Ok(new ApiResponseDto<PaginatedResponseDto<InventoryDetailDto>>
         {
             Success = true,
-            Message = "Inventory retrieved by location successfully",
+            Message = searchQuery != null
+                ? $"Inventory matching '{searchQuery}' retrieved by location successfully"
+                : "Inventory retrieved by location successfully",
             Data = inventories,
             StatusCode = 200
         });
@@ -53,13 +56,16 @@ public class InventoryController : ControllerBase
     public async Task<ActionResult<ApiResponseDto<PaginatedResponseDto<InventoryDetailDto>>>> GetByItem(
         long itemId,
         [FromQuery] int skip = 0,
-        [FromQuery] int take = 10)
+        [FromQuery] int take = 10,
+        [FromQuery] string? searchQuery = null)
     {
-        var inventories = await _inventoryService.GetByItemAsync(itemId, skip, take);
+        var inventories = await _inventoryService.GetByItemAsync(itemId, skip, take, searchQuery);
         return Ok(new ApiResponseDto<PaginatedResponseDto<InventoryDetailDto>>
         {
             Success = true,
-            Message = "Inventory retrieved by item successfully",
+            Message = searchQuery != null
+                ? $"Inventory matching '{searchQuery}' retrieved by item successfully"
+                : "Inventory retrieved by item successfully",
             Data = inventories,
             StatusCode = 200
         });
