@@ -20,10 +20,11 @@ public class LocationsController : ControllerBase
         _logger = logger;
     }
 
+
     [HttpGet]
     public async Task<ActionResult<ApiResponseDto<PaginatedResponseDto<LocationDto>>>> GetAllLocations(
-        [FromQuery] int skip = 0,
-        [FromQuery] int take = 10)
+        [FromQuery] int skip,
+        [FromQuery] int take)
     {
         var locations = await _locationService.GetAllLocationsAsync(skip, take);
         return Ok(new ApiResponseDto<PaginatedResponseDto<LocationDto>>

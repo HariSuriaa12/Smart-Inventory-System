@@ -108,7 +108,7 @@ export const VendorsPage = () => {
       width: '300px',
     },
     {
-      key: 'Creation_Date',
+      key: 'creation_Date',
       label: 'Creation Date',
       width: '150px',
       render: (value) => value ? new Date(value).toLocaleDateString() : '-',

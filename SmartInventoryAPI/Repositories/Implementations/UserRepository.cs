@@ -28,4 +28,9 @@ public class UserRepository : GenericRepository<User>, IUserRepository
             .Take(take)
             .ToListAsync();
     }
+
+    public async Task<int> CountNonDeletedAsync()
+    {
+        return await _dbSet.Where(i => !i.Is_Deleted).CountAsync();
+    }
 }

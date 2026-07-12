@@ -23,15 +23,19 @@ export interface User extends Entity {
 }
 
 export enum UserRole {
-  Admin = 1,
-  Manager = 2,
-  Staff = 3,
+  Admin = 0,
+  Manager = 1,
+  Staff = 2,
+  IT = 3,
+  Other = 4
 }
 
 export const UserRoleLabel: Record<UserRole, string> = {
   [UserRole.Admin]: 'Admin',
   [UserRole.Manager]: 'Manager',
   [UserRole.Staff]: 'Staff',
+  [UserRole.IT]: 'IT',
+  [UserRole.Other]: 'Other',
 }
 
 export interface AuthState {
@@ -43,7 +47,7 @@ export interface AuthState {
 }
 
 export interface CreateUserRequest {
-  fullName: string
+  full_Name: string
   username: string
   password: string
   email: string
@@ -54,7 +58,7 @@ export interface CreateUserRequest {
 }
 
 export interface UpdateUserRequest {
-  fullName?: string
+  full_Name?: string
   username?: string
   email?: string
   role?: UserRole

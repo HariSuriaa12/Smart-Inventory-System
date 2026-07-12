@@ -14,10 +14,10 @@ interface EditLocationModalProps {
 
 export const EditLocationModal = ({ isOpen, location, onClose, onUpdate, onDelete, isLoading = false }: EditLocationModalProps) => {
   const [formData, setFormData] = useState<UpdateLocationRequest>({
-    Location_Name: '',
-    Outlet_Code: '',
-    Location_Type: 1,
-    Address: '',
+    location_Name: '',
+    outlet_Code: '',
+    location_Type: 1,
+    address: '',
   })
 
   const [errors, setErrors] = useState<Record<string, string>>({})
@@ -27,10 +27,10 @@ export const EditLocationModal = ({ isOpen, location, onClose, onUpdate, onDelet
   useEffect(() => {
     if (location) {
       setFormData({
-        Location_Name: location.Location_Name || '',
-        Outlet_Code: location.Outlet_Code || '',
-        Location_Type: location.Location_Type || 1,
-        Address: location.Address || '',
+        location_Name: location.location_Name || '',
+        outlet_Code: location.outlet_Code || '',
+        location_Type: location.location_Type || 1,
+        address: location.address || '',
       })
       setErrors({})
     }
@@ -43,10 +43,10 @@ export const EditLocationModal = ({ isOpen, location, onClose, onUpdate, onDelet
     const changes: Partial<UpdateLocationRequest> = {}
 
     const fieldMap: Record<string, keyof Location> = {
-      Location_Name: 'Location_Name',
-      Outlet_Code: 'Outlet_Code',
-      Location_Type: 'Location_Type',
-      Address: 'Address',
+      location_Name: 'location_Name',
+      outlet_Code: 'outlet_Code',
+      location_Type: 'location_Type',
+      address: 'address',
     }
 
     Object.entries(fieldMap).forEach(([formKey, locationKey]) => {
@@ -63,9 +63,9 @@ export const EditLocationModal = ({ isOpen, location, onClose, onUpdate, onDelet
   const validateForm = useCallback(() => {
     const newErrors: Record<string, string> = {}
 
-    if (!formData.Location_Name?.trim()) newErrors.Location_Name = 'Location name is required'
-    if (!formData.Outlet_Code?.trim()) newErrors.Outlet_Code = 'Outlet code is required'
-    if (!formData.Address?.trim()) newErrors.Address = 'Address is required'
+    if (!formData.location_Name?.trim()) newErrors.location_Name = 'Location name is required'
+    if (!formData.outlet_Code?.trim()) newErrors.outlet_Code = 'Outlet code is required'
+    if (!formData.address?.trim()) newErrors.address = 'Address is required'
 
     setErrors(newErrors)
     return Object.keys(newErrors).length === 0
@@ -135,10 +135,10 @@ export const EditLocationModal = ({ isOpen, location, onClose, onUpdate, onDelet
               </label>
               <Input
                 type="text"
-                value={formData.Outlet_Code || ''}
-                onChange={(e) => handleInputChange('Outlet_Code', e.target.value)}
+                value={formData.outlet_Code || ''}
+                onChange={(e) => handleInputChange('outlet_Code', e.target.value)}
                 placeholder="e.g., LOC-001"
-                error={errors.Outlet_Code}
+                error={errors.outlet_Code}
                 disabled={isLoading}
               />
             </div>
@@ -148,10 +148,10 @@ export const EditLocationModal = ({ isOpen, location, onClose, onUpdate, onDelet
               </label>
               <Input
                 type="text"
-                value={formData.Location_Name || ''}
-                onChange={(e) => handleInputChange('Location_Name', e.target.value)}
+                value={formData.location_Name || ''}
+                onChange={(e) => handleInputChange('location_Name', e.target.value)}
                 placeholder="e.g., Main Warehouse"
-                error={errors.Location_Name}
+                error={errors.location_Name}
                 disabled={isLoading}
               />
             </div>
@@ -163,8 +163,8 @@ export const EditLocationModal = ({ isOpen, location, onClose, onUpdate, onDelet
               Location Type <span className="text-red-500">*</span>
             </label>
             <select
-              value={formData.Location_Type || 1}
-              onChange={(e) => handleInputChange('Location_Type', parseInt(e.target.value))}
+              value={formData.location_Type || 1}
+              onChange={(e) => handleInputChange('location_Type', parseInt(e.target.value))}
               disabled={isLoading}
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-primary-500 focus:border-transparent bg-white transition-colors disabled:bg-gray-100 disabled:cursor-not-allowed"
             >
@@ -182,12 +182,12 @@ export const EditLocationModal = ({ isOpen, location, onClose, onUpdate, onDelet
               Address <span className="text-red-500">*</span>
             </label>
             <textarea
-              value={formData.Address || ''}
-              onChange={(e) => handleInputChange('Address', e.target.value)}
+              value={formData.address || ''}
+              onChange={(e) => handleInputChange('address', e.target.value)}
               placeholder="Enter the location address..."
               rows={4}
               className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-primary-500 transition-colors ${
-                errors.Address
+                errors.address
                   ? 'border-red-500'
                   : 'border-gray-300 focus:border-transparent'
               } disabled:bg-gray-100 disabled:cursor-not-allowed`}

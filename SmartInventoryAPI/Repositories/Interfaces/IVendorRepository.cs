@@ -5,4 +5,5 @@ namespace SmartInventoryAPI.Repositories.Interfaces;
 public interface IVendorRepository : IGenericRepository<Vendor>
 {
     Task<Vendor?> GetByVendorCodeAsync(string vendorCode);
+    Task<int> CountNonDeletedAsync();
 }

@@ -12,10 +12,10 @@ interface AddCustomerModalProps {
 
 export const AddCustomerModal = ({ isOpen, onClose, onSubmit, isLoading = false }: AddCustomerModalProps) => {
   const [formData, setFormData] = useState<CreateCustomerRequest>({
-    companyName: '',
-    customerCode: '',
+    company_Name: '',
+    customer_Code: '',
     address: '',
-    companyAddress: '',
+    company_Address: '',
     email: '',
     mobile: '',
   })
@@ -25,10 +25,10 @@ export const AddCustomerModal = ({ isOpen, onClose, onSubmit, isLoading = false 
   const validateForm = useCallback(() => {
     const newErrors: Record<string, string> = {}
 
-    if (!formData.companyName.trim()) newErrors.companyName = 'Company name is required'
-    if (!formData.customerCode.trim()) newErrors.customerCode = 'Customer code is required'
+    if (!formData.company_Name.trim()) newErrors.companyName = 'Company name is required'
+    if (!formData.customer_Code.trim()) newErrors.customerCode = 'Customer code is required'
     if (!formData.address.trim()) newErrors.address = 'Address is required'
-    if (!formData.companyAddress.trim()) newErrors.companyAddress = 'Company address is required'
+    if (!formData.company_Address.trim()) newErrors.companyAddress = 'Company address is required'
     if (!formData.email.trim()) newErrors.email = 'Email is required'
     if (formData.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
       newErrors.email = 'Please enter a valid email'
@@ -47,10 +47,10 @@ export const AddCustomerModal = ({ isOpen, onClose, onSubmit, isLoading = false 
     try {
       await onSubmit(formData)
       setFormData({
-        companyName: '',
-        customerCode: '',
+        company_Name: '',
+        customer_Code: '',
         address: '',
-        companyAddress: '',
+        company_Address: '',
         email: '',
         mobile: '',
       })
@@ -102,10 +102,10 @@ export const AddCustomerModal = ({ isOpen, onClose, onSubmit, isLoading = false 
               </label>
               <Input
                 type="text"
-                value={formData.customerCode}
-                onChange={(e) => handleInputChange('customerCode', e.target.value)}
+                value={formData.customer_Code}
+                onChange={(e) => handleInputChange('customer_Code', e.target.value)}
                 placeholder="e.g., CUST-001"
-                error={errors.customerCode}
+                error={errors.customer_Code}
                 disabled={isLoading}
               />
             </div>
@@ -115,10 +115,10 @@ export const AddCustomerModal = ({ isOpen, onClose, onSubmit, isLoading = false 
               </label>
               <Input
                 type="text"
-                value={formData.companyName}
-                onChange={(e) => handleInputChange('companyName', e.target.value)}
+                value={formData.company_Name}
+                onChange={(e) => handleInputChange('company_Name', e.target.value)}
                 placeholder="e.g., XYZ Retail Ltd."
-                error={errors.companyName}
+                error={errors.company_Name}
                 disabled={isLoading}
               />
             </div>
@@ -180,18 +180,18 @@ export const AddCustomerModal = ({ isOpen, onClose, onSubmit, isLoading = false 
               Company Address <span className="text-red-500">*</span>
             </label>
             <textarea
-              value={formData.companyAddress}
-              onChange={(e) => handleInputChange('companyAddress', e.target.value)}
+              value={formData.company_Address}
+              onChange={(e) => handleInputChange('company_Address', e.target.value)}
               placeholder="Enter the company address..."
               rows={2}
               className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-primary-500 transition-colors ${
-                errors.companyAddress
+                errors.company_Address
                   ? 'border-red-500'
                   : 'border-gray-300 focus:border-transparent'
               } disabled:bg-gray-100 disabled:cursor-not-allowed`}
               disabled={isLoading}
             />
-            {errors.companyAddress && <p className="text-red-500 text-sm mt-1">{errors.companyAddress}</p>}
+            {errors.company_Address && <p className="text-red-500 text-sm mt-1">{errors.company_Address}</p>}
           </div>
 
           {/* Footer */}

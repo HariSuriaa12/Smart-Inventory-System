@@ -83,12 +83,12 @@ export const CustomersPage = () => {
 
   const columns: Column<Customer>[] = [
     {
-      key: 'customerCode',
+      key: 'customer_Code',
       label: 'Customer Code',
       width: '150px',
     },
     {
-      key: 'companyName',
+      key: 'company_Name',
       label: 'Company Name',
       width: '200px',
     },
@@ -108,7 +108,7 @@ export const CustomersPage = () => {
       width: '250px',
     },
     {
-      key: 'Creation_Date',
+      key: 'creation_Date',
       label: 'Creation Date',
       width: '150px',
       render: (value) => value ? new Date(value).toLocaleDateString() : '-',

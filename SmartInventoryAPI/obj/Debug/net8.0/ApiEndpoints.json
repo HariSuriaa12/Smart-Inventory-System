@@ -46,7 +46,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "SmartInventoryAPI.Models.DTOs.Response.ApiResponseDto\u00601[[System.Collections.Generic.IEnumerable\u00601[[SmartInventoryAPI.Models.DTOs.Response.CustomerDto, SmartInventoryAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "Type": "SmartInventoryAPI.Models.DTOs.Response.ApiResponseDto\u00601[[SmartInventoryAPI.Models.DTOs.Response.PaginatedResponseDto\u00601[[SmartInventoryAPI.Models.DTOs.Response.CustomerDto, SmartInventoryAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], SmartInventoryAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -517,7 +517,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "SmartInventoryAPI.Models.DTOs.Response.ApiResponseDto\u00601[[System.Collections.Generic.IEnumerable\u00601[[SmartInventoryAPI.Models.DTOs.Response.LocationDto, SmartInventoryAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "Type": "SmartInventoryAPI.Models.DTOs.Response.ApiResponseDto\u00601[[SmartInventoryAPI.Models.DTOs.Response.PaginatedResponseDto\u00601[[SmartInventoryAPI.Models.DTOs.Response.LocationDto, SmartInventoryAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], SmartInventoryAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -1308,7 +1308,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "SmartInventoryAPI.Models.DTOs.Response.ApiResponseDto\u00601[[System.Collections.Generic.IEnumerable\u00601[[SmartInventoryAPI.Models.DTOs.Response.UserDto, SmartInventoryAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "Type": "SmartInventoryAPI.Models.DTOs.Response.ApiResponseDto\u00601[[SmartInventoryAPI.Models.DTOs.Response.PaginatedResponseDto\u00601[[SmartInventoryAPI.Models.DTOs.Response.UserDto, SmartInventoryAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], SmartInventoryAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -1448,7 +1448,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "SmartInventoryAPI.Models.DTOs.Response.ApiResponseDto\u00601[[System.Collections.Generic.IEnumerable\u00601[[SmartInventoryAPI.Models.DTOs.Response.VendorDto, SmartInventoryAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "Type": "SmartInventoryAPI.Models.DTOs.Response.ApiResponseDto\u00601[[SmartInventoryAPI.Models.DTOs.Response.PaginatedResponseDto\u00601[[SmartInventoryAPI.Models.DTOs.Response.VendorDto, SmartInventoryAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], SmartInventoryAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",

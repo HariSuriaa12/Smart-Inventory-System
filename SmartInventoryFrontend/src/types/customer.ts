@@ -1,28 +1,28 @@
 import { Entity } from './common'
 
 export interface Customer extends Entity {
-  companyName: string
-  customerCode: string
+  company_Name: string
+  customer_Code: string
   address: string
-  companyAddress: string
+  company_Address: string
   email: string
   mobile: string
 }
 
 export interface CreateCustomerRequest {
-  companyName: string
-  customerCode: string
+  company_Name: string
+  customer_Code: string
   address: string
-  companyAddress: string
+  company_Address: string
   email: string
   mobile: string
 }
 
 export interface UpdateCustomerRequest {
-  companyName?: string
-  customerCode?: string
+  company_Name?: string
+  customer_Code?: string
   address?: string
-  companyAddress?: string
+  company_Address?: string
   email?: string
   mobile?: string
 }

@@ -24,7 +24,7 @@ public class PurchaseOrderService : IPurchaseOrderService
     public async Task<PurchaseOrderDetailDto> CreatePurchaseOrderAsync(CreatePurchaseOrderRequestDto request)
     {
         var vendor = await _unitOfWork.Vendors.GetByIdAsync(request.Vendor_ID);
-        if (vendor == null || vendor.IsDeleted)
+        if (vendor == null || vendor.Is_Deleted)
             throw new NotFoundException("Vendor not found");
 
         var location = await _unitOfWork.Locations.GetByIdAsync(request.Location_ID);

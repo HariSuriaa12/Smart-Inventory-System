@@ -20,10 +20,10 @@ const LOCATION_TYPES = [
 
 export const AddLocationModal = ({ isOpen, onClose, onSubmit, isLoading = false }: AddLocationModalProps) => {
   const [formData, setFormData] = useState<CreateLocationRequest>({
-    Location_Name: '',
-    Outlet_Code: '',
-    Location_Type: 1,
-    Address: '',
+    location_Name: '',
+    outlet_Code: '',
+    location_Type: 1,
+    address: '',
   })
 
   const [errors, setErrors] = useState<Record<string, string>>({})
@@ -31,9 +31,9 @@ export const AddLocationModal = ({ isOpen, onClose, onSubmit, isLoading = false 
   const validateForm = useCallback(() => {
     const newErrors: Record<string, string> = {}
 
-    if (!formData.Location_Name.trim()) newErrors.Location_Name = 'Location name is required'
-    if (!formData.Outlet_Code.trim()) newErrors.Outlet_Code = 'Outlet code is required'
-    if (!formData.Address.trim()) newErrors.Address = 'Address is required'
+    if (!formData.location_Name.trim()) newErrors.location_Name = 'Location name is required'
+    if (!formData.outlet_Code.trim()) newErrors.outlet_Code = 'Outlet code is required'
+    if (!formData.address.trim()) newErrors.address = 'Address is required'
 
     setErrors(newErrors)
     return Object.keys(newErrors).length === 0
@@ -47,10 +47,10 @@ export const AddLocationModal = ({ isOpen, onClose, onSubmit, isLoading = false 
     try {
       await onSubmit(formData)
       setFormData({
-        Location_Name: '',
-        Outlet_Code: '',
-        Location_Type: 1,
-        Address: '',
+        location_Name: '',
+        outlet_Code: '',
+        location_Type: 1,
+        address: '',
       })
       setErrors({})
       onClose()
@@ -100,10 +100,10 @@ export const AddLocationModal = ({ isOpen, onClose, onSubmit, isLoading = false 
               </label>
               <Input
                 type="text"
-                value={formData.Outlet_Code}
-                onChange={(e) => handleInputChange('Outlet_Code', e.target.value)}
+                value={formData.outlet_Code}
+                onChange={(e) => handleInputChange('outlet_Code', e.target.value)}
                 placeholder="e.g., LOC-001"
-                error={errors.Outlet_Code}
+                error={errors.outlet_Code}
                 disabled={isLoading}
               />
             </div>
@@ -113,10 +113,10 @@ export const AddLocationModal = ({ isOpen, onClose, onSubmit, isLoading = false 
               </label>
               <Input
                 type="text"
-                value={formData.Location_Name}
-                onChange={(e) => handleInputChange('Location_Name', e.target.value)}
+                value={formData.location_Name}
+                onChange={(e) => handleInputChange('location_Name', e.target.value)}
                 placeholder="e.g., Main Warehouse"
-                error={errors.Location_Name}
+                error={errors.location_Name}
                 disabled={isLoading}
               />
             </div>
@@ -128,8 +128,8 @@ export const AddLocationModal = ({ isOpen, onClose, onSubmit, isLoading = false 
               Location Type <span className="text-red-500">*</span>
             </label>
             <select
-              value={formData.Location_Type}
-              onChange={(e) => handleInputChange('Location_Type', parseInt(e.target.value))}
+              value={formData.location_Type}
+              onChange={(e) => handleInputChange('location_Type', parseInt(e.target.value))}
               disabled={isLoading}
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-primary-500 focus:border-transparent bg-white transition-colors disabled:bg-gray-100 disabled:cursor-not-allowed"
             >
@@ -147,12 +147,12 @@ export const AddLocationModal = ({ isOpen, onClose, onSubmit, isLoading = false 
               Address <span className="text-red-500">*</span>
             </label>
             <textarea
-              value={formData.Address}
-              onChange={(e) => handleInputChange('Address', e.target.value)}
+              value={formData.address}
+              onChange={(e) => handleInputChange('address', e.target.value)}
               placeholder="Enter the location address..."
               rows={4}
               className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-primary-500 transition-colors ${
-                errors.Address
+                errors.address
                   ? 'border-red-500'
                   : 'border-gray-300 focus:border-transparent'
               } disabled:bg-gray-100 disabled:cursor-not-allowed`}

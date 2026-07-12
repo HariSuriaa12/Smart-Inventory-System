@@ -4,7 +4,7 @@ import { fetchLocations, createLocation, updateLocation, deleteLocation } from '
 import { DataGrid, Card, Column, Input } from '@/components'
 import { AddLocationModal } from '@/components/modals/AddLocationModal'
 import { EditLocationModal } from '@/components/modals/EditLocationModal'
-import { Location, CreateLocationRequest, UpdateLocationRequest } from '@/types/location'
+import { Location, CreateLocationRequest, UpdateLocationRequest, LocationTypeLabel } from '@/types/location'
 import { Plus, Search, X } from 'lucide-react'
 
 const PAGE_SIZE = 10
@@ -96,6 +96,7 @@ export const LocationsPage = () => {
       key: 'location_Type',
       label: 'Location Type',
       width: '150px',
+      render: (value) => LocationTypeLabel[value] || value,
     },
     {
       key: 'address',
@@ -105,9 +106,8 @@ export const LocationsPage = () => {
     {
       key: 'creation_Date',
       label: 'Creation Date',
-      width: '150px',
-      render: (value) => value ? new Date(value).toLocaleDateString() : '-',
-    },
+      width: '100px',
+    }
   ]
 
   return (

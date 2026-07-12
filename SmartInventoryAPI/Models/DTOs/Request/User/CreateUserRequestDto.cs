@@ -18,4 +18,6 @@ public class UpdateUserRequestDto
     public string? Email { get; set; }
     public string? Mobile_No { get; set; }
     public int Role { get; set; }
+    public string? IC { get; set; }
+    public string? Staff_Code { get; set; }
 }

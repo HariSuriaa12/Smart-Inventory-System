@@ -42,15 +42,26 @@ public class LocationService : ILocationService
         return _mapper.Map<LocationDto>(location);
     }
 
-    public async Task<PaginatedResponseDto<LocationDto>> GetAllLocationsAsync(int skip = 0, int take = 10)
+    public async Task<PaginatedResponseDto<LocationDto>> GetAllLocationsAsync(int skip, int take)
     {
-        var locations = await _unitOfWork.Locations.GetAllAsync(skip, take);
-        var total = await _unitOfWork.Locations.CountNonDeletedAsync();
+        IEnumerable<Location> locations = null;
+        var total = 0;
+        var page = 0;
+        var totalPages = 0;
+
+        if (take > 0)
+        {
+            locations = await _unitOfWork.Locations.GetAllAsync(skip, take);
+
+            total = await _unitOfWork.Locations.CountNonDeletedAsync();
+
+            page = (skip / take) + 1;
+            totalPages = (int)Math.Ceiling((double)total / take);
+        }
+        else
+            locations = await _unitOfWork.Locations.GetAllAsync();
 
         var activeLocations = locations.Where(l => !l.Is_Deleted).ToList();
-
-        var page = (skip / take) + 1;
-        var totalPages = (int)Math.Ceiling((double)total / take);
 
         return new PaginatedResponseDto<LocationDto>
         {
@@ -86,6 +97,11 @@ public class LocationService : ILocationService
             throw new NotFoundException("Location not found");
 
         location.Is_Deleted = true;
+        // Ensure deletion timestamp is UTC
+        if (location.Creation_Date.Kind == DateTimeKind.Unspecified)
+        {
+            location.Creation_Date = DateTime.SpecifyKind(location.Creation_Date, DateTimeKind.Utc);
+        }
         await _unitOfWork.Locations.UpdateAsync(location);
         await _unitOfWork.SaveAsync();
 

@@ -6,7 +6,7 @@ public class Customer
     public string? Company_Name { get; set; }
     public string? Customer_Code { get; set; }
     public string? Address { get; set; }
-    public bool IsDeleted { get; set; } = false;
+    public bool Is_Deleted { get; set; } = false;
     public DateTime Creation_Date { get; set; } = DateTime.UtcNow;
     public string? Company_Address { get; set; }
     public string? Email { get; set; }

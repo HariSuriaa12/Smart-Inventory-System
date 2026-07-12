@@ -12,13 +12,13 @@ interface AddUserModalProps {
 
 export const AddUserModal = ({ isOpen, onClose, onSubmit, isLoading = false }: AddUserModalProps) => {
   const [formData, setFormData] = useState<CreateUserRequest>({
-    fullName: '',
+    full_Name: '',
     username: '',
     password: '',
     email: '',
     role: UserRole.Staff,
-    mobileNo: '',
-    staffCode: '',
+    mobile_No: '',
+    staff_Code: '',
     ic: '',
   })
 
@@ -27,7 +27,7 @@ export const AddUserModal = ({ isOpen, onClose, onSubmit, isLoading = false }: A
   const validateForm = useCallback(() => {
     const newErrors: Record<string, string> = {}
 
-    if (!formData.fullName.trim()) newErrors.fullName = 'Full name is required'
+    if (!formData.full_Name.trim()) newErrors.full_Name = 'Full name is required'
     if (!formData.username.trim()) newErrors.username = 'Username is required'
     if (!formData.password.trim()) newErrors.password = 'Password is required'
     if (formData.password && formData.password.length < 6) {
@@ -50,13 +50,13 @@ export const AddUserModal = ({ isOpen, onClose, onSubmit, isLoading = false }: A
     try {
       await onSubmit(formData)
       setFormData({
-        fullName: '',
+        full_Name: '',
         username: '',
         password: '',
         email: '',
         role: UserRole.Staff,
-        mobileNo: '',
-        staffCode: '',
+        mobile_No: '',
+        staff_Code: '',
         ic: '',
       })
       setErrors({})
@@ -107,10 +107,10 @@ export const AddUserModal = ({ isOpen, onClose, onSubmit, isLoading = false }: A
               </label>
               <Input
                 type="text"
-                value={formData.fullName}
-                onChange={(e) => handleInputChange('fullName', e.target.value)}
+                value={formData.full_Name}
+                onChange={(e) => handleInputChange('full_Name', e.target.value)}
                 placeholder="e.g., John Doe"
-                error={errors.fullName}
+                error={errors.full_Name}
                 disabled={isLoading}
               />
             </div>
@@ -182,8 +182,8 @@ export const AddUserModal = ({ isOpen, onClose, onSubmit, isLoading = false }: A
               <label className="block text-sm font-medium text-gray-700 mb-1">Staff Code</label>
               <Input
                 type="text"
-                value={formData.staffCode || ''}
-                onChange={(e) => handleInputChange('staffCode', e.target.value)}
+                value={formData.staff_Code || ''}
+                onChange={(e) => handleInputChange('staff_Code', e.target.value)}
                 placeholder="e.g., STF-001"
                 disabled={isLoading}
               />
@@ -205,8 +205,8 @@ export const AddUserModal = ({ isOpen, onClose, onSubmit, isLoading = false }: A
             <label className="block text-sm font-medium text-gray-700 mb-1">Mobile Number</label>
             <Input
               type="tel"
-              value={formData.mobileNo || ''}
-              onChange={(e) => handleInputChange('mobileNo', e.target.value)}
+              value={formData.mobile_No || ''}
+              onChange={(e) => handleInputChange('mobile_No', e.target.value)}
               placeholder="e.g., +1-234-567-8900"
               disabled={isLoading}
             />

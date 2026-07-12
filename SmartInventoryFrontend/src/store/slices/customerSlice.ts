@@ -55,6 +55,7 @@ const customerSlice = createSlice({
     builder
       .addCase(fetchCustomers.pending, (state) => { state.loading = true })
       .addCase(fetchCustomers.fulfilled, (state, action) => {
+        console.log('Fetched customers:', action.payload) // Debugging log
         state.loading = false
         state.customers = action.payload?.data || []
         state.total = action.payload?.total || 0

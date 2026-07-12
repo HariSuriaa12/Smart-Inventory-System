@@ -17,7 +17,7 @@ export const selectLocation = (state: { locations: LocationState }) => state.loc
 export const fetchLocations = createAsyncThunk('locations/fetchLocations',
   async ({ skip = 0, take = 10 }: { skip?: number; take?: number }, { rejectWithValue }) => {
     try {
-      return (await locationService.getLocations(skip, take))
+      return (await locationService.getLocations(skip, take)).data
     } catch (error: any) {
       return rejectWithValue(error.message)
     }
@@ -27,7 +27,7 @@ export const fetchLocations = createAsyncThunk('locations/fetchLocations',
 export const fetchAllLocations = createAsyncThunk('locations/fetchAllLocations',
   async () => {
     try {
-      return (await locationService.getAllLocations())
+      return (await locationService.getAllLocations()).data
     } catch (error: any) {
       return error.message
     }

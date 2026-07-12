@@ -13,6 +13,11 @@ public class CustomerRepository : GenericRepository<Customer>, ICustomerReposito
 
     public async Task<Customer?> GetByCustomerCodeAsync(string customerCode)
     {
-        return await _dbSet.FirstOrDefaultAsync(c => c.Customer_Code == customerCode && !c.IsDeleted);
+        return await _dbSet.FirstOrDefaultAsync(c => c.Customer_Code == customerCode && !c.Is_Deleted);
+    }
+
+    public async Task<int> CountNonDeletedAsync()
+    {
+        return await _dbSet.Where(i => !i.Is_Deleted).CountAsync();
     }
 }

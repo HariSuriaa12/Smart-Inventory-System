@@ -36,7 +36,7 @@ public class CustomerService : ICustomerService
     public async Task<CustomerDto> GetCustomerByIdAsync(long id)
     {
         var customer = await _unitOfWork.Customers.GetByIdAsync(id);
-        if (customer == null || customer.IsDeleted)
+        if (customer == null || customer.Is_Deleted)
             throw new NotFoundException("Customer not found");
 
         return _mapper.Map<CustomerDto>(customer);
@@ -47,7 +47,7 @@ public class CustomerService : ICustomerService
         var customers = await _unitOfWork.Customers.GetAllAsync(skip, take);
         var total = await _unitOfWork.Customers.CountNonDeletedAsync();
 
-        var activeCustomers = customers.Where(c => !c.IsDeleted).ToList();
+        var activeCustomers = customers.Where(c => !c.Is_Deleted).ToList();
 
         var page = (skip / take) + 1;
         var totalPages = (int)Math.Ceiling((double)total / take);
@@ -68,7 +68,7 @@ public class CustomerService : ICustomerService
     public async Task<CustomerDto> UpdateCustomerAsync(long id, UpdateCustomerRequestDto request)
     {
         var customer = await _unitOfWork.Customers.GetByIdAsync(id);
-        if (customer == null || customer.IsDeleted)
+        if (customer == null || customer.Is_Deleted)
             throw new NotFoundException("Customer not found");
 
         _mapper.Map(request, customer);
@@ -85,7 +85,12 @@ public class CustomerService : ICustomerService
         if (customer == null)
             throw new NotFoundException("Customer not found");
 
-        customer.IsDeleted = true;
+        customer.Is_Deleted = true;
+        // Ensure deletion timestamp is UTC
+        if (customer.Creation_Date.Kind == DateTimeKind.Unspecified)
+        {
+            customer.Creation_Date = DateTime.SpecifyKind(customer.Creation_Date, DateTimeKind.Utc);
+        }
         await _unitOfWork.Customers.UpdateAsync(customer);
         await _unitOfWork.SaveAsync();
 

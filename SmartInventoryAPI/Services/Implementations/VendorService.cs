@@ -36,7 +36,7 @@ public class VendorService : IVendorService
     public async Task<VendorDto> GetVendorByIdAsync(long id)
     {
         var vendor = await _unitOfWork.Vendors.GetByIdAsync(id);
-        if (vendor == null || vendor.IsDeleted)
+        if (vendor == null || vendor.Is_Deleted)
             throw new NotFoundException("Vendor not found");
 
         return _mapper.Map<VendorDto>(vendor);
@@ -47,7 +47,7 @@ public class VendorService : IVendorService
         var vendors = await _unitOfWork.Vendors.GetAllAsync(skip, take);
         var total = await _unitOfWork.Vendors.CountNonDeletedAsync();
 
-        var activeVendors = vendors.Where(v => !v.IsDeleted).ToList();
+        var activeVendors = vendors.Where(v => !v.Is_Deleted).ToList();
 
         var page = (skip / take) + 1;
         var totalPages = (int)Math.Ceiling((double)total / take);
@@ -68,7 +68,7 @@ public class VendorService : IVendorService
     public async Task<VendorDto> UpdateVendorAsync(long id, UpdateVendorRequestDto request)
     {
         var vendor = await _unitOfWork.Vendors.GetByIdAsync(id);
-        if (vendor == null || vendor.IsDeleted)
+        if (vendor == null || vendor.Is_Deleted)
             throw new NotFoundException("Vendor not found");
 
         _mapper.Map(request, vendor);
@@ -85,7 +85,12 @@ public class VendorService : IVendorService
         if (vendor == null)
             throw new NotFoundException("Vendor not found");
 
-        vendor.IsDeleted = true;
+        vendor.Is_Deleted = true;
+        // Ensure deletion timestamp is UTC
+        if (vendor.Creation_Date.Kind == DateTimeKind.Unspecified)
+        {
+            vendor.Creation_Date = DateTime.SpecifyKind(vendor.Creation_Date, DateTimeKind.Utc);
+        }
         await _unitOfWork.Vendors.UpdateAsync(vendor);
         await _unitOfWork.SaveAsync();
 

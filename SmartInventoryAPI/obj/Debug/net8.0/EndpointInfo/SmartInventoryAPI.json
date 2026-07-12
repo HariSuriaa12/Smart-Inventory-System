@@ -85,17 +85,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/CustomerDtoIEnumerableApiResponseDto"
+                  "$ref": "#/components/schemas/CustomerDtoPaginatedResponseDtoApiResponseDto"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/CustomerDtoIEnumerableApiResponseDto"
+                  "$ref": "#/components/schemas/CustomerDtoPaginatedResponseDtoApiResponseDto"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/CustomerDtoIEnumerableApiResponseDto"
+                  "$ref": "#/components/schemas/CustomerDtoPaginatedResponseDtoApiResponseDto"
                 }
               }
             }
@@ -859,17 +859,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/LocationDtoIEnumerableApiResponseDto"
+                  "$ref": "#/components/schemas/LocationDtoPaginatedResponseDtoApiResponseDto"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/LocationDtoIEnumerableApiResponseDto"
+                  "$ref": "#/components/schemas/LocationDtoPaginatedResponseDtoApiResponseDto"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/LocationDtoIEnumerableApiResponseDto"
+                  "$ref": "#/components/schemas/LocationDtoPaginatedResponseDtoApiResponseDto"
                 }
               }
             }
@@ -2150,17 +2150,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/UserDtoIEnumerableApiResponseDto"
+                  "$ref": "#/components/schemas/UserDtoPaginatedResponseDtoApiResponseDto"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/UserDtoIEnumerableApiResponseDto"
+                  "$ref": "#/components/schemas/UserDtoPaginatedResponseDtoApiResponseDto"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/UserDtoIEnumerableApiResponseDto"
+                  "$ref": "#/components/schemas/UserDtoPaginatedResponseDtoApiResponseDto"
                 }
               }
             }
@@ -2380,17 +2380,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/VendorDtoIEnumerableApiResponseDto"
+                  "$ref": "#/components/schemas/VendorDtoPaginatedResponseDtoApiResponseDto"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/VendorDtoIEnumerableApiResponseDto"
+                  "$ref": "#/components/schemas/VendorDtoPaginatedResponseDtoApiResponseDto"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/VendorDtoIEnumerableApiResponseDto"
+                  "$ref": "#/components/schemas/VendorDtoPaginatedResponseDtoApiResponseDto"
                 }
               }
             }
@@ -2956,7 +2956,46 @@
         },
         "additionalProperties": false
       },
-      "CustomerDtoIEnumerableApiResponseDto": {
+      "CustomerDtoPaginatedResponseDto": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CustomerDto"
+            },
+            "nullable": true
+          },
+          "total": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "skip": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "take": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "page": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "hasNextPage": {
+            "type": "boolean"
+          },
+          "hasPreviousPage": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CustomerDtoPaginatedResponseDtoApiResponseDto": {
         "type": "object",
         "properties": {
           "success": {
@@ -2967,11 +3006,7 @@
             "nullable": true
           },
           "data": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/CustomerDto"
-            },
-            "nullable": true
+            "$ref": "#/components/schemas/CustomerDtoPaginatedResponseDto"
           },
           "statusCode": {
             "type": "integer",
@@ -3298,7 +3333,46 @@
         },
         "additionalProperties": false
       },
-      "LocationDtoIEnumerableApiResponseDto": {
+      "LocationDtoPaginatedResponseDto": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LocationDto"
+            },
+            "nullable": true
+          },
+          "total": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "skip": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "take": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "page": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "hasNextPage": {
+            "type": "boolean"
+          },
+          "hasPreviousPage": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "LocationDtoPaginatedResponseDtoApiResponseDto": {
         "type": "object",
         "properties": {
           "success": {
@@ -3309,11 +3383,7 @@
             "nullable": true
           },
           "data": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/LocationDto"
-            },
-            "nullable": true
+            "$ref": "#/components/schemas/LocationDtoPaginatedResponseDto"
           },
           "statusCode": {
             "type": "integer",
@@ -4224,6 +4294,14 @@
           "role": {
             "type": "integer",
             "format": "int32"
+          },
+          "ic": {
+            "type": "string",
+            "nullable": true
+          },
+          "staff_Code": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -4319,7 +4397,46 @@
         },
         "additionalProperties": false
       },
-      "UserDtoIEnumerableApiResponseDto": {
+      "UserDtoPaginatedResponseDto": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UserDto"
+            },
+            "nullable": true
+          },
+          "total": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "skip": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "take": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "page": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "hasNextPage": {
+            "type": "boolean"
+          },
+          "hasPreviousPage": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UserDtoPaginatedResponseDtoApiResponseDto": {
         "type": "object",
         "properties": {
           "success": {
@@ -4330,11 +4447,7 @@
             "nullable": true
           },
           "data": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/UserDto"
-            },
-            "nullable": true
+            "$ref": "#/components/schemas/UserDtoPaginatedResponseDto"
           },
           "statusCode": {
             "type": "integer",
@@ -4411,7 +4524,46 @@
         },
         "additionalProperties": false
       },
-      "VendorDtoIEnumerableApiResponseDto": {
+      "VendorDtoPaginatedResponseDto": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/VendorDto"
+            },
+            "nullable": true
+          },
+          "total": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "skip": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "take": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "page": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "hasNextPage": {
+            "type": "boolean"
+          },
+          "hasPreviousPage": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "VendorDtoPaginatedResponseDtoApiResponseDto": {
         "type": "object",
         "properties": {
           "success": {
@@ -4422,11 +4574,7 @@
             "nullable": true
           },
           "data": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/VendorDto"
-            },
-            "nullable": true
+            "$ref": "#/components/schemas/VendorDtoPaginatedResponseDto"
           },
           "statusCode": {
             "type": "integer",

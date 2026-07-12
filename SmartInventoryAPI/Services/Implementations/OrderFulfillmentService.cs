@@ -24,7 +24,7 @@ public class OrderFulfillmentService : IOrderFulfillmentService
     public async Task<OrderFulfillmentDetailDto> ReceiveOrderFulfillmentAsync(ReceiveOrderFulfillmentRequestDto request)
     {
         var customer = await _unitOfWork.Customers.GetByIdAsync(request.Customer_ID);
-        if (customer == null || customer.IsDeleted)
+        if (customer == null || customer.Is_Deleted)
             throw new NotFoundException("Customer not found");
 
         var location = await _unitOfWork.Locations.GetByIdAsync(request.Location_ID);

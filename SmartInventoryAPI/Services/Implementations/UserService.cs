@@ -92,6 +92,11 @@ public class UserService : IUserService
             throw new NotFoundException("User not found");
 
         user.Is_Deleted = true;
+        // Ensure deletion timestamp is UTC
+        if (user.Creation_Date.Kind == DateTimeKind.Unspecified)
+        {
+            user.Creation_Date = DateTime.SpecifyKind(user.Creation_Date, DateTimeKind.Utc);
+        }
         await _unitOfWork.User.UpdateAsync(user);
         await _unitOfWork.SaveAsync();
 

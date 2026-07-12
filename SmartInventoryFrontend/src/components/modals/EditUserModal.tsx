@@ -14,11 +14,11 @@ interface EditUserModalProps {
 
 export const EditUserModal = ({ isOpen, user, onClose, onUpdate, onDelete, isLoading = false }: EditUserModalProps) => {
   const [formData, setFormData] = useState<UpdateUserRequest>({
-    fullName: '',
+    full_Name: '',
     email: '',
     role: UserRole.Staff,
-    mobileNo: '',
-    staffCode: '',
+    mobile_No: '',
+    staff_Code: '',
     ic: '',
   })
 
@@ -29,11 +29,11 @@ export const EditUserModal = ({ isOpen, user, onClose, onUpdate, onDelete, isLoa
   useEffect(() => {
     if (user) {
       setFormData({
-        fullName: user.fullName || '',
+        full_Name: user.full_Name || '',
         email: user.email || '',
         role: user.role || UserRole.Staff,
-        mobileNo: user.mobileNo || '',
-        staffCode: user.staffCode || '',
+        mobile_No: user.mobile_No || '',
+        staff_Code: user.staff_Code || '',
         ic: user.ic || '',
       })
       setErrors({})
@@ -47,11 +47,11 @@ export const EditUserModal = ({ isOpen, user, onClose, onUpdate, onDelete, isLoa
     const changes: Partial<UpdateUserRequest> = {}
 
     const fieldMap: Record<string, keyof User> = {
-      fullName: 'fullName',
+      full_Name: 'full_Name',
       email: 'email',
       role: 'role',
-      mobileNo: 'mobileNo',
-      staffCode: 'staffCode',
+      mobile_No: 'mobile_No',
+      staff_Code: 'staff_Code',
       ic: 'ic',
     }
 
@@ -69,7 +69,7 @@ export const EditUserModal = ({ isOpen, user, onClose, onUpdate, onDelete, isLoa
   const validateForm = useCallback(() => {
     const newErrors: Record<string, string> = {}
 
-    if (!formData.fullName?.trim()) newErrors.fullName = 'Full name is required'
+    if (!formData.full_Name?.trim()) newErrors.full_Name = 'Full name is required'
     if (!formData.email?.trim()) newErrors.email = 'Email is required'
     if (formData.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
       newErrors.email = 'Please enter a valid email'
@@ -107,6 +107,7 @@ export const EditUserModal = ({ isOpen, user, onClose, onUpdate, onDelete, isLoa
       ...prev,
       [field]: value
     }))
+    console.log('Changed field:', field, 'New value:', value)
     // Clear error for this field when user starts typing
     if (errors[field]) {
       setErrors((prev) => ({
@@ -143,10 +144,10 @@ export const EditUserModal = ({ isOpen, user, onClose, onUpdate, onDelete, isLoa
               </label>
               <Input
                 type="text"
-                value={formData.fullName || ''}
-                onChange={(e) => handleInputChange('fullName', e.target.value)}
+                value={formData.full_Name || ''}
+                onChange={(e) => handleInputChange('full_Name', e.target.value)}
                 placeholder="e.g., John Doe"
-                error={errors.fullName}
+                error={errors.full_Name}
                 disabled={isLoading}
               />
             </div>
@@ -190,6 +191,8 @@ export const EditUserModal = ({ isOpen, user, onClose, onUpdate, onDelete, isLoa
                 <option value={UserRole.Admin}>{UserRoleLabel[UserRole.Admin]}</option>
                 <option value={UserRole.Manager}>{UserRoleLabel[UserRole.Manager]}</option>
                 <option value={UserRole.Staff}>{UserRoleLabel[UserRole.Staff]}</option>
+                <option value={UserRole.IT}>{UserRoleLabel[UserRole.IT]}</option>
+                <option value={UserRole.Other}>{UserRoleLabel[UserRole.Other]}</option>
               </select>
             </div>
           </div>
@@ -200,8 +203,8 @@ export const EditUserModal = ({ isOpen, user, onClose, onUpdate, onDelete, isLoa
               <label className="block text-sm font-medium text-gray-700 mb-1">Staff Code</label>
               <Input
                 type="text"
-                value={formData.staffCode || ''}
-                onChange={(e) => handleInputChange('staffCode', e.target.value)}
+                value={formData.staff_Code || ''}
+                onChange={(e) => handleInputChange('staff_Code', e.target.value)}
                 placeholder="e.g., STF-001"
                 disabled={isLoading}
               />
@@ -223,8 +226,8 @@ export const EditUserModal = ({ isOpen, user, onClose, onUpdate, onDelete, isLoa
             <label className="block text-sm font-medium text-gray-700 mb-1">Mobile Number</label>
             <Input
               type="tel"
-              value={formData.mobileNo || ''}
-              onChange={(e) => handleInputChange('mobileNo', e.target.value)}
+              value={formData.mobile_No || ''}
+              onChange={(e) => handleInputChange('mobile_No', e.target.value)}
               placeholder="e.g., +1-234-567-8900"
               disabled={isLoading}
             />

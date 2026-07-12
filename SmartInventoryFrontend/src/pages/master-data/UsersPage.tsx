@@ -59,6 +59,7 @@ export const UsersPage = () => {
   const handleUpdateUser = useCallback(async (formData: UpdateUserRequest) => {
     if (!selectedUser) return
     try {
+      console.log('Updating user with ID:', selectedUser.id, 'Data:', formData)
       await dispatch(updateUser({ id: selectedUser.id, data: formData }) as any)
       // Refresh the list
       dispatch(fetchUsers({ skip: (currentPage - 1) * PAGE_SIZE, take: PAGE_SIZE }) as any)
@@ -95,6 +96,11 @@ export const UsersPage = () => {
     {
       key: 'email',
       label: 'Email',
+      width: '200px',
+    },
+    {
+      key: 'ic',
+      label: 'IC',
       width: '200px',
     },
     {
