@@ -62,19 +62,19 @@ export const InventoryPage = () => {
 
   const columns: Column<Inventory>[] = [
     {
-      key: 'Item_Name',
-      label: 'Item Name',
+      key: 'item_Code',
+      label: 'Item Code',
       width: '220px',
     },
     {
-      key: 'OnHand_Quantity',
+      key: 'on_Hand_Quantity',
       label: 'On Hand',
       width: '120px',
       align: 'right',
       render: (value) => value?.toFixed(2) || '0.00',
     },
     {
-      key: 'Available_Quantity',
+      key: 'available_Quantity',
       label: 'Available',
       width: '120px',
       align: 'right',

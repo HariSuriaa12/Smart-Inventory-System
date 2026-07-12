@@ -3037,10 +3037,6 @@
             "type": "integer",
             "format": "int64"
           },
-          "item_Name": {
-            "type": "string",
-            "nullable": true
-          },
           "location_Name": {
             "type": "string",
             "nullable": true
@@ -3052,6 +3048,65 @@
           "available_Quantity": {
             "type": "number",
             "format": "double"
+          },
+          "item_Name": {
+            "type": "string",
+            "nullable": true
+          },
+          "item_Code": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "item_Category": {
+            "type": "string",
+            "nullable": true
+          },
+          "item_Brand": {
+            "type": "string",
+            "nullable": true
+          },
+          "purchase_Cost": {
+            "type": "number",
+            "format": "double"
+          },
+          "unit_Cost": {
+            "type": "number",
+            "format": "double"
+          },
+          "is_Active": {
+            "type": "boolean"
+          },
+          "unit_Of_Measure": {
+            "type": "string",
+            "nullable": true
+          },
+          "remark": {
+            "type": "string",
+            "nullable": true
+          },
+          "creation_Date": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "item_Image_URL": {
+            "type": "string",
+            "nullable": true
+          },
+          "tax_Percentage": {
+            "type": "number",
+            "format": "double"
+          },
+          "tax_Type": {
+            "type": "string",
+            "nullable": true
+          },
+          "item_Type": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
