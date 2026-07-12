@@ -34,13 +34,13 @@ public class InventoryController : ControllerBase
     }
 
     [HttpGet("location/{locationId}")]
-    public async Task<ActionResult<ApiResponseDto<IEnumerable<InventoryDetailDto>>>> GetByLocation(
+    public async Task<ActionResult<ApiResponseDto<PaginatedResponseDto<InventoryDetailDto>>>> GetByLocation(
         long locationId,
         [FromQuery] int skip = 0,
         [FromQuery] int take = 10)
     {
         var inventories = await _inventoryService.GetByLocationAsync(locationId, skip, take);
-        return Ok(new ApiResponseDto<IEnumerable<InventoryDetailDto>>
+        return Ok(new ApiResponseDto<PaginatedResponseDto<InventoryDetailDto>>
         {
             Success = true,
             Message = "Inventory retrieved by location successfully",
@@ -50,13 +50,13 @@ public class InventoryController : ControllerBase
     }
 
     [HttpGet("item/{itemId}")]
-    public async Task<ActionResult<ApiResponseDto<IEnumerable<InventoryDetailDto>>>> GetByItem(
+    public async Task<ActionResult<ApiResponseDto<PaginatedResponseDto<InventoryDetailDto>>>> GetByItem(
         long itemId,
         [FromQuery] int skip = 0,
         [FromQuery] int take = 10)
     {
         var inventories = await _inventoryService.GetByItemAsync(itemId, skip, take);
-        return Ok(new ApiResponseDto<IEnumerable<InventoryDetailDto>>
+        return Ok(new ApiResponseDto<PaginatedResponseDto<InventoryDetailDto>>
         {
             Success = true,
             Message = "Inventory retrieved by item successfully",

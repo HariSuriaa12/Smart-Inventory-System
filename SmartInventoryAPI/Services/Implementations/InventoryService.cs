@@ -32,16 +32,44 @@ public class InventoryService : IInventoryService
         return _mapper.Map<InventoryDto>(inventory);
     }
 
-    public async Task<IEnumerable<InventoryDetailDto>> GetByLocationAsync(long locationId, int skip = 0, int take = 10)
+    public async Task<PaginatedResponseDto<InventoryDetailDto>> GetByLocationAsync(long locationId, int skip = 0, int take = 10)
     {
         var inventories = await _unitOfWork.Inventories.GetByLocationAsync(locationId, skip, take);
-        return _mapper.Map<IEnumerable<InventoryDetailDto>>(inventories);
+        var total = await _unitOfWork.Inventories.CountByLocationAsync(locationId);
+        var page = (skip / take) + 1;
+        var totalPages = (total + take - 1) / take;
+
+        return new PaginatedResponseDto<InventoryDetailDto>
+        {
+            Data = _mapper.Map<IEnumerable<InventoryDetailDto>>(inventories),
+            Total = total,
+            Skip = skip,
+            Take = take,
+            Page = page,
+            TotalPages = totalPages,
+            HasNextPage = page < totalPages,
+            HasPreviousPage = page > 1
+        };
     }
 
-    public async Task<IEnumerable<InventoryDetailDto>> GetByItemAsync(long itemId, int skip = 0, int take = 10)
+    public async Task<PaginatedResponseDto<InventoryDetailDto>> GetByItemAsync(long itemId, int skip = 0, int take = 10)
     {
         var inventories = await _unitOfWork.Inventories.GetByItemAsync(itemId, skip, take);
-        return _mapper.Map<IEnumerable<InventoryDetailDto>>(inventories);
+        var total = await _unitOfWork.Inventories.CountByItemAsync(itemId);
+        var page = (skip / take) + 1;
+        var totalPages = (total + take - 1) / take;
+
+        return new PaginatedResponseDto<InventoryDetailDto>
+        {
+            Data = _mapper.Map<IEnumerable<InventoryDetailDto>>(inventories),
+            Total = total,
+            Skip = skip,
+            Take = take,
+            Page = page,
+            TotalPages = totalPages,
+            HasNextPage = page < totalPages,
+            HasPreviousPage = page > 1
+        };
     }
 
     public async Task<InventoryDto> AdjustInventoryAsync(AdjustInventoryRequestDto request)
