@@ -5,6 +5,7 @@ public class CreatePurchaseOrderRequestDto
     public long Location_ID { get; set; }
     public long Vendor_ID { get; set; }
     public string? Remark { get; set; }
+    public string? PO_Reference_No { get; set; }
     public List<PurchaseOrderItemRequestDto>? Items { get; set; }
 }
 

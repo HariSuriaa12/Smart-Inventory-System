@@ -64,11 +64,13 @@ const poSlice = createSlice({
     builder
       .addCase(fetchPOs.pending, (state) => { state.loading = true })
       .addCase(fetchPOs.fulfilled, (state, action) => {
+
         state.loading = false
         state.orders = action.payload?.data || []
         state.total = action.payload?.total || 0
         state.skip = action.payload?.skip || 0
         state.take = action.payload?.take || 10
+        
       })
       .addCase(fetchPOs.rejected, (state, action) => {
         state.loading = false

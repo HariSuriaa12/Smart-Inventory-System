@@ -41,7 +41,7 @@ export const DataGrid = <T,>({
   const totalPages = useMemo(() => Math.ceil(totalItems / pageSize), [totalItems, pageSize])
   const maxButtons = 5
   const [paginationStartPage, setPaginationStartPage] = useState(1)
-
+  console.log('Columns:', columns)
   const paginationItems = useMemo(() => {
     const items = []
     let startPage = paginationStartPage

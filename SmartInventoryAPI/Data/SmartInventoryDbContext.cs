@@ -202,6 +202,37 @@ public class SmartInventoryDbContext : DbContext
             .HasForeignKey(p => p.Performed_By)
             .OnDelete(DeleteBehavior.Restrict);
 
+        //Purchase Order Relation
+        modelBuilder.Entity<PurchaseOrderHeader>()
+            .HasOne(p => p.Vendor)
+            .WithMany()
+            .HasForeignKey(p => p.Vendor_ID)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<PurchaseOrderHeader>()
+            .HasOne(p => p.Location)
+            .WithMany()
+            .HasForeignKey(p => p.Location_ID)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<PurchaseOrderHeader>()
+            .HasOne(p => p.User)
+            .WithMany()
+            .HasForeignKey(p => p.Performed_By)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<PurchaseOrderItem>()
+            .HasOne(p => p.PurchaseOrder)
+            .WithMany(po => po.Items)
+            .HasForeignKey(p => p.PO_ID)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<PurchaseOrderItem>()
+            .HasOne(p => p.Item)
+            .WithMany()
+            .HasForeignKey(p => p.Item_ID)
+            .OnDelete(DeleteBehavior.Restrict);
+
         modelBuilder.Entity<PriceLog>()
             .Property(x => x.Previous_Unit_Price)
             .HasPrecision(14, 2);
@@ -237,7 +268,8 @@ public class SmartInventoryDbContext : DbContext
 
         modelBuilder.Entity<PurchaseOrderHeader>()
             .HasOne(p => p.User)
-            .WithForeignKey(p => p.Performed_By)
+            .WithMany()
+            .HasForeignKey(p => p.Performed_By)
             .OnDelete(DeleteBehavior.Restrict);
 
         // Configure PurchaseOrderItem relationships
