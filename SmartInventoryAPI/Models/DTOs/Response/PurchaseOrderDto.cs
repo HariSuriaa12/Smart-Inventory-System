@@ -8,6 +8,11 @@ public class PurchaseOrderDto
     public DateTime Purchase_Date { get; set; }
     public long Vendor_ID { get; set; }
     public string? Vendor_Name { get; set; }
+    public string? Vendor_Code { get; set; }
+    public string? Company_Address { get; set; }
+    public string? Staff_Code { get; set; }
+    public string? Full_Name { get; set; }
+    public string? Mobile_No { get; set; }
     public int Status { get; set; }
     public string? Remark { get; set; }
     public decimal Total_Amount { get; set; }

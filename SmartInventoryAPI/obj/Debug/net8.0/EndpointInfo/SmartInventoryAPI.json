@@ -1393,17 +1393,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/PurchaseOrderDtoIEnumerableApiResponseDto"
+                  "$ref": "#/components/schemas/PurchaseOrderDtoPaginatedResponseDtoApiResponseDto"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PurchaseOrderDtoIEnumerableApiResponseDto"
+                  "$ref": "#/components/schemas/PurchaseOrderDtoPaginatedResponseDtoApiResponseDto"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PurchaseOrderDtoIEnumerableApiResponseDto"
+                  "$ref": "#/components/schemas/PurchaseOrderDtoPaginatedResponseDtoApiResponseDto"
                 }
               }
             }
@@ -1632,17 +1632,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/PurchaseOrderDtoIEnumerableApiResponseDto"
+                  "$ref": "#/components/schemas/PurchaseOrderDtoPaginatedResponseDtoApiResponseDto"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PurchaseOrderDtoIEnumerableApiResponseDto"
+                  "$ref": "#/components/schemas/PurchaseOrderDtoPaginatedResponseDtoApiResponseDto"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PurchaseOrderDtoIEnumerableApiResponseDto"
+                  "$ref": "#/components/schemas/PurchaseOrderDtoPaginatedResponseDtoApiResponseDto"
                 }
               }
             }
@@ -4120,6 +4120,26 @@
             "type": "string",
             "nullable": true
           },
+          "vendor_Code": {
+            "type": "string",
+            "nullable": true
+          },
+          "company_Address": {
+            "type": "string",
+            "nullable": true
+          },
+          "staff_Code": {
+            "type": "string",
+            "nullable": true
+          },
+          "full_Name": {
+            "type": "string",
+            "nullable": true
+          },
+          "mobile_No": {
+            "type": "string",
+            "nullable": true
+          },
           "status": {
             "type": "integer",
             "format": "int32"
@@ -4139,7 +4159,46 @@
         },
         "additionalProperties": false
       },
-      "PurchaseOrderDtoIEnumerableApiResponseDto": {
+      "PurchaseOrderDtoPaginatedResponseDto": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PurchaseOrderDto"
+            },
+            "nullable": true
+          },
+          "total": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "skip": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "take": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "page": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "hasNextPage": {
+            "type": "boolean"
+          },
+          "hasPreviousPage": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "PurchaseOrderDtoPaginatedResponseDtoApiResponseDto": {
         "type": "object",
         "properties": {
           "success": {
@@ -4150,11 +4209,7 @@
             "nullable": true
           },
           "data": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/PurchaseOrderDto"
-            },
-            "nullable": true
+            "$ref": "#/components/schemas/PurchaseOrderDtoPaginatedResponseDto"
           },
           "statusCode": {
             "type": "integer",

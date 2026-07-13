@@ -223,7 +223,7 @@ public class SmartInventoryDbContext : DbContext
 
         modelBuilder.Entity<PurchaseOrderItem>()
             .HasOne(p => p.PurchaseOrder)
-            .WithMany()
+            .WithMany(po => po.Items)
             .HasForeignKey(p => p.PO_ID)
             .OnDelete(DeleteBehavior.Restrict);
 
