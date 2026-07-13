@@ -89,8 +89,8 @@ public class PurchaseOrderService : IPurchaseOrderService
 
     public async Task<PaginatedResponseDto<PurchaseOrderDto>> GetAllPurchaseOrdersAsync(int skip = 0, int take = 10)
     {
-        var pos = await _unitOfWork.PurchaseOrders.GetAllAsync(skip, take);
-        var total = await _unitOfWork.PurchaseOrders.CountAsync();
+        var pos = await _unitOfWork.PurchaseOrders.GetAllWithDetailsAsync(skip, take);
+        var total = await _unitOfWork.PurchaseOrders.CountNonDeletedAsync();
         var activePOs = pos.Where(p => !p.Is_Deleted).ToList();
 
         var page = (skip / take) + 1;
@@ -141,7 +141,7 @@ public class PurchaseOrderService : IPurchaseOrderService
 
     public async Task<PaginatedResponseDto<PurchaseOrderDto>> GetByVendorAsync(long vendorId, int skip = 0, int take = 10)
     {
-        var pos = await _unitOfWork.PurchaseOrders.GetByVendorAsync(vendorId, skip, take);
+        var pos = await _unitOfWork.PurchaseOrders.GetByVendorWithDetailsAsync(vendorId, skip, take);
         var total = await _unitOfWork.PurchaseOrders.CountByVendorAsync(vendorId);
         var activePOs = pos.Where(p => !p.Is_Deleted).ToList();
 

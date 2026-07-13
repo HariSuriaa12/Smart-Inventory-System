@@ -10,4 +10,6 @@ public interface IPurchaseOrderRepository : IGenericRepository<PurchaseOrderHead
     Task<IEnumerable<PurchaseOrderHeader>> GetByStatusAsync(int status, int skip = 0, int take = 10);
     Task<int> CountNonDeletedAsync();
     Task<int> CountByVendorAsync(long vendorId);
+    Task<IEnumerable<PurchaseOrderHeader>> GetAllWithDetailsAsync(int skip = 0, int take = 10);
+    Task<IEnumerable<PurchaseOrderHeader>> GetByVendorWithDetailsAsync(long vendorId, int skip = 0, int take = 10);
 }
