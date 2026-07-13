@@ -285,79 +285,86 @@ export const PurchaseOrderListPage = () => {
       </div>
 
       {/* Filter Bar */}
-      <div className="flex-shrink-0 flex gap-2 flex-wrap items-end">
-        <input
-          type="text"
-          placeholder="Filter by PO ID..."
-          value={poIdFilter}
-          onChange={(e) => setPoIdFilter(e.target.value)}
-          className="px-3 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm"
-          style={{ minWidth: '120px' }}
-        />
-        <input
-          type="text"
-          placeholder="Filter by PO Reference..."
-          value={poRefFilter}
-          onChange={(e) => setPoRefFilter(e.target.value)}
-          className="px-3 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm"
-          style={{ minWidth: '150px' }}
-        />
-        <select
-          value={vendorFilter}
-          onChange={(e) => setVendorFilter(e.target.value)}
-          className="px-3 py-2.5 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm"
-          style={{ minWidth: '140px' }}
-        >
-          <option value="">All Vendors</option>
-          {vendors?.map((vendor: any) => (
-            <option key={vendor.id} value={vendor.id}>
-              {vendor.vendor_Name || vendor.company_Name}
-            </option>
-          ))}
-        </select>
-        <select
-          value={statusFilter}
-          onChange={(e) => setStatusFilter(e.target.value as any)}
-          className="px-3 py-2.5 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm"
-          style={{ minWidth: '120px' }}
-        >
-          <option value="">All Status</option>
-          {Object.entries(PurchaseOrderStatusLabel).map(([key, label]) => (
-            <option key={key} value={key}>
-              {label}
-            </option>
-          ))}
-        </select>
-        <div style={{ minWidth: '220px' }}>
-          <DateRangePicker
-            startDate={dateFromFilter}
-            endDate={dateToFilter}
-            onStartDateChange={setDateFromFilter}
-            onEndDateChange={setDateToFilter}
+      <div className="flex-shrink-0 space-y-3">
+        {/* Filters Row */}
+        <div className="flex gap-2 flex-wrap">
+          <input
+            type="text"
+            placeholder="Filter by PO ID..."
+            value={poIdFilter}
+            onChange={(e) => setPoIdFilter(e.target.value)}
+            className="flex-1 px-3 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm"
+            style={{ minWidth: '120px' }}
           />
+          <input
+            type="text"
+            placeholder="Filter by PO Reference..."
+            value={poRefFilter}
+            onChange={(e) => setPoRefFilter(e.target.value)}
+            className="flex-1 px-3 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm"
+            style={{ minWidth: '150px' }}
+          />
+          <select
+            value={vendorFilter}
+            onChange={(e) => setVendorFilter(e.target.value)}
+            className="flex-1 px-3 py-2.5 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm"
+            style={{ minWidth: '140px' }}
+          >
+            <option value="">All Vendors</option>
+            {vendors?.map((vendor: any) => (
+              <option key={vendor.id} value={vendor.id}>
+                {vendor.vendor_Name || vendor.company_Name}
+              </option>
+            ))}
+          </select>
+          <select
+            value={statusFilter}
+            onChange={(e) => setStatusFilter(e.target.value as any)}
+            className="flex-1 px-3 py-2.5 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm"
+            style={{ minWidth: '120px' }}
+          >
+            <option value="">All Status</option>
+            {Object.entries(PurchaseOrderStatusLabel).map(([key, label]) => (
+              <option key={key} value={key}>
+                {label}
+              </option>
+            ))}
+          </select>
+          <div className="flex-1" style={{ minWidth: '220px' }}>
+            <DateRangePicker
+              startDate={dateFromFilter}
+              endDate={dateToFilter}
+              onStartDateChange={setDateFromFilter}
+              onEndDateChange={setDateToFilter}
+            />
+          </div>
         </div>
-        <button
-          onClick={() => setIsColumnSelectorOpen(true)}
-          className="flex items-center gap-2 px-4 py-2.5 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors whitespace-nowrap text-sm"
-          title="Select columns to display"
-        >
-          <Columns3 size={18} />
-          <span className="hidden sm:inline">Columns</span>
-        </button>
-        <button
-          onClick={() => {
-            setPoIdFilter('')
-            setPoRefFilter('')
-            setVendorFilter('')
-            setStatusFilter('')
-            setDateFromFilter('')
-            setDateToFilter('')
-            setCurrentPage(1)
-          }}
-          className="px-4 py-2.5 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors text-sm"
-        >
-          Clear
-        </button>
+
+        {/* Actions Row */}
+        <div className="flex gap-2 justify-end">
+          <button
+            onClick={() => setIsColumnSelectorOpen(true)}
+            className="flex items-center gap-2 px-4 py-2.5 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors whitespace-nowrap text-sm"
+            title="Select columns to display"
+          >
+            <Columns3 size={18} />
+            <span className="hidden sm:inline">Columns</span>
+          </button>
+          <button
+            onClick={() => {
+              setPoIdFilter('')
+              setPoRefFilter('')
+              setVendorFilter('')
+              setStatusFilter('')
+              setDateFromFilter('')
+              setDateToFilter('')
+              setCurrentPage(1)
+            }}
+            className="px-4 py-2.5 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors text-sm"
+          >
+            Clear
+          </button>
+        </div>
       </div>
 
       {/* Data Grid Card */}
@@ -375,45 +382,6 @@ export const PurchaseOrderListPage = () => {
           emptyMessage="No purchase orders found"
         />
       </Card>
-
-      {/* Pagination Controls */}
-      <div className="flex-shrink-0 flex items-center justify-between gap-4 text-sm text-gray-600">
-        <div className="flex items-center gap-2">
-          <button
-            onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
-            disabled={currentPage === 1 || loading}
-            className="px-3 py-1.5 border border-gray-300 rounded text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors text-xs"
-          >
-            ← Previous
-          </button>
-          <div className="flex items-center gap-1">
-            <span>Page</span>
-            <input
-              type="number"
-              value={currentPage}
-              onChange={(e) => {
-                const page = Math.max(1, parseInt(e.target.value) || 1)
-                const totalPages = Math.ceil(total / PAGE_SIZE) || 1
-                setCurrentPage(Math.min(page, totalPages))
-              }}
-              min="1"
-              max={Math.ceil(total / PAGE_SIZE) || 1}
-              className="w-12 px-1.5 py-1 border border-gray-300 rounded text-center text-xs focus:outline-none focus:ring-1 focus:ring-primary-500"
-            />
-            <span>of {Math.ceil(total / PAGE_SIZE) || 1}</span>
-          </div>
-          <button
-            onClick={() => setCurrentPage(Math.min(Math.ceil(total / PAGE_SIZE) || 1, currentPage + 1))}
-            disabled={currentPage >= Math.ceil(total / PAGE_SIZE) || loading}
-            className="px-3 py-1.5 border border-gray-300 rounded text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors text-xs"
-          >
-            Next →
-          </button>
-        </div>
-        <div>
-          Showing {Math.min((currentPage - 1) * PAGE_SIZE + 1, total)} to {Math.min(currentPage * PAGE_SIZE, total)} of {total}
-        </div>
-      </div>
 
       {/* Create PO Modal */}
       <CreatePurchaseOrderModal
