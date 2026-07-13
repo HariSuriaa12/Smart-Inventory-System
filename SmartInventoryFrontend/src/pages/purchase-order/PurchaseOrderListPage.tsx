@@ -286,15 +286,14 @@ export const PurchaseOrderListPage = () => {
 
       {/* Filter Bar */}
       <div className="flex-shrink-0 space-y-3">
-        {/* Filters Row */}
-        <div className="flex gap-2 flex-wrap">
+        {/* Row 1: PO ID, Reference, Vendor, Status */}
+        <div className="flex gap-2">
           <input
             type="text"
             placeholder="Filter by PO ID..."
             value={poIdFilter}
             onChange={(e) => setPoIdFilter(e.target.value)}
             className="flex-1 px-3 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm"
-            style={{ minWidth: '120px' }}
           />
           <input
             type="text"
@@ -302,13 +301,11 @@ export const PurchaseOrderListPage = () => {
             value={poRefFilter}
             onChange={(e) => setPoRefFilter(e.target.value)}
             className="flex-1 px-3 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm"
-            style={{ minWidth: '150px' }}
           />
           <select
             value={vendorFilter}
             onChange={(e) => setVendorFilter(e.target.value)}
             className="flex-1 px-3 py-2.5 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm"
-            style={{ minWidth: '140px' }}
           >
             <option value="">All Vendors</option>
             {vendors?.map((vendor: any) => (
@@ -321,7 +318,6 @@ export const PurchaseOrderListPage = () => {
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value as any)}
             className="flex-1 px-3 py-2.5 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm"
-            style={{ minWidth: '120px' }}
           >
             <option value="">All Status</option>
             {Object.entries(PurchaseOrderStatusLabel).map(([key, label]) => (
@@ -330,7 +326,11 @@ export const PurchaseOrderListPage = () => {
               </option>
             ))}
           </select>
-          <div className="flex-1" style={{ minWidth: '220px' }}>
+        </div>
+
+        {/* Row 2: Date Range */}
+        <div className="flex gap-2">
+          <div className="flex-1">
             <DateRangePicker
               startDate={dateFromFilter}
               endDate={dateToFilter}
@@ -338,9 +338,11 @@ export const PurchaseOrderListPage = () => {
               onEndDateChange={setDateToFilter}
             />
           </div>
+          {/* Spacer to align with actions row */}
+          <div className="w-0" />
         </div>
 
-        {/* Actions Row */}
+        {/* Row 3: Actions */}
         <div className="flex gap-2 justify-end">
           <button
             onClick={() => setIsColumnSelectorOpen(true)}
