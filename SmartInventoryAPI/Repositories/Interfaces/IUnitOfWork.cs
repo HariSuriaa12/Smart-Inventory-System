@@ -1,9 +1,11 @@
+using SmartInventoryAPI.Data;
 using SmartInventoryAPI.Models.Entities;
 
 namespace SmartInventoryAPI.Repositories.Interfaces;
 
 public interface IUnitOfWork : IDisposable
 {
+    SmartInventoryDbContext Context { get; }
     IUserRepository User { get; }
     IItemRepository Items { get; }
     ILocationRepository Locations { get; }

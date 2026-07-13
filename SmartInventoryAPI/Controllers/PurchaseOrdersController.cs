@@ -105,4 +105,34 @@ public class PurchaseOrdersController : ControllerBase
             StatusCode = 200
         });
     }
+
+    [HttpPost("{id}/items")]
+    public async Task<ActionResult<ApiResponseDto<PurchaseOrderDetailDto>>> AddItemToPurchaseOrder(
+        long id,
+        [FromBody] AddPurchaseOrderItemRequestDto request)
+    {
+        var po = await _poService.AddItemToPurchaseOrderAsync(id, request);
+        return Ok(new ApiResponseDto<PurchaseOrderDetailDto>
+        {
+            Success = true,
+            Message = "Item added to purchase order successfully",
+            Data = po,
+            StatusCode = 200
+        });
+    }
+
+    [HttpDelete("{id}/items/{itemId}")]
+    public async Task<ActionResult<ApiResponseDto<PurchaseOrderDetailDto>>> RemoveItemFromPurchaseOrder(
+        long id,
+        long itemId)
+    {
+        var po = await _poService.RemoveItemFromPurchaseOrderAsync(id, itemId);
+        return Ok(new ApiResponseDto<PurchaseOrderDetailDto>
+        {
+            Success = true,
+            Message = "Item removed from purchase order successfully",
+            Data = po,
+            StatusCode = 200
+        });
+    }
 }

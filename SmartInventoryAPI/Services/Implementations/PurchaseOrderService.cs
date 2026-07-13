@@ -1,4 +1,5 @@
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using SmartInventoryAPI.Models.DTOs.Request.PurchaseOrder;
 using SmartInventoryAPI.Models.DTOs.Response;
 using SmartInventoryAPI.Models.Entities;
@@ -38,7 +39,7 @@ public class PurchaseOrderService : IPurchaseOrderService
             Vendor_ID = request.Vendor_ID,
             Purchase_Date = DateTime.UtcNow.Date,
             Purchase_Time = DateTime.UtcNow.TimeOfDay,
-            Status = 1,
+            Status = 0,
             Remark = request.Remark,
             Performed_By = 1,
             Total_Amount = 0
@@ -57,11 +58,11 @@ public class PurchaseOrderService : IPurchaseOrderService
                     Item_ID = item.Item_ID,
                     Order_Quantity = item.Order_Quantity,
                     Unit_Price = item.Unit_Price,
-                    Status = 1,
+                    Status = 0,
                     Sub_Total = item.Order_Quantity * item.Unit_Price,
                     Received_Quantity = 0
                 };
-                await _unitOfWork.PurchaseOrders.AddAsync(createdPO);
+                await _unitOfWork.Context.Set<PurchaseOrderItem>().AddAsync(poItem);
                 totalAmount += poItem.Sub_Total;
             }
         }
@@ -125,5 +126,84 @@ public class PurchaseOrderService : IPurchaseOrderService
     {
         var pos = await _unitOfWork.PurchaseOrders.GetByVendorAsync(vendorId, skip, take);
         return _mapper.Map<IEnumerable<PurchaseOrderDto>>(pos);
+    }
+
+    public async Task<PurchaseOrderDetailDto> AddItemToPurchaseOrderAsync(long id, AddPurchaseOrderItemRequestDto request)
+    {
+        var po = await _unitOfWork.PurchaseOrders.GetByIdAsync(id);
+        if (po == null || po.Is_Deleted)
+            throw new NotFoundException("Purchase Order not found");
+
+        // Only allow adding items when PO status is Saved (0)
+        if (po.Status != 0)
+            throw new BadRequestException("Items can only be added to Saved purchase orders");
+
+        // Verify item exists
+        var item = await _unitOfWork.Items.GetByIdAsync(request.Item_ID);
+        if (item == null || item.Is_Deleted)
+            throw new NotFoundException("Item not found");
+
+        // Check if item already exists in PO
+        var existingItem = await _unitOfWork.Context.Set<PurchaseOrderItem>()
+            .FirstOrDefaultAsync(p => p.PO_ID == id && p.Item_ID == request.Item_ID && !p.Is_Deleted);
+        if (existingItem != null)
+            throw new BadRequestException("This item is already in the purchase order");
+
+        // Validate quantities and prices
+        if (request.Order_Quantity <= 0)
+            throw new BadRequestException("Order quantity must be greater than zero");
+        if (request.Unit_Price <= 0)
+            throw new BadRequestException("Unit price must be greater than zero");
+
+        // Create new PO item
+        var poItem = new PurchaseOrderItem
+        {
+            PO_ID = id,
+            Item_ID = request.Item_ID,
+            Order_Quantity = request.Order_Quantity,
+            Unit_Price = request.Unit_Price,
+            Status = 0,
+            Sub_Total = request.Order_Quantity * request.Unit_Price,
+            Received_Quantity = 0
+        };
+
+        await _unitOfWork.Context.Set<PurchaseOrderItem>().AddAsync(poItem);
+
+        // Update PO total amount
+        po.Total_Amount += poItem.Sub_Total;
+        await _unitOfWork.PurchaseOrders.UpdateAsync(po);
+        await _unitOfWork.SaveAsync();
+
+        _logger.LogInformation("Item {ItemID} added to Purchase Order {POID}", request.Item_ID, id);
+
+        return await GetPurchaseOrderByIdAsync(id);
+    }
+
+    public async Task<PurchaseOrderDetailDto> RemoveItemFromPurchaseOrderAsync(long id, long itemId)
+    {
+        var po = await _unitOfWork.PurchaseOrders.GetByIdAsync(id);
+        if (po == null || po.Is_Deleted)
+            throw new NotFoundException("Purchase Order not found");
+
+        // Only allow removing items when PO status is Saved (0)
+        if (po.Status != 0)
+            throw new BadRequestException("Items can only be removed from Saved purchase orders");
+
+        var poItem = await _unitOfWork.Context.Set<PurchaseOrderItem>()
+            .FirstOrDefaultAsync(p => p.ID == itemId && p.PO_ID == id && !p.Is_Deleted);
+        if (poItem == null)
+            throw new NotFoundException("Purchase Order item not found");
+
+        // Mark item as deleted and update PO total
+        poItem.Is_Deleted = true;
+        po.Total_Amount -= poItem.Sub_Total;
+
+        _unitOfWork.Context.Set<PurchaseOrderItem>().Update(poItem);
+        await _unitOfWork.PurchaseOrders.UpdateAsync(po);
+        await _unitOfWork.SaveAsync();
+
+        _logger.LogInformation("Item {ItemID} removed from Purchase Order {POID}", itemId, id);
+
+        return await GetPurchaseOrderByIdAsync(id);
     }
 }

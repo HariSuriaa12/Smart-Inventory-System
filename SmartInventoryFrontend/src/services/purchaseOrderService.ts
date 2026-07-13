@@ -21,6 +21,12 @@ export const purchaseOrderService = {
   receivePurchaseOrderItem: async (id: number, data: ReceivePurchaseOrderItemRequest) =>
     (await api.post<ApiResponse<PurchaseOrder>>(`/api/purchaseorders/${id}/receive`, data)).data,
 
+  addItemToPO: async (id: number, itemData: { itemId: number; orderQuantity: number; unitPrice: number }) =>
+    (await api.post<ApiResponse<PurchaseOrder>>(`/api/purchaseorders/${id}/items`, itemData)).data,
+
+  removeItemFromPO: async (id: number, itemId: number) =>
+    (await api.delete<ApiResponse<PurchaseOrder>>(`/api/purchaseorders/${id}/items/${itemId}`)).data,
+
   getPurchaseOrdersByVendor: async (vendorId: number, skip: number = 0, take: number = 10) =>
     (await api.get<ApiResponse<PaginatedResponse<PurchaseOrder>>>('/api/purchaseorders', {
       params: { skip, take, vendorId },

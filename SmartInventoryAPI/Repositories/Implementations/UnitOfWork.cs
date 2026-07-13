@@ -26,6 +26,8 @@ public class UnitOfWork : IUnitOfWork
         _context = context;
     }
 
+    public SmartInventoryDbContext Context => _context;
+
     public IUserRepository User => _userRepository ??= new UserRepository(_context);
     public IItemRepository Items => _itemRepository ??= new ItemRepository(_context);
     public ILocationRepository Locations => _locationRepository ??= new LocationRepository(_context);
