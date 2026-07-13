@@ -14,7 +14,8 @@ const initialState: PurchaseOrderState = {
 
 export const fetchPOs = createAsyncThunk('po/fetch', async ({ skip = 0, take = 10 }: any, { rejectWithValue }) => {
   try {
-    return (await purchaseOrderService.getPurchaseOrders(skip, take)).data
+    const response = await purchaseOrderService.getPurchaseOrders(skip, take)
+    return response.data
   } catch (error: any) {
     return rejectWithValue(error.message)
   }
@@ -66,6 +67,8 @@ const poSlice = createSlice({
         state.loading = false
         state.orders = action.payload?.data || []
         state.total = action.payload?.total || 0
+        state.skip = action.payload?.skip || 0
+        state.take = action.payload?.take || 10
       })
       .addCase(fetchPOs.rejected, (state, action) => {
         state.loading = false
