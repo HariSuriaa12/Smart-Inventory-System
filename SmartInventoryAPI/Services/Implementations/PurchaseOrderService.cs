@@ -34,7 +34,8 @@ public class PurchaseOrderService : IPurchaseOrderService
 
         var po = new PurchaseOrderHeader
         {
-            PO_Refence_No = $"PO-{DateTime.UtcNow:yyyyMMddHHmmss}",
+            //PO_Reference_No = $"PO-{DateTime.UtcNow:yyyyMMddHHmmss}",
+            PO_Reference_No = request.PO_Reference_No,
             Location_ID = request.Location_ID,
             Vendor_ID = request.Vendor_ID,
             Purchase_Date = DateTime.UtcNow.Date,
@@ -71,7 +72,7 @@ public class PurchaseOrderService : IPurchaseOrderService
         await _unitOfWork.PurchaseOrders.UpdateAsync(createdPO);
         await _unitOfWork.SaveAsync();
 
-        _logger.LogInformation("Purchase Order {PONo} created for Vendor {VendorID}", createdPO.PO_Refence_No, request.Vendor_ID);
+        _logger.LogInformation("Purchase Order {PONo} created for Vendor {VendorID}", createdPO.ID, request.Vendor_ID);
 
         var detail = await GetPurchaseOrderByIdAsync(createdPO.ID);
         return detail;

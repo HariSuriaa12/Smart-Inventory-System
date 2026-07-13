@@ -3,7 +3,7 @@ namespace SmartInventoryAPI.Models.Entities;
 public class PurchaseOrderHeader
 {
     public long ID { get; set; }
-    public string? PO_Refence_No { get; set; }
+    public string? PO_Reference_No { get; set; }
     public long Location_ID { get; set; }
     public DateTime Purchase_Date { get; set; }
     public TimeSpan Purchase_Time { get; set; }

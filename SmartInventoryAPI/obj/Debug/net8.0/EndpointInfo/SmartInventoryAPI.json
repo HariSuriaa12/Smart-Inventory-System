@@ -1650,6 +1650,114 @@
         }
       }
     },
+    "/api/PurchaseOrders/{id}/items": {
+      "post": {
+        "tags": [
+          "PurchaseOrders"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddPurchaseOrderItemRequestDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddPurchaseOrderItemRequestDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddPurchaseOrderItemRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PurchaseOrderDetailDtoApiResponseDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PurchaseOrderDetailDtoApiResponseDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PurchaseOrderDetailDtoApiResponseDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/PurchaseOrders/{id}/items/{itemId}": {
+      "delete": {
+        "tags": [
+          "PurchaseOrders"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "itemId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PurchaseOrderDetailDtoApiResponseDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PurchaseOrderDetailDtoApiResponseDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PurchaseOrderDetailDtoApiResponseDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/Sales/import": {
       "post": {
         "tags": [
@@ -2596,6 +2704,24 @@
   },
   "components": {
     "schemas": {
+      "AddPurchaseOrderItemRequestDto": {
+        "type": "object",
+        "properties": {
+          "item_ID": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "order_Quantity": {
+            "type": "number",
+            "format": "double"
+          },
+          "unit_Price": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false
+      },
       "AdjustInventoryRequestDto": {
         "type": "object",
         "properties": {
@@ -2828,6 +2954,10 @@
             "format": "int64"
           },
           "remark": {
+            "type": "string",
+            "nullable": true
+          },
+          "pO_Reference_No": {
             "type": "string",
             "nullable": true
           },
@@ -3970,7 +4100,7 @@
             "type": "integer",
             "format": "int64"
           },
-          "pO_Refence_No": {
+          "pO_Reference_No": {
             "type": "string",
             "nullable": true
           },
