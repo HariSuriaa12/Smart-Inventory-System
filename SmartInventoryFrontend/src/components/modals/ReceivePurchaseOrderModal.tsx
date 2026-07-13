@@ -20,7 +20,7 @@ export const ReceivePurchaseOrderModal = ({ isOpen, poId, item, onClose, onSucce
 
   useEffect(() => {
     if (isOpen && item) {
-      setReceivedQuantity(item.Received_Quantity?.toString() || '0')
+      setReceivedQuantity(item.received_Quantity?.toString() || '0')
       setErrors({})
     }
   }, [isOpen, item])
@@ -32,8 +32,8 @@ export const ReceivePurchaseOrderModal = ({ isOpen, poId, item, onClose, onSucce
     if (isNaN(received) || received < 0) {
       newErrors.receivedQuantity = 'Received quantity must be non-negative'
     }
-    if (received > item!.Order_Quantity) {
-      newErrors.receivedQuantity = `Received quantity cannot exceed ordered quantity (${item!.Order_Quantity})`
+    if (received > item!.order_Quantity) {
+      newErrors.receivedQuantity = `Received quantity cannot exceed ordered quantity (${item!.order_Quantity})`
     }
 
     setErrors(newErrors)
@@ -61,8 +61,8 @@ export const ReceivePurchaseOrderModal = ({ isOpen, poId, item, onClose, onSucce
 
   if (!isOpen || !item) return null
 
-  const remainingToReceive = item.Order_Quantity - item.Received_Quantity
-  const isFullyReceived = item.Received_Quantity >= item.Order_Quantity
+  const remainingToReceive = item.order_Quantity - item.received_Quantity
+  const isFullyReceived = item.received_Quantity >= item.order_Quantity
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
@@ -91,11 +91,11 @@ export const ReceivePurchaseOrderModal = ({ isOpen, poId, item, onClose, onSucce
               </div>
               <div className="flex justify-between">
                 <span className="text-gray-700">Order Quantity:</span>
-                <span className="font-medium text-gray-900">{item.Order_Quantity}</span>
+                <span className="font-medium text-gray-900">{item.order_Quantity}</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-gray-700">Previously Received:</span>
-                <span className="font-medium text-gray-900">{item.Received_Quantity}</span>
+                <span className="font-medium text-gray-900">{item.received_Quantity}</span>
               </div>
               <div className="flex justify-between pt-2 border-t border-gray-200">
                 <span className="text-gray-700 font-medium">Remaining to Receive:</span>
@@ -107,10 +107,10 @@ export const ReceivePurchaseOrderModal = ({ isOpen, poId, item, onClose, onSucce
           </div>
 
           {/* Status */}
-          {item.Status !== PurchaseOrderStatus.Pending && (
+          {item.status !== PurchaseOrderStatus.Pending && (
             <div className="p-4 bg-blue-50 rounded-lg border border-blue-200">
               <p className="text-sm text-gray-600 mb-1">Current Status</p>
-              <p className="font-medium text-gray-900">{PurchaseOrderStatusLabel[item.Status]}</p>
+              <p className="font-medium text-gray-900">{PurchaseOrderStatusLabel[item.status]}</p>
             </div>
           )}
 
@@ -146,11 +146,11 @@ export const ReceivePurchaseOrderModal = ({ isOpen, poId, item, onClose, onSucce
               placeholder="Enter received quantity"
               min="0"
               step="0.01"
-              max={item.Order_Quantity}
+              max={item.order_Quantity}
               disabled={isLoading || submitting}
               error={errors.receivedQuantity}
             />
-            <p className="text-xs text-gray-500 mt-2">Maximum: {item.Order_Quantity}</p>
+            <p className="text-xs text-gray-500 mt-2">Maximum: {item.order_Quantity}</p>
           </div>
 
           {errors.submit && (

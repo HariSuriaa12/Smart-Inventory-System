@@ -13,25 +13,25 @@ const PAGE_SIZE = 10
 // Mandatory columns that users cannot remove
 const MANDATORY_COLUMNS = [
   { key: 'id', label: 'PO ID' },
-  { key: 'Purchase_Date', label: 'Date' },
-  { key: 'vendor_code', label: 'Vendor Code' },
-  { key: 'Total_Amount', label: 'Total Amount' },
-  { key: 'Status', label: 'Status' },
+  { key: 'purchase_Date', label: 'Date' },
+  { key: 'vendor_Code', label: 'Vendor Code' },
+  { key: 'total_Amount', label: 'Total Amount' },
+  { key: 'status', label: 'Status' },
 ]
 
 // Optional columns that users can toggle
 const OPTIONAL_COLUMNS = [
-  { key: 'PO_Reference_No', label: 'PO Reference' },
-  { key: 'vendor_name', label: 'Vendor Name' },
-  { key: 'vendor_email', label: 'Vendor Email' },
-  { key: 'vendor_phone', label: 'Vendor Phone' },
-  { key: 'location_name', label: 'Location Name' },
-  { key: 'location_address', label: 'Location Address' },
-  { key: 'Purchase_Time', label: 'Time' },
-  { key: 'items_count', label: 'Items Count' },
-  { key: 'received_count', label: 'Received Items' },
-  { key: 'Remark', label: 'Remarks' },
-  { key: 'performed_by', label: 'Created By' },
+  { key: 'po_Refence_No', label: 'PO Reference' },
+  { key: 'vendor_Name', label: 'Vendor Name' },
+  { key: 'vendor_Email', label: 'Vendor Email' },
+  { key: 'vendor_Phone', label: 'Vendor Phone' },
+  { key: 'location_Name', label: 'Location Name' },
+  { key: 'location_Address', label: 'Location Address' },
+  { key: 'purchase_Time', label: 'Time' },
+  { key: 'items_Count', label: 'Items Count' },
+  { key: 'received_Count', label: 'Received Items' },
+  { key: 'remark', label: 'Remarks' },
+  { key: 'user_Full_Name', label: 'Created By' },
 ]
 
 const STORAGE_KEY = 'po_visible_columns'
@@ -101,82 +101,82 @@ export const PurchaseOrderListPage = () => {
       label: 'PO ID',
       width: '80px',
     },
-    PO_Reference_No: {
-      key: 'PO_Reference_No',
+    po_Refence_No: {
+      key: 'po_Refence_No',
       label: 'PO Reference',
       width: '150px',
     },
-    Purchase_Date: {
-      key: 'Purchase_Date',
+    purchase_Date: {
+      key: 'purchase_Date',
       label: 'Date',
       width: '130px',
       render: (value) => new Date(value).toLocaleDateString(),
     },
-    Purchase_Time: {
-      key: 'Purchase_Time',
+    purchase_Time: {
+      key: 'purchase_Time',
       label: 'Time',
       width: '100px',
       render: (value) => value ? new Date(`2000-01-01T${value}`).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '-',
     },
-    vendor_code: {
-      key: 'vendor_code',
+    vendor_Code: {
+      key: 'vendor_Code',
       label: 'Vendor Code',
       width: '120px',
-      render: (_, po) => po.Vendor?.vendor_Code || '-',
+      render: (value) => value || '-',
     },
-    vendor_name: {
-      key: 'vendor_name',
+    vendor_Name: {
+      key: 'vendor_Name',
       label: 'Vendor Name',
       width: '150px',
-      render: (_, po) => po.Vendor?.vendor_Name || '-',
+      render: (value) => value || '-',
     },
-    vendor_email: {
-      key: 'vendor_email',
+    vendor_Email: {
+      key: 'vendor_Email',
       label: 'Vendor Email',
       width: '180px',
-      render: (_, po) => po.Vendor?.email || '-',
+      render: (_, po) => po.vendor?.email || '-',
     },
-    vendor_phone: {
-      key: 'vendor_phone',
+    vendor_Phone: {
+      key: 'vendor_Phone',
       label: 'Vendor Phone',
       width: '130px',
-      render: (_, po) => po.Vendor?.phone_No || '-',
+      render: (_, po) => po.vendor?.phone_No || '-',
     },
-    location_name: {
-      key: 'location_name',
+    location_Name: {
+      key: 'location_Name',
       label: 'Location Name',
       width: '150px',
-      render: (_, po) => po.Location?.location_Name || '-',
+      render: (value) => value || '-',
     },
-    location_address: {
-      key: 'location_address',
+    location_Address: {
+      key: 'location_Address',
       label: 'Location Address',
       width: '200px',
-      render: (_, po) => po.Location?.address || '-',
+      render: (_, po) => po.location?.address || '-',
     },
-    Total_Amount: {
-      key: 'Total_Amount',
+    total_Amount: {
+      key: 'total_Amount',
       label: 'Total Amount',
       width: '130px',
       align: 'right',
       render: (value) => `$${Number(value).toFixed(2)}`,
     },
-    items_count: {
-      key: 'items_count',
+    items_Count: {
+      key: 'items_Count',
       label: 'Items Count',
       width: '120px',
       align: 'center',
-      render: (_, po) => po.Items?.length || 0,
+      render: (_, po) => po.items?.length || 0,
     },
-    received_count: {
-      key: 'received_count',
+    received_Count: {
+      key: 'received_Count',
       label: 'Received Items',
       width: '130px',
       align: 'center',
-      render: (_, po) => po.Items?.filter(i => i.Received_Quantity > 0).length || 0,
+      render: (_, po) => po.items?.filter(i => i.received_Quantity > 0).length || 0,
     },
-    Status: {
-      key: 'Status',
+    status: {
+      key: 'status',
       label: 'Status',
       width: '140px',
       render: (value: PurchaseOrderStatus) => (
@@ -185,8 +185,8 @@ export const PurchaseOrderListPage = () => {
         </span>
       ),
     },
-    Remark: {
-      key: 'Remark',
+    remark: {
+      key: 'remark',
       label: 'Remarks',
       width: '200px',
       render: (value) => value ? (
@@ -195,24 +195,24 @@ export const PurchaseOrderListPage = () => {
         </span>
       ) : '-',
     },
-    performed_by: {
-      key: 'performed_by',
+    user_Full_Name: {
+      key: 'user_Full_Name',
       label: 'Created By',
       width: '150px',
-      render: (_, po) => po.performed_ByUser?.user_Full_Name || '-',
+      render: (value) => value || '-',
     },
   }), [])
 
   const columns = useMemo(() => {
     // Always include mandatory columns first
     const mandatoryCols = MANDATORY_COLUMNS
-      .map(col => allColumnDefinitions[col.key])
+      .map(({ key }) => allColumnDefinitions[key])
       .filter(Boolean)
 
     // Then add selected optional columns
     const optionalCols = OPTIONAL_COLUMNS
-      .filter(col => visibleColumns.has(col.key))
-      .map(col => allColumnDefinitions[col.key])
+      .filter(({ key }) => visibleColumns.has(key))
+      .map(({ key }) => allColumnDefinitions[key])
       .filter(Boolean)
 
     return [...mandatoryCols, ...optionalCols]

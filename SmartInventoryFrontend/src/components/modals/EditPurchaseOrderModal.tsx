@@ -22,7 +22,7 @@ export const EditPurchaseOrderModal = ({ isOpen, po, onClose, onSuccess, isLoadi
   useEffect(() => {
     if (po && isOpen) {
       setFormData({
-        remark: po.Remark || '',
+        remark: po.remark || '',
       })
       setErrors({})
     }

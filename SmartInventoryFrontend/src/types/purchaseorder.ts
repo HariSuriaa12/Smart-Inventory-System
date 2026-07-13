@@ -21,29 +21,36 @@ export const PurchaseOrderStatusLabel: Record<PurchaseOrderStatus, string> = {
 }
 
 export interface PurchaseOrderItem extends Entity {
-  PO_Id: number
-  Item_Id: number
-  Order_Quantity: number
-  Unit_Price: number
-  Status: PurchaseOrderStatus
-  Sub_Total: number
-  Received_Quantity: number
+  id: number
+  po_ID: number
+  item_ID: number
+  order_Quantity: number
+  unit_Price: number
+  status: PurchaseOrderStatus
+  sub_Total: number
+  received_Quantity: number
   item?: Item
 }
 
 export interface PurchaseOrder extends Entity {
-  PO_Reference_No: string
-  Location_Id: number
-  Purchase_Date: string | Date
-  Purchase_Time: string
-  Vendor_Id: number
-  Status: PurchaseOrderStatus
-  Remark?: string
-  Performed_By: number
-  Total_Amount: number
-  Items?: PurchaseOrderItem[]
-  Location?: Location
-  Vendor?: Vendor
+  id: number
+  po_Refence_No?: string
+  location_ID: number
+  location_Name?: string
+  purchase_Date: string | Date
+  purchase_Time?: string
+  vendor_ID: number
+  vendor_Name?: string
+  vendor_Code?: string
+  status: PurchaseOrderStatus
+  remark?: string
+  performed_By: number
+  user_Full_Name?: string
+  user_Staff_Code?: string
+  total_Amount: number
+  items?: PurchaseOrderItem[]
+  location?: Location
+  vendor?: Vendor
   performed_ByUser?: User
 }
 

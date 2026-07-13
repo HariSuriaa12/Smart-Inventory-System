@@ -86,50 +86,50 @@ export const PurchaseOrderDetailPage = () => {
     )
   }
 
-  const isEditable = currentOrder.Status === PurchaseOrderStatus.Pending
-  const canAddItems = currentOrder.Status === PurchaseOrderStatus.Pending
+  const isEditable = currentOrder.status === PurchaseOrderStatus.Pending
+  const canAddItems = currentOrder.status === PurchaseOrderStatus.Pending
 
   const itemColumns: Column<PurchaseOrderItem>[] = [
     {
-      key: 'item.item_Code',
+      key: 'item_Code',
       label: 'Item Code',
       width: '120px',
       render: (_, item) => item.item?.item_Code || '-',
     },
     {
-      key: 'item.item_Name',
+      key: 'item_Name',
       label: 'Item Name',
       width: '200px',
       render: (_, item) => item.item?.item_Name || '-',
     },
     {
-      key: 'Order_Quantity',
+      key: 'order_Quantity',
       label: 'Order Qty',
       width: '110px',
       align: 'right',
     },
     {
-      key: 'Received_Quantity',
+      key: 'received_Quantity',
       label: 'Received Qty',
       width: '120px',
       align: 'right',
     },
     {
-      key: 'Unit_Price',
+      key: 'unit_Price',
       label: 'Unit Price',
       width: '110px',
       align: 'right',
       render: (value) => `$${Number(value).toFixed(2)}`,
     },
     {
-      key: 'Sub_Total',
+      key: 'sub_Total',
       label: 'Sub Total',
       width: '110px',
       align: 'right',
       render: (value) => `$${Number(value).toFixed(2)}`,
     },
     {
-      key: 'Status',
+      key: 'status',
       label: 'Status',
       width: '130px',
       render: (value: PurchaseOrderStatus) => (
@@ -152,13 +152,13 @@ export const PurchaseOrderDetailPage = () => {
             <ArrowLeft size={24} />
           </button>
           <div>
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">Purchase Order {currentOrder.PO_Reference_No}</h1>
+            <h1 className="text-3xl font-bold text-gray-900 mb-2">Purchase Order {currentOrder.po_Refence_No}</h1>
             <div className="flex items-center gap-4">
-              <span className={`inline-flex px-3 py-1 rounded-full text-sm font-semibold ${STATUS_BADGE_CLASSES[currentOrder.Status]}`}>
-                {PurchaseOrderStatusLabel[currentOrder.Status]}
+              <span className={`inline-flex px-3 py-1 rounded-full text-sm font-semibold ${STATUS_BADGE_CLASSES[currentOrder.status]}`}>
+                {PurchaseOrderStatusLabel[currentOrder.status]}
               </span>
               <p className="text-gray-600">
-                {new Date(currentOrder.Purchase_Date).toLocaleDateString()}
+                {new Date(currentOrder.purchase_Date).toLocaleDateString()}
               </p>
             </div>
           </div>
@@ -189,27 +189,27 @@ export const PurchaseOrderDetailPage = () => {
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 flex-shrink-0">
         <Card className="p-4">
           <p className="text-sm text-gray-600 mb-1">Vendor</p>
-          <p className="text-lg font-semibold text-gray-900">{currentOrder.Vendor?.vendor_Name || '-'}</p>
+          <p className="text-lg font-semibold text-gray-900">{currentOrder.vendor_Name || '-'}</p>
         </Card>
         <Card className="p-4">
           <p className="text-sm text-gray-600 mb-1">Location</p>
-          <p className="text-lg font-semibold text-gray-900">{currentOrder.Location?.location_Name || '-'}</p>
+          <p className="text-lg font-semibold text-gray-900">{currentOrder.location_Name || '-'}</p>
         </Card>
         <Card className="p-4">
           <p className="text-sm text-gray-600 mb-1">Total Amount</p>
-          <p className="text-lg font-semibold text-gray-900">${Number(currentOrder.Total_Amount).toFixed(2)}</p>
+          <p className="text-lg font-semibold text-gray-900">${Number(currentOrder.total_Amount).toFixed(2)}</p>
         </Card>
         <Card className="p-4">
           <p className="text-sm text-gray-600 mb-1">Created By</p>
-          <p className="text-lg font-semibold text-gray-900">{currentOrder.performed_ByUser?.user_Full_Name || '-'}</p>
+          <p className="text-lg font-semibold text-gray-900">{currentOrder.user_Full_Name || '-'}</p>
         </Card>
       </div>
 
       {/* Remark Section */}
-      {currentOrder.Remark && (
+      {currentOrder.remark && (
         <Card className="p-4 bg-blue-50 border border-blue-200 flex-shrink-0">
           <p className="text-sm text-gray-600 mb-2">Remark</p>
-          <p className="text-gray-900">{currentOrder.Remark}</p>
+          <p className="text-gray-900">{currentOrder.remark}</p>
         </Card>
       )}
 
@@ -221,12 +221,12 @@ export const PurchaseOrderDetailPage = () => {
         </div>
         <DataGrid<PurchaseOrderItem>
           columns={itemColumns}
-          data={currentOrder.Items || []}
+          data={currentOrder.items || []}
           loading={false}
-          onRowDoubleClick={currentOrder.Status !== PurchaseOrderStatus.Pending ? handleRowDoubleClick : undefined}
+          onRowDoubleClick={currentOrder.status !== PurchaseOrderStatus.Pending ? handleRowDoubleClick : undefined}
           rowKey="id"
           emptyMessage="No items in this purchase order"
-          rowHint={currentOrder.Status !== PurchaseOrderStatus.Pending ? 'Double-click to receive item' : undefined}
+          rowHint={currentOrder.status !== PurchaseOrderStatus.Pending ? 'Double-click to receive item' : undefined}
         />
       </Card>
 
@@ -251,7 +251,7 @@ export const PurchaseOrderDetailPage = () => {
       )}
 
       {/* Receive Item Modal */}
-      {currentOrder.Status !== PurchaseOrderStatus.Pending && selectedItem && (
+      {currentOrder.status !== PurchaseOrderStatus.Pending && selectedItem && (
         <ReceivePurchaseOrderModal
           isOpen={isReceiveOpen}
           poId={currentOrder.id}
