@@ -45,4 +45,14 @@ public class PurchaseOrderRepository : GenericRepository<PurchaseOrderHeader>, I
             .Take(take)
             .ToListAsync();
     }
+
+    public async Task<int> CountNonDeletedAsync()
+    {
+        return await _dbSet.Where(p => !p.Is_Deleted).CountAsync();
+    }
+
+    public async Task<int> CountByVendorAsync(long vendorId)
+    {
+        return await _dbSet.Where(p => p.Vendor_ID == vendorId && !p.Is_Deleted).CountAsync();
+    }
 }

@@ -21,12 +21,12 @@ public class PurchaseOrdersController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<ApiResponseDto<IEnumerable<PurchaseOrderDto>>>> GetAllPurchaseOrders(
+    public async Task<ActionResult<ApiResponseDto<PaginatedResponseDto<PurchaseOrderDto>>>> GetAllPurchaseOrders(
         [FromQuery] int skip = 0,
         [FromQuery] int take = 10)
     {
         var pos = await _poService.GetAllPurchaseOrdersAsync(skip, take);
-        return Ok(new ApiResponseDto<IEnumerable<PurchaseOrderDto>>
+        return Ok(new ApiResponseDto<PaginatedResponseDto<PurchaseOrderDto>>
         {
             Success = true,
             Message = "Purchase orders retrieved successfully",
@@ -91,13 +91,13 @@ public class PurchaseOrdersController : ControllerBase
     }
 
     [HttpGet("vendor/{vendorId}")]
-    public async Task<ActionResult<ApiResponseDto<IEnumerable<PurchaseOrderDto>>>> GetByVendor(
+    public async Task<ActionResult<ApiResponseDto<PaginatedResponseDto<PurchaseOrderDto>>>> GetByVendor(
         long vendorId,
         [FromQuery] int skip = 0,
         [FromQuery] int take = 10)
     {
         var pos = await _poService.GetByVendorAsync(vendorId, skip, take);
-        return Ok(new ApiResponseDto<IEnumerable<PurchaseOrderDto>>
+        return Ok(new ApiResponseDto<PaginatedResponseDto<PurchaseOrderDto>>
         {
             Success = true,
             Message = "Purchase orders retrieved by vendor successfully",

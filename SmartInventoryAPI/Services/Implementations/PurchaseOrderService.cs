@@ -86,10 +86,26 @@ public class PurchaseOrderService : IPurchaseOrderService
         return _mapper.Map<PurchaseOrderDetailDto>(po);
     }
 
-    public async Task<IEnumerable<PurchaseOrderDto>> GetAllPurchaseOrdersAsync(int skip = 0, int take = 10)
+    public async Task<PaginatedResponseDto<PurchaseOrderDto>> GetAllPurchaseOrdersAsync(int skip = 0, int take = 10)
     {
         var pos = await _unitOfWork.PurchaseOrders.GetAllAsync(skip, take);
-        return _mapper.Map<IEnumerable<PurchaseOrderDto>>(pos.Where(p => !p.Is_Deleted));
+        var total = await _unitOfWork.PurchaseOrders.CountAsync();
+        var activePOs = pos.Where(p => !p.Is_Deleted).ToList();
+
+        var page = (skip / take) + 1;
+        var totalPages = (int)Math.Ceiling((double)total / take);
+
+        return new PaginatedResponseDto<PurchaseOrderDto>
+        {
+            Data = _mapper.Map<IEnumerable<PurchaseOrderDto>>(activePOs),
+            Total = total,
+            Skip = skip,
+            Take = take,
+            Page = page,
+            TotalPages = totalPages,
+            HasNextPage = skip + take < total,
+            HasPreviousPage = skip > 0
+        };
     }
 
     public async Task<PurchaseOrderDetailDto> UpdatePurchaseOrderAsync(long id, UpdatePurchaseOrderRequestDto request)
@@ -122,10 +138,26 @@ public class PurchaseOrderService : IPurchaseOrderService
         _logger.LogInformation("Purchase Order {ID} deleted", id);
     }
 
-    public async Task<IEnumerable<PurchaseOrderDto>> GetByVendorAsync(long vendorId, int skip = 0, int take = 10)
+    public async Task<PaginatedResponseDto<PurchaseOrderDto>> GetByVendorAsync(long vendorId, int skip = 0, int take = 10)
     {
         var pos = await _unitOfWork.PurchaseOrders.GetByVendorAsync(vendorId, skip, take);
-        return _mapper.Map<IEnumerable<PurchaseOrderDto>>(pos);
+        var total = await _unitOfWork.PurchaseOrders.CountByVendorAsync(vendorId);
+        var activePOs = pos.Where(p => !p.Is_Deleted).ToList();
+
+        var page = (skip / take) + 1;
+        var totalPages = (int)Math.Ceiling((double)total / take);
+
+        return new PaginatedResponseDto<PurchaseOrderDto>
+        {
+            Data = _mapper.Map<IEnumerable<PurchaseOrderDto>>(activePOs),
+            Total = total,
+            Skip = skip,
+            Take = take,
+            Page = page,
+            TotalPages = totalPages,
+            HasNextPage = skip + take < total,
+            HasPreviousPage = skip > 0
+        };
     }
 
     public async Task<PurchaseOrderDetailDto> AddItemToPurchaseOrderAsync(long id, AddPurchaseOrderItemRequestDto request)
