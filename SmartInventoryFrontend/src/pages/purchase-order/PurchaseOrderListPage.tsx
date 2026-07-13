@@ -4,8 +4,9 @@ import { fetchPOs } from '@/store/slices/purchaseOrderSlice'
 import { DataGrid, Card, Column } from '@/components'
 import { CreatePurchaseOrderModal } from '@/components/modals/CreatePurchaseOrderModal'
 import { ColumnSelectorModal } from '@/components/modals/ColumnSelectorModal'
+import { DateRangePicker } from '@/components/DateRangePicker'
 import { PurchaseOrder, PurchaseOrderStatus, PurchaseOrderStatusLabel } from '@/types/purchaseorder'
-import { Plus, Search, X, Columns3 } from 'lucide-react'
+import { Plus, Columns3 } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 
 const PAGE_SIZE = 10 
@@ -74,6 +75,7 @@ export const PurchaseOrderListPage = () => {
     dispatch(require('@/store/slices/vendorSlice').fetchVendors({ skip: 0, take: 100 }) as any)
   }, [dispatch])
 
+  // Debounce all filters together
   useEffect(() => {
     const debounceTimer = setTimeout(() => {
       setCurrentPage(1)
@@ -87,10 +89,11 @@ export const PurchaseOrderListPage = () => {
         dateFrom: dateFromFilter || undefined,
         dateTo: dateToFilter || undefined,
       }) as any)
-    }, 500)
+    }, 800)
     return () => clearTimeout(debounceTimer)
-  }, [searchInput, statusFilter, poIdFilter, poRefFilter, vendorFilter, dateFromFilter, dateToFilter, dispatch])
+  }, [statusFilter, poIdFilter, poRefFilter, vendorFilter, dateFromFilter, dateToFilter, dispatch])
 
+  // Fetch when page changes (no debounce needed)
   useEffect(() => {
     const skip = (currentPage - 1) * PAGE_SIZE
     dispatch(fetchPOs({
@@ -103,7 +106,7 @@ export const PurchaseOrderListPage = () => {
       dateFrom: dateFromFilter || undefined,
       dateTo: dateToFilter || undefined,
     }) as any)
-  }, [currentPage, dispatch, statusFilter, poIdFilter, poRefFilter, vendorFilter, dateFromFilter, dateToFilter])
+  }, [currentPage])
 
   const handleClearSearch = useCallback(() => {
     setSearchInput('')
@@ -280,72 +283,81 @@ export const PurchaseOrderListPage = () => {
         </button>
       </div>
 
-      {/* Search and Filter Bar */}
-      <div className="flex-shrink-0 space-y-3">
-        <div className="flex gap-3">
-          <input
-            type="text"
-            placeholder="Filter by PO ID..."
-            value={poIdFilter}
-            onChange={(e) => setPoIdFilter(e.target.value)}
-            className="flex-1 px-3 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-          />
-          <input
-            type="text"
-            placeholder="Filter by PO Reference..."
-            value={poRefFilter}
-            onChange={(e) => setPoRefFilter(e.target.value)}
-            className="flex-1 px-3 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-          />
-          <select
-            value={vendorFilter}
-            onChange={(e) => setVendorFilter(e.target.value)}
-            className="px-4 py-2.5 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent min-w-[150px]"
-          >
-            <option value="">All Vendors</option>
-            {vendors?.map((vendor: any) => (
-              <option key={vendor.id} value={vendor.id}>
-                {vendor.vendor_Name || vendor.company_Name}
-              </option>
-            ))}
-          </select>
-          <select
-            value={statusFilter}
-            onChange={(e) => setStatusFilter(e.target.value as any)}
-            className="px-6 py-2.5 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent min-w-[140px]"
-          >
-            <option value="">All Status</option>
-            {Object.entries(PurchaseOrderStatusLabel).map(([key, label]) => (
-              <option key={key} value={key}>
-                {label}
-              </option>
-            ))}
-          </select>
+      {/* Filter Bar */}
+      <div className="flex-shrink-0 space-y-4 bg-gray-50 p-4 rounded-lg border border-gray-200">
+        {/* Row 1: Search and Filter Inputs */}
+        <div className="grid grid-cols-4 gap-3">
+          <div>
+            <label className="block text-xs font-medium text-gray-600 mb-1">PO ID</label>
+            <input
+              type="text"
+              placeholder="Filter by ID..."
+              value={poIdFilter}
+              onChange={(e) => setPoIdFilter(e.target.value)}
+              className="w-full px-3 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm"
+            />
+          </div>
+          <div>
+            <label className="block text-xs font-medium text-gray-600 mb-1">PO Reference</label>
+            <input
+              type="text"
+              placeholder="Filter by reference..."
+              value={poRefFilter}
+              onChange={(e) => setPoRefFilter(e.target.value)}
+              className="w-full px-3 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm"
+            />
+          </div>
+          <div>
+            <label className="block text-xs font-medium text-gray-600 mb-1">Vendor</label>
+            <select
+              value={vendorFilter}
+              onChange={(e) => setVendorFilter(e.target.value)}
+              className="w-full px-3 py-2.5 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm"
+            >
+              <option value="">All Vendors</option>
+              {vendors?.map((vendor: any) => (
+                <option key={vendor.id} value={vendor.id}>
+                  {vendor.vendor_Name || vendor.company_Name}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div>
+            <label className="block text-xs font-medium text-gray-600 mb-1">Status</label>
+            <select
+              value={statusFilter}
+              onChange={(e) => setStatusFilter(e.target.value as any)}
+              className="w-full px-3 py-2.5 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm"
+            >
+              <option value="">All Status</option>
+              {Object.entries(PurchaseOrderStatusLabel).map(([key, label]) => (
+                <option key={key} value={key}>
+                  {label}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
+
+        {/* Row 2: Date Range and Actions */}
+        <div className="flex gap-3 items-end">
+          <div className="flex-1">
+            <label className="block text-xs font-medium text-gray-600 mb-1">Date Range (Click to select)</label>
+            <DateRangePicker
+              startDate={dateFromFilter}
+              endDate={dateToFilter}
+              onStartDateChange={setDateFromFilter}
+              onEndDateChange={setDateToFilter}
+            />
+          </div>
           <button
             onClick={() => setIsColumnSelectorOpen(true)}
-            className="flex items-center gap-2 px-4 py-2.5 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors whitespace-nowrap"
+            className="flex items-center gap-2 px-4 py-2.5 border border-gray-300 rounded-lg text-gray-700 hover:bg-white transition-colors whitespace-nowrap text-sm font-medium"
             title="Select columns to display"
           >
             <Columns3 size={18} />
-            <span className="text-sm font-medium">Columns</span>
+            Columns
           </button>
-        </div>
-        <div className="flex gap-3">
-          <input
-            type="date"
-            placeholder="From Date"
-            value={dateFromFilter}
-            onChange={(e) => setDateFromFilter(e.target.value)}
-            className="px-3 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-          />
-          <input
-            type="date"
-            placeholder="To Date"
-            value={dateToFilter}
-            onChange={(e) => setDateToFilter(e.target.value)}
-            className="px-3 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-          />
-          <div className="flex-1" />
           <button
             onClick={() => {
               setPoIdFilter('')
@@ -356,9 +368,9 @@ export const PurchaseOrderListPage = () => {
               setDateToFilter('')
               setCurrentPage(1)
             }}
-            className="px-4 py-2.5 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors"
+            className="px-4 py-2.5 border border-gray-300 rounded-lg text-gray-700 hover:bg-white transition-colors text-sm font-medium"
           >
-            Clear Filters
+            Clear
           </button>
         </div>
       </div>
@@ -378,6 +390,45 @@ export const PurchaseOrderListPage = () => {
           emptyMessage="No purchase orders found"
         />
       </Card>
+
+      {/* Pagination Controls */}
+      <div className="flex-shrink-0 flex items-center justify-between bg-gray-50 p-4 rounded-lg border border-gray-200">
+        <div className="flex items-center gap-2">
+          <button
+            onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
+            disabled={currentPage === 1 || loading}
+            className="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-white disabled:opacity-50 disabled:cursor-not-allowed transition-colors text-sm font-medium"
+          >
+            Previous
+          </button>
+          <div className="flex items-center gap-2">
+            <span className="text-sm text-gray-600">Page</span>
+            <input
+              type="number"
+              value={currentPage}
+              onChange={(e) => {
+                const page = Math.max(1, parseInt(e.target.value) || 1)
+                const totalPages = Math.ceil(total / PAGE_SIZE) || 1
+                setCurrentPage(Math.min(page, totalPages))
+              }}
+              min="1"
+              max={Math.ceil(total / PAGE_SIZE) || 1}
+              className="w-16 px-2 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm text-center"
+            />
+            <span className="text-sm text-gray-600">of {Math.ceil(total / PAGE_SIZE) || 1}</span>
+          </div>
+          <button
+            onClick={() => setCurrentPage(Math.min(Math.ceil(total / PAGE_SIZE) || 1, currentPage + 1))}
+            disabled={currentPage >= Math.ceil(total / PAGE_SIZE) || loading}
+            className="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-white disabled:opacity-50 disabled:cursor-not-allowed transition-colors text-sm font-medium"
+          >
+            Next
+          </button>
+        </div>
+        <div className="text-sm text-gray-600">
+          Showing {(currentPage - 1) * PAGE_SIZE + 1} to {Math.min(currentPage * PAGE_SIZE, total)} of {total} results
+        </div>
+      </div>
 
       {/* Create PO Modal */}
       <CreatePurchaseOrderModal
