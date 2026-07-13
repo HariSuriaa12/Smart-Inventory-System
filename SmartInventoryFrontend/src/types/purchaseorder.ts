@@ -22,7 +22,11 @@ export const PurchaseOrderStatusLabel: Record<PurchaseOrderStatus, string> = {
 
 export interface PurchaseOrderItem extends Entity {
   pO_Id: number
-  iTem_Id: number
+  item_Id: number
+  item_Name: string
+  item_Code: string
+  item_Category: string
+  unit_Of_Measure: string
   order_Quantity: number
   unit_Price: number
   status: PurchaseOrderStatus

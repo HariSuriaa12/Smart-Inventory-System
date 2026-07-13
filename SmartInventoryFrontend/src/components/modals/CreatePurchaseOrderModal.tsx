@@ -89,6 +89,7 @@ export const CreatePurchaseOrderModal = ({ isOpen, onClose, onSuccess, isLoading
       return
     }
 
+    console.log('Item search value:', itemSearch)
     const selectedItem = itemSearchResults.find((i) => i.item_Name === itemSearch || i.item_Code === itemSearch)
     if (!selectedItem) {
       setErrors((prev) => ({ ...prev, item: 'Please select a valid item' }))
@@ -235,7 +236,7 @@ export const CreatePurchaseOrderModal = ({ isOpen, onClose, onSuccess, isLoading
                 <option value="">Select Vendor</option>
                 {vendors.map((vendor) => (
                   <option key={vendor.id} value={vendor.id}>
-                    {vendor.vendor_Name}
+                    {vendor.company_Name}
                   </option>
                 ))}
               </select>
@@ -281,7 +282,8 @@ export const CreatePurchaseOrderModal = ({ isOpen, onClose, onSuccess, isLoading
                         key={item.id}
                         type="button"
                         onClick={() => {
-                          setItemSearch(`${item.item_Code} - ${item.item_Name}`)
+                          //setItemSearch(`${item.item_Code} - ${item.item_Name}`)
+                          setItemSearch(`${item.item_Code}`)
                           setShowItemDropdown(false)
                         }}
                         className="w-full text-left px-4 py-2 hover:bg-gray-100 transition-colors"

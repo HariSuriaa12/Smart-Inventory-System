@@ -94,13 +94,29 @@ export const PurchaseOrderDetailPage = () => {
       key: 'item_Code',
       label: 'Item Code',
       width: '120px',
-      render: (_, item) => item.item?.item_Code || '-',
+      //render: (_, item) => item.item?.item_Code || '-',
+      render: (value) => value || '-',
     },
     {
       key: 'item_Name',
       label: 'Item Name',
       width: '200px',
-      render: (_, item) => item.item?.item_Name || '-',
+      //render: (_, item) => item.item?.item_Name || '-',
+      render: (value) => value || '-',
+    },
+    {
+      key: 'item_Category',
+      label: 'Item Category',
+      width: '150px',
+      //render: (_, item) => item.item?.item_Category || '-',
+      render: (value) => value || '-',
+    },
+    {
+      key: 'unit_Of_Measure',
+      label: 'Unit of Measure',
+      width: '150px',
+      //render: (_, item) => item.item?.unit_Of_Measure || '-',
+      render: (value) => value || '-',
     },
     {
       key: 'order_Quantity',
@@ -152,7 +168,7 @@ export const PurchaseOrderDetailPage = () => {
             <ArrowLeft size={24} />
           </button>
           <div>
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">Purchase Order {currentOrder.po_Refence_No}</h1>
+            <h1 className="text-3xl font-bold text-gray-900 mb-2">Purchase Order {currentOrder.pO_Reference_No}</h1>
             <div className="flex items-center gap-4">
               <span className={`inline-flex px-3 py-1 rounded-full text-sm font-semibold ${STATUS_BADGE_CLASSES[currentOrder.status]}`}>
                 {PurchaseOrderStatusLabel[currentOrder.status]}

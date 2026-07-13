@@ -102,6 +102,7 @@ public class MapperProfile : Profile
             .ForMember(dest => dest.Vendor_Name, opt => opt.MapFrom(src => src.Vendor != null ? src.Vendor.Company_Name : ""))
             .ForMember(dest => dest.Vendor_Code, opt => opt.MapFrom(src => src.Vendor != null ? src.Vendor.Vendor_Code : ""))
             .ForMember(dest => dest.Vendor_Mobile, opt => opt.MapFrom(src => src.Vendor != null ? src.Vendor.Mobile : ""))
+            .ForMember(dest => dest.Vendor_Email, opt => opt.MapFrom(src => src.Vendor != null ? src.Vendor.Email : ""))
             .ForMember(dest => dest.Vendor_Company_Address, opt => opt.MapFrom(src => src.Vendor != null ? src.Vendor.Company_Address : ""))
             .ForMember(dest => dest.User_Full_Name, opt => opt.MapFrom(src => src.User != null ? src.User.Full_Name : ""))
             .ForMember(dest => dest.User_Staff_Code, opt => opt.MapFrom(src => src.User != null ? src.User.Staff_Code : ""))
@@ -109,12 +110,16 @@ public class MapperProfile : Profile
             .ForMember(dest => dest.Location_Name, opt => opt.MapFrom(src => src.Location != null ? src.Location.Location_Name : ""));
 
         CreateMap<PurchaseOrderItem, PurchaseOrderItemDto>()
-            .ForMember(dest => dest.Item_Name, opt => opt.MapFrom(src => src.Item != null ? src.Item.Item_Name : ""));
+            .ForMember(dest => dest.Item_Name, opt => opt.MapFrom(src => src.Item != null ? src.Item.Item_Name : ""))
+            .ForMember(dest => dest.Item_Code, opt => opt.MapFrom(src => src.Item != null ? src.Item.Item_Code : ""))
+            .ForMember(dest => dest.Item_Category, opt => opt.MapFrom(src => src.Item != null ? src.Item.Item_Category : ""))
+            .ForMember(dest => dest.Unit_Of_Measure, opt => opt.MapFrom(src => src.Item != null ? src.Item.Unit_Of_Measure : ""));
 
         CreateMap<PurchaseOrderHeader, PurchaseOrderDetailDto>()
             .ForMember(dest => dest.Vendor_Name, opt => opt.MapFrom(src => src.Vendor != null ? src.Vendor.Company_Name : ""))
             .ForMember(dest => dest.Vendor_Code, opt => opt.MapFrom(src => src.Vendor != null ? src.Vendor.Vendor_Code : ""))
             .ForMember(dest => dest.Vendor_Mobile, opt => opt.MapFrom(src => src.Vendor != null ? src.Vendor.Mobile : ""))
+            .ForMember(dest => dest.Vendor_Email, opt => opt.MapFrom(src => src.Vendor != null ? src.Vendor.Email : ""))
             .ForMember(dest => dest.Vendor_Company_Address, opt => opt.MapFrom(src => src.Vendor != null ? src.Vendor.Company_Address : ""))
             .ForMember(dest => dest.User_Full_Name, opt => opt.MapFrom(src => src.User != null ? src.User.Full_Name : ""))
             .ForMember(dest => dest.User_Staff_Code, opt => opt.MapFrom(src => src.User != null ? src.User.Staff_Code : ""))

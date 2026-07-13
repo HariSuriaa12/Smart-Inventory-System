@@ -4056,6 +4056,10 @@
             "type": "string",
             "nullable": true
           },
+          "vendor_Email": {
+            "type": "string",
+            "nullable": true
+          },
           "vendor_Company_Address": {
             "type": "string",
             "nullable": true
@@ -4168,6 +4172,10 @@
             "type": "string",
             "nullable": true
           },
+          "vendor_Email": {
+            "type": "string",
+            "nullable": true
+          },
           "user_Staff_Code": {
             "type": "string",
             "nullable": true
@@ -4277,6 +4285,18 @@
             "format": "int64"
           },
           "item_Name": {
+            "type": "string",
+            "nullable": true
+          },
+          "item_Code": {
+            "type": "string",
+            "nullable": true
+          },
+          "item_Category": {
+            "type": "string",
+            "nullable": true
+          },
+          "unit_Of_Measure": {
             "type": "string",
             "nullable": true
           },

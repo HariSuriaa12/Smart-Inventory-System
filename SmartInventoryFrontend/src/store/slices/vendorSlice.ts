@@ -59,6 +59,7 @@ const vendorSlice = createSlice({
         state.loading = true
       })
       .addCase(fetchVendors.fulfilled, (state, action) => {
+        console.log('Fetched vendors:', action.payload) // Debugging log
         state.loading = false
         state.vendors = action.payload?.data || []
         state.total = action.payload?.total || 0

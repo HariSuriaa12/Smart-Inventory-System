@@ -13,9 +13,18 @@ public class PurchaseOrderRepository : GenericRepository<PurchaseOrderHeader>, I
 
     public async Task<PurchaseOrderHeader?> GetWithItemsAsync(long id)
     {
-        return await _dbSet.Include(p => p.Items)
-            .ThenInclude(i => i.Item)
+        //return await _dbSet.Include(p => p.Items)
+        //    .ThenInclude(i => i.Item)
+        //    .Include(p => p.Vendor)
+        //    .FirstOrDefaultAsync(p => p.ID == id && !p.Is_Deleted);
+
+        return await _dbSet
+            //.Where(p => !p.Is_Deleted)
             .Include(p => p.Vendor)
+            .Include(p => p.Location)
+            .Include(p => p.Items)
+            .ThenInclude(i => i.Item)
+            .Include(p => p.User)
             .FirstOrDefaultAsync(p => p.ID == id && !p.Is_Deleted);
     }
 
