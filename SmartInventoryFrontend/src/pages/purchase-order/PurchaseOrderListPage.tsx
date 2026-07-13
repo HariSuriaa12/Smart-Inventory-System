@@ -8,7 +8,7 @@ import { PurchaseOrder, PurchaseOrderStatus, PurchaseOrderStatusLabel } from '@/
 import { Plus, Search, X, Columns3 } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 
-const PAGE_SIZE = 10
+const PAGE_SIZE = 10 
 
 // Mandatory columns that users cannot remove
 const MANDATORY_COLUMNS = [
