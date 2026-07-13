@@ -221,5 +221,36 @@ public class SmartInventoryDbContext : DbContext
         modelBuilder.Entity<InventoryLog>()
             .Property(x => x.New_Available_Quantity)
             .HasPrecision(14, 2);
+
+        // Configure PurchaseOrderHeader relationships
+        modelBuilder.Entity<PurchaseOrderHeader>()
+            .HasOne(p => p.Vendor)
+            .WithMany()
+            .HasForeignKey(p => p.Vendor_ID)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<PurchaseOrderHeader>()
+            .HasOne(p => p.Location)
+            .WithMany()
+            .HasForeignKey(p => p.Location_ID)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<PurchaseOrderHeader>()
+            .HasOne(p => p.User)
+            .WithForeignKey(p => p.Performed_By)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        // Configure PurchaseOrderItem relationships
+        modelBuilder.Entity<PurchaseOrderItem>()
+            .HasOne(p => p.PurchaseOrder)
+            .WithMany(po => po.Items)
+            .HasForeignKey(p => p.PO_ID)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<PurchaseOrderItem>()
+            .HasOne(p => p.Item)
+            .WithMany()
+            .HasForeignKey(p => p.Item_ID)
+            .OnDelete(DeleteBehavior.Restrict);
     }
 }

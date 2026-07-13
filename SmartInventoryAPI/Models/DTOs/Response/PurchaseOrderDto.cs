@@ -31,11 +31,16 @@ public class PurchaseOrderDetailDto
     public long ID { get; set; }
     public string? PO_Refence_No { get; set; }
     public long Location_ID { get; set; }
+    public string? Location_Name { get; set; }
     public DateTime Purchase_Date { get; set; }
     public long Vendor_ID { get; set; }
     public string? Vendor_Name { get; set; }
+    public string? Vendor_Code { get; set; }
     public int Status { get; set; }
     public string? Remark { get; set; }
     public decimal Total_Amount { get; set; }
+    public long Performed_By { get; set; }
+    public string? User_Full_Name { get; set; }
+    public string? User_Staff_Code { get; set; }
     public List<PurchaseOrderItemDto>? Items { get; set; }
 }
