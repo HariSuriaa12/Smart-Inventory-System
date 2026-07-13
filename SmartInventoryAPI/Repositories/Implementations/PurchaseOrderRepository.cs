@@ -55,4 +55,32 @@ public class PurchaseOrderRepository : GenericRepository<PurchaseOrderHeader>, I
     {
         return await _dbSet.Where(p => p.Vendor_ID == vendorId && !p.Is_Deleted).CountAsync();
     }
+
+    public async Task<IEnumerable<PurchaseOrderHeader>> GetAllWithDetailsAsync(int skip = 0, int take = 10)
+    {
+        return await _dbSet
+            .Where(p => !p.Is_Deleted)
+            .Include(p => p.Vendor)
+            .Include(p => p.Location)
+            .Include(p => p.Items)
+            .ThenInclude(i => i.Item)
+            .Include(p => p.User)
+            .Skip(skip)
+            .Take(take)
+            .ToListAsync();
+    }
+
+    public async Task<IEnumerable<PurchaseOrderHeader>> GetByVendorWithDetailsAsync(long vendorId, int skip = 0, int take = 10)
+    {
+        return await _dbSet
+            .Where(p => p.Vendor_ID == vendorId && !p.Is_Deleted)
+            .Include(p => p.Vendor)
+            .Include(p => p.Location)
+            .Include(p => p.Items)
+            .ThenInclude(i => i.Item)
+            .Include(p => p.User)
+            .Skip(skip)
+            .Take(take)
+            .ToListAsync();
+    }
 }
