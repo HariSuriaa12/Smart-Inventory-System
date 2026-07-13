@@ -5,6 +5,7 @@ import { DataGrid, Card, Column } from '@/components'
 import { CreatePurchaseOrderModal } from '@/components/modals/CreatePurchaseOrderModal'
 import { ColumnSelectorModal } from '@/components/modals/ColumnSelectorModal'
 import { DateRangePicker } from '@/components/DateRangePicker'
+import { fetchVendors } from '@/store/slices/vendorSlice'
 import { PurchaseOrder, PurchaseOrderStatus, PurchaseOrderStatusLabel } from '@/types/purchaseorder'
 import { Plus, Columns3 } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
@@ -72,7 +73,7 @@ export const PurchaseOrderListPage = () => {
   const { vendors } = useAppSelector((state) => state.vendors)
 
   useEffect(() => {
-    dispatch(require('@/store/slices/vendorSlice').fetchVendors({ skip: 0, take: 100 }) as any)
+    dispatch(fetchVendors({ skip: 0, take: 100 }) as any)
   }, [dispatch])
 
   // Debounce all filters together
