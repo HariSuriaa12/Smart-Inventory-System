@@ -268,7 +268,8 @@ public class SmartInventoryDbContext : DbContext
 
         modelBuilder.Entity<PurchaseOrderHeader>()
             .HasOne(p => p.User)
-            .WithForeignKey(p => p.Performed_By)
+            .WithMany()
+            .HasForeignKey(p => p.Performed_By)
             .OnDelete(DeleteBehavior.Restrict);
 
         // Configure PurchaseOrderItem relationships

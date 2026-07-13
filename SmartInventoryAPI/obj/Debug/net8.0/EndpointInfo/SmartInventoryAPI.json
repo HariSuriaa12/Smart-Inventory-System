@@ -4032,6 +4032,10 @@
             "type": "integer",
             "format": "int64"
           },
+          "location_Name": {
+            "type": "string",
+            "nullable": true
+          },
           "purchase_Date": {
             "type": "string",
             "format": "date-time"
@@ -4041,6 +4045,18 @@
             "format": "int64"
           },
           "vendor_Name": {
+            "type": "string",
+            "nullable": true
+          },
+          "vendor_Code": {
+            "type": "string",
+            "nullable": true
+          },
+          "vendor_Mobile": {
+            "type": "string",
+            "nullable": true
+          },
+          "vendor_Company_Address": {
             "type": "string",
             "nullable": true
           },
@@ -4055,6 +4071,22 @@
           "total_Amount": {
             "type": "number",
             "format": "double"
+          },
+          "performed_By": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "user_Full_Name": {
+            "type": "string",
+            "nullable": true
+          },
+          "user_Staff_Code": {
+            "type": "string",
+            "nullable": true
+          },
+          "user_Mobile_No": {
+            "type": "string",
+            "nullable": true
           },
           "items": {
             "type": "array",
@@ -4112,6 +4144,10 @@
             "type": "string",
             "format": "date-time"
           },
+          "location_Name": {
+            "type": "string",
+            "nullable": true
+          },
           "vendor_ID": {
             "type": "integer",
             "format": "int64"
@@ -4124,19 +4160,23 @@
             "type": "string",
             "nullable": true
           },
-          "company_Address": {
+          "vendor_Mobile": {
             "type": "string",
             "nullable": true
           },
-          "staff_Code": {
+          "vendor_Company_Address": {
             "type": "string",
             "nullable": true
           },
-          "full_Name": {
+          "user_Staff_Code": {
             "type": "string",
             "nullable": true
           },
-          "mobile_No": {
+          "user_Full_Name": {
+            "type": "string",
+            "nullable": true
+          },
+          "user_Mobile_No": {
             "type": "string",
             "nullable": true
           },

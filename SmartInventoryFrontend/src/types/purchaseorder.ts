@@ -32,16 +32,19 @@ export interface PurchaseOrderItem extends Entity {
 }
 
 export interface PurchaseOrder extends Entity {
+  id: number
   pO_Reference_No: string
   location_Id: number
   purchase_Date: string | Date
+  location_Name: string
   purchase_Time: string
   vendor_Id: number
   vendor_Code: string
-  company_Address : string
-  full_name : string
-  staff_Code : string
-  mobile_No : string
+  vendor_Mobile : string
+  vendor_Company_Address : string
+  user_full_name : string
+  user_staff_Code : string
+  user_mobile_No : string
   status: PurchaseOrderStatus
   remark?: string
   performed_By: number
