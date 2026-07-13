@@ -87,24 +87,47 @@ public class PurchaseOrderService : IPurchaseOrderService
         return _mapper.Map<PurchaseOrderDetailDto>(po);
     }
 
-    public async Task<PaginatedResponseDto<PurchaseOrderDto>> GetAllPurchaseOrdersAsync(int skip = 0, int take = 10)
+    public async Task<PaginatedResponseDto<PurchaseOrderDto>> GetAllPurchaseOrdersAsync(
+        int skip = 0, int take = 10, long? poId = null, string? poRefNo = null,
+        long? vendorId = null, int? status = null, string? dateFrom = null, string? dateTo = null)
     {
         var pos = await _unitOfWork.PurchaseOrders.GetAllWithDetailsAsync(skip, take);
-        var total = await _unitOfWork.PurchaseOrders.CountNonDeletedAsync();
         var activePOs = pos.Where(p => !p.Is_Deleted).ToList();
 
-        var page = (skip / take) + 1;
-        var totalPages = (int)Math.Ceiling((double)total / take);
+        // Apply filters
+        if (poId.HasValue)
+            activePOs = activePOs.Where(p => p.ID == poId.Value).ToList();
+
+        if (!string.IsNullOrEmpty(poRefNo))
+            activePOs = activePOs.Where(p => p.PO_Reference_No != null && p.PO_Reference_No.Contains(poRefNo, StringComparison.OrdinalIgnoreCase)).ToList();
+
+        if (vendorId.HasValue)
+            activePOs = activePOs.Where(p => p.Vendor_ID == vendorId.Value).ToList();
+
+        if (status.HasValue)
+            activePOs = activePOs.Where(p => p.Status == status.Value).ToList();
+
+        if (!string.IsNullOrEmpty(dateFrom) && DateTime.TryParse(dateFrom, out var fromDate))
+            activePOs = activePOs.Where(p => p.Purchase_Date >= fromDate).ToList();
+
+        if (!string.IsNullOrEmpty(dateTo) && DateTime.TryParse(dateTo, out var toDate))
+            activePOs = activePOs.Where(p => p.Purchase_Date <= toDate.AddDays(1)).ToList();
+
+        var filteredTotal = activePOs.Count;
+        var filteredPage = (skip / take) + 1;
+        var filteredTotalPages = (int)Math.Ceiling((double)filteredTotal / take);
+
+        var pagedData = activePOs.Skip(skip).Take(take).ToList();
 
         return new PaginatedResponseDto<PurchaseOrderDto>
         {
-            Data = _mapper.Map<IEnumerable<PurchaseOrderDto>>(activePOs),
-            Total = total,
+            Data = _mapper.Map<IEnumerable<PurchaseOrderDto>>(pagedData),
+            Total = filteredTotal,
             Skip = skip,
             Take = take,
-            Page = page,
-            TotalPages = totalPages,
-            HasNextPage = skip + take < total,
+            Page = filteredPage,
+            TotalPages = filteredTotalPages,
+            HasNextPage = skip + take < filteredTotal,
             HasPreviousPage = skip > 0
         };
     }

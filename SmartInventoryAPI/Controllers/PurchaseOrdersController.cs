@@ -23,9 +23,15 @@ public class PurchaseOrdersController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<ApiResponseDto<PaginatedResponseDto<PurchaseOrderDto>>>> GetAllPurchaseOrders(
         [FromQuery] int skip = 0,
-        [FromQuery] int take = 10)
+        [FromQuery] int take = 10,
+        [FromQuery] long? poId = null,
+        [FromQuery] string? poRefNo = null,
+        [FromQuery] long? vendorId = null,
+        [FromQuery] int? status = null,
+        [FromQuery] string? dateFrom = null,
+        [FromQuery] string? dateTo = null)
     {
-        var pos = await _poService.GetAllPurchaseOrdersAsync(skip, take);
+        var pos = await _poService.GetAllPurchaseOrdersAsync(skip, take, poId, poRefNo, vendorId, status, dateFrom, dateTo);
         return Ok(new ApiResponseDto<PaginatedResponseDto<PurchaseOrderDto>>
         {
             Success = true,

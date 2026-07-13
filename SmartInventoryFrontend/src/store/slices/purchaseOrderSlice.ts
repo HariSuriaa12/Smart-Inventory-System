@@ -12,9 +12,10 @@ const initialState: PurchaseOrderState = {
   take: 10,
 }
 
-export const fetchPOs = createAsyncThunk('po/fetch', async ({ skip = 0, take = 10 }: any, { rejectWithValue }) => {
+export const fetchPOs = createAsyncThunk('po/fetch', async (params: any, { rejectWithValue }) => {
   try {
-    const response = await purchaseOrderService.getPurchaseOrders(skip, take)
+    const { skip = 0, take = 10, ...filters } = params
+    const response = await purchaseOrderService.getPurchaseOrders(skip, take, filters)
     return response.data
   } catch (error: any) {
     return rejectWithValue(error.message)

@@ -60,6 +60,7 @@ export interface PurchaseOrder extends Entity {
 }
 
 export interface CreatePurchaseOrderRequest {
+  poRefNo: string
   locationId: number
   vendorId: number
   purchaseDate: string | Date

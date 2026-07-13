@@ -52,6 +52,11 @@ export const PurchaseOrderListPage = () => {
   const [currentPage, setCurrentPage] = useState(1)
   const [searchInput, setSearchInput] = useState('')
   const [statusFilter, setStatusFilter] = useState<PurchaseOrderStatus | ''>('')
+  const [poIdFilter, setPoIdFilter] = useState('')
+  const [poRefFilter, setPoRefFilter] = useState('')
+  const [vendorFilter, setVendorFilter] = useState('')
+  const [dateFromFilter, setDateFromFilter] = useState('')
+  const [dateToFilter, setDateToFilter] = useState('')
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false)
   const [isColumnSelectorOpen, setIsColumnSelectorOpen] = useState(false)
   const [visibleColumns, setVisibleColumns] = useState<Set<string>>(() => {
@@ -63,19 +68,42 @@ export const PurchaseOrderListPage = () => {
   })
 
   const { orders, loading, total } = useAppSelector((state) => state.purchaseOrders)
+  const { vendors } = useAppSelector((state) => state.vendors)
+
+  useEffect(() => {
+    dispatch(require('@/store/slices/vendorSlice').fetchVendors({ skip: 0, take: 100 }) as any)
+  }, [dispatch])
 
   useEffect(() => {
     const debounceTimer = setTimeout(() => {
       setCurrentPage(1)
-      dispatch(fetchPOs({ skip: 0, take: PAGE_SIZE }) as any)
+      dispatch(fetchPOs({
+        skip: 0,
+        take: PAGE_SIZE,
+        poId: poIdFilter ? Number(poIdFilter) : undefined,
+        poRefNo: poRefFilter || undefined,
+        vendorId: vendorFilter ? Number(vendorFilter) : undefined,
+        status: statusFilter ? Number(statusFilter) : undefined,
+        dateFrom: dateFromFilter || undefined,
+        dateTo: dateToFilter || undefined,
+      }) as any)
     }, 500)
     return () => clearTimeout(debounceTimer)
-  }, [searchInput, dispatch])
+  }, [searchInput, statusFilter, poIdFilter, poRefFilter, vendorFilter, dateFromFilter, dateToFilter, dispatch])
 
   useEffect(() => {
     const skip = (currentPage - 1) * PAGE_SIZE
-    dispatch(fetchPOs({ skip, take: PAGE_SIZE }) as any)
-  }, [currentPage, dispatch])
+    dispatch(fetchPOs({
+      skip,
+      take: PAGE_SIZE,
+      poId: poIdFilter ? Number(poIdFilter) : undefined,
+      poRefNo: poRefFilter || undefined,
+      vendorId: vendorFilter ? Number(vendorFilter) : undefined,
+      status: statusFilter ? Number(statusFilter) : undefined,
+      dateFrom: dateFromFilter || undefined,
+      dateTo: dateToFilter || undefined,
+    }) as any)
+  }, [currentPage, dispatch, statusFilter, poIdFilter, poRefFilter, vendorFilter, dateFromFilter, dateToFilter])
 
   const handleClearSearch = useCallback(() => {
     setSearchInput('')
@@ -253,49 +281,86 @@ export const PurchaseOrderListPage = () => {
       </div>
 
       {/* Search and Filter Bar */}
-      <div className="flex-shrink-0 flex gap-3">
-        <div className="flex-1 relative">
-          <Search size={18} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+      <div className="flex-shrink-0 space-y-3">
+        <div className="flex gap-3">
           <input
             type="text"
-            placeholder="Search by PO reference, vendor..."
-            value={searchInput}
-            onChange={(e) => setSearchInput(e.target.value)}
-            className="w-full pl-10 pr-10 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+            placeholder="Filter by PO ID..."
+            value={poIdFilter}
+            onChange={(e) => setPoIdFilter(e.target.value)}
+            className="flex-1 px-3 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
           />
-          {searchInput && (
-            <button
-              onClick={handleClearSearch}
-              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
-              aria-label="Clear search"
-            >
-              <X size={18} />
-            </button>
-          )}
+          <input
+            type="text"
+            placeholder="Filter by PO Reference..."
+            value={poRefFilter}
+            onChange={(e) => setPoRefFilter(e.target.value)}
+            className="flex-1 px-3 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+          />
+          <select
+            value={vendorFilter}
+            onChange={(e) => setVendorFilter(e.target.value)}
+            className="px-4 py-2.5 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent min-w-[150px]"
+          >
+            <option value="">All Vendors</option>
+            {vendors?.map((vendor: any) => (
+              <option key={vendor.id} value={vendor.id}>
+                {vendor.vendor_Name || vendor.company_Name}
+              </option>
+            ))}
+          </select>
+          <select
+            value={statusFilter}
+            onChange={(e) => setStatusFilter(e.target.value as any)}
+            className="px-6 py-2.5 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent min-w-[140px]"
+          >
+            <option value="">All Status</option>
+            {Object.entries(PurchaseOrderStatusLabel).map(([key, label]) => (
+              <option key={key} value={key}>
+                {label}
+              </option>
+            ))}
+          </select>
+          <button
+            onClick={() => setIsColumnSelectorOpen(true)}
+            className="flex items-center gap-2 px-4 py-2.5 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors whitespace-nowrap"
+            title="Select columns to display"
+          >
+            <Columns3 size={18} />
+            <span className="text-sm font-medium">Columns</span>
+          </button>
         </div>
-        <select
-          value={statusFilter}
-          onChange={(e) => {
-            setStatusFilter(e.target.value as any)
-            setCurrentPage(1)
-          }}
-          className="px-4 py-2.5 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent whitespace-nowrap"
-        >
-          <option value="">All Status</option>
-          {Object.entries(PurchaseOrderStatusLabel).map(([key, label]) => (
-            <option key={key} value={key}>
-              {label}
-            </option>
-          ))}
-        </select>
-        <button
-          onClick={() => setIsColumnSelectorOpen(true)}
-          className="flex items-center gap-2 px-4 py-2.5 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors whitespace-nowrap"
-          title="Select columns to display"
-        >
-          <Columns3 size={18} />
-          <span className="text-sm font-medium">Columns</span>
-        </button>
+        <div className="flex gap-3">
+          <input
+            type="date"
+            placeholder="From Date"
+            value={dateFromFilter}
+            onChange={(e) => setDateFromFilter(e.target.value)}
+            className="px-3 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+          />
+          <input
+            type="date"
+            placeholder="To Date"
+            value={dateToFilter}
+            onChange={(e) => setDateToFilter(e.target.value)}
+            className="px-3 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+          />
+          <div className="flex-1" />
+          <button
+            onClick={() => {
+              setPoIdFilter('')
+              setPoRefFilter('')
+              setVendorFilter('')
+              setStatusFilter('')
+              setDateFromFilter('')
+              setDateToFilter('')
+              setCurrentPage(1)
+            }}
+            className="px-4 py-2.5 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors"
+          >
+            Clear Filters
+          </button>
+        </div>
       </div>
 
       {/* Data Grid Card */}

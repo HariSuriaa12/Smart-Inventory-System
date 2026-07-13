@@ -7,7 +7,7 @@ public interface IPurchaseOrderService
 {
     Task<PurchaseOrderDetailDto> CreatePurchaseOrderAsync(CreatePurchaseOrderRequestDto request);
     Task<PurchaseOrderDetailDto> GetPurchaseOrderByIdAsync(long id);
-    Task<PaginatedResponseDto<PurchaseOrderDto>> GetAllPurchaseOrdersAsync(int skip = 0, int take = 10);
+    Task<PaginatedResponseDto<PurchaseOrderDto>> GetAllPurchaseOrdersAsync(int skip = 0, int take = 10, long? poId = null, string? poRefNo = null, long? vendorId = null, int? status = null, string? dateFrom = null, string? dateTo = null);
     Task<PurchaseOrderDetailDto> UpdatePurchaseOrderAsync(long id, UpdatePurchaseOrderRequestDto request);
     Task DeletePurchaseOrderAsync(long id);
     Task<PaginatedResponseDto<PurchaseOrderDto>> GetByVendorAsync(long vendorId, int skip = 0, int take = 10);

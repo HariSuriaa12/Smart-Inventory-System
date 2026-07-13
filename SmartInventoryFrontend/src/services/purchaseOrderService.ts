@@ -3,8 +3,8 @@ import { ApiResponse, PaginatedResponse } from '@/types/common'
 import { PurchaseOrder, CreatePurchaseOrderRequest, UpdatePurchaseOrderRequest, ReceivePurchaseOrderItemRequest } from '@/types/purchaseorder'
 
 export const purchaseOrderService = {
-  getPurchaseOrders: async (skip: number = 0, take: number = 10) =>
-    (await api.get<ApiResponse<PaginatedResponse<PurchaseOrder>>>('/api/purchaseorders', { params: { skip, take } })).data,
+  getPurchaseOrders: async (skip: number = 0, take: number = 10, filters?: any) =>
+    (await api.get<ApiResponse<PaginatedResponse<PurchaseOrder>>>('/api/purchaseorders', { params: { skip, take, ...filters } })).data,
 
   getPurchaseOrderById: async (id: number) =>
     (await api.get<ApiResponse<PurchaseOrder>>(`/api/purchaseorders/${id}`)).data,

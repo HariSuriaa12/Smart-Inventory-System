@@ -27,6 +27,7 @@ interface SelectedItem {
 export const CreatePurchaseOrderModal = ({ isOpen, onClose, onSuccess, isLoading = false }: CreatePurchaseOrderModalProps) => {
   const dispatch = useAppDispatch()
   const [formData, setFormData] = useState({
+    poRefNo: '',
     locationId: '',
     vendorId: '',
     remark: '',
@@ -47,8 +48,12 @@ export const CreatePurchaseOrderModal = ({ isOpen, onClose, onSuccess, isLoading
     if (isOpen) {
       dispatch(fetchVendors({ skip: 0, take: 100 }) as any)
       dispatch(fetchLocations({ skip: 0, take: 100 }) as any)
+      // Set default location if available
+      if (locations && locations.length > 0 && !formData.locationId) {
+        setFormData((prev) => ({ ...prev, locationId: locations[0].id.toString() }))
+      }
     }
-  }, [isOpen, dispatch])
+  }, [isOpen, dispatch, locations])
 
   const handleSearchItems = useCallback(async (query: string) => {
     if (query.length < 2) {
@@ -75,6 +80,7 @@ export const CreatePurchaseOrderModal = ({ isOpen, onClose, onSuccess, isLoading
 
   const validateForm = useCallback(() => {
     const newErrors: Record<string, string> = {}
+    if (!formData.poRefNo) newErrors.poRefNo = 'PO Reference No is required'
     if (!formData.locationId) newErrors.locationId = 'Location is required'
     if (!formData.vendorId) newErrors.vendorId = 'Vendor is required'
     if (selectedItems.length === 0) newErrors.items = 'At least one item is required'
@@ -138,6 +144,7 @@ export const CreatePurchaseOrderModal = ({ isOpen, onClose, onSuccess, isLoading
 
     try {
       const request: CreatePurchaseOrderRequest = {
+        poRefNo: formData.poRefNo,
         locationId: Number(formData.locationId),
         vendorId: Number(formData.vendorId),
         purchaseDate: new Date().toISOString(),
@@ -158,7 +165,7 @@ export const CreatePurchaseOrderModal = ({ isOpen, onClose, onSuccess, isLoading
   }
 
   const handleReset = () => {
-    setFormData({ locationId: '', vendorId: '', remark: '' })
+    setFormData({ poRefNo: '', locationId: locations && locations.length > 0 ? locations[0].id.toString() : '', vendorId: '', remark: '' })
     setSelectedItems([])
     setItemSearch('')
     setCurrentItemQty('1')
@@ -188,60 +195,65 @@ export const CreatePurchaseOrderModal = ({ isOpen, onClose, onSuccess, isLoading
 
         {/* Form Content */}
         <form onSubmit={handleSubmit} className="p-6 space-y-6">
-          {/* Location and Vendor */}
+          {/* PO Reference and Location */}
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                Location <span className="text-red-500">*</span>
+                PO Reference No <span className="text-red-500">*</span>
               </label>
-              <select
-                value={formData.locationId}
+              <input
+                type="text"
+                value={formData.poRefNo}
                 onChange={(e) => {
-                  setFormData((prev) => ({ ...prev, locationId: e.target.value }))
+                  setFormData((prev) => ({ ...prev, poRefNo: e.target.value }))
                   setErrors((prev) => {
                     const newErrors = { ...prev }
-                    delete newErrors.locationId
+                    delete newErrors.poRefNo
                     return newErrors
                   })
                 }}
+                placeholder="Enter PO reference number"
                 disabled={isLoading}
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent disabled:bg-gray-50"
-              >
-                <option value="">Select Location</option>
-                {locations.map((loc) => (
-                  <option key={loc.id} value={loc.id}>
-                    {loc.location_Name}
-                  </option>
-                ))}
-              </select>
-              {errors.locationId && <p className="text-sm text-red-600 mt-1">{errors.locationId}</p>}
+              />
+              {errors.poRefNo && <p className="text-sm text-red-600 mt-1">{errors.poRefNo}</p>}
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                Vendor <span className="text-red-500">*</span>
+                Location
               </label>
-              <select
-                value={formData.vendorId}
-                onChange={(e) => {
-                  setFormData((prev) => ({ ...prev, vendorId: e.target.value }))
-                  setErrors((prev) => {
-                    const newErrors = { ...prev }
-                    delete newErrors.vendorId
-                    return newErrors
-                  })
-                }}
-                disabled={isLoading}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent disabled:bg-gray-50"
-              >
-                <option value="">Select Vendor</option>
-                {vendors.map((vendor) => (
-                  <option key={vendor.id} value={vendor.id}>
-                    {vendor.company_Name}
-                  </option>
-                ))}
-              </select>
-              {errors.vendorId && <p className="text-sm text-red-600 mt-1">{errors.vendorId}</p>}
+              <div className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-gray-50 flex items-center">
+                <span className="text-gray-700">{locations && formData.locationId ? locations.find(l => l.id.toString() === formData.locationId)?.location_Name : 'Default Location'}</span>
+              </div>
             </div>
+          </div>
+
+          {/* Vendor */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Vendor <span className="text-red-500">*</span>
+            </label>
+            <select
+              value={formData.vendorId}
+              onChange={(e) => {
+                setFormData((prev) => ({ ...prev, vendorId: e.target.value }))
+                setErrors((prev) => {
+                  const newErrors = { ...prev }
+                  delete newErrors.vendorId
+                  return newErrors
+                })
+              }}
+              disabled={isLoading}
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent disabled:bg-gray-50"
+            >
+              <option value="">Select Vendor</option>
+              {vendors.map((vendor) => (
+                <option key={vendor.id} value={vendor.id}>
+                  {vendor.company_Name}
+                </option>
+              ))}
+            </select>
+            {errors.vendorId && <p className="text-sm text-red-600 mt-1">{errors.vendorId}</p>}
           </div>
 
           {/* Remark */}
