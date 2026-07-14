@@ -75,6 +75,19 @@ export const PurchaseOrderDetailPage = () => {
     }
   }, [id, dispatch])
 
+  const handleCancelItem = useCallback(async (itemId: number) => {
+    if (!id || !window.confirm('Are you sure you want to cancel this item?')) return
+    setActionLoading(true)
+    try {
+      await purchaseOrderService.cancelItem(Number(id), itemId)
+      dispatch(fetchPOById(Number(id)) as any)
+    } catch (error) {
+      console.error('Failed to cancel item:', error)
+    } finally {
+      setActionLoading(false)
+    }
+  }, [id, dispatch])
+
   const handleCancelItemWithReturn = useCallback(async (itemId: number) => {
     if (!id || !window.confirm('Are you sure you want to cancel this item with return?')) return
     setActionLoading(true)
@@ -144,6 +157,17 @@ export const PurchaseOrderDetailPage = () => {
   const isEditable = currentOrder.status === PurchaseOrderStatus.Pending
   const canAddItems = currentOrder.status === PurchaseOrderStatus.Pending
 
+  const canCancelPO = (): boolean => {
+    if (!currentOrder.items || currentOrder.items.length === 0) return false
+
+    const itemStatuses = currentOrder.items.map(i => i.status)
+    const allSaved = itemStatuses.every(s => s === PurchaseOrderStatus.Pending)
+    const allConfirmed = itemStatuses.every(s => s === PurchaseOrderStatus.Confirmed)
+    const mixedConfirmedCancelled = itemStatuses.every(s => s === PurchaseOrderStatus.Confirmed || s === PurchaseOrderStatus.Cancelled)
+
+    return allSaved || allConfirmed || mixedConfirmedCancelled
+  }
+
   const itemColumns: Column<PurchaseOrderItem>[] = [
     {
       key: 'item_Code',
@@ -212,7 +236,7 @@ export const PurchaseOrderDetailPage = () => {
     {
       key: 'actions',
       label: 'Actions',
-      width: '140px',
+      width: '180px',
       render: (_, item) => (
         <div className="flex gap-2">
           {currentOrder.status === PurchaseOrderStatus.Pending && (
@@ -220,20 +244,40 @@ export const PurchaseOrderDetailPage = () => {
               onClick={() => handleRemoveItem(item.id)}
               disabled={actionLoading}
               className="p-1.5 text-red-600 hover:bg-red-50 rounded transition-colors disabled:opacity-50"
-              title="Remove item"
+              title="Delete item"
             >
               <Trash2 size={16} />
             </button>
           )}
-          {(item.status === PurchaseOrderStatus.PartiallyReceived || item.status === PurchaseOrderStatus.Received) && (
+          {item.status === PurchaseOrderStatus.Confirmed && (
             <button
-              onClick={() => handleCancelItemWithReturn(item.id)}
+              onClick={() => handleCancelItem(item.id)}
               disabled={actionLoading}
-              className="p-1.5 text-orange-600 hover:bg-orange-50 rounded transition-colors disabled:opacity-50"
-              title="Cancel with return"
+              className="p-1.5 text-gray-600 hover:bg-gray-100 rounded transition-colors disabled:opacity-50"
+              title="Cancel item"
             >
-              <RotateCcw size={16} />
+              <X size={16} />
             </button>
+          )}
+          {(item.status === PurchaseOrderStatus.PartiallyReceived || item.status === PurchaseOrderStatus.Received) && (
+            <>
+              <button
+                onClick={() => handleCancelItem(item.id)}
+                disabled={actionLoading}
+                className="p-1.5 text-gray-600 hover:bg-gray-100 rounded transition-colors disabled:opacity-50"
+                title="Cancel item"
+              >
+                <X size={16} />
+              </button>
+              <button
+                onClick={() => handleCancelItemWithReturn(item.id)}
+                disabled={actionLoading}
+                className="p-1.5 text-orange-600 hover:bg-orange-50 rounded transition-colors disabled:opacity-50"
+                title="Cancel with return"
+              >
+                <RotateCcw size={16} />
+              </button>
+            </>
           )}
         </div>
       ),
@@ -294,7 +338,7 @@ export const PurchaseOrderDetailPage = () => {
               Confirm
             </button>
           )}
-          {(currentOrder.status === PurchaseOrderStatus.Pending || currentOrder.status === PurchaseOrderStatus.Confirmed || currentOrder.status === PurchaseOrderStatus.PartiallyReceived) && (
+          {canCancelPO() && currentOrder.status !== PurchaseOrderStatus.Cancelled && (
             <button
               onClick={handleCancel}
               className="flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors disabled:opacity-50"

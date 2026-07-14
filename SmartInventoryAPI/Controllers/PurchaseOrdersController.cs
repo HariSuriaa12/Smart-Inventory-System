@@ -184,6 +184,21 @@ public class PurchaseOrdersController : ControllerBase
         });
     }
 
+    [HttpPost("{id}/items/{itemId}/cancel")]
+    public async Task<ActionResult<ApiResponseDto<PurchaseOrderDetailDto>>> CancelItem(
+        long id,
+        long itemId)
+    {
+        var po = await _poService.CancelItemAsync(id, itemId);
+        return Ok(new ApiResponseDto<PurchaseOrderDetailDto>
+        {
+            Success = true,
+            Message = "Item cancelled successfully",
+            Data = po,
+            StatusCode = 200
+        });
+    }
+
     [HttpPost("{id}/items/{itemId}/cancel-with-return")]
     public async Task<ActionResult<ApiResponseDto<PurchaseOrderDetailDto>>> CancelItemWithReturn(
         long id,

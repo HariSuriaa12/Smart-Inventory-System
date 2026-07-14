@@ -467,4 +467,44 @@ public class PurchaseOrderService : IPurchaseOrderService
 
         return await GetPurchaseOrderByIdAsync(id);
     }
+
+    public async Task<PurchaseOrderDetailDto> CancelItemAsync(long id, long itemId)
+    {
+        var po = await _unitOfWork.PurchaseOrders.GetByIdAsync(id);
+        if (po == null || po.Is_Deleted)
+            throw new NotFoundException("Purchase Order not found");
+
+        if (po.Status == 0)
+            throw new BadRequestException("Cannot cancel individual items for Pending purchase orders");
+
+        var poItem = await _unitOfWork.Context.Set<PurchaseOrderItem>()
+            .FirstOrDefaultAsync(p => p.ID == itemId && p.PO_ID == id && !p.Is_Deleted);
+        if (poItem == null)
+            throw new NotFoundException("Purchase Order item not found");
+
+        if (poItem.Status != 1 && poItem.Status != 2 && poItem.Status != 3)
+            throw new BadRequestException("Only Confirmed, Partially Received, or Received items can be cancelled");
+
+        poItem.Status = 4;
+        _unitOfWork.Context.Set<PurchaseOrderItem>().Update(poItem);
+
+        var allItems = await _unitOfWork.Context.Set<PurchaseOrderItem>()
+            .Where(i => i.PO_ID == id && !i.Is_Deleted)
+            .ToListAsync();
+
+        bool allCancelled = allItems.All(i => i.Status == 4);
+
+        if (allCancelled)
+        {
+            po.Status = 4;
+        }
+
+        po.Purchase_Date = DateTime.SpecifyKind(po.Purchase_Date, DateTimeKind.Utc);
+        await _unitOfWork.PurchaseOrders.UpdateAsync(po);
+        await _unitOfWork.SaveAsync();
+
+        _logger.LogInformation("Item {ItemID} cancelled for Purchase Order {POID}", itemId, id);
+
+        return await GetPurchaseOrderByIdAsync(id);
+    }
 }

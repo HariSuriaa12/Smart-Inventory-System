@@ -16,5 +16,6 @@ public interface IPurchaseOrderService
     Task<PurchaseOrderDetailDto> AddItemToPurchaseOrderAsync(long id, AddPurchaseOrderItemRequestDto request);
     Task<PurchaseOrderDetailDto> RemoveItemFromPurchaseOrderAsync(long id, long itemId);
     Task<PurchaseOrderDetailDto> ReceiveItemAsync(long id, long itemId, decimal receivedQuantity);
+    Task<PurchaseOrderDetailDto> CancelItemAsync(long id, long itemId);
     Task<PurchaseOrderDetailDto> CancelItemWithReturnAsync(long id, long itemId);
 }

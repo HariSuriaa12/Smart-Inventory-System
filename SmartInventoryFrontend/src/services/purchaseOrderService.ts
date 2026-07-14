@@ -27,6 +27,9 @@ export const purchaseOrderService = {
   receiveItem: async (id: number, itemId: number, receivedQuantity: number) =>
     (await api.post<ApiResponse<PurchaseOrder>>(`/api/purchaseorders/${id}/items/${itemId}/receive`, null, { params: { receivedQuantity } })).data,
 
+  cancelItem: async (id: number, itemId: number) =>
+    (await api.post<ApiResponse<PurchaseOrder>>(`/api/purchaseorders/${id}/items/${itemId}/cancel`)).data,
+
   cancelItemWithReturn: async (id: number, itemId: number) =>
     (await api.post<ApiResponse<PurchaseOrder>>(`/api/purchaseorders/${id}/items/${itemId}/cancel-with-return`)).data,
 
