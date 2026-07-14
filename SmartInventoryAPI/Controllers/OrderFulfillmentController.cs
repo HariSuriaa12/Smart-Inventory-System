@@ -39,12 +39,16 @@ public class OrderFulfillmentController : ControllerBase
 
     [Authorize]
     [HttpGet]
-    public async Task<ActionResult<ApiResponseDto<IEnumerable<OrderFulfillmentDto>>>> GetAllOrderFulfillments(
+    public async Task<ActionResult<ApiResponseDto<PaginatedResponseDto<OrderFulfillmentDto>>>> GetAllOrderFulfillments(
         [FromQuery] int skip = 0,
-        [FromQuery] int take = 10)
+        [FromQuery] int take = 10,
+        [FromQuery] long? fulfillmentId = null,
+        [FromQuery] long? customerId = null,
+        [FromQuery] bool? unprocessedOnly = null,
+        [FromQuery] long? locationId = null)
     {
-        var orders = await _ofService.GetAllOrderFulfillmentsAsync(skip, take);
-        return Ok(new ApiResponseDto<IEnumerable<OrderFulfillmentDto>>
+        var orders = await _ofService.GetAllOrderFulfillmentsAsync(skip, take, fulfillmentId, customerId, unprocessedOnly, locationId);
+        return Ok(new ApiResponseDto<PaginatedResponseDto<OrderFulfillmentDto>>
         {
             Success = true,
             Message = "Order fulfillments retrieved successfully",
@@ -84,6 +88,71 @@ public class OrderFulfillmentController : ControllerBase
     }
 
     [Authorize]
+    [HttpPost("{id}/verify-and-assign")]
+    public async Task<ActionResult<ApiResponseDto<OrderFulfillmentDetailDto>>> VerifyAndAssign(
+        long id,
+        [FromQuery] long locationId)
+    {
+        var order = await _ofService.VerifyAndAssignAsync(id, locationId);
+        return Ok(new ApiResponseDto<OrderFulfillmentDetailDto>
+        {
+            Success = true,
+            Message = "Order fulfillment verified and assigned successfully",
+            Data = order,
+            StatusCode = 200
+        });
+    }
+
+    [Authorize]
+    [HttpPost("{id}/items/{itemId}/ship")]
+    public async Task<ActionResult<ApiResponseDto<OrderFulfillmentDetailDto>>> ShipItem(
+        long id,
+        long itemId,
+        [FromQuery] decimal shippedQuantity)
+    {
+        var order = await _ofService.ShipItemAsync(id, itemId, shippedQuantity);
+        return Ok(new ApiResponseDto<OrderFulfillmentDetailDto>
+        {
+            Success = true,
+            Message = "Item shipped successfully",
+            Data = order,
+            StatusCode = 200
+        });
+    }
+
+    [Authorize]
+    [HttpPost("{id}/items/{itemId}/cancel")]
+    public async Task<ActionResult<ApiResponseDto<OrderFulfillmentDetailDto>>> CancelItem(
+        long id,
+        long itemId)
+    {
+        var order = await _ofService.CancelItemAsync(id, itemId);
+        return Ok(new ApiResponseDto<OrderFulfillmentDetailDto>
+        {
+            Success = true,
+            Message = "Item cancelled successfully",
+            Data = order,
+            StatusCode = 200
+        });
+    }
+
+    [Authorize]
+    [HttpPost("{id}/items/{itemId}/cancel-with-return")]
+    public async Task<ActionResult<ApiResponseDto<OrderFulfillmentDetailDto>>> CancelItemWithReturn(
+        long id,
+        long itemId)
+    {
+        var order = await _ofService.CancelItemWithReturnAsync(id, itemId);
+        return Ok(new ApiResponseDto<OrderFulfillmentDetailDto>
+        {
+            Success = true,
+            Message = "Item cancelled with return successfully",
+            Data = order,
+            StatusCode = 200
+        });
+    }
+
+    [Authorize]
     [HttpDelete("{id}")]
     public async Task<ActionResult<ApiResponseDto>> DeleteOrderFulfillment(long id)
     {
@@ -98,13 +167,13 @@ public class OrderFulfillmentController : ControllerBase
 
     [Authorize]
     [HttpGet("customer/{customerId}")]
-    public async Task<ActionResult<ApiResponseDto<IEnumerable<OrderFulfillmentDto>>>> GetByCustomer(
+    public async Task<ActionResult<ApiResponseDto<PaginatedResponseDto<OrderFulfillmentDto>>>> GetByCustomer(
         long customerId,
         [FromQuery] int skip = 0,
         [FromQuery] int take = 10)
     {
         var orders = await _ofService.GetByCustomerAsync(customerId, skip, take);
-        return Ok(new ApiResponseDto<IEnumerable<OrderFulfillmentDto>>
+        return Ok(new ApiResponseDto<PaginatedResponseDto<OrderFulfillmentDto>>
         {
             Success = true,
             Message = "Order fulfillments retrieved by customer successfully",
