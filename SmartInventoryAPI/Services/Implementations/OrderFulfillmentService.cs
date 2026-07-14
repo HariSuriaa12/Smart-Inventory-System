@@ -90,7 +90,7 @@ public class OrderFulfillmentService : IOrderFulfillmentService
 
     public async Task<PaginatedResponseDto<OrderFulfillmentDto>> GetAllOrderFulfillmentsAsync(
         int skip = 0, int take = 10, long? fulfillmentId = null, long? customerId = null,
-        bool? unprocessedOnly = null, long? locationId = null)
+        int? status = null, bool? unprocessedOnly = null, long? locationId = null)
     {
         IQueryable<OrderFulfillmentHeader> query = _unitOfWork.Context.Set<OrderFulfillmentHeader>()
             .Where(o => !o.Is_Deleted)
@@ -103,6 +103,9 @@ public class OrderFulfillmentService : IOrderFulfillmentService
 
         if (customerId.HasValue)
             query = query.Where(o => o.Customer_ID == customerId.Value);
+
+        if (status.HasValue)
+            query = query.Where(o => o.Status == status.Value);
 
         if (unprocessedOnly.HasValue && unprocessedOnly.Value)
             query = query.Where(o => o.Location_ID == 0);

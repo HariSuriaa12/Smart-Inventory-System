@@ -44,10 +44,11 @@ public class OrderFulfillmentController : ControllerBase
         [FromQuery] int take = 10,
         [FromQuery] long? fulfillmentId = null,
         [FromQuery] long? customerId = null,
+        [FromQuery] int? status = null,
         [FromQuery] bool? unprocessedOnly = null,
         [FromQuery] long? locationId = null)
     {
-        var orders = await _ofService.GetAllOrderFulfillmentsAsync(skip, take, fulfillmentId, customerId, unprocessedOnly, locationId);
+        var orders = await _ofService.GetAllOrderFulfillmentsAsync(skip, take, fulfillmentId, customerId, status, unprocessedOnly, locationId);
         return Ok(new ApiResponseDto<PaginatedResponseDto<OrderFulfillmentDto>>
         {
             Success = true,

@@ -1,6 +1,7 @@
 import { useEffect, useState, useCallback } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { Card, DataGrid, Column } from '@/components'
+import { ShipItemModal } from '@/components/modals/ShipItemModal'
 import { orderFulfillmentService } from '@/services/orderFulfillmentService'
 import { OrderFulfillment, OrderFulfillmentItem, OrderFulfillmentStatus, OrderFulfillmentStatusLabel } from '@/types/orderfulfillment'
 import { ArrowLeft, Check, X, RotateCcw, Package } from 'lucide-react'
@@ -21,6 +22,8 @@ export const OrderFulfillmentDetailPage = () => {
   const [loading, setLoading] = useState(false)
   const [actionLoading, setActionLoading] = useState(false)
   const [selectedLocationId, setSelectedLocationId] = useState<string>('')
+  const [isShipModalOpen, setIsShipModalOpen] = useState(false)
+  const [selectedItem, setSelectedItem] = useState<OrderFulfillmentItem | null>(null)
 
   useEffect(() => {
     if (id) {
@@ -58,23 +61,16 @@ export const OrderFulfillmentDetailPage = () => {
     }
   }, [id, selectedLocationId])
 
-  const handleShipItem = useCallback(
-    async (itemId: number) => {
-      const quantity = prompt('Enter shipped quantity:')
-      if (!quantity || !id) return
-      setActionLoading(true)
-      try {
-        const response = await orderFulfillmentService.shipItem(Number(id), itemId, parseFloat(quantity))
-        setOrder(response.data)
-      } catch (error) {
-        console.error('Failed to ship item:', error)
-        alert('Failed to ship item')
-      } finally {
-        setActionLoading(false)
-      }
-    },
-    [id]
-  )
+  const handleShipItemClick = useCallback((item: OrderFulfillmentItem) => {
+    setSelectedItem(item)
+    setIsShipModalOpen(true)
+  }, [])
+
+  const handleShipSuccess = useCallback(async () => {
+    await loadOrder()
+    setIsShipModalOpen(false)
+    setSelectedItem(null)
+  }, [])
 
   const handleCancelItem = useCallback(
     async (itemId: number) => {
@@ -202,19 +198,9 @@ export const OrderFulfillmentDetailPage = () => {
     {
       key: 'actions',
       label: 'Actions',
-      width: '150px',
+      width: '120px',
       render: (_, item) => (
         <div className="flex gap-2">
-          {canShip && item.status !== OrderFulfillmentStatus.Cancelled && (
-            <button
-              onClick={() => handleShipItem(item.id)}
-              disabled={actionLoading}
-              className="p-1.5 text-green-600 hover:bg-green-50 rounded transition-colors disabled:opacity-50"
-              title="Ship item"
-            >
-              <Check size={16} />
-            </button>
-          )}
           {(item.status === OrderFulfillmentStatus.PartiallyFulfilled || item.status === OrderFulfillmentStatus.Fulfilled) && (
             <>
               <button
@@ -317,18 +303,32 @@ export const OrderFulfillmentDetailPage = () => {
       <Card className="flex flex-col overflow-hidden p-6" style={{ height: '400px' }}>
         <div className="mb-4 flex items-center gap-2 flex-shrink-0">
           <Package size={20} className="text-primary-600" />
-          <h2 className="text-lg font-semibold text-gray-900">Items</h2>
+          <h2 className="text-lg font-semibold text-gray-900">Items (Double-click to ship)</h2>
         </div>
         <div className="flex-1 overflow-y-auto">
           <DataGrid<OrderFulfillmentItem>
             columns={itemColumns}
             data={order.items || []}
             loading={false}
+            onRowDoubleClick={(item) => canShip && item.status !== OrderFulfillmentStatus.Cancelled && handleShipItemClick(item)}
             rowKey="id"
             emptyMessage="No items in this order"
           />
         </div>
       </Card>
+
+      {/* Ship Item Modal */}
+      <ShipItemModal
+        isOpen={isShipModalOpen}
+        fulfillmentId={Number(id)}
+        item={selectedItem}
+        onClose={() => {
+          setIsShipModalOpen(false)
+          setSelectedItem(null)
+        }}
+        onSuccess={handleShipSuccess}
+        isLoading={actionLoading}
+      />
     </div>
   )
 }

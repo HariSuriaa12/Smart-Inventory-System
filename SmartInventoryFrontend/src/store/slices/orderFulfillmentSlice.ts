@@ -15,7 +15,14 @@ const initialState: OrderFulfillmentState = {
 export const fetchOrderFulfillments = createAsyncThunk('of/fetch', async (params: any, { rejectWithValue }) => {
   try {
     const { skip = 0, take = 10, ...filters } = params
-    const response = await orderFulfillmentService.getAllOrderFulfillments(skip, take, filters)
+    const filterParams: any = {}
+
+    if (filters.fulfillmentId) filterParams.fulfillmentId = filters.fulfillmentId
+    if (filters.customerId) filterParams.customerId = filters.customerId
+    if (filters.status !== undefined && filters.status !== '') filterParams.status = filters.status
+    if (filters.unprocessedOnly) filterParams.unprocessedOnly = filters.unprocessedOnly
+
+    const response = await orderFulfillmentService.getAllOrderFulfillments(skip, take, filterParams)
     return response
   } catch (error: any) {
     return rejectWithValue(error.message)

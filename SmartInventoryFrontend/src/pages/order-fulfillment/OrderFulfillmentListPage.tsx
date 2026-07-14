@@ -1,6 +1,7 @@
 import { useEffect, useState, useCallback, useMemo } from 'react'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { fetchOrderFulfillments } from '@/store/slices/orderFulfillmentSlice'
+import { fetchCustomers } from '@/store/slices/customerSlice'
 import { useNavigate } from 'react-router-dom'
 import { Card, DataGrid, Column } from '@/components'
 import { ColumnSelectorModal } from '@/components/modals/ColumnSelectorModal'
@@ -43,6 +44,7 @@ export const OrderFulfillmentListPage = () => {
   const [currentPage, setCurrentPage] = useState(1)
   const [fulfillmentIdFilter, setFulfillmentIdFilter] = useState('')
   const [customerIdFilter, setCustomerIdFilter] = useState('')
+  const [statusFilter, setStatusFilter] = useState<OrderFulfillmentStatus | ''>('')
   const [unprocessedOnlyFilter, setUnprocessedOnlyFilter] = useState(false)
   const [isColumnSelectorOpen, setIsColumnSelectorOpen] = useState(false)
 
@@ -55,6 +57,12 @@ export const OrderFulfillmentListPage = () => {
   })
 
   const { orders, loading, total } = useAppSelector((state) => state.orderFulfillment)
+  const { customers } = useAppSelector((state) => state.customers)
+
+  // Fetch customers on mount
+  useEffect(() => {
+    dispatch(fetchCustomers({ skip: 0, take: 100 }) as any)
+  }, [dispatch])
 
   // Debounce filter changes
   useEffect(() => {
@@ -65,11 +73,12 @@ export const OrderFulfillmentListPage = () => {
         take: PAGE_SIZE,
         fulfillmentId: fulfillmentIdFilter ? Number(fulfillmentIdFilter) : undefined,
         customerId: customerIdFilter ? Number(customerIdFilter) : undefined,
+        status: statusFilter ? Number(statusFilter) : undefined,
         unprocessedOnly: unprocessedOnlyFilter ? true : undefined,
       }) as any)
     }, 800)
     return () => clearTimeout(debounceTimer)
-  }, [fulfillmentIdFilter, customerIdFilter, unprocessedOnlyFilter, dispatch])
+  }, [fulfillmentIdFilter, customerIdFilter, statusFilter, unprocessedOnlyFilter, dispatch])
 
   // Fetch when page changes
   useEffect(() => {
@@ -79,6 +88,7 @@ export const OrderFulfillmentListPage = () => {
       take: PAGE_SIZE,
       fulfillmentId: fulfillmentIdFilter ? Number(fulfillmentIdFilter) : undefined,
       customerId: customerIdFilter ? Number(customerIdFilter) : undefined,
+      status: statusFilter ? Number(statusFilter) : undefined,
       unprocessedOnly: unprocessedOnlyFilter ? true : undefined,
     }) as any)
   }, [currentPage])
@@ -86,6 +96,7 @@ export const OrderFulfillmentListPage = () => {
   const handleClearFilters = useCallback(() => {
     setFulfillmentIdFilter('')
     setCustomerIdFilter('')
+    setStatusFilter('')
     setUnprocessedOnlyFilter(false)
     setCurrentPage(1)
   }, [])
@@ -201,7 +212,7 @@ export const OrderFulfillmentListPage = () => {
 
       {/* Filter Bar */}
       <div className="flex-shrink-0 space-y-3">
-        {/* Row 1: Fulfillment ID, Customer ID, Unprocessed Only */}
+        {/* Row 1: Fulfillment ID, Customer Dropdown, Status */}
         <div className="flex gap-2">
           <input
             type="text"
@@ -210,24 +221,30 @@ export const OrderFulfillmentListPage = () => {
             onChange={(e) => setFulfillmentIdFilter(e.target.value)}
             className="flex-1 px-3 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm"
           />
-          <input
-            type="text"
-            placeholder="Filter by Customer ID..."
+          <select
             value={customerIdFilter}
             onChange={(e) => setCustomerIdFilter(e.target.value)}
-            className="flex-1 px-3 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm"
-          />
-          <div className="flex items-center px-3 py-2.5">
-            <label className="flex items-center gap-2 cursor-pointer whitespace-nowrap">
-              <input
-                type="checkbox"
-                checked={unprocessedOnlyFilter}
-                onChange={(e) => setUnprocessedOnlyFilter(e.target.checked)}
-                className="w-4 h-4 text-primary-600 border-gray-300 rounded focus:ring-primary-500"
-              />
-              <span className="text-sm text-gray-700">Unprocessed</span>
-            </label>
-          </div>
+            className="flex-1 px-3 py-2.5 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm"
+          >
+            <option value="">All Customers</option>
+            {customers?.map((customer: any) => (
+              <option key={customer.id} value={customer.id}>
+                {customer.company_Name || customer.customer_Name}
+              </option>
+            ))}
+          </select>
+          <select
+            value={statusFilter}
+            onChange={(e) => setStatusFilter(e.target.value as any)}
+            className="flex-1 px-3 py-2.5 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm"
+          >
+            <option value="">All Status</option>
+            {Object.entries(OrderFulfillmentStatusLabel).map(([key, label]) => (
+              <option key={key} value={key}>
+                {label}
+              </option>
+            ))}
+          </select>
         </div>
 
         {/* Row 2: Actions */}
