@@ -92,7 +92,7 @@ public class OrderFulfillmentService : IOrderFulfillmentService
         int skip = 0, int take = 10, long? fulfillmentId = null, long? customerId = null,
         bool? unprocessedOnly = null, long? locationId = null)
     {
-        var query = _unitOfWork.Context.Set<OrderFulfillmentHeader>()
+        IQueryable<OrderFulfillmentHeader> query = _unitOfWork.Context.Set<OrderFulfillmentHeader>()
             .Where(o => !o.Is_Deleted)
             .Include(o => o.Customer)
             .Include(o => o.Location)
