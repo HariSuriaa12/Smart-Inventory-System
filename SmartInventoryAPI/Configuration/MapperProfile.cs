@@ -128,13 +128,20 @@ public class MapperProfile : Profile
 
         // OrderFulfillment mappings
         CreateMap<OrderFulfillmentHeader, OrderFulfillmentDto>()
-            .ForMember(dest => dest.Customer_Name, opt => opt.MapFrom(src => src.Customer != null ? src.Customer.Company_Name : ""));
+            .ForMember(dest => dest.Customer_Name, opt => opt.MapFrom(src => src.Customer != null ? src.Customer.Company_Name : ""))
+            .ForMember(dest => dest.Location_Name, opt => opt.MapFrom(src => src.Location != null ? src.Location.Location_Name : ""))
+            .ForMember(dest => dest.Verified_By_Name, opt => opt.MapFrom(src => src.User != null ? src.User.Full_Name : ""));
 
         CreateMap<OrderFulfillmentItem, OrderFulfillmentItemDto>()
-            .ForMember(dest => dest.Item_Name, opt => opt.MapFrom(src => src.Item != null ? src.Item.Item_Name : ""));
+            .ForMember(dest => dest.Item_Name, opt => opt.MapFrom(src => src.Item != null ? src.Item.Item_Name : ""))
+            .ForMember(dest => dest.Item_Code, opt => opt.MapFrom(src => src.Item != null ? src.Item.Item_Code : ""))
+            .ForMember(dest => dest.Item_Category, opt => opt.MapFrom(src => src.Item != null ? src.Item.Item_Category : ""))
+            .ForMember(dest => dest.Unit_Of_Measure, opt => opt.MapFrom(src => src.Item != null ? src.Item.Unit_Of_Measure : ""));
 
         CreateMap<OrderFulfillmentHeader, OrderFulfillmentDetailDto>()
-            .ForMember(dest => dest.Customer_Name, opt => opt.MapFrom(src => src.Customer != null ? src.Customer.Company_Name : ""));
+            .ForMember(dest => dest.Customer_Name, opt => opt.MapFrom(src => src.Customer != null ? src.Customer.Company_Name : ""))
+            .ForMember(dest => dest.Location_Name, opt => opt.MapFrom(src => src.Location != null ? src.Location.Location_Name : ""))
+            .ForMember(dest => dest.Verified_By_Name, opt => opt.MapFrom(src => src.User != null ? src.User.Full_Name : ""));
 
         // Sales mappings
         CreateMap<Sales, SalesDto>()

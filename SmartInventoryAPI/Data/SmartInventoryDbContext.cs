@@ -284,5 +284,37 @@ public class SmartInventoryDbContext : DbContext
             .WithMany()
             .HasForeignKey(p => p.Item_ID)
             .OnDelete(DeleteBehavior.Restrict);
+
+        // Configure OrderFulfillmentHeader relationships
+        modelBuilder.Entity<OrderFulfillmentHeader>()
+            .HasOne(o => o.Customer)
+            .WithMany()
+            .HasForeignKey(o => o.Customer_ID)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<OrderFulfillmentHeader>()
+            .HasOne(o => o.Location)
+            .WithMany()
+            .HasForeignKey(o => o.Location_ID)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<OrderFulfillmentHeader>()
+            .HasOne(o => o.User)
+            .WithMany()
+            .HasForeignKey(o => o.Verified_By)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        // Configure OrderFulfillmentItem relationships
+        modelBuilder.Entity<OrderFulfillmentItem>()
+            .HasOne(i => i.OrderFulfillment)
+            .WithMany(of => of.Items)
+            .HasForeignKey(i => i.Fulfillment_ID)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<OrderFulfillmentItem>()
+            .HasOne(i => i.Item)
+            .WithMany()
+            .HasForeignKey(i => i.Item_ID)
+            .OnDelete(DeleteBehavior.Restrict);
     }
 }
