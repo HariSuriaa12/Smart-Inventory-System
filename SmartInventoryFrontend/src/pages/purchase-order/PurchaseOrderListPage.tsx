@@ -23,7 +23,7 @@ const MANDATORY_COLUMNS = [
 
 // Optional columns that users can toggle
 const OPTIONAL_COLUMNS = [
-  { key: 'po_Refence_No', label: 'PO Reference' },
+  { key: 'pO_Reference_No', label: 'PO Reference' },
   { key: 'vendor_Name', label: 'Vendor Name' },
   { key: 'vendor_Email', label: 'Vendor Email' },
   { key: 'vendor_Mobile', label: 'Vendor Phone' },
@@ -135,8 +135,8 @@ export const PurchaseOrderListPage = () => {
       label: 'PO ID',
       width: '80px',
     },
-    po_Refence_No: {
-      key: 'po_Refence_No',
+    pO_Reference_No: {
+      key: 'pO_Reference_No',
       label: 'PO Reference',
       width: '150px',
     },
@@ -329,7 +329,7 @@ export const PurchaseOrderListPage = () => {
         </div>
 
         {/* Row 2: Date Range */}
-        <div className="flex gap-2">
+        {/* <div className="flex gap-2">
           <div className="flex-1">
             <DateRangePicker
               startDate={dateFromFilter}
@@ -338,9 +338,8 @@ export const PurchaseOrderListPage = () => {
               onEndDateChange={setDateToFilter}
             />
           </div>
-          {/* Spacer to align with actions row */}
           <div className="w-0" />
-        </div>
+        </div> */}
 
         {/* Row 3: Actions */}
         <div className="flex gap-2 justify-end">

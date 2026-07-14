@@ -97,7 +97,7 @@ public class PurchaseOrderRepository : GenericRepository<PurchaseOrderHeader>, I
         long? poId = null, string? poRefNo = null, long? vendorId = null, int? status = null,
         string? dateFrom = null, string? dateTo = null, int skip = 0, int take = 10)
     {
-        var query = _dbSet
+        IQueryable<PurchaseOrderHeader> query = _dbSet
             .Where(p => !p.Is_Deleted)
             .Include(p => p.Vendor)
             .Include(p => p.Location)

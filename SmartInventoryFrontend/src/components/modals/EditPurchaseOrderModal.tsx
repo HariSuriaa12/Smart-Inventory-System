@@ -39,7 +39,7 @@ export const EditPurchaseOrderModal = ({ isOpen, po, onClose, onSuccess, isLoadi
     if (!po || !validateForm()) return
 
     try {
-      await dispatch(updatePO({ id: po.id, data: { remark: formData.remark } }) as any)
+      await dispatch(updatePO({ id: po.id, data: { Remark: formData.remark } }) as any)
       onSuccess()
     } catch (error) {
       console.error('Failed to update purchase order:', error)

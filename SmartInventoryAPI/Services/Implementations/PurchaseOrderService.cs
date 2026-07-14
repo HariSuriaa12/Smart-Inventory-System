@@ -47,6 +47,7 @@ public class PurchaseOrderService : IPurchaseOrderService
         };
 
         var createdPO = await _unitOfWork.PurchaseOrders.AddAsync(po);
+        await _unitOfWork.SaveAsync();
         decimal totalAmount = 0;
 
         if (request.Items != null)
@@ -118,6 +119,7 @@ public class PurchaseOrderService : IPurchaseOrderService
 
         po.Status = request.Status;
         po.Remark = request.Remark;
+        po.Purchase_Date = DateTime.SpecifyKind(po.Purchase_Date, DateTimeKind.Utc);
 
         await _unitOfWork.PurchaseOrders.UpdateAsync(po);
         await _unitOfWork.SaveAsync();
@@ -205,6 +207,7 @@ public class PurchaseOrderService : IPurchaseOrderService
 
         // Update PO total amount
         po.Total_Amount += poItem.Sub_Total;
+        po.Purchase_Date = DateTime.SpecifyKind(po.Purchase_Date, DateTimeKind.Utc);
         await _unitOfWork.PurchaseOrders.UpdateAsync(po);
         await _unitOfWork.SaveAsync();
 

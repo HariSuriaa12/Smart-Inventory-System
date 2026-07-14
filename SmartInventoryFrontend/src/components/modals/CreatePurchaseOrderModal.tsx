@@ -144,16 +144,16 @@ export const CreatePurchaseOrderModal = ({ isOpen, onClose, onSuccess, isLoading
 
     try {
       const request: CreatePurchaseOrderRequest = {
-        poRefNo: formData.poRefNo,
-        locationId: Number(formData.locationId),
-        vendorId: Number(formData.vendorId),
-        purchaseDate: new Date().toISOString(),
-        purchaseTime: new Date().toTimeString().slice(0, 5),
-        remark: formData.remark || undefined,
-        items: selectedItems.map((si) => ({
-          itemId: si.item.id,
-          orderQuantity: si.orderQuantity,
-          unitPrice: si.unitPrice,
+        PO_Reference_No: formData.poRefNo,
+        Location_Id: Number(formData.locationId),
+        Vendor_Id: Number(formData.vendorId),
+        // purchaseDate: new Date().toISOString(),
+        // purchaseTime: new Date().toTimeString().slice(0, 5),
+        Remark: formData.remark || undefined,
+        Items: selectedItems.map((si) => ({
+          Item_ID: si.item.id,
+          Order_Quantity: si.orderQuantity,
+          Unit_Price: si.unitPrice,
         })),
       }
       await dispatch(createPO(request) as any)

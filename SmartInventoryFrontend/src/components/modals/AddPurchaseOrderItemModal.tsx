@@ -65,9 +65,9 @@ export const AddPurchaseOrderItemModal = ({ isOpen, poId, onClose, onSuccess, is
     setSubmitting(true)
     try {
       await purchaseOrderService.addItemToPO(poId, {
-        itemId: selectedItem.id,
-        orderQuantity: parseFloat(orderQuantity),
-        unitPrice: parseFloat(unitPrice),
+        Item_ID: selectedItem.id,
+        Order_Quantity: parseFloat(orderQuantity),
+        Unit_Price: parseFloat(unitPrice),
       })
       handleReset()
       onSuccess()
