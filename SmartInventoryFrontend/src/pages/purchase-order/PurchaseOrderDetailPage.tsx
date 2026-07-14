@@ -196,7 +196,7 @@ export const PurchaseOrderDetailPage = () => {
             <ArrowLeft size={24} />
           </button>
           <div>
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">Purchase Order {currentOrder.pO_Reference_No}</h1>
+            <h1 className="text-3xl font-bold text-gray-900 mb-2">Purchase Order {currentOrder.id}</h1>
             <div className="flex items-center gap-4">
               <span className={`inline-flex px-3 py-1 rounded-full text-sm font-semibold ${STATUS_BADGE_CLASSES[currentOrder.status]}`}>
                 {PurchaseOrderStatusLabel[currentOrder.status]}
@@ -263,7 +263,7 @@ export const PurchaseOrderDetailPage = () => {
         </Card>
         <Card className="p-4">
           <p className="text-sm text-gray-600 mb-1">Total Amount</p>
-          <p className="text-lg font-semibold text-gray-900">${Number(currentOrder.total_Amount).toFixed(2)}</p>
+          <p className="text-lg font-semibold text-gray-900">{`${Number(currentOrder.total_Amount).toFixed(2)}`}</p>
         </Card>
         <Card className="p-4">
           <p className="text-sm text-gray-600 mb-1">Created By</p>

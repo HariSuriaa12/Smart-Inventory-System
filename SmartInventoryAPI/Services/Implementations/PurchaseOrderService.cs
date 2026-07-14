@@ -139,8 +139,19 @@ public class PurchaseOrderService : IPurchaseOrderService
         if (po.Status != 0)
             throw new BadRequestException("Only Pending purchase orders can be confirmed");
 
+        var items = await _unitOfWork.Context.Set<PurchaseOrderItem>()
+            .Where(i => i.PO_ID == id && !i.Is_Deleted)
+            .ToListAsync();
+
+        foreach (var item in items)
+        {
+            item.Status = 1;
+        }
+
         po.Status = 1;
+        po.Purchase_Date = DateTime.SpecifyKind(po.Purchase_Date, DateTimeKind.Utc);
         await _unitOfWork.PurchaseOrders.UpdateAsync(po);
+        _unitOfWork.Context.Set<PurchaseOrderItem>().UpdateRange(items);
         await _unitOfWork.SaveAsync();
 
         _logger.LogInformation("Purchase Order {ID} confirmed", id);
@@ -173,6 +184,7 @@ public class PurchaseOrderService : IPurchaseOrderService
         {
             item.Status = 4;
         }
+        po.Purchase_Date = DateTime.SpecifyKind(po.Purchase_Date, DateTimeKind.Utc);
 
         await _unitOfWork.PurchaseOrders.UpdateAsync(po);
         _unitOfWork.Context.Set<PurchaseOrderItem>().UpdateRange(items);
@@ -190,6 +202,7 @@ public class PurchaseOrderService : IPurchaseOrderService
             throw new NotFoundException("Purchase Order not found");
 
         po.Is_Deleted = true;
+        po.Purchase_Date = DateTime.SpecifyKind(po.Purchase_Date, DateTimeKind.Utc);
         await _unitOfWork.PurchaseOrders.UpdateAsync(po);
         await _unitOfWork.SaveAsync();
 

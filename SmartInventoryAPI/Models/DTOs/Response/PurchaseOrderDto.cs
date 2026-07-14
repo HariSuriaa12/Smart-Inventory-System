@@ -40,7 +40,7 @@ public class PurchaseOrderItemDto
 public class PurchaseOrderDetailDto
 {
     public long ID { get; set; }
-    public string? PO_Refence_No { get; set; }
+    public string? PO_Reference_No { get; set; }
     public long Location_ID { get; set; }
     public string? Location_Name { get; set; }
     public DateTime Purchase_Date { get; set; }
