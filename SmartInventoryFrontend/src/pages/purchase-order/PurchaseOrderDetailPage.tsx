@@ -380,20 +380,22 @@ export const PurchaseOrderDetailPage = () => {
       )}
 
       {/* Items Table */}
-      <Card className="flex-1 flex flex-col overflow-hidden p-6">
-        <div className="mb-4 flex items-center gap-2">
+      <Card className="flex flex-col overflow-hidden p-6" style={{ height: '400px' }}>
+        <div className="mb-4 flex items-center gap-2 flex-shrink-0">
           <Package size={20} className="text-primary-600" />
           <h2 className="text-lg font-semibold text-gray-900">Items</h2>
         </div>
-        <DataGrid<PurchaseOrderItem>
-          columns={itemColumns}
-          data={currentOrder.items || []}
-          loading={false}
-          onRowDoubleClick={currentOrder.status !== PurchaseOrderStatus.Pending ? handleRowDoubleClick : undefined}
-          rowKey="id"
-          emptyMessage="No items in this purchase order"
-          rowHint={currentOrder.status !== PurchaseOrderStatus.Pending ? 'Double-click to receive item (cancelled items cannot be received)' : undefined}
-        />
+        <div className="flex-1 overflow-y-auto">
+          <DataGrid<PurchaseOrderItem>
+            columns={itemColumns}
+            data={currentOrder.items || []}
+            loading={false}
+            onRowDoubleClick={currentOrder.status !== PurchaseOrderStatus.Pending ? handleRowDoubleClick : undefined}
+            rowKey="id"
+            emptyMessage="No items in this purchase order"
+            rowHint={currentOrder.status !== PurchaseOrderStatus.Pending ? 'Double-click to receive item (cancelled items cannot be received)' : undefined}
+          />
+        </div>
       </Card>
 
       {/* Edit PO Modal */}
