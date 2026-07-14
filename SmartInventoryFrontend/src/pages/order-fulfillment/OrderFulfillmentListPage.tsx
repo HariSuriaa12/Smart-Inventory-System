@@ -1,9 +1,31 @@
-import { useEffect, useState, useCallback } from 'react'
+import { useEffect, useState, useCallback, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Card, DataGrid, Column, Input } from '@/components'
+import { Card, DataGrid, Column } from '@/components'
+import { ColumnSelectorModal } from '@/components/modals/ColumnSelectorModal'
 import { orderFulfillmentService } from '@/services/orderFulfillmentService'
 import { OrderFulfillment, OrderFulfillmentStatus, OrderFulfillmentStatusLabel } from '@/types/orderfulfillment'
-import { Plus, Search } from 'lucide-react'
+import { Plus, Columns3 } from 'lucide-react'
+
+const PAGE_SIZE = 10
+
+const MANDATORY_COLUMNS = [
+  { key: 'id', label: 'ID' },
+  { key: 'order_Date', label: 'Order Date' },
+  { key: 'customer_Name', label: 'Customer' },
+  { key: 'total_Amount', label: 'Total Amount' },
+  { key: 'status', label: 'Status' },
+]
+
+const OPTIONAL_COLUMNS = [
+  { key: 'location_Name', label: 'Location' },
+  { key: 'shipment_City', label: 'Shipment City' },
+  { key: 'shipment_State', label: 'State' },
+  { key: 'shipment_PostCode', label: 'Post Code' },
+  { key: 'remark', label: 'Remarks' },
+  { key: 'verified_By_Name', label: 'Verified By' },
+]
+
+const STORAGE_KEY = 'of_visible_columns'
 
 const STATUS_BADGE_CLASSES: Record<OrderFulfillmentStatus, string> = {
   [OrderFulfillmentStatus.Unassigned]: 'bg-red-100 text-red-800',
@@ -14,54 +36,57 @@ const STATUS_BADGE_CLASSES: Record<OrderFulfillmentStatus, string> = {
   [OrderFulfillmentStatus.Verified]: 'bg-blue-100 text-blue-800',
 }
 
-const AVAILABLE_COLUMNS = [
-  { id: 'id', label: 'ID', width: '80px' },
-  { id: 'customer_Name', label: 'Customer', width: '180px' },
-  { id: 'location_Name', label: 'Location', width: '150px' },
-  { id: 'order_Date', label: 'Order Date', width: '120px' },
-  { id: 'status', label: 'Status', width: '140px' },
-  { id: 'total_Amount', label: 'Total Amount', width: '130px' },
-]
-
 export const OrderFulfillmentListPage = () => {
   const navigate = useNavigate()
   const [orders, setOrders] = useState<OrderFulfillment[]>([])
   const [loading, setLoading] = useState(false)
-  const [skip, setSkip] = useState(0)
-  const [take, setTake] = useState(10)
+  const [currentPage, setCurrentPage] = useState(1)
   const [total, setTotal] = useState(0)
 
-  const [filters, setFilters] = useState({
-    fulfillmentId: '',
-    customerId: '',
-    unprocessedOnly: false,
+  const [fulfillmentIdFilter, setFulfillmentIdFilter] = useState('')
+  const [customerIdFilter, setCustomerIdFilter] = useState('')
+  const [unprocessedOnlyFilter, setUnprocessedOnlyFilter] = useState(false)
+  const [isColumnSelectorOpen, setIsColumnSelectorOpen] = useState(false)
+
+  const [visibleColumns, setVisibleColumns] = useState<Set<string>>(() => {
+    const stored = localStorage.getItem(STORAGE_KEY)
+    if (stored) {
+      return new Set(JSON.parse(stored))
+    }
+    return new Set()
   })
 
-  const [selectedColumns, setSelectedColumns] = useState<string[]>([
-    'id',
-    'customer_Name',
-    'location_Name',
-    'order_Date',
-    'status',
-    'total_Amount',
-  ])
+  // Debounce filter changes
+  useEffect(() => {
+    const debounceTimer = setTimeout(() => {
+      setCurrentPage(1)
+      loadOrders(0)
+    }, 800)
+    return () => clearTimeout(debounceTimer)
+  }, [fulfillmentIdFilter, customerIdFilter, unprocessedOnlyFilter])
 
-  const loadOrders = useCallback(async () => {
+  // Load on page change
+  useEffect(() => {
+    const skip = (currentPage - 1) * PAGE_SIZE
+    loadOrders(skip)
+  }, [currentPage])
+
+  const loadOrders = useCallback(async (skip: number) => {
     setLoading(true)
     try {
       const filterParams: any = {}
 
-      if (filters.fulfillmentId) {
-        filterParams.fulfillmentId = parseInt(filters.fulfillmentId)
+      if (fulfillmentIdFilter) {
+        filterParams.fulfillmentId = parseInt(fulfillmentIdFilter)
       }
-      if (filters.customerId) {
-        filterParams.customerId = parseInt(filters.customerId)
+      if (customerIdFilter) {
+        filterParams.customerId = parseInt(customerIdFilter)
       }
-      if (filters.unprocessedOnly) {
+      if (unprocessedOnlyFilter) {
         filterParams.unprocessedOnly = true
       }
 
-      const response = await orderFulfillmentService.getAllOrderFulfillments(skip, take, filterParams)
+      const response = await orderFulfillmentService.getAllOrderFulfillments(skip, PAGE_SIZE, filterParams)
       setOrders(response.data || [])
       setTotal(response.total || 0)
     } catch (error) {
@@ -69,192 +94,198 @@ export const OrderFulfillmentListPage = () => {
     } finally {
       setLoading(false)
     }
-  }, [skip, take, filters])
+  }, [fulfillmentIdFilter, customerIdFilter, unprocessedOnlyFilter])
 
-  useEffect(() => {
-    loadOrders()
-  }, [loadOrders])
+  const handleClearFilters = useCallback(() => {
+    setFulfillmentIdFilter('')
+    setCustomerIdFilter('')
+    setUnprocessedOnlyFilter(false)
+    setCurrentPage(1)
+  }, [])
 
-  const handleColumnToggle = (columnId: string) => {
-    setSelectedColumns((prev) => (prev.includes(columnId) ? prev.filter((c) => c !== columnId) : [...prev, columnId]))
-  }
+  const handleRowDoubleClick = useCallback((order: OrderFulfillment) => {
+    navigate(`/app/order-fulfillment/${order.id}`)
+  }, [navigate])
 
-  const handleFilterChange = (field: string, value: any) => {
-    setFilters((prev) => ({ ...prev, [field]: value }))
-    setSkip(0)
-  }
+  const handleSaveVisibleColumns = useCallback((newVisibleColumns: Set<string>) => {
+    setVisibleColumns(newVisibleColumns)
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(Array.from(newVisibleColumns)))
+  }, [])
 
-  const handleRowDoubleClick = useCallback(
-    (order: OrderFulfillment) => {
-      navigate(`/app/order-fulfillment/${order.id}`)
+  const allColumnDefinitions: Record<string, Column<OrderFulfillment>> = useMemo(() => ({
+    id: {
+      key: 'id',
+      label: 'ID',
+      width: '80px',
     },
-    [navigate]
-  )
-
-  const columns: Column<OrderFulfillment>[] = AVAILABLE_COLUMNS.filter((col) => selectedColumns.includes(col.id)).map((col) => {
-    if (col.id === 'status') {
-      return {
-        key: 'status',
-        label: col.label,
-        width: col.width,
-        render: (value: OrderFulfillmentStatus) => (
-          <span className={`inline-flex px-2.5 py-0.5 rounded-full text-xs font-semibold ${STATUS_BADGE_CLASSES[value]}`}>
-            {OrderFulfillmentStatusLabel[value]}
-          </span>
-        ),
-      }
-    }
-    if (col.id === 'order_Date') {
-      return {
-        key: 'order_Date',
-        label: col.label,
-        width: col.width,
-        render: (value) => new Date(value).toLocaleDateString(),
-      }
-    }
-    if (col.id === 'total_Amount') {
-      return {
-        key: 'total_Amount',
-        label: col.label,
-        width: col.width,
-        align: 'right',
-        render: (value) => `$${Number(value).toFixed(2)}`,
-      }
-    }
-    return {
-      key: col.id as keyof OrderFulfillment,
-      label: col.label,
-      width: col.width,
+    order_Date: {
+      key: 'order_Date',
+      label: 'Order Date',
+      width: '130px',
+      render: (value) => new Date(value).toLocaleDateString(),
+    },
+    customer_Name: {
+      key: 'customer_Name',
+      label: 'Customer',
+      width: '180px',
       render: (value) => value || '-',
-    }
-  })
+    },
+    location_Name: {
+      key: 'location_Name',
+      label: 'Location',
+      width: '150px',
+      render: (value) => value || '-',
+    },
+    shipment_City: {
+      key: 'shipment_City',
+      label: 'Shipment City',
+      width: '150px',
+      render: (value) => value || '-',
+    },
+    shipment_State: {
+      key: 'shipment_State',
+      label: 'State',
+      width: '120px',
+      render: (value) => value || '-',
+    },
+    shipment_PostCode: {
+      key: 'shipment_PostCode',
+      label: 'Post Code',
+      width: '120px',
+      render: (value) => value || '-',
+    },
+    total_Amount: {
+      key: 'total_Amount',
+      label: 'Total Amount',
+      width: '130px',
+      align: 'right',
+      render: (value) => `$${Number(value).toFixed(2)}`,
+    },
+    status: {
+      key: 'status',
+      label: 'Status',
+      width: '140px',
+      render: (value: OrderFulfillmentStatus) => (
+        <span className={`inline-flex px-2.5 py-0.5 rounded-full text-xs font-semibold ${STATUS_BADGE_CLASSES[value]}`}>
+          {OrderFulfillmentStatusLabel[value]}
+        </span>
+      ),
+    },
+    remark: {
+      key: 'remark',
+      label: 'Remarks',
+      width: '200px',
+      render: (value) => value ? (
+        <span title={value} className="truncate inline-block max-w-[200px]">
+          {value}
+        </span>
+      ) : '-',
+    },
+    verified_By_Name: {
+      key: 'verified_By_Name',
+      label: 'Verified By',
+      width: '150px',
+      render: (value) => value || '-',
+    },
+  }), [])
 
-  const totalPages = Math.ceil(total / take)
-  const currentPage = Math.floor(skip / take) + 1
+  const columns = useMemo(() => {
+    const mandatoryCols = MANDATORY_COLUMNS
+      .map(({ key }) => allColumnDefinitions[key])
+      .filter(Boolean)
+
+    const optionalCols = OPTIONAL_COLUMNS
+      .filter(({ key }) => visibleColumns.has(key))
+      .map(({ key }) => allColumnDefinitions[key])
+      .filter(Boolean)
+
+    return [...mandatoryCols, ...optionalCols]
+  }, [visibleColumns, allColumnDefinitions])
 
   return (
     <div className="p-6 space-y-6 h-full flex flex-col">
       {/* Header */}
       <div className="flex items-center justify-between flex-shrink-0">
-        <h1 className="text-3xl font-bold text-gray-900">Order Fulfillments</h1>
-        <button className="flex items-center gap-2 px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors disabled:opacity-50">
-          <Plus size={18} />
-          New Order
-        </button>
+        <div>
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">Order Fulfillments</h1>
+          <p className="text-gray-600">Manage and fulfill customer orders</p>
+        </div>
       </div>
 
-      {/* Filters */}
-      <Card className="p-4 flex-shrink-0">
-        <div className="space-y-4">
-          <h3 className="font-medium text-gray-900">Filters</h3>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Fulfillment ID</label>
-              <Input
-                type="text"
-                placeholder="Search by ID"
-                value={filters.fulfillmentId}
-                onChange={(e) => handleFilterChange('fulfillmentId', e.target.value)}
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Customer ID</label>
-              <Input
-                type="text"
-                placeholder="Search by Customer"
-                value={filters.customerId}
-                onChange={(e) => handleFilterChange('customerId', e.target.value)}
-              />
-            </div>
-            <div className="flex items-end">
-              <label className="flex items-center gap-2 cursor-pointer">
-                <input
-                  type="checkbox"
-                  checked={filters.unprocessedOnly}
-                  onChange={(e) => handleFilterChange('unprocessedOnly', e.target.checked)}
-                  className="w-4 h-4 text-primary-600 border-gray-300 rounded focus:ring-primary-500"
-                />
-                <span className="text-sm font-medium text-gray-700">Unprocessed Only</span>
-              </label>
-            </div>
-            <div className="flex items-end gap-2">
-              <button
-                onClick={() => loadOrders()}
-                className="flex-1 px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors flex items-center justify-center gap-2"
-              >
-                <Search size={16} />
-                Search
-              </button>
-            </div>
-          </div>
-        </div>
-      </Card>
-
-      {/* Column Selection */}
-      <Card className="p-4 flex-shrink-0">
-        <div className="space-y-2">
-          <p className="text-sm font-medium text-gray-900">Select Columns</p>
-          <div className="flex flex-wrap gap-3">
-            {AVAILABLE_COLUMNS.map((col) => (
-              <label key={col.id} className="flex items-center gap-2 cursor-pointer">
-                <input
-                  type="checkbox"
-                  checked={selectedColumns.includes(col.id)}
-                  onChange={() => handleColumnToggle(col.id)}
-                  className="w-4 h-4 text-primary-600 border-gray-300 rounded focus:ring-primary-500"
-                />
-                <span className="text-sm text-gray-700">{col.label}</span>
-              </label>
-            ))}
-          </div>
-        </div>
-      </Card>
-
-      {/* Data Grid */}
-      <Card className="flex-1 flex flex-col overflow-hidden p-6">
-        <div className="mb-4">
-          <h2 className="text-lg font-semibold text-gray-900">Orders ({total})</h2>
-        </div>
-        <div className="flex-1 overflow-y-auto">
-          <DataGrid<OrderFulfillment>
-            columns={columns}
-            data={orders}
-            loading={loading}
-            onRowDoubleClick={handleRowDoubleClick}
-            rowKey="id"
-            emptyMessage="No order fulfillments found"
-            rowHint="Double-click to view details"
+      {/* Filter Bar */}
+      <div className="flex-shrink-0 space-y-3">
+        {/* Row 1: Fulfillment ID, Customer ID, Unprocessed Only */}
+        <div className="flex gap-2">
+          <input
+            type="text"
+            placeholder="Filter by Fulfillment ID..."
+            value={fulfillmentIdFilter}
+            onChange={(e) => setFulfillmentIdFilter(e.target.value)}
+            className="flex-1 px-3 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm"
           />
+          <input
+            type="text"
+            placeholder="Filter by Customer ID..."
+            value={customerIdFilter}
+            onChange={(e) => setCustomerIdFilter(e.target.value)}
+            className="flex-1 px-3 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm"
+          />
+          <div className="flex items-center px-3 py-2.5">
+            <label className="flex items-center gap-2 cursor-pointer whitespace-nowrap">
+              <input
+                type="checkbox"
+                checked={unprocessedOnlyFilter}
+                onChange={(e) => setUnprocessedOnlyFilter(e.target.checked)}
+                className="w-4 h-4 text-primary-600 border-gray-300 rounded focus:ring-primary-500"
+              />
+              <span className="text-sm text-gray-700">Unprocessed</span>
+            </label>
+          </div>
         </div>
 
-        {/* Pagination */}
-        <div className="mt-4 flex items-center justify-between border-t pt-4 flex-shrink-0">
-          <div className="text-sm text-gray-600">
-            Showing {skip + 1} to {Math.min(skip + take, total)} of {total} orders
-          </div>
-          <div className="flex gap-2">
-            <button
-              onClick={() => setSkip(Math.max(0, skip - take))}
-              disabled={skip === 0}
-              className="px-3 py-1 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              Previous
-            </button>
-            <div className="flex items-center gap-2">
-              <span className="text-sm text-gray-600">
-                Page {currentPage} of {totalPages || 1}
-              </span>
-            </div>
-            <button
-              onClick={() => setSkip(skip + take)}
-              disabled={skip + take >= total}
-              className="px-3 py-1 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              Next
-            </button>
-          </div>
+        {/* Row 2: Actions */}
+        <div className="flex gap-2 justify-end">
+          <button
+            onClick={() => setIsColumnSelectorOpen(true)}
+            className="flex items-center gap-2 px-4 py-2.5 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors whitespace-nowrap text-sm"
+            title="Select columns to display"
+          >
+            <Columns3 size={18} />
+            <span className="hidden sm:inline">Columns</span>
+          </button>
+          <button
+            onClick={handleClearFilters}
+            className="px-4 py-2.5 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors text-sm"
+          >
+            Clear
+          </button>
         </div>
+      </div>
+
+      {/* Data Grid Card */}
+      <Card className="flex-1 flex flex-col overflow-hidden p-6">
+        <DataGrid<OrderFulfillment>
+          columns={columns}
+          data={orders}
+          loading={loading}
+          currentPage={currentPage}
+          pageSize={PAGE_SIZE}
+          totalItems={total}
+          onPageChange={setCurrentPage}
+          onRowDoubleClick={handleRowDoubleClick}
+          rowKey="id"
+          emptyMessage="No order fulfillments found"
+        />
       </Card>
+
+      {/* Column Selector Modal */}
+      <ColumnSelectorModal
+        isOpen={isColumnSelectorOpen}
+        columns={OPTIONAL_COLUMNS}
+        visibleColumns={visibleColumns}
+        onClose={() => setIsColumnSelectorOpen(false)}
+        onSave={handleSaveVisibleColumns}
+      />
     </div>
   )
 }
