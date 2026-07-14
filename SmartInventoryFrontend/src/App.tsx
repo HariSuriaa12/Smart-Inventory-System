@@ -10,6 +10,7 @@ import { CustomersPage } from '@/pages/master-data/CustomersPage'
 import { UsersPage } from '@/pages/master-data/UsersPage'
 import { InventoryPage } from '@/pages/inventory/InventoryPage'
 import { PurchaseOrderListPage, PurchaseOrderDetailPage } from '@/pages/purchase-order'
+import { OrderFulfillmentListPage, OrderFulfillmentDetailPage } from '@/pages/order-fulfillment'
 import { Card, Badge } from '@/components'
 import { LocationModalProvider } from '@/context/LocationModalContext'
 
@@ -56,7 +57,8 @@ function App() {
               <Route path="/app/inventory" element={<InventoryPage />} />
               <Route path="/app/purchase-orders" element={<PurchaseOrderListPage />} />
               <Route path="/app/purchase-orders/:id" element={<PurchaseOrderDetailPage />} />
-              <Route path="/app/order-fulfillment" element={<PlaceholderPage title="Order Fulfillment" />} />
+              <Route path="/app/order-fulfillment" element={<OrderFulfillmentListPage />} />
+              <Route path="/app/order-fulfillment/:id" element={<OrderFulfillmentDetailPage />} />
               <Route path="/app/sales" element={<PlaceholderPage title="Sales Management" />} />
               <Route path="/app/stock-transfer" element={<PlaceholderPage title="Stock Transfer" />} />
               <Route path="/app/forecasting" element={<PlaceholderPage title="Forecasting & Analytics" />} />
