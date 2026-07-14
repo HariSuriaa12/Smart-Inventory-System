@@ -84,6 +84,8 @@ public class PurchaseOrderService : IPurchaseOrderService
         var po = await _unitOfWork.PurchaseOrders.GetWithItemsAsync(id);
         if (po == null || po.Is_Deleted)
             throw new NotFoundException("Purchase Order not found");
+        else
+            po.Items = po.Items?.Where(i => !i.Is_Deleted).ToList();
 
         return _mapper.Map<PurchaseOrderDetailDto>(po);
     }
@@ -301,6 +303,7 @@ public class PurchaseOrderService : IPurchaseOrderService
         // Mark item as deleted and update PO total
         poItem.Is_Deleted = true;
         po.Total_Amount -= poItem.Sub_Total;
+        po.Purchase_Date = DateTime.SpecifyKind(po.Purchase_Date, DateTimeKind.Utc);
 
         _unitOfWork.Context.Set<PurchaseOrderItem>().Update(poItem);
         await _unitOfWork.PurchaseOrders.UpdateAsync(po);
@@ -364,6 +367,8 @@ public class PurchaseOrderService : IPurchaseOrderService
         {
             poItem.Status = 1;
         }
+
+        po.Purchase_Date = DateTime.SpecifyKind(po.Purchase_Date, DateTimeKind.Utc);
 
         _unitOfWork.Context.Set<Inventory>().Update(inventory);
         _unitOfWork.Context.Set<PurchaseOrderItem>().Update(poItem);
@@ -452,6 +457,8 @@ public class PurchaseOrderService : IPurchaseOrderService
                 po.Status = 1;
             }
         }
+
+        po.Purchase_Date = DateTime.SpecifyKind(po.Purchase_Date, DateTimeKind.Utc);
 
         await _unitOfWork.PurchaseOrders.UpdateAsync(po);
         await _unitOfWork.SaveAsync();

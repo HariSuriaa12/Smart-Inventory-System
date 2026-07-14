@@ -3,16 +3,19 @@
   "WorkspaceRootPath": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{74672F46-6E60-E07D-20D6-A7C4B76E2B01}|SmartInventoryAPI.csproj|c:\\users\\user\\documents\\hari\\unitar\\semester 6\\major project\\smart inventory system\\smartinventoryapi\\middleware\\exceptionhandlingmiddleware.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{74672F46-6E60-E07D-20D6-A7C4B76E2B01}|SmartInventoryAPI.csproj|solutionrelative:middleware\\exceptionhandlingmiddleware.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{74672F46-6E60-E07D-20D6-A7C4B76E2B01}|SmartInventoryAPI.csproj|c:\\users\\user\\documents\\hari\\unitar\\semester 6\\major project\\smart inventory system\\smartinventoryapi\\services\\implementations\\purchaseorderservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{74672F46-6E60-E07D-20D6-A7C4B76E2B01}|SmartInventoryAPI.csproj|solutionrelative:services\\implementations\\purchaseorderservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{74672F46-6E60-E07D-20D6-A7C4B76E2B01}|SmartInventoryAPI.csproj|c:\\users\\user\\documents\\hari\\unitar\\semester 6\\major project\\smart inventory system\\smartinventoryapi\\controllers\\purchaseorderscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{74672F46-6E60-E07D-20D6-A7C4B76E2B01}|SmartInventoryAPI.csproj|solutionrelative:controllers\\purchaseorderscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{74672F46-6E60-E07D-20D6-A7C4B76E2B01}|SmartInventoryAPI.csproj|c:\\users\\user\\documents\\hari\\unitar\\semester 6\\major project\\smart inventory system\\smartinventoryapi\\middleware\\exceptionhandlingmiddleware.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{74672F46-6E60-E07D-20D6-A7C4B76E2B01}|SmartInventoryAPI.csproj|solutionrelative:middleware\\exceptionhandlingmiddleware.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\User\\AppData\\Local\\SourceServer\\b6d9e4fbe4038caa4fcc7ddb45f93a7ca0d0f6b1a094d6769d9a33f2419cd8a9\\SmartInventoryAPI\\Controllers\\PurchaseOrdersController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{74672F46-6E60-E07D-20D6-A7C4B76E2B01}|SmartInventoryAPI.csproj|c:\\users\\user\\documents\\hari\\unitar\\semester 6\\major project\\smart inventory system\\smartinventoryapi\\models\\dtos\\response\\purchaseorderdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -421,7 +424,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 9,
+          "SelectedChildIndex": 6,
           "Children": [
             {
               "$type": "Bookmark",
@@ -429,46 +432,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "PurchaseOrdersController.cs",
-              "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Controllers\\PurchaseOrdersController.cs",
-              "RelativeDocumentMoniker": "Controllers\\PurchaseOrdersController.cs",
-              "ToolTip": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Controllers\\PurchaseOrdersController.cs",
-              "RelativeToolTip": "Controllers\\PurchaseOrdersController.cs",
-              "ViewState": "AgIAADoAAAAAAAAAAAAkwFkAAAA7AAAAAAAAAA==",
+              "DocumentMoniker": "C:\\Users\\User\\AppData\\Local\\SourceServer\\b6d9e4fbe4038caa4fcc7ddb45f93a7ca0d0f6b1a094d6769d9a33f2419cd8a9\\SmartInventoryAPI\\Controllers\\PurchaseOrdersController.cs",
+              "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\..\\..\\AppData\\Local\\SourceServer\\b6d9e4fbe4038caa4fcc7ddb45f93a7ca0d0f6b1a094d6769d9a33f2419cd8a9\\SmartInventoryAPI\\Controllers\\PurchaseOrdersController.cs",
+              "ToolTip": "C:\\Users\\User\\AppData\\Local\\SourceServer\\b6d9e4fbe4038caa4fcc7ddb45f93a7ca0d0f6b1a094d6769d9a33f2419cd8a9\\SmartInventoryAPI\\Controllers\\PurchaseOrdersController.cs [Read Only]",
+              "RelativeToolTip": "..\\..\\..\\..\\..\\..\\..\\AppData\\Local\\SourceServer\\b6d9e4fbe4038caa4fcc7ddb45f93a7ca0d0f6b1a094d6769d9a33f2419cd8a9\\SmartInventoryAPI\\Controllers\\PurchaseOrdersController.cs [Read Only]",
+              "ViewState": "AgIAACAAAAAAAAAAAAASwDwAAAAIAAAAAQAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-07T14:28:07.255Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "Item.cs",
-              "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Models\\Entities\\Item.cs",
-              "RelativeDocumentMoniker": "Models\\Entities\\Item.cs",
-              "ToolTip": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Models\\Entities\\Item.cs",
-              "RelativeToolTip": "Models\\Entities\\Item.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAANAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-07T15:22:05.088Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-14T14:32:06.707Z",
+              "EditorCaption": " [Read Only]"
             },
             {
               "$type": "Document",
               "DocumentIndex": 8,
-              "Title": "InventoryRepository.cs",
-              "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Repositories\\Implementations\\InventoryRepository.cs",
-              "RelativeDocumentMoniker": "Repositories\\Implementations\\InventoryRepository.cs",
-              "ToolTip": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Repositories\\Implementations\\InventoryRepository.cs",
-              "RelativeToolTip": "Repositories\\Implementations\\InventoryRepository.cs",
-              "ViewState": "AgIAADUAAAAAAAAAAAAgwBcAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-07T14:57:38.677Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
               "Title": "ItemRepository.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Repositories\\Implementations\\ItemRepository.cs",
               "RelativeDocumentMoniker": "Repositories\\Implementations\\ItemRepository.cs",
@@ -481,7 +458,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 7,
               "Title": "ItemService.cs",
               "DocumentMoniker": "C:\\Users\\User\\AppData\\Local\\SourceServer\\25f29b54293493ca7531acebb501632ddfce9e3f135b514dc9de02ea8b2d6506\\SmartInventoryAPI\\Services\\Implementations\\ItemService.cs",
               "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\..\\..\\AppData\\Local\\SourceServer\\25f29b54293493ca7531acebb501632ddfce9e3f135b514dc9de02ea8b2d6506\\SmartInventoryAPI\\Services\\Implementations\\ItemService.cs",
@@ -494,20 +471,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "PurchaseOrderDto.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Models\\DTOs\\Response\\PurchaseOrderDto.cs",
               "RelativeDocumentMoniker": "Models\\DTOs\\Response\\PurchaseOrderDto.cs",
               "ToolTip": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Models\\DTOs\\Response\\PurchaseOrderDto.cs",
               "RelativeToolTip": "Models\\DTOs\\Response\\PurchaseOrderDto.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAiAAAAAAAAAA==",
+              "ViewState": "AgIAABYAAAAAAAAAAAApwCcAAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-07-09T13:21:54.313Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "CreatePurchaseOrderRequestDto.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Models\\DTOs\\Request\\PurchaseOrder\\CreatePurchaseOrderRequestDto.cs",
               "RelativeDocumentMoniker": "Models\\DTOs\\Request\\PurchaseOrder\\CreatePurchaseOrderRequestDto.cs",
@@ -520,33 +497,72 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "PurchaseOrderService.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Services\\Implementations\\PurchaseOrderService.cs",
               "RelativeDocumentMoniker": "Services\\Implementations\\PurchaseOrderService.cs",
               "ToolTip": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Services\\Implementations\\PurchaseOrderService.cs",
               "RelativeToolTip": "Services\\Implementations\\PurchaseOrderService.cs",
-              "ViewState": "AgIAAAMBAAAAAAAAAAApwLoAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAMBAAAAAAAAAAAEwBwBAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-07-07T14:21:03.616Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "ExceptionHandlingMiddleware.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Middleware\\ExceptionHandlingMiddleware.cs",
               "RelativeDocumentMoniker": "Middleware\\ExceptionHandlingMiddleware.cs",
               "ToolTip": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Middleware\\ExceptionHandlingMiddleware.cs",
               "RelativeToolTip": "Middleware\\ExceptionHandlingMiddleware.cs",
-              "ViewState": "AgIAABcAAAAAAAAAAAAcwCMAAAAsAAAAAAAAAA==",
+              "ViewState": "AgIAABQAAAAAAAAAAAAEwEQAAAAQAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-07-07T15:41:22.89Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "PurchaseOrdersController.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Controllers\\PurchaseOrdersController.cs",
+              "RelativeDocumentMoniker": "Controllers\\PurchaseOrdersController.cs",
+              "ToolTip": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Controllers\\PurchaseOrdersController.cs",
+              "RelativeToolTip": "Controllers\\PurchaseOrdersController.cs",
+              "ViewState": "AgIAAI0AAAAAAAAAAAAIwKAAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-07T14:28:07.255Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 9,
+              "Title": "InventoryRepository.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Repositories\\Implementations\\InventoryRepository.cs",
+              "RelativeDocumentMoniker": "Repositories\\Implementations\\InventoryRepository.cs",
+              "ToolTip": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Repositories\\Implementations\\InventoryRepository.cs",
+              "RelativeToolTip": "Repositories\\Implementations\\InventoryRepository.cs",
+              "ViewState": "AgIAADUAAAAAAAAAAAAgwBcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-07T14:57:38.677Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "Item.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Models\\Entities\\Item.cs",
+              "RelativeDocumentMoniker": "Models\\Entities\\Item.cs",
+              "ToolTip": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Models\\Entities\\Item.cs",
+              "RelativeToolTip": "Models\\Entities\\Item.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-07T15:22:05.088Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
               "Title": "SmartInventoryDbContext.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Data\\SmartInventoryDbContext.cs",
               "RelativeDocumentMoniker": "Data\\SmartInventoryDbContext.cs",
@@ -559,7 +575,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "PurchaseOrderRepository.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Repositories\\Implementations\\PurchaseOrderRepository.cs",
               "RelativeDocumentMoniker": "Repositories\\Implementations\\PurchaseOrderRepository.cs",
@@ -572,7 +588,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 17,
               "Title": "MapperProfile.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Configuration\\MapperProfile.cs",
               "RelativeDocumentMoniker": "Configuration\\MapperProfile.cs",
@@ -585,7 +601,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 14,
               "Title": "IItemRepository.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Repositories\\Interfaces\\IItemRepository.cs",
               "RelativeDocumentMoniker": "Repositories\\Interfaces\\IItemRepository.cs",
@@ -598,7 +614,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 13,
               "Title": "ItemService.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Services\\Implementations\\ItemService.cs",
               "RelativeDocumentMoniker": "Services\\Implementations\\ItemService.cs",
@@ -611,7 +627,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 15,
               "Title": "CreateItemRequestDto.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Models\\DTOs\\Request\\Item\\CreateItemRequestDto.cs",
               "RelativeDocumentMoniker": "Models\\DTOs\\Request\\Item\\CreateItemRequestDto.cs",
@@ -624,7 +640,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 23,
               "Title": "PurchaseOrderItem.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Models\\Entities\\PurchaseOrderItem.cs",
               "RelativeDocumentMoniker": "Models\\Entities\\PurchaseOrderItem.cs",
@@ -636,7 +652,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 12,
               "Title": "GenericRepository.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Repositories\\Implementations\\GenericRepository.cs",
               "RelativeDocumentMoniker": "Repositories\\Implementations\\GenericRepository.cs",
@@ -649,7 +665,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 20,
               "Title": "Inventory.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Models\\Entities\\Inventory.cs",
               "RelativeDocumentMoniker": "Models\\Entities\\Inventory.cs",
@@ -661,7 +677,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 24,
               "Title": "ItemsController.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Controllers\\ItemsController.cs",
               "RelativeDocumentMoniker": "Controllers\\ItemsController.cs",
@@ -674,7 +690,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 16,
               "Title": "InventoryController.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Controllers\\InventoryController.cs",
               "RelativeDocumentMoniker": "Controllers\\InventoryController.cs",
@@ -687,7 +703,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 21,
               "Title": "AdjustInventoryRequestDto.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Models\\DTOs\\Request\\Inventory\\AdjustInventoryRequestDto.cs",
               "RelativeDocumentMoniker": "Models\\DTOs\\Request\\Inventory\\AdjustInventoryRequestDto.cs",
@@ -699,7 +715,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 18,
               "Title": "DependencyInjectionExtensions.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Configuration\\DependencyInjectionExtensions.cs",
               "RelativeDocumentMoniker": "Configuration\\DependencyInjectionExtensions.cs",
@@ -711,7 +727,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 19,
               "Title": "PurchaseOrderHeader.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Models\\Entities\\PurchaseOrderHeader.cs",
               "RelativeDocumentMoniker": "Models\\Entities\\PurchaseOrderHeader.cs",
@@ -723,7 +739,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 22,
               "Title": "Vendor.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Models\\Entities\\Vendor.cs",
               "RelativeDocumentMoniker": "Models\\Entities\\Vendor.cs",
@@ -735,7 +751,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
+              "DocumentIndex": 25,
               "Title": "ApiResponseDto.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Models\\DTOs\\Response\\ApiResponseDto.cs",
               "RelativeDocumentMoniker": "Models\\DTOs\\Response\\ApiResponseDto.cs",
@@ -747,7 +763,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 25,
+              "DocumentIndex": 26,
               "Title": "AddPurchaseOrderItemRequestDto.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Models\\DTOs\\Request\\PurchaseOrder\\AddPurchaseOrderItemRequestDto.cs",
               "RelativeDocumentMoniker": "Models\\DTOs\\Request\\PurchaseOrder\\AddPurchaseOrderItemRequestDto.cs",
@@ -759,7 +775,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 26,
+              "DocumentIndex": 27,
               "Title": "LoggingService.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Services\\Implementations\\LoggingService.cs",
               "RelativeDocumentMoniker": "Services\\Implementations\\LoggingService.cs",
@@ -772,7 +788,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 28,
+              "DocumentIndex": 29,
               "Title": "UnitOfWork.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Repositories\\Implementations\\UnitOfWork.cs",
               "RelativeDocumentMoniker": "Repositories\\Implementations\\UnitOfWork.cs",
@@ -784,7 +800,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 27,
+              "DocumentIndex": 28,
               "Title": "InventoryService.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Services\\Implementations\\InventoryService.cs",
               "RelativeDocumentMoniker": "Services\\Implementations\\InventoryService.cs",
@@ -797,7 +813,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 32,
+              "DocumentIndex": 33,
               "Title": "CustomersController.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Controllers\\CustomersController.cs",
               "RelativeDocumentMoniker": "Controllers\\CustomersController.cs",
@@ -810,7 +826,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 29,
+              "DocumentIndex": 30,
               "Title": "StockTransfer.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Models\\Entities\\StockTransfer.cs",
               "RelativeDocumentMoniker": "Models\\Entities\\StockTransfer.cs",
@@ -822,7 +838,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 31,
+              "DocumentIndex": 32,
               "Title": "IInventoryService.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Services\\Interfaces\\IInventoryService.cs",
               "RelativeDocumentMoniker": "Services\\Interfaces\\IInventoryService.cs",
@@ -834,7 +850,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 30,
+              "DocumentIndex": 31,
               "Title": "StockTransferController.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Controllers\\StockTransferController.cs",
               "RelativeDocumentMoniker": "Controllers\\StockTransferController.cs",
@@ -847,7 +863,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 34,
+              "DocumentIndex": 35,
               "Title": "InventoryLog.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Models\\Entities\\InventoryLog.cs",
               "RelativeDocumentMoniker": "Models\\Entities\\InventoryLog.cs",
@@ -859,7 +875,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 33,
+              "DocumentIndex": 34,
               "Title": "PriceLog.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Models\\Entities\\PriceLog.cs",
               "RelativeDocumentMoniker": "Models\\Entities\\PriceLog.cs",
@@ -871,7 +887,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 35,
+              "DocumentIndex": 36,
               "Title": "PerformLog.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Models\\Entities\\PerformLog.cs",
               "RelativeDocumentMoniker": "Models\\Entities\\PerformLog.cs",
@@ -883,7 +899,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 38,
+              "DocumentIndex": 39,
               "Title": "OrderFulfillmentHeader.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Models\\Entities\\OrderFulfillmentHeader.cs",
               "RelativeDocumentMoniker": "Models\\Entities\\OrderFulfillmentHeader.cs",
@@ -895,7 +911,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 37,
+              "DocumentIndex": 38,
               "Title": "IUnitOfWork.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Repositories\\Interfaces\\IUnitOfWork.cs",
               "RelativeDocumentMoniker": "Repositories\\Interfaces\\IUnitOfWork.cs",
@@ -907,7 +923,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 36,
+              "DocumentIndex": 37,
               "Title": "StockTransferRepository.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Repositories\\Implementations\\StockTransferRepository.cs",
               "RelativeDocumentMoniker": "Repositories\\Implementations\\StockTransferRepository.cs",
@@ -919,7 +935,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 39,
+              "DocumentIndex": 40,
               "Title": "IOrderFulfillmentRepository.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Repositories\\Interfaces\\IOrderFulfillmentRepository.cs",
               "RelativeDocumentMoniker": "Repositories\\Interfaces\\IOrderFulfillmentRepository.cs",
@@ -931,7 +947,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 42,
+              "DocumentIndex": 43,
               "Title": "SalesService.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Services\\Implementations\\SalesService.cs",
               "RelativeDocumentMoniker": "Services\\Implementations\\SalesService.cs",
@@ -943,7 +959,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 40,
+              "DocumentIndex": 41,
               "Title": "InventoryDto.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Models\\DTOs\\Response\\InventoryDto.cs",
               "RelativeDocumentMoniker": "Models\\DTOs\\Response\\InventoryDto.cs",
@@ -955,7 +971,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 41,
+              "DocumentIndex": 42,
               "Title": "ItemDto.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Models\\DTOs\\Response\\ItemDto.cs",
               "RelativeDocumentMoniker": "Models\\DTOs\\Response\\ItemDto.cs",
@@ -967,7 +983,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 43,
+              "DocumentIndex": 44,
               "Title": "UsersController.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Controllers\\UsersController.cs",
               "RelativeDocumentMoniker": "Controllers\\UsersController.cs",
@@ -980,7 +996,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 54,
+              "DocumentIndex": 55,
               "Title": "CustomerService.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Services\\Implementations\\CustomerService.cs",
               "RelativeDocumentMoniker": "Services\\Implementations\\CustomerService.cs",
@@ -992,7 +1008,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 46,
+              "DocumentIndex": 47,
               "Title": "LocationDto.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Models\\DTOs\\Response\\LocationDto.cs",
               "RelativeDocumentMoniker": "Models\\DTOs\\Response\\LocationDto.cs",
@@ -1004,7 +1020,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 47,
+              "DocumentIndex": 48,
               "Title": "LocationsController.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Controllers\\LocationsController.cs",
               "RelativeDocumentMoniker": "Controllers\\LocationsController.cs",
@@ -1017,7 +1033,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 55,
+              "DocumentIndex": 56,
               "Title": "LocationRepository.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Repositories\\Implementations\\LocationRepository.cs",
               "RelativeDocumentMoniker": "Repositories\\Implementations\\LocationRepository.cs",
@@ -1029,7 +1045,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 48,
+              "DocumentIndex": 49,
               "Title": "Sales.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Models\\Entities\\Sales.cs",
               "RelativeDocumentMoniker": "Models\\Entities\\Sales.cs",
@@ -1041,7 +1057,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 45,
+              "DocumentIndex": 46,
               "Title": "UserService.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Services\\Implementations\\UserService.cs",
               "RelativeDocumentMoniker": "Services\\Implementations\\UserService.cs",
@@ -1053,7 +1069,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 51,
+              "DocumentIndex": 52,
               "Title": "Customer.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Models\\Entities\\Customer.cs",
               "RelativeDocumentMoniker": "Models\\Entities\\Customer.cs",
@@ -1065,7 +1081,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 44,
+              "DocumentIndex": 45,
               "Title": "CreateUserRequestDto.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Models\\DTOs\\Request\\User\\CreateUserRequestDto.cs",
               "RelativeDocumentMoniker": "Models\\DTOs\\Request\\User\\CreateUserRequestDto.cs",
@@ -1077,7 +1093,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 49,
+              "DocumentIndex": 50,
               "Title": "User.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Models\\Entities\\User.cs",
               "RelativeDocumentMoniker": "Models\\Entities\\User.cs",
@@ -1089,7 +1105,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 50,
+              "DocumentIndex": 51,
               "Title": "Location.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Models\\Entities\\Location.cs",
               "RelativeDocumentMoniker": "Models\\Entities\\Location.cs",
@@ -1101,7 +1117,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 52,
+              "DocumentIndex": 53,
               "Title": "VendorService.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Services\\Implementations\\VendorService.cs",
               "RelativeDocumentMoniker": "Services\\Implementations\\VendorService.cs",
@@ -1113,7 +1129,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 53,
+              "DocumentIndex": 54,
               "Title": "LocationService.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Services\\Implementations\\LocationService.cs",
               "RelativeDocumentMoniker": "Services\\Implementations\\LocationService.cs",
@@ -1125,7 +1141,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 57,
+              "DocumentIndex": 58,
               "Title": "ILocationRepository.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Repositories\\Interfaces\\ILocationRepository.cs",
               "RelativeDocumentMoniker": "Repositories\\Interfaces\\ILocationRepository.cs",
@@ -1137,7 +1153,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 58,
+              "DocumentIndex": 59,
               "Title": "CreateCustomerRequestDto.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Models\\DTOs\\Request\\Customer\\CreateCustomerRequestDto.cs",
               "RelativeDocumentMoniker": "Models\\DTOs\\Request\\Customer\\CreateCustomerRequestDto.cs",
@@ -1149,7 +1165,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 56,
+              "DocumentIndex": 57,
               "Title": "ILocationService.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Services\\Interfaces\\ILocationService.cs",
               "RelativeDocumentMoniker": "Services\\Interfaces\\ILocationService.cs",
@@ -1161,7 +1177,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 59,
+              "DocumentIndex": 60,
               "Title": "OrderFulfillmentService.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Services\\Implementations\\OrderFulfillmentService.cs",
               "RelativeDocumentMoniker": "Services\\Implementations\\OrderFulfillmentService.cs",
@@ -1173,7 +1189,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 60,
+              "DocumentIndex": 61,
               "Title": "CustomerRepository.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Repositories\\Implementations\\CustomerRepository.cs",
               "RelativeDocumentMoniker": "Repositories\\Implementations\\CustomerRepository.cs",
@@ -1185,7 +1201,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 61,
+              "DocumentIndex": 62,
               "Title": "UserRepository.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Repositories\\Implementations\\UserRepository.cs",
               "RelativeDocumentMoniker": "Repositories\\Implementations\\UserRepository.cs",
@@ -1197,7 +1213,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 62,
+              "DocumentIndex": 63,
               "Title": "VendorRepository.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Repositories\\Implementations\\VendorRepository.cs",
               "RelativeDocumentMoniker": "Repositories\\Implementations\\VendorRepository.cs",
@@ -1209,7 +1225,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 63,
+              "DocumentIndex": 64,
               "Title": "IVendorRepository.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Repositories\\Interfaces\\IVendorRepository.cs",
               "RelativeDocumentMoniker": "Repositories\\Interfaces\\IVendorRepository.cs",
@@ -1221,7 +1237,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 64,
+              "DocumentIndex": 65,
               "Title": "ICustomerRepository.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Repositories\\Interfaces\\ICustomerRepository.cs",
               "RelativeDocumentMoniker": "Repositories\\Interfaces\\ICustomerRepository.cs",
@@ -1233,7 +1249,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 66,
+              "DocumentIndex": 67,
               "Title": "CreateLocationRequestDto.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Models\\DTOs\\Request\\Location\\CreateLocationRequestDto.cs",
               "RelativeDocumentMoniker": "Models\\DTOs\\Request\\Location\\CreateLocationRequestDto.cs",
@@ -1245,7 +1261,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 65,
+              "DocumentIndex": 66,
               "Title": "IUserRepository.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Repositories\\Interfaces\\IUserRepository.cs",
               "RelativeDocumentMoniker": "Repositories\\Interfaces\\IUserRepository.cs",
@@ -1257,7 +1273,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 67,
+              "DocumentIndex": 68,
               "Title": "IItemService.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Services\\Interfaces\\IItemService.cs",
               "RelativeDocumentMoniker": "Services\\Interfaces\\IItemService.cs",
@@ -1269,7 +1285,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 68,
+              "DocumentIndex": 69,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Program.cs",
               "RelativeDocumentMoniker": "Program.cs",
@@ -1281,7 +1297,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 69,
+              "DocumentIndex": 70,
               "Title": "IGenericRepository.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Repositories\\Interfaces\\IGenericRepository.cs",
               "RelativeDocumentMoniker": "Repositories\\Interfaces\\IGenericRepository.cs",
@@ -1293,7 +1309,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 74,
+              "DocumentIndex": 75,
               "Title": "ReceiveOrderFulfillmentRequestDto.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Models\\DTOs\\Request\\OrderFulfillment\\ReceiveOrderFulfillmentRequestDto.cs",
               "RelativeDocumentMoniker": "Models\\DTOs\\Request\\OrderFulfillment\\ReceiveOrderFulfillmentRequestDto.cs",
@@ -1305,7 +1321,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 71,
+              "DocumentIndex": 72,
               "Title": "AuthController.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Controllers\\AuthController.cs",
               "RelativeDocumentMoniker": "Controllers\\AuthController.cs",
@@ -1317,7 +1333,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 72,
+              "DocumentIndex": 73,
               "Title": "PasswordHelper.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Utilities\\Helpers\\PasswordHelper.cs",
               "RelativeDocumentMoniker": "Utilities\\Helpers\\PasswordHelper.cs",
@@ -1329,7 +1345,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 73,
+              "DocumentIndex": 74,
               "Title": "AuthService.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Services\\Implementations\\AuthService.cs",
               "RelativeDocumentMoniker": "Services\\Implementations\\AuthService.cs",
@@ -1341,7 +1357,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 70,
+              "DocumentIndex": 71,
               "Title": "IUserService.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Services\\Interfaces\\IUserService.cs",
               "RelativeDocumentMoniker": "Services\\Interfaces\\IUserService.cs",
@@ -1353,7 +1369,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 81,
+              "DocumentIndex": 82,
               "Title": "AuthResponseDto.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Models\\DTOs\\Response\\AuthResponseDto.cs",
               "RelativeDocumentMoniker": "Models\\DTOs\\Response\\AuthResponseDto.cs",
@@ -1365,7 +1381,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 80,
+              "DocumentIndex": 81,
               "Title": "CustomerDto.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Models\\DTOs\\Response\\CustomerDto.cs",
               "RelativeDocumentMoniker": "Models\\DTOs\\Response\\CustomerDto.cs",
@@ -1377,7 +1393,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 78,
+              "DocumentIndex": 79,
               "Title": "OrderFulfillmentDto.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Models\\DTOs\\Response\\OrderFulfillmentDto.cs",
               "RelativeDocumentMoniker": "Models\\DTOs\\Response\\OrderFulfillmentDto.cs",
@@ -1389,7 +1405,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 77,
+              "DocumentIndex": 78,
               "Title": "SalesDto.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Models\\DTOs\\Response\\SalesDto.cs",
               "RelativeDocumentMoniker": "Models\\DTOs\\Response\\SalesDto.cs",
@@ -1401,7 +1417,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 76,
+              "DocumentIndex": 77,
               "Title": "UserDto.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Models\\DTOs\\Response\\UserDto.cs",
               "RelativeDocumentMoniker": "Models\\DTOs\\Response\\UserDto.cs",
@@ -1413,7 +1429,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 75,
+              "DocumentIndex": 76,
               "Title": "VendorDto.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Models\\DTOs\\Response\\VendorDto.cs",
               "RelativeDocumentMoniker": "Models\\DTOs\\Response\\VendorDto.cs",
@@ -1425,7 +1441,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 82,
+              "DocumentIndex": 83,
               "Title": "CreateVendorRequestDto.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Models\\DTOs\\Request\\Vendor\\CreateVendorRequestDto.cs",
               "RelativeDocumentMoniker": "Models\\DTOs\\Request\\Vendor\\CreateVendorRequestDto.cs",
@@ -1437,7 +1453,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 83,
+              "DocumentIndex": 84,
               "Title": "ReceiveSalesRequestDto.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Models\\DTOs\\Request\\Sales\\ReceiveSalesRequestDto.cs",
               "RelativeDocumentMoniker": "Models\\DTOs\\Request\\Sales\\ReceiveSalesRequestDto.cs",
@@ -1449,7 +1465,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 79,
+              "DocumentIndex": 80,
               "Title": "ForecastDto.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Models\\DTOs\\Response\\ForecastDto.cs",
               "RelativeDocumentMoniker": "Models\\DTOs\\Response\\ForecastDto.cs",
@@ -1461,7 +1477,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 84,
+              "DocumentIndex": 85,
               "Title": "LoginRequestDto.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Models\\DTOs\\Request\\Auth\\LoginRequestDto.cs",
               "RelativeDocumentMoniker": "Models\\DTOs\\Request\\Auth\\LoginRequestDto.cs",
@@ -1473,7 +1489,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 86,
+              "DocumentIndex": 87,
               "Title": "SalesRepository.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Repositories\\Implementations\\SalesRepository.cs",
               "RelativeDocumentMoniker": "Repositories\\Implementations\\SalesRepository.cs",
@@ -1485,7 +1501,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 87,
+              "DocumentIndex": 88,
               "Title": "StockTransferService.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Services\\Implementations\\StockTransferService.cs",
               "RelativeDocumentMoniker": "Services\\Implementations\\StockTransferService.cs",
@@ -1497,7 +1513,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 85,
+              "DocumentIndex": 86,
               "Title": "OrderFulfillmentRepository.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Repositories\\Implementations\\OrderFulfillmentRepository.cs",
               "RelativeDocumentMoniker": "Repositories\\Implementations\\OrderFulfillmentRepository.cs",
@@ -1509,7 +1525,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 88,
+              "DocumentIndex": 89,
               "Title": "ForecastedResult.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Models\\Entities\\ForecastedResult.cs",
               "RelativeDocumentMoniker": "Models\\Entities\\ForecastedResult.cs",
@@ -1521,7 +1537,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 89,
+              "DocumentIndex": 90,
               "Title": "SalesItem.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Models\\Entities\\SalesItem.cs",
               "RelativeDocumentMoniker": "Models\\Entities\\SalesItem.cs",
@@ -1533,7 +1549,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 90,
+              "DocumentIndex": 91,
               "Title": "OrderFulfillmentItem.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Models\\Entities\\OrderFulfillmentItem.cs",
               "RelativeDocumentMoniker": "Models\\Entities\\OrderFulfillmentItem.cs",
@@ -1545,7 +1561,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 91,
+              "DocumentIndex": 92,
               "Title": "JWT_AUTHENTICATION_GUIDE.md",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\JWT_AUTHENTICATION_GUIDE.md",
               "RelativeDocumentMoniker": "JWT_AUTHENTICATION_GUIDE.md",
@@ -1558,7 +1574,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 92,
+              "DocumentIndex": 93,
               "Title": "IMPLEMENTATION_GUIDE.md",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\IMPLEMENTATION_GUIDE.md",
               "RelativeDocumentMoniker": "IMPLEMENTATION_GUIDE.md",
@@ -1570,7 +1586,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 93,
+              "DocumentIndex": 94,
               "Title": "JwtTokenService.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Services\\Implementations\\JwtTokenService.cs",
               "RelativeDocumentMoniker": "Services\\Implementations\\JwtTokenService.cs",
@@ -1582,7 +1598,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 94,
+              "DocumentIndex": 95,
               "Title": "appsettings.json",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\appsettings.json",
               "RelativeDocumentMoniker": "appsettings.json",
@@ -1594,7 +1610,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 96,
+              "DocumentIndex": 97,
               "Title": "JwtSettings.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Configuration\\JwtSettings.cs",
               "RelativeDocumentMoniker": "Configuration\\JwtSettings.cs",
@@ -1606,7 +1622,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 95,
+              "DocumentIndex": 96,
               "Title": "OrderFulfillmentController.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Controllers\\OrderFulfillmentController.cs",
               "RelativeDocumentMoniker": "Controllers\\OrderFulfillmentController.cs",
@@ -1618,7 +1634,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 97,
+              "DocumentIndex": 98,
               "Title": "log-20260707.txt",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\logs\\log-20260707.txt",
               "RelativeDocumentMoniker": "logs\\log-20260707.txt",
@@ -1630,7 +1646,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 98,
+              "DocumentIndex": 99,
               "Title": "CURL_EXAMPLES.md",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\CURL_EXAMPLES.md",
               "RelativeDocumentMoniker": "CURL_EXAMPLES.md",
@@ -1642,7 +1658,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 99,
+              "DocumentIndex": 100,
               "Title": "AUDIT_LOGGING_GUIDE.md",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\AUDIT_LOGGING_GUIDE.md",
               "RelativeDocumentMoniker": "AUDIT_LOGGING_GUIDE.md",
@@ -1654,7 +1670,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 100,
+              "DocumentIndex": 101,
               "Title": "SalesController.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Controllers\\SalesController.cs",
               "RelativeDocumentMoniker": "Controllers\\SalesController.cs",
@@ -1666,7 +1682,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 101,
+              "DocumentIndex": 102,
               "Title": "SmartInventoryAPI.csproj",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\SmartInventoryAPI.csproj",
               "RelativeDocumentMoniker": "SmartInventoryAPI.csproj",
@@ -1678,7 +1694,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 102,
+              "DocumentIndex": 103,
               "Title": "README.md",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\README.md",
               "RelativeDocumentMoniker": "README.md",
