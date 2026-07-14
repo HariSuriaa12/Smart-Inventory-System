@@ -15,12 +15,14 @@ interface ReceivePurchaseOrderModalProps {
 
 export const ReceivePurchaseOrderModal = ({ isOpen, poId, item, onClose, onSuccess, isLoading = false }: ReceivePurchaseOrderModalProps) => {
   const [receivedQuantity, setReceivedQuantity] = useState('')
+  const [orderedQuantity, setOrderedQuantity] = useState('')
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [submitting, setSubmitting] = useState(false)
 
   useEffect(() => {
     if (isOpen && item) {
       setReceivedQuantity(item.received_Quantity?.toString() || '0')
+      setOrderedQuantity(item.order_Quantity?.toString() || '0')
       setErrors({})
     }
   }, [isOpen, item])
@@ -34,6 +36,9 @@ export const ReceivePurchaseOrderModal = ({ isOpen, poId, item, onClose, onSucce
     }
     if (received > item!.order_Quantity) {
       newErrors.receivedQuantity = `Received quantity cannot exceed ordered quantity (${item!.order_Quantity})`
+    }
+    if (received > (item!.order_Quantity - item!.received_Quantity)) {
+      newErrors.receivedQuantity = `Received quantity cannot exceed remaining quantity (${(item!.order_Quantity - item!.received_Quantity)})`
     }
 
     setErrors(newErrors)
@@ -81,11 +86,11 @@ export const ReceivePurchaseOrderModal = ({ isOpen, poId, item, onClose, onSucce
             <div className="space-y-2">
               <div className="flex justify-between">
                 <span className="text-gray-700">Item Code:</span>
-                <span className="font-medium text-gray-900">{item.item?.item_Code || '-'}</span>
+                <span className="font-medium text-gray-900">{item.item_Code || '-'}</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-gray-700">Item Name:</span>
-                <span className="font-medium text-gray-900">{item.item?.item_Name || '-'}</span>
+                <span className="font-medium text-gray-900">{item.item_Name || '-'}</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-gray-700">Order Quantity:</span>
@@ -118,12 +123,12 @@ export const ReceivePurchaseOrderModal = ({ isOpen, poId, item, onClose, onSucce
               <AlertCircle size={20} className="text-red-600 flex-shrink-0 mt-0.5" />
               <div>
                 <p className="text-sm font-medium text-red-800">This item has been fully received</p>
-                <p className="text-sm text-red-700">The received quantity cannot be modified for fully received items</p>
+                {/* <p className="text-sm text-red-700">The received quantity cannot be modified for fully received items</p> */}
               </div>
             </div>
           )}
 
-          {isFullyReceived && !isItemReceived && (
+          {/* {isFullyReceived && !isItemReceived && (
             <div className="p-4 bg-green-50 rounded-lg border border-green-200 flex gap-3">
               <AlertCircle size={20} className="text-green-600 flex-shrink-0 mt-0.5" />
               <div>
@@ -131,35 +136,38 @@ export const ReceivePurchaseOrderModal = ({ isOpen, poId, item, onClose, onSucce
                 <p className="text-sm text-green-700">You can still update the received quantity if needed</p>
               </div>
             </div>
-          )}
+          )} */}
 
           {/* Received Quantity Input */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Received Quantity <span className="text-red-500">*</span>
-            </label>
-            <Input
-              type="number"
-              value={receivedQuantity}
-              onChange={(e) => {
-                setReceivedQuantity(e.target.value)
-                if (errors.receivedQuantity) {
-                  setErrors((prev) => {
-                    const newErrors = { ...prev }
-                    delete newErrors.receivedQuantity
-                    return newErrors
-                  })
-                }
-              }}
-              placeholder="Enter received quantity"
-              min="0"
-              step="0.01"
-              max={item.order_Quantity}
-              disabled={isLoading || submitting || isItemReceived}
-              error={errors.receivedQuantity}
-            />
-            <p className="text-xs text-gray-500 mt-2">Maximum: {item.order_Quantity}</p>
-          </div>
+          {!isFullyReceived && (
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Received Quantity <span className="text-red-500">*</span>
+              </label>
+              <Input
+                type="number"
+                value={receivedQuantity}
+                onChange={(e) => {
+                  setReceivedQuantity(e.target.value)
+                  if (errors.receivedQuantity) {
+                    setErrors((prev) => {
+                      const newErrors = { ...prev }
+                      delete newErrors.receivedQuantity
+                      return newErrors
+                    })
+                  }
+                }}
+                placeholder="Enter received quantity"
+                min="0"
+                step="0.01"
+                max={remainingToReceive}
+                disabled={isLoading || submitting || isItemReceived}
+                error={errors.receivedQuantity}
+              />
+              {/* <p className="text-xs text-gray-500 mt-2">Maximum: {item.order_Quantity}</p> */}
+              <p className="text-xs text-gray-500 mt-2">Maximum: {remainingToReceive}</p>
+            </div>
+          )}
 
           {errors.submit && (
             <div className="p-4 bg-red-50 rounded-lg border border-red-200">

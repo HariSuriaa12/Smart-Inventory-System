@@ -353,9 +353,9 @@ public class PurchaseOrderService : IPurchaseOrderService
         inventory.On_Hand_Quantity += quantityDifference;
         inventory.Available_Quantity += quantityDifference;
 
-        poItem.Received_Quantity = receivedQuantity;
+        poItem.Received_Quantity = poItem.Received_Quantity + receivedQuantity;
 
-        if (receivedQuantity == poItem.Order_Quantity)
+        if (poItem.Received_Quantity == poItem.Order_Quantity)
         {
             poItem.Status = 3;
         }
