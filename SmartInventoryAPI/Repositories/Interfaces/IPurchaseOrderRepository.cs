@@ -12,4 +12,10 @@ public interface IPurchaseOrderRepository : IGenericRepository<PurchaseOrderHead
     Task<int> CountByVendorAsync(long vendorId);
     Task<IEnumerable<PurchaseOrderHeader>> GetAllWithDetailsAsync(int skip = 0, int take = 10);
     Task<IEnumerable<PurchaseOrderHeader>> GetByVendorWithDetailsAsync(long vendorId, int skip = 0, int take = 10);
+    Task<IEnumerable<PurchaseOrderHeader>> GetFilteredAsync(
+        long? poId = null, string? poRefNo = null, long? vendorId = null, int? status = null,
+        string? dateFrom = null, string? dateTo = null, int skip = 0, int take = 10);
+    Task<int> CountFilteredAsync(
+        long? poId = null, string? poRefNo = null, long? vendorId = null, int? status = null,
+        string? dateFrom = null, string? dateTo = null);
 }

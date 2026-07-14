@@ -92,4 +92,67 @@ public class PurchaseOrderRepository : GenericRepository<PurchaseOrderHeader>, I
             .Take(take)
             .ToListAsync();
     }
+
+    public async Task<IEnumerable<PurchaseOrderHeader>> GetFilteredAsync(
+        long? poId = null, string? poRefNo = null, long? vendorId = null, int? status = null,
+        string? dateFrom = null, string? dateTo = null, int skip = 0, int take = 10)
+    {
+        var query = _dbSet
+            .Where(p => !p.Is_Deleted)
+            .Include(p => p.Vendor)
+            .Include(p => p.Location)
+            .Include(p => p.Items)
+            .ThenInclude(i => i.Item)
+            .Include(p => p.User);
+
+        if (poId.HasValue)
+            query = query.Where(p => p.ID == poId.Value);
+
+        if (!string.IsNullOrEmpty(poRefNo))
+            query = query.Where(p => p.PO_Reference_No != null && p.PO_Reference_No.Contains(poRefNo));
+
+        if (vendorId.HasValue)
+            query = query.Where(p => p.Vendor_ID == vendorId.Value);
+
+        if (status.HasValue)
+            query = query.Where(p => p.Status == status.Value);
+
+        if (!string.IsNullOrEmpty(dateFrom) && DateTime.TryParse(dateFrom, out var fromDate))
+            query = query.Where(p => p.Purchase_Date >= fromDate);
+
+        if (!string.IsNullOrEmpty(dateTo) && DateTime.TryParse(dateTo, out var toDate))
+            query = query.Where(p => p.Purchase_Date <= toDate.AddDays(1));
+
+        return await query
+            .Skip(skip)
+            .Take(take)
+            .ToListAsync();
+    }
+
+    public async Task<int> CountFilteredAsync(
+        long? poId = null, string? poRefNo = null, long? vendorId = null, int? status = null,
+        string? dateFrom = null, string? dateTo = null)
+    {
+        var query = _dbSet.Where(p => !p.Is_Deleted);
+
+        if (poId.HasValue)
+            query = query.Where(p => p.ID == poId.Value);
+
+        if (!string.IsNullOrEmpty(poRefNo))
+            query = query.Where(p => p.PO_Reference_No != null && p.PO_Reference_No.Contains(poRefNo));
+
+        if (vendorId.HasValue)
+            query = query.Where(p => p.Vendor_ID == vendorId.Value);
+
+        if (status.HasValue)
+            query = query.Where(p => p.Status == status.Value);
+
+        if (!string.IsNullOrEmpty(dateFrom) && DateTime.TryParse(dateFrom, out var fromDate))
+            query = query.Where(p => p.Purchase_Date >= fromDate);
+
+        if (!string.IsNullOrEmpty(dateTo) && DateTime.TryParse(dateTo, out var toDate))
+            query = query.Where(p => p.Purchase_Date <= toDate.AddDays(1));
+
+        return await query.CountAsync();
+    }
 }
