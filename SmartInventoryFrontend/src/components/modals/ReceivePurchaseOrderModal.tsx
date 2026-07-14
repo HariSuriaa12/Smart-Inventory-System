@@ -46,10 +46,7 @@ export const ReceivePurchaseOrderModal = ({ isOpen, poId, item, onClose, onSucce
 
     setSubmitting(true)
     try {
-      await purchaseOrderService.receivePurchaseOrderItem(poId, {
-        poItemId: item.id,
-        receivedQuantity: parseFloat(receivedQuantity),
-      })
+      await purchaseOrderService.receiveItem(poId, item.id, parseFloat(receivedQuantity))
       onSuccess()
     } catch (error) {
       console.error('Failed to receive item:', error)

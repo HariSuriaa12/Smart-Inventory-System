@@ -24,8 +24,11 @@ export const purchaseOrderService = {
   deletePurchaseOrder: async (id: number) =>
     (await api.delete<ApiResponse<void>>(`/api/purchaseorders/${id}`)).data,
 
-  receivePurchaseOrderItem: async (id: number, data: ReceivePurchaseOrderItemRequest) =>
-    (await api.post<ApiResponse<PurchaseOrder>>(`/api/purchaseorders/${id}/receive`, data)).data,
+  receiveItem: async (id: number, itemId: number, receivedQuantity: number) =>
+    (await api.post<ApiResponse<PurchaseOrder>>(`/api/purchaseorders/${id}/items/${itemId}/receive`, null, { params: { receivedQuantity } })).data,
+
+  cancelItemWithReturn: async (id: number, itemId: number) =>
+    (await api.post<ApiResponse<PurchaseOrder>>(`/api/purchaseorders/${id}/items/${itemId}/cancel-with-return`)).data,
 
   addItemToPO: async (id: number, itemData: { Item_ID: number; Order_Quantity: number; Unit_Price: number }) =>
     (await api.post<ApiResponse<PurchaseOrder>>(`/api/purchaseorders/${id}/items`, itemData)).data,

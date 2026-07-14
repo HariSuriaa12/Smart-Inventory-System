@@ -310,4 +310,154 @@ public class PurchaseOrderService : IPurchaseOrderService
 
         return await GetPurchaseOrderByIdAsync(id);
     }
+
+    public async Task<PurchaseOrderDetailDto> ReceiveItemAsync(long id, long itemId, decimal receivedQuantity)
+    {
+        var po = await _unitOfWork.PurchaseOrders.GetByIdAsync(id);
+        if (po == null || po.Is_Deleted)
+            throw new NotFoundException("Purchase Order not found");
+
+        var poItem = await _unitOfWork.Context.Set<PurchaseOrderItem>()
+            .FirstOrDefaultAsync(p => p.ID == itemId && p.PO_ID == id && !p.Is_Deleted);
+        if (poItem == null)
+            throw new NotFoundException("Purchase Order item not found");
+
+        if (receivedQuantity < 0)
+            throw new BadRequestException("Received quantity cannot be negative");
+        if (receivedQuantity > poItem.Order_Quantity)
+            throw new BadRequestException($"Received quantity cannot exceed ordered quantity ({poItem.Order_Quantity})");
+
+        var item = await _unitOfWork.Items.GetByIdAsync(poItem.Item_ID);
+        if (item == null)
+            throw new NotFoundException("Item not found");
+
+        var inventory = await _unitOfWork.Context.Set<Inventory>()
+            .FirstOrDefaultAsync(i => i.Item_ID == poItem.Item_ID && i.Location_ID == po.Location_ID && !i.Is_Deleted);
+
+        if (inventory == null)
+        {
+            inventory = new Inventory
+            {
+                Item_ID = poItem.Item_ID,
+                Location_ID = po.Location_ID,
+                On_Hand_Quantity = 0,
+                Available_Quantity = 0
+            };
+            await _unitOfWork.Context.Set<Inventory>().AddAsync(inventory);
+        }
+
+        decimal quantityDifference = receivedQuantity - poItem.Received_Quantity;
+        inventory.On_Hand_Quantity += quantityDifference;
+        inventory.Available_Quantity += quantityDifference;
+
+        poItem.Received_Quantity = receivedQuantity;
+
+        if (receivedQuantity == poItem.Order_Quantity)
+        {
+            poItem.Status = 3;
+        }
+        else if (receivedQuantity > 0)
+        {
+            poItem.Status = 2;
+        }
+        else
+        {
+            poItem.Status = 1;
+        }
+
+        _unitOfWork.Context.Set<Inventory>().Update(inventory);
+        _unitOfWork.Context.Set<PurchaseOrderItem>().Update(poItem);
+
+        var allItems = await _unitOfWork.Context.Set<PurchaseOrderItem>()
+            .Where(i => i.PO_ID == id && !i.Is_Deleted)
+            .ToListAsync();
+
+        bool allReceived = allItems.All(i => i.Received_Quantity >= i.Order_Quantity);
+        bool anyReceived = allItems.Any(i => i.Received_Quantity > 0);
+
+        if (allReceived)
+        {
+            po.Status = 3;
+        }
+        else if (anyReceived)
+        {
+            po.Status = 2;
+        }
+
+        await _unitOfWork.PurchaseOrders.UpdateAsync(po);
+        await _unitOfWork.SaveAsync();
+
+        _logger.LogInformation("Item {ItemID} received with quantity {Qty} for Purchase Order {POID}", itemId, receivedQuantity, id);
+
+        return await GetPurchaseOrderByIdAsync(id);
+    }
+
+    public async Task<PurchaseOrderDetailDto> CancelItemWithReturnAsync(long id, long itemId)
+    {
+        var po = await _unitOfWork.PurchaseOrders.GetByIdAsync(id);
+        if (po == null || po.Is_Deleted)
+            throw new NotFoundException("Purchase Order not found");
+
+        if (po.Status == 0)
+            throw new BadRequestException("Cannot cancel individual items for Pending purchase orders");
+
+        var poItem = await _unitOfWork.Context.Set<PurchaseOrderItem>()
+            .FirstOrDefaultAsync(p => p.ID == itemId && p.PO_ID == id && !p.Is_Deleted);
+        if (poItem == null)
+            throw new NotFoundException("Purchase Order item not found");
+
+        if (poItem.Status != 2 && poItem.Status != 3)
+            throw new BadRequestException("Items can only be cancelled with return if they are Partially Received or Received");
+
+        var inventory = await _unitOfWork.Context.Set<Inventory>()
+            .FirstOrDefaultAsync(i => i.Item_ID == poItem.Item_ID && i.Location_ID == po.Location_ID && !i.Is_Deleted);
+
+        if (inventory != null && poItem.Received_Quantity > 0)
+        {
+            inventory.On_Hand_Quantity -= poItem.Received_Quantity;
+            inventory.Available_Quantity -= poItem.Received_Quantity;
+            _unitOfWork.Context.Set<Inventory>().Update(inventory);
+        }
+
+        poItem.Received_Quantity = 0;
+        poItem.Status = 4;
+
+        _unitOfWork.Context.Set<PurchaseOrderItem>().Update(poItem);
+
+        var allItems = await _unitOfWork.Context.Set<PurchaseOrderItem>()
+            .Where(i => i.PO_ID == id && !i.Is_Deleted && i.Status != 4)
+            .ToListAsync();
+
+        bool allCancelled = !allItems.Any(i => i.Received_Quantity > 0);
+
+        if (allCancelled && allItems.Count == 0)
+        {
+            po.Status = 4;
+        }
+        else
+        {
+            var anyReceived = allItems.Any(i => i.Received_Quantity > 0);
+            var allReceived = allItems.All(i => i.Received_Quantity >= i.Order_Quantity);
+
+            if (allReceived)
+            {
+                po.Status = 3;
+            }
+            else if (anyReceived)
+            {
+                po.Status = 2;
+            }
+            else
+            {
+                po.Status = 1;
+            }
+        }
+
+        await _unitOfWork.PurchaseOrders.UpdateAsync(po);
+        await _unitOfWork.SaveAsync();
+
+        _logger.LogInformation("Item {ItemID} cancelled with return for Purchase Order {POID}", itemId, id);
+
+        return await GetPurchaseOrderByIdAsync(id);
+    }
 }

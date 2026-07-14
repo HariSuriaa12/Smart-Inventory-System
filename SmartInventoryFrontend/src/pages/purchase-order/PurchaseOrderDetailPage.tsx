@@ -7,7 +7,7 @@ import { EditPurchaseOrderModal } from '@/components/modals/EditPurchaseOrderMod
 import { AddPurchaseOrderItemModal } from '@/components/modals/AddPurchaseOrderItemModal'
 import { ReceivePurchaseOrderModal } from '@/components/modals/ReceivePurchaseOrderModal'
 import { PurchaseOrder, PurchaseOrderItem, PurchaseOrderStatus, PurchaseOrderStatusLabel } from '@/types/purchaseorder'
-import { ArrowLeft, Edit2, Plus, Package, Check, X } from 'lucide-react'
+import { ArrowLeft, Edit2, Plus, Package, Check, X, Trash2, RotateCcw } from 'lucide-react'
 import { purchaseOrderService } from '@/services/purchaseOrderService'
 
 const STATUS_BADGE_CLASSES: Record<PurchaseOrderStatus, string> = {
@@ -57,6 +57,32 @@ export const PurchaseOrderDetailPage = () => {
       dispatch(fetchPOById(Number(id)) as any)
     } catch (error) {
       console.error('Failed to cancel purchase order:', error)
+    } finally {
+      setActionLoading(false)
+    }
+  }, [id, dispatch])
+
+  const handleRemoveItem = useCallback(async (itemId: number) => {
+    if (!id || !window.confirm('Are you sure you want to remove this item?')) return
+    setActionLoading(true)
+    try {
+      await purchaseOrderService.removeItemFromPO(Number(id), itemId)
+      dispatch(fetchPOById(Number(id)) as any)
+    } catch (error) {
+      console.error('Failed to remove item:', error)
+    } finally {
+      setActionLoading(false)
+    }
+  }, [id, dispatch])
+
+  const handleCancelItemWithReturn = useCallback(async (itemId: number) => {
+    if (!id || !window.confirm('Are you sure you want to cancel this item with return?')) return
+    setActionLoading(true)
+    try {
+      await purchaseOrderService.cancelItemWithReturn(Number(id), itemId)
+      dispatch(fetchPOById(Number(id)) as any)
+    } catch (error) {
+      console.error('Failed to cancel item with return:', error)
     } finally {
       setActionLoading(false)
     }
@@ -180,6 +206,35 @@ export const PurchaseOrderDetailPage = () => {
         <span className={`inline-flex px-2.5 py-0.5 rounded-full text-xs font-semibold ${STATUS_BADGE_CLASSES[value]}`}>
           {PurchaseOrderStatusLabel[value]}
         </span>
+      ),
+    },
+    {
+      key: 'actions',
+      label: 'Actions',
+      width: '140px',
+      render: (_, item) => (
+        <div className="flex gap-2">
+          {currentOrder.status === PurchaseOrderStatus.Pending && (
+            <button
+              onClick={() => handleRemoveItem(item.id)}
+              disabled={actionLoading}
+              className="p-1.5 text-red-600 hover:bg-red-50 rounded transition-colors disabled:opacity-50"
+              title="Remove item"
+            >
+              <Trash2 size={16} />
+            </button>
+          )}
+          {(item.status === PurchaseOrderStatus.PartiallyReceived || item.status === PurchaseOrderStatus.Received) && (
+            <button
+              onClick={() => handleCancelItemWithReturn(item.id)}
+              disabled={actionLoading}
+              className="p-1.5 text-orange-600 hover:bg-orange-50 rounded transition-colors disabled:opacity-50"
+              title="Cancel with return"
+            >
+              <RotateCcw size={16} />
+            </button>
+          )}
+        </div>
       ),
     },
   ]
