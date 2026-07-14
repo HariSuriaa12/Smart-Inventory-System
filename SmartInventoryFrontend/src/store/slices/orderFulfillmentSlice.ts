@@ -12,9 +12,11 @@ const initialState: OrderFulfillmentState = {
   take: 10,
 }
 
-export const fetchOrders = createAsyncThunk('of/fetch', async ({ skip = 0, take = 10 }: any, { rejectWithValue }) => {
+export const fetchOrderFulfillments = createAsyncThunk('of/fetch', async (params: any, { rejectWithValue }) => {
   try {
-    return (await orderFulfillmentService.getOrders(skip, take)).data
+    const { skip = 0, take = 10, ...filters } = params
+    const response = await orderFulfillmentService.getAllOrderFulfillments(skip, take, filters)
+    return response
   } catch (error: any) {
     return rejectWithValue(error.message)
   }
@@ -44,13 +46,15 @@ const ofSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchOrders.pending, (state) => { state.loading = true })
-      .addCase(fetchOrders.fulfilled, (state, action) => {
+      .addCase(fetchOrderFulfillments.pending, (state) => { state.loading = true })
+      .addCase(fetchOrderFulfillments.fulfilled, (state, action) => {
         state.loading = false
         state.orders = action.payload?.data || []
         state.total = action.payload?.total || 0
+        state.skip = action.payload?.skip || 0
+        state.take = action.payload?.take || 10
       })
-      .addCase(fetchOrders.rejected, (state, action) => {
+      .addCase(fetchOrderFulfillments.rejected, (state, action) => {
         state.loading = false
         state.error = action.payload as string
       })

@@ -1,10 +1,11 @@
 import { useEffect, useState, useCallback, useMemo } from 'react'
+import { useAppDispatch, useAppSelector } from '@/store/hooks'
+import { fetchOrderFulfillments } from '@/store/slices/orderFulfillmentSlice'
 import { useNavigate } from 'react-router-dom'
 import { Card, DataGrid, Column } from '@/components'
 import { ColumnSelectorModal } from '@/components/modals/ColumnSelectorModal'
-import { orderFulfillmentService } from '@/services/orderFulfillmentService'
 import { OrderFulfillment, OrderFulfillmentStatus, OrderFulfillmentStatusLabel } from '@/types/orderfulfillment'
-import { Plus, Columns3 } from 'lucide-react'
+import { Columns3 } from 'lucide-react'
 
 const PAGE_SIZE = 10
 
@@ -37,12 +38,9 @@ const STATUS_BADGE_CLASSES: Record<OrderFulfillmentStatus, string> = {
 }
 
 export const OrderFulfillmentListPage = () => {
+  const dispatch = useAppDispatch()
   const navigate = useNavigate()
-  const [orders, setOrders] = useState<OrderFulfillment[]>([])
-  const [loading, setLoading] = useState(false)
   const [currentPage, setCurrentPage] = useState(1)
-  const [total, setTotal] = useState(0)
-
   const [fulfillmentIdFilter, setFulfillmentIdFilter] = useState('')
   const [customerIdFilter, setCustomerIdFilter] = useState('')
   const [unprocessedOnlyFilter, setUnprocessedOnlyFilter] = useState(false)
@@ -56,45 +54,34 @@ export const OrderFulfillmentListPage = () => {
     return new Set()
   })
 
+  const { orders, loading, total } = useAppSelector((state) => state.orderFulfillment)
+
   // Debounce filter changes
   useEffect(() => {
     const debounceTimer = setTimeout(() => {
       setCurrentPage(1)
-      loadOrders(0)
+      dispatch(fetchOrderFulfillments({
+        skip: 0,
+        take: PAGE_SIZE,
+        fulfillmentId: fulfillmentIdFilter ? Number(fulfillmentIdFilter) : undefined,
+        customerId: customerIdFilter ? Number(customerIdFilter) : undefined,
+        unprocessedOnly: unprocessedOnlyFilter ? true : undefined,
+      }) as any)
     }, 800)
     return () => clearTimeout(debounceTimer)
-  }, [fulfillmentIdFilter, customerIdFilter, unprocessedOnlyFilter])
+  }, [fulfillmentIdFilter, customerIdFilter, unprocessedOnlyFilter, dispatch])
 
-  // Load on page change
+  // Fetch when page changes
   useEffect(() => {
     const skip = (currentPage - 1) * PAGE_SIZE
-    loadOrders(skip)
+    dispatch(fetchOrderFulfillments({
+      skip,
+      take: PAGE_SIZE,
+      fulfillmentId: fulfillmentIdFilter ? Number(fulfillmentIdFilter) : undefined,
+      customerId: customerIdFilter ? Number(customerIdFilter) : undefined,
+      unprocessedOnly: unprocessedOnlyFilter ? true : undefined,
+    }) as any)
   }, [currentPage])
-
-  const loadOrders = useCallback(async (skip: number) => {
-    setLoading(true)
-    try {
-      const filterParams: any = {}
-
-      if (fulfillmentIdFilter) {
-        filterParams.fulfillmentId = parseInt(fulfillmentIdFilter)
-      }
-      if (customerIdFilter) {
-        filterParams.customerId = parseInt(customerIdFilter)
-      }
-      if (unprocessedOnlyFilter) {
-        filterParams.unprocessedOnly = true
-      }
-
-      const response = await orderFulfillmentService.getAllOrderFulfillments(skip, PAGE_SIZE, filterParams)
-      setOrders(response.data || [])
-      setTotal(response.total || 0)
-    } catch (error) {
-      console.error('Failed to load orders:', error)
-    } finally {
-      setLoading(false)
-    }
-  }, [fulfillmentIdFilter, customerIdFilter, unprocessedOnlyFilter])
 
   const handleClearFilters = useCallback(() => {
     setFulfillmentIdFilter('')
