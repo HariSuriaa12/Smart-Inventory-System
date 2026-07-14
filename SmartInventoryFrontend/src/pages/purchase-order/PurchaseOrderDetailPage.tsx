@@ -111,6 +111,7 @@ export const PurchaseOrderDetailPage = () => {
   }, [id, dispatch])
 
   const handleRowDoubleClick = useCallback((item: PurchaseOrderItem) => {
+    if (item.status === PurchaseOrderStatus.Cancelled) return
     setSelectedItem(item)
     setIsReceiveOpen(true)
   }, [])
@@ -347,7 +348,7 @@ export const PurchaseOrderDetailPage = () => {
           onRowDoubleClick={currentOrder.status !== PurchaseOrderStatus.Pending ? handleRowDoubleClick : undefined}
           rowKey="id"
           emptyMessage="No items in this purchase order"
-          rowHint={currentOrder.status !== PurchaseOrderStatus.Pending ? 'Double-click to receive item' : undefined}
+          rowHint={currentOrder.status !== PurchaseOrderStatus.Pending ? 'Double-click to receive item (cancelled items cannot be received)' : undefined}
         />
       </Card>
 
