@@ -15,6 +15,7 @@ interface EditPurchaseOrderModalProps {
 export const EditPurchaseOrderModal = ({ isOpen, po, onClose, onSuccess, isLoading = false }: EditPurchaseOrderModalProps) => {
   const dispatch = useAppDispatch()
   const [formData, setFormData] = useState({
+    poRefNo: '',
     remark: '',
   })
   const [errors, setErrors] = useState<Record<string, string>>({})
@@ -22,6 +23,7 @@ export const EditPurchaseOrderModal = ({ isOpen, po, onClose, onSuccess, isLoadi
   useEffect(() => {
     if (po && isOpen) {
       setFormData({
+        poRefNo: po.pO_Reference_No || '',
         remark: po.remark || '',
       })
       setErrors({})
@@ -39,7 +41,7 @@ export const EditPurchaseOrderModal = ({ isOpen, po, onClose, onSuccess, isLoadi
     if (!po || !validateForm()) return
 
     try {
-      await dispatch(updatePO({ id: po.id, data: { Remark: formData.remark } }) as any)
+      await dispatch(updatePO({ id: po.id, data: { PO_Reference_No: formData.poRefNo, Remark: formData.remark } }) as any)
       onSuccess()
     } catch (error) {
       console.error('Failed to update purchase order:', error)
@@ -64,8 +66,31 @@ export const EditPurchaseOrderModal = ({ isOpen, po, onClose, onSuccess, isLoadi
           {/* Info Box */}
           <div className="p-4 bg-blue-50 rounded-lg border border-blue-200">
             <p className="text-sm text-gray-600">
-              Only remarks and status can be edited for <strong>Saved</strong> purchase orders. To add or remove items, create a new purchase order.
+              Only PO Reference No and remarks can be edited for <strong>Saved</strong> purchase orders. To add or remove items, create a new purchase order.
             </p>
+          </div>
+
+          {/* PO Reference No */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">PO Reference No</label>
+            <input
+              type="text"
+              value={formData.poRefNo}
+              onChange={(e) => {
+                setFormData((prev) => ({ ...prev, poRefNo: e.target.value }))
+                if (errors.poRefNo) {
+                  setErrors((prev) => {
+                    const newErrors = { ...prev }
+                    delete newErrors.poRefNo
+                    return newErrors
+                  })
+                }
+              }}
+              placeholder="Enter PO Reference No"
+              disabled={isLoading}
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent disabled:bg-gray-50"
+            />
+            {errors.poRefNo && <p className="text-sm text-red-600 mt-1">{errors.poRefNo}</p>}
           </div>
 
           {/* Remark */}

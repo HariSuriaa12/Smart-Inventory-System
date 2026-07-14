@@ -19,5 +19,6 @@ public class PurchaseOrderItemRequestDto
 public class UpdatePurchaseOrderRequestDto
 {
     public string? Remark { get; set; }
+    public string? PO_Reference_No { get; set; }
     public int Status { get; set; }
 }

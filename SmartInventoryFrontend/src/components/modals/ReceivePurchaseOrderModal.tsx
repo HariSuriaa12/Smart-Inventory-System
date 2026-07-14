@@ -63,6 +63,7 @@ export const ReceivePurchaseOrderModal = ({ isOpen, poId, item, onClose, onSucce
 
   const remainingToReceive = item.order_Quantity - item.received_Quantity
   const isFullyReceived = item.received_Quantity >= item.order_Quantity
+  const isItemReceived = item.status === PurchaseOrderStatus.Received
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
@@ -115,7 +116,17 @@ export const ReceivePurchaseOrderModal = ({ isOpen, poId, item, onClose, onSucce
           )}
 
           {/* Warning if fully received */}
-          {isFullyReceived && (
+          {isItemReceived && (
+            <div className="p-4 bg-red-50 rounded-lg border border-red-200 flex gap-3">
+              <AlertCircle size={20} className="text-red-600 flex-shrink-0 mt-0.5" />
+              <div>
+                <p className="text-sm font-medium text-red-800">This item has been fully received</p>
+                <p className="text-sm text-red-700">The received quantity cannot be modified for fully received items</p>
+              </div>
+            </div>
+          )}
+
+          {isFullyReceived && !isItemReceived && (
             <div className="p-4 bg-green-50 rounded-lg border border-green-200 flex gap-3">
               <AlertCircle size={20} className="text-green-600 flex-shrink-0 mt-0.5" />
               <div>
@@ -147,7 +158,7 @@ export const ReceivePurchaseOrderModal = ({ isOpen, poId, item, onClose, onSucce
               min="0"
               step="0.01"
               max={item.order_Quantity}
-              disabled={isLoading || submitting}
+              disabled={isLoading || submitting || isItemReceived}
               error={errors.receivedQuantity}
             />
             <p className="text-xs text-gray-500 mt-2">Maximum: {item.order_Quantity}</p>
@@ -178,7 +189,7 @@ export const ReceivePurchaseOrderModal = ({ isOpen, poId, item, onClose, onSucce
             </button>
             <button
               type="submit"
-              disabled={isLoading || submitting}
+              disabled={isLoading || submitting || isItemReceived}
               className="px-6 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors disabled:bg-gray-400 font-medium"
             >
               {submitting ? 'Updating...' : 'Update Receipt'}

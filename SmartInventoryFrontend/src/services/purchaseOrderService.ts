@@ -15,6 +15,12 @@ export const purchaseOrderService = {
   updatePurchaseOrder: async (id: number, data: UpdatePurchaseOrderRequest) =>
     (await api.put<ApiResponse<PurchaseOrder>>(`/api/purchaseorders/${id}`, data)).data,
 
+  confirmPurchaseOrder: async (id: number) =>
+    (await api.post<ApiResponse<PurchaseOrder>>(`/api/purchaseorders/${id}/confirm`)).data,
+
+  cancelPurchaseOrder: async (id: number) =>
+    (await api.post<ApiResponse<PurchaseOrder>>(`/api/purchaseorders/${id}/cancel`)).data,
+
   deletePurchaseOrder: async (id: number) =>
     (await api.delete<ApiResponse<void>>(`/api/purchaseorders/${id}`)).data,
 

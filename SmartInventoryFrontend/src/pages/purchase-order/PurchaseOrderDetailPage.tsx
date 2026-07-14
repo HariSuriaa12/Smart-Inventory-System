@@ -7,7 +7,8 @@ import { EditPurchaseOrderModal } from '@/components/modals/EditPurchaseOrderMod
 import { AddPurchaseOrderItemModal } from '@/components/modals/AddPurchaseOrderItemModal'
 import { ReceivePurchaseOrderModal } from '@/components/modals/ReceivePurchaseOrderModal'
 import { PurchaseOrder, PurchaseOrderItem, PurchaseOrderStatus, PurchaseOrderStatusLabel } from '@/types/purchaseorder'
-import { ArrowLeft, Edit2, Plus, Package } from 'lucide-react'
+import { ArrowLeft, Edit2, Plus, Package, Check, X } from 'lucide-react'
+import { purchaseOrderService } from '@/services/purchaseOrderService'
 
 const STATUS_BADGE_CLASSES: Record<PurchaseOrderStatus, string> = {
   [PurchaseOrderStatus.Pending]: 'bg-blue-100 text-blue-800',
@@ -27,10 +28,37 @@ export const PurchaseOrderDetailPage = () => {
   const [selectedItem, setSelectedItem] = useState<PurchaseOrderItem | null>(null)
 
   const { currentOrder, loading } = useAppSelector((state) => state.purchaseOrders)
+  const [actionLoading, setActionLoading] = useState(false)
 
   useEffect(() => {
     if (id) {
       dispatch(fetchPOById(Number(id)) as any)
+    }
+  }, [id, dispatch])
+
+  const handleConfirm = useCallback(async () => {
+    if (!id) return
+    setActionLoading(true)
+    try {
+      await purchaseOrderService.confirmPurchaseOrder(Number(id))
+      dispatch(fetchPOById(Number(id)) as any)
+    } catch (error) {
+      console.error('Failed to confirm purchase order:', error)
+    } finally {
+      setActionLoading(false)
+    }
+  }, [id, dispatch])
+
+  const handleCancel = useCallback(async () => {
+    if (!id || !window.confirm('Are you sure you want to cancel this purchase order?')) return
+    setActionLoading(true)
+    try {
+      await purchaseOrderService.cancelPurchaseOrder(Number(id))
+      dispatch(fetchPOById(Number(id)) as any)
+    } catch (error) {
+      console.error('Failed to cancel purchase order:', error)
+    } finally {
+      setActionLoading(false)
     }
   }, [id, dispatch])
 
@@ -184,6 +212,7 @@ export const PurchaseOrderDetailPage = () => {
             <button
               onClick={() => setIsEditOpen(true)}
               className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+              disabled={actionLoading}
             >
               <Edit2 size={18} />
               Edit
@@ -193,9 +222,30 @@ export const PurchaseOrderDetailPage = () => {
             <button
               onClick={() => setIsAddItemOpen(true)}
               className="flex items-center gap-2 px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors"
+              disabled={actionLoading}
             >
               <Plus size={18} />
               Add Item
+            </button>
+          )}
+          {currentOrder.status === PurchaseOrderStatus.Pending && (
+            <button
+              onClick={handleConfirm}
+              className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors disabled:opacity-50"
+              disabled={actionLoading}
+            >
+              <Check size={18} />
+              Confirm
+            </button>
+          )}
+          {(currentOrder.status === PurchaseOrderStatus.Pending || currentOrder.status === PurchaseOrderStatus.Confirmed || currentOrder.status === PurchaseOrderStatus.PartiallyReceived) && (
+            <button
+              onClick={handleCancel}
+              className="flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors disabled:opacity-50"
+              disabled={actionLoading}
+            >
+              <X size={18} />
+              Cancel
             </button>
           )}
         </div>
@@ -208,8 +258,8 @@ export const PurchaseOrderDetailPage = () => {
           <p className="text-lg font-semibold text-gray-900">{currentOrder.vendor_Name || '-'}</p>
         </Card>
         <Card className="p-4">
-          <p className="text-sm text-gray-600 mb-1">Location</p>
-          <p className="text-lg font-semibold text-gray-900">{currentOrder.location_Name || '-'}</p>
+          <p className="text-sm text-gray-600 mb-1">PO Reference No</p>
+          <p className="text-lg font-semibold text-gray-900">{currentOrder.pO_Reference_No || '-'}</p>
         </Card>
         <Card className="p-4">
           <p className="text-sm text-gray-600 mb-1">Total Amount</p>

@@ -119,12 +119,66 @@ public class PurchaseOrderService : IPurchaseOrderService
 
         po.Status = request.Status;
         po.Remark = request.Remark;
+        po.PO_Reference_No = request.PO_Reference_No ?? po.PO_Reference_No;
         po.Purchase_Date = DateTime.SpecifyKind(po.Purchase_Date, DateTimeKind.Utc);
 
         await _unitOfWork.PurchaseOrders.UpdateAsync(po);
         await _unitOfWork.SaveAsync();
 
         _logger.LogInformation("Purchase Order {ID} updated", id);
+
+        return await GetPurchaseOrderByIdAsync(id);
+    }
+
+    public async Task<PurchaseOrderDetailDto> ConfirmPurchaseOrderAsync(long id)
+    {
+        var po = await _unitOfWork.PurchaseOrders.GetByIdAsync(id);
+        if (po == null || po.Is_Deleted)
+            throw new NotFoundException("Purchase Order not found");
+
+        if (po.Status != 0)
+            throw new BadRequestException("Only Pending purchase orders can be confirmed");
+
+        po.Status = 1;
+        await _unitOfWork.PurchaseOrders.UpdateAsync(po);
+        await _unitOfWork.SaveAsync();
+
+        _logger.LogInformation("Purchase Order {ID} confirmed", id);
+
+        return await GetPurchaseOrderByIdAsync(id);
+    }
+
+    public async Task<PurchaseOrderDetailDto> CancelPurchaseOrderAsync(long id)
+    {
+        var po = await _unitOfWork.PurchaseOrders.GetWithItemsAsync(id);
+        if (po == null || po.Is_Deleted)
+            throw new NotFoundException("Purchase Order not found");
+
+        if (po.Status != 0 && po.Status != 1 && po.Status != 2)
+            throw new BadRequestException("Purchase orders with Received or Cancelled status cannot be cancelled");
+
+        var items = await _unitOfWork.Context.Set<PurchaseOrderItem>()
+            .Where(i => i.PO_ID == id && !i.Is_Deleted)
+            .ToListAsync();
+
+        if (po.Status == 2)
+        {
+            var unreceivedItems = items.Where(i => i.Status != 3).ToList();
+            if (unreceivedItems.Any())
+                throw new BadRequestException("Cannot cancel partially received PO unless all items are handled");
+        }
+
+        po.Status = 4;
+        foreach (var item in items)
+        {
+            item.Status = 4;
+        }
+
+        await _unitOfWork.PurchaseOrders.UpdateAsync(po);
+        _unitOfWork.Context.Set<PurchaseOrderItem>().UpdateRange(items);
+        await _unitOfWork.SaveAsync();
+
+        _logger.LogInformation("Purchase Order {ID} cancelled", id);
 
         return await GetPurchaseOrderByIdAsync(id);
     }
