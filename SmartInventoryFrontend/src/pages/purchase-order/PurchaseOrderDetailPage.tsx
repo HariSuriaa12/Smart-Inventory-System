@@ -380,7 +380,7 @@ export const PurchaseOrderDetailPage = () => {
       )}
 
       {/* Items Table */}
-      <Card className="flex flex-col overflow-hidden p-6" style={{ height: '400px' }}>
+      <Card className="flex flex-col overflow-hidden p-6" style={{ height: '520px' }}>
         <div className="mb-4 flex items-center gap-2 flex-shrink-0">
           <Package size={20} className="text-primary-600" />
           <h2 className="text-lg font-semibold text-gray-900">Items</h2>
