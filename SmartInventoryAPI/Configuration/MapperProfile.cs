@@ -141,7 +141,8 @@ public class MapperProfile : Profile
         CreateMap<OrderFulfillmentHeader, OrderFulfillmentDetailDto>()
             .ForMember(dest => dest.Customer_Name, opt => opt.MapFrom(src => src.Customer != null ? src.Customer.Company_Name : ""))
             .ForMember(dest => dest.Location_Name, opt => opt.MapFrom(src => src.Location != null ? src.Location.Location_Name : ""))
-            .ForMember(dest => dest.Verified_By_Name, opt => opt.MapFrom(src => src.User != null ? src.User.Full_Name : ""));
+            .ForMember(dest => dest.Verified_By_Name, opt => opt.MapFrom(src => src.User != null ? src.User.Full_Name : ""))
+            .ForMember(dest => dest.Verified_By_Code, opt => opt.MapFrom(src => src.User != null ? src.User.Staff_Code : ""));
 
         // Sales mappings
         CreateMap<Sales, SalesDto>()

@@ -48,6 +48,7 @@ public class OrderFulfillmentDetailDto
     public decimal Total_Amount { get; set; }
     public long Verified_By { get; set; }
     public string? Verified_By_Name { get; set; }
+    public string? Verified_By_Code { get; set; }
     public string? Remark { get; set; }
     public List<OrderFulfillmentItemDto>? Items { get; set; }
 }

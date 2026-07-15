@@ -12,6 +12,7 @@ export interface AuthResponse {
 }
 
 export interface User extends Entity {
+  userID: number
   full_Name: string
   username: string
   email: string
@@ -40,6 +41,7 @@ export const UserRoleLabel: Record<UserRole, string> = {
 
 export interface AuthState {
   isAuthenticated: boolean
+  currentUser: User | null
   user: User | null
   token: string | null
   loading: boolean

@@ -58,6 +58,7 @@ export const OrderFulfillmentListPage = () => {
 
   const { orders, loading, total } = useAppSelector((state) => state.orderFulfillment)
   const { customers } = useAppSelector((state) => state.customers)
+  const { currentLocation } = useAppSelector((state) => state.locations)
 
   // Fetch customers on mount
   useEffect(() => {

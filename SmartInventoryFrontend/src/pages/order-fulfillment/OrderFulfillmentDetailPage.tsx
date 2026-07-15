@@ -5,6 +5,7 @@ import { ShipItemModal } from '@/components/modals/ShipItemModal'
 import { orderFulfillmentService } from '@/services/orderFulfillmentService'
 import { OrderFulfillment, OrderFulfillmentItem, OrderFulfillmentStatus, OrderFulfillmentStatusLabel } from '@/types/orderfulfillment'
 import { ArrowLeft, Check, X, RotateCcw, Package } from 'lucide-react'
+import { useAppSelector } from '@/store/hooks/useAppSelector'
 
 const STATUS_BADGE_CLASSES: Record<OrderFulfillmentStatus, string> = {
   [OrderFulfillmentStatus.Unassigned]: 'bg-red-100 text-red-800',
@@ -24,6 +25,9 @@ export const OrderFulfillmentDetailPage = () => {
   const [selectedLocationId, setSelectedLocationId] = useState<string>('')
   const [isShipModalOpen, setIsShipModalOpen] = useState(false)
   const [selectedItem, setSelectedItem] = useState<OrderFulfillmentItem | null>(null)
+
+  const { currentLocation } = useAppSelector((state) => state.locations)
+  const { currentUser } = useAppSelector((state) => state.auth)
 
   useEffect(() => {
     if (id) {
@@ -45,13 +49,15 @@ export const OrderFulfillmentDetailPage = () => {
   }
 
   const handleVerifyAndAssign = useCallback(async () => {
-    if (!id || !selectedLocationId) {
-      alert('Please select a location')
-      return
-    }
+    // if (!id || !selectedLocationId) {
+    //   alert('Please select a location')
+    //   return
+    // }
     setActionLoading(true)
     try {
-      const response = await orderFulfillmentService.verifyAndAssign(Number(id), Number(selectedLocationId))
+      //const response = await orderFulfillmentService.verifyAndAssign(Number(id), Number(selectedLocationId))
+      console.log('User:', currentUser)
+      const response = await orderFulfillmentService.verifyAndAssign(Number(id), Number(currentLocation?.id), Number(currentUser?.userID))
       setOrder(response.data)
     } catch (error) {
       console.error('Failed to verify and assign:', error)
@@ -59,7 +65,7 @@ export const OrderFulfillmentDetailPage = () => {
     } finally {
       setActionLoading(false)
     }
-  }, [id, selectedLocationId])
+  }, [id, currentLocation?.id, currentUser?.userID])
 
   const handleShipItemClick = useCallback((item: OrderFulfillmentItem) => {
     setSelectedItem(item)
@@ -249,7 +255,7 @@ export const OrderFulfillmentDetailPage = () => {
         </div>
         {isUnassigned && (
           <div className="flex gap-3 items-end">
-            <div>
+            {/* <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Select Location</label>
               <input
                 type="number"
@@ -258,10 +264,11 @@ export const OrderFulfillmentDetailPage = () => {
                 placeholder="Enter Location ID"
                 className="px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
               />
-            </div>
+            </div> */}
             <button
               onClick={handleVerifyAndAssign}
-              disabled={actionLoading || !selectedLocationId}
+              //disabled={actionLoading || !selectedLocationId}
+              disabled={actionLoading || !currentLocation?.id}
               className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50"
             >
               <Check size={18} />
@@ -278,8 +285,8 @@ export const OrderFulfillmentDetailPage = () => {
           <p className="text-lg font-semibold text-gray-900">{order.customer_Name || '-'}</p>
         </Card>
         <Card className="p-4">
-          <p className="text-sm text-gray-600 mb-1">Location</p>
-          <p className="text-lg font-semibold text-gray-900">{order.location_Name || (isUnassigned ? 'Not Assigned' : '-')}</p>
+          <p className="text-sm text-gray-600 mb-1">Verified By</p>
+          <p className="text-lg font-semibold text-gray-900">{order.verified_By_Name || 'Unassigned'}</p>
         </Card>
         <Card className="p-4">
           <p className="text-sm text-gray-600 mb-1">Total Amount</p>
@@ -303,7 +310,7 @@ export const OrderFulfillmentDetailPage = () => {
       <Card className="flex flex-col overflow-hidden p-6" style={{ height: '400px' }}>
         <div className="mb-4 flex items-center gap-2 flex-shrink-0">
           <Package size={20} className="text-primary-600" />
-          <h2 className="text-lg font-semibold text-gray-900">Items (Double-click to ship)</h2>
+          <h2 className="text-lg font-semibold text-gray-900">Items</h2>
         </div>
         <div className="flex-1 overflow-y-auto">
           <DataGrid<OrderFulfillmentItem>

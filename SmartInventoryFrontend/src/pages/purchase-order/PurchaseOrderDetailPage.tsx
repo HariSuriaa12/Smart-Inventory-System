@@ -296,7 +296,7 @@ export const PurchaseOrderDetailPage = () => {
             <ArrowLeft size={24} />
           </button>
           <div>
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">Purchase Order {currentOrder.id}</h1>
+            <h1 className="text-3xl font-bold text-gray-900 mb-2">Purchase Order #{currentOrder.id}</h1>
             <div className="flex items-center gap-4">
               <span className={`inline-flex px-3 py-1 rounded-full text-sm font-semibold ${STATUS_BADGE_CLASSES[currentOrder.status]}`}>
                 {PurchaseOrderStatusLabel[currentOrder.status]}

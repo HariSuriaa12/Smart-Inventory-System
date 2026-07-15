@@ -9,8 +9,8 @@ export const orderFulfillmentService = {
   getOrderFulfillmentById: async (id: number) =>
     (await api.get<ApiResponse<OrderFulfillment>>(`/api/orderfulfillment/${id}`)).data,
 
-  verifyAndAssign: async (id: number, locationId: number) =>
-    (await api.post<ApiResponse<OrderFulfillment>>(`/api/orderfulfillment/${id}/verify-and-assign`, null, { params: { locationId } })).data,
+  verifyAndAssign: async (id: number, locationId: number, userId: number) =>
+    (await api.post<ApiResponse<OrderFulfillment>>(`/api/orderfulfillment/${id}/verify-and-assign`, null, { params: { locationId, userId } })).data,
 
   shipItem: async (id: number, itemId: number, shippedQuantity: number) =>
     (await api.post<ApiResponse<OrderFulfillment>>(`/api/orderfulfillment/${id}/items/${itemId}/ship`, null, { params: { shippedQuantity } })).data,

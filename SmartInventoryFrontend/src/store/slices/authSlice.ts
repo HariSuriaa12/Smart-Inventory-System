@@ -4,6 +4,7 @@ import { LoginRequest, AuthResponse, AuthState } from '@/types/auth'
 
 const initialState: AuthState = {
   isAuthenticated: !!authService.getToken(),
+  currentUser: null,
   user: authService.getUser(),
   token: authService.getToken(),
   loading: false,
@@ -20,7 +21,7 @@ export const login = createAsyncThunk(
       if (response.data) {
         authService.saveToken(response.data.token)
         authService.saveUser(response.data.user)
-        return response.data
+        return response
       }
       return rejectWithValue(response.message || 'Login failed')
     } catch (error: any) {
@@ -55,10 +56,12 @@ const authSlice = createSlice({
         state.error = null
       })
       .addCase(login.fulfilled, (state, action) => {
+        console.log('Login fulfilled:', action.payload)
         state.loading = false
         state.isAuthenticated = true
-        state.user = action.payload.user
-        state.token = action.payload.token
+        state.currentUser = action.payload.data
+        state.user = action.payload.data
+        state.token = action.payload.data?.token
         state.error = null
       })
       .addCase(login.rejected, (state, action) => {

@@ -13,10 +13,18 @@ public class OrderFulfillmentRepository : GenericRepository<OrderFulfillmentHead
 
     public async Task<OrderFulfillmentHeader?> GetWithItemsAsync(long id)
     {
-        return await _dbSet.Include(o => o.Items)
-            .ThenInclude(i => i.Item)
+        return await _dbSet
             .Include(o => o.Customer)
+            .Include(o => o.Location)
+            .Include(o => o.Items)
+            .ThenInclude(i => i.Item)
+            .Include(o => o.User)
             .FirstOrDefaultAsync(o => o.ID == id && !o.Is_Deleted);
+
+        //return await _dbSet.Include(o => o.Items)
+        //    .ThenInclude(i => i.Item)
+        //    .Include(o => o.Customer)
+        //    .FirstOrDefaultAsync(o => o.ID == id && !o.Is_Deleted);
     }
 
     public async Task<IEnumerable<OrderFulfillmentHeader>> GetByCustomerAsync(long customerId, int skip = 0, int take = 10)

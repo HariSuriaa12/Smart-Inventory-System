@@ -92,9 +92,10 @@ public class OrderFulfillmentController : ControllerBase
     [HttpPost("{id}/verify-and-assign")]
     public async Task<ActionResult<ApiResponseDto<OrderFulfillmentDetailDto>>> VerifyAndAssign(
         long id,
-        [FromQuery] long locationId)
+        [FromQuery] long locationId,
+        [FromQuery] long userId)
     {
-        var order = await _ofService.VerifyAndAssignAsync(id, locationId);
+        var order = await _ofService.VerifyAndAssignAsync(id, locationId, userId);
         return Ok(new ApiResponseDto<OrderFulfillmentDetailDto>
         {
             Success = true,

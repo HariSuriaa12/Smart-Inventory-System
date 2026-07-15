@@ -23,7 +23,7 @@ export const fetchOrderFulfillments = createAsyncThunk('of/fetch', async (params
     if (filters.unprocessedOnly) filterParams.unprocessedOnly = filters.unprocessedOnly
 
     const response = await orderFulfillmentService.getAllOrderFulfillments(skip, take, filterParams)
-    return response
+    return response.data
   } catch (error: any) {
     return rejectWithValue(error.message)
   }

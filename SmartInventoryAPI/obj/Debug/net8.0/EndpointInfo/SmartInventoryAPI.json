@@ -1143,6 +1143,45 @@
               "format": "int32",
               "default": 10
             }
+          },
+          {
+            "name": "fulfillmentId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "customerId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "unprocessedOnly",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "locationId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
           }
         ],
         "responses": {
@@ -1151,17 +1190,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/OrderFulfillmentDtoIEnumerableApiResponseDto"
+                  "$ref": "#/components/schemas/OrderFulfillmentDtoPaginatedResponseDtoApiResponseDto"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/OrderFulfillmentDtoIEnumerableApiResponseDto"
+                  "$ref": "#/components/schemas/OrderFulfillmentDtoPaginatedResponseDtoApiResponseDto"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/OrderFulfillmentDtoIEnumerableApiResponseDto"
+                  "$ref": "#/components/schemas/OrderFulfillmentDtoPaginatedResponseDtoApiResponseDto"
                 }
               }
             }
@@ -1304,6 +1343,217 @@
         }
       }
     },
+    "/api/OrderFulfillment/{id}/verify-and-assign": {
+      "post": {
+        "tags": [
+          "OrderFulfillment"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "locationId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "userId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderFulfillmentDetailDtoApiResponseDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderFulfillmentDetailDtoApiResponseDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderFulfillmentDetailDtoApiResponseDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/OrderFulfillment/{id}/items/{itemId}/ship": {
+      "post": {
+        "tags": [
+          "OrderFulfillment"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "itemId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "shippedQuantity",
+            "in": "query",
+            "schema": {
+              "type": "number",
+              "format": "double"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderFulfillmentDetailDtoApiResponseDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderFulfillmentDetailDtoApiResponseDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderFulfillmentDetailDtoApiResponseDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/OrderFulfillment/{id}/items/{itemId}/cancel": {
+      "post": {
+        "tags": [
+          "OrderFulfillment"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "itemId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderFulfillmentDetailDtoApiResponseDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderFulfillmentDetailDtoApiResponseDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderFulfillmentDetailDtoApiResponseDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/OrderFulfillment/{id}/items/{itemId}/cancel-with-return": {
+      "post": {
+        "tags": [
+          "OrderFulfillment"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "itemId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderFulfillmentDetailDtoApiResponseDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderFulfillmentDetailDtoApiResponseDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderFulfillmentDetailDtoApiResponseDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/OrderFulfillment/customer/{customerId}": {
       "get": {
         "tags": [
@@ -1344,17 +1594,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/OrderFulfillmentDtoIEnumerableApiResponseDto"
+                  "$ref": "#/components/schemas/OrderFulfillmentDtoPaginatedResponseDtoApiResponseDto"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/OrderFulfillmentDtoIEnumerableApiResponseDto"
+                  "$ref": "#/components/schemas/OrderFulfillmentDtoPaginatedResponseDtoApiResponseDto"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/OrderFulfillmentDtoIEnumerableApiResponseDto"
+                  "$ref": "#/components/schemas/OrderFulfillmentDtoPaginatedResponseDtoApiResponseDto"
                 }
               }
             }
@@ -4107,6 +4357,10 @@
             "type": "integer",
             "format": "int64"
           },
+          "location_Name": {
+            "type": "string",
+            "nullable": true
+          },
           "order_Date": {
             "type": "string",
             "format": "date-time"
@@ -4119,11 +4373,27 @@
             "type": "string",
             "nullable": true
           },
+          "shipment_Address_Line_1": {
+            "type": "string",
+            "nullable": true
+          },
+          "shipment_Address_Line_2": {
+            "type": "string",
+            "nullable": true
+          },
           "shipment_City": {
             "type": "string",
             "nullable": true
           },
           "shipment_State": {
+            "type": "string",
+            "nullable": true
+          },
+          "shipment_PostCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "shipment_Country_Code": {
             "type": "string",
             "nullable": true
           },
@@ -4134,6 +4404,22 @@
           "total_Amount": {
             "type": "number",
             "format": "double"
+          },
+          "verified_By": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "verified_By_Name": {
+            "type": "string",
+            "nullable": true
+          },
+          "verified_By_Code": {
+            "type": "string",
+            "nullable": true
+          },
+          "remark": {
+            "type": "string",
+            "nullable": true
           },
           "items": {
             "type": "array",
@@ -4183,6 +4469,10 @@
             "type": "integer",
             "format": "int64"
           },
+          "location_Name": {
+            "type": "string",
+            "nullable": true
+          },
           "order_Date": {
             "type": "string",
             "format": "date-time"
@@ -4206,11 +4496,58 @@
           "total_Amount": {
             "type": "number",
             "format": "double"
+          },
+          "verified_By": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "verified_By_Name": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
       },
-      "OrderFulfillmentDtoIEnumerableApiResponseDto": {
+      "OrderFulfillmentDtoPaginatedResponseDto": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OrderFulfillmentDto"
+            },
+            "nullable": true
+          },
+          "total": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "skip": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "take": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "page": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "hasNextPage": {
+            "type": "boolean"
+          },
+          "hasPreviousPage": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "OrderFulfillmentDtoPaginatedResponseDtoApiResponseDto": {
         "type": "object",
         "properties": {
           "success": {
@@ -4221,11 +4558,7 @@
             "nullable": true
           },
           "data": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/OrderFulfillmentDto"
-            },
-            "nullable": true
+            "$ref": "#/components/schemas/OrderFulfillmentDtoPaginatedResponseDto"
           },
           "statusCode": {
             "type": "integer",
@@ -4252,7 +4585,19 @@
             "type": "integer",
             "format": "int64"
           },
+          "item_Code": {
+            "type": "string",
+            "nullable": true
+          },
           "item_Name": {
+            "type": "string",
+            "nullable": true
+          },
+          "item_Category": {
+            "type": "string",
+            "nullable": true
+          },
+          "unit_Of_Measure": {
             "type": "string",
             "nullable": true
           },

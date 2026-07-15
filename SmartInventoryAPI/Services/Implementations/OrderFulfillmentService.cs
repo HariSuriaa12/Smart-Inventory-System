@@ -1,3 +1,4 @@
+using System.Reflection;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using SmartInventoryAPI.Models.DTOs.Request.OrderFulfillment;
@@ -30,9 +31,9 @@ public class OrderFulfillmentService : IOrderFulfillmentService
 
         var order = new OrderFulfillmentHeader
         {
-            Location_ID = 0,
+            Location_ID = null,
             Customer_ID = request.Customer_ID,
-            Order_Date = request.Order_Date,
+            Order_Date = DateTime.SpecifyKind(request.Order_Date, DateTimeKind.Utc),
             Order_Time = DateTime.UtcNow.TimeOfDay,
             Shipment_Address_Line_1 = request.Shipment_Address_Line_1,
             Shipment_Address_Line_2 = request.Shipment_Address_Line_2,
@@ -41,7 +42,7 @@ public class OrderFulfillmentService : IOrderFulfillmentService
             Shipment_PostCode = request.Shipment_PostCode,
             Shipment_Country_Code = request.Shipment_Country_Code,
             Status = 0,
-            Verified_By = 0,
+            Verified_By = null,
             Total_Amount = 0
         };
 
@@ -139,6 +140,7 @@ public class OrderFulfillmentService : IOrderFulfillmentService
 
         order.Status = request.Status;
         order.Remark = request.Remark;
+        order.Order_Date = DateTime.SpecifyKind(order.Order_Date, DateTimeKind.Utc);
 
         await _unitOfWork.OrderFulfillments.UpdateAsync(order);
         await _unitOfWork.SaveAsync();
@@ -148,7 +150,7 @@ public class OrderFulfillmentService : IOrderFulfillmentService
         return await GetOrderFulfillmentByIdAsync(id);
     }
 
-    public async Task<OrderFulfillmentDetailDto> VerifyAndAssignAsync(long id, long locationId)
+    public async Task<OrderFulfillmentDetailDto> VerifyAndAssignAsync(long id, long locationId, long userId)
     {
         var order = await _unitOfWork.OrderFulfillments.GetByIdAsync(id);
         if (order == null || order.Is_Deleted)
@@ -161,8 +163,14 @@ public class OrderFulfillmentService : IOrderFulfillmentService
         if (location == null || location.Is_Deleted)
             throw new NotFoundException("Location not found");
 
+        var user = await _unitOfWork.User.GetByIdAsync(userId);
+        if (user == null || user.Is_Deleted)
+            throw new NotFoundException("Location not found");
+
         order.Location_ID = locationId;
+        order.Verified_By = userId;
         order.Status = 5;
+        order.Order_Date = DateTime.SpecifyKind(order.Order_Date, DateTimeKind.Utc);
 
         var items = await _unitOfWork.Context.Set<OrderFulfillmentItem>()
             .Where(i => i.Fulfillment_ID == id && !i.Is_Deleted)
@@ -198,9 +206,27 @@ public class OrderFulfillmentService : IOrderFulfillmentService
         if (shippedQuantity > item.Request_Quantity)
             throw new BadRequestException($"Shipped quantity cannot exceed requested quantity ({item.Request_Quantity})");
 
-        item.Shipped_Quantity = shippedQuantity;
+        var inventory = await _unitOfWork.Context.Set<Inventory>()
+            .FirstOrDefaultAsync(i => i.Item_ID == item.Item_ID && i.Location_ID == order.Location_ID && !i.Is_Deleted);
 
-        if (shippedQuantity == item.Request_Quantity)
+        if (inventory == null)
+        {
+            inventory = new Inventory
+            {
+                Item_ID = item.Item_ID,
+                Location_ID = order.Location_ID ?? 0,
+                On_Hand_Quantity = 0,
+                Available_Quantity = 0
+            };
+            await _unitOfWork.Context.Set<Inventory>().AddAsync(inventory);
+        }
+
+        inventory.On_Hand_Quantity -= shippedQuantity;
+        inventory.Available_Quantity -= shippedQuantity;
+
+        item.Shipped_Quantity = item.Shipped_Quantity + shippedQuantity;
+
+        if (item.Shipped_Quantity == item.Request_Quantity)
         {
             item.Status = 3;
         }
@@ -230,6 +256,7 @@ public class OrderFulfillmentService : IOrderFulfillmentService
         {
             order.Status = 2;
         }
+        order.Order_Date = DateTime.SpecifyKind(order.Order_Date, DateTimeKind.Utc);
 
         await _unitOfWork.OrderFulfillments.UpdateAsync(order);
         await _unitOfWork.SaveAsync();
@@ -260,15 +287,32 @@ public class OrderFulfillmentService : IOrderFulfillmentService
         _unitOfWork.Context.Set<OrderFulfillmentItem>().Update(item);
 
         var allItems = await _unitOfWork.Context.Set<OrderFulfillmentItem>()
-            .Where(i => i.Fulfillment_ID == id && !i.Is_Deleted)
+            .Where(i => i.Fulfillment_ID == id && !i.Is_Deleted && i.Status != 4)
             .ToListAsync();
 
-        bool allCancelled = allItems.All(i => i.Status == 4);
-
-        if (allCancelled)
+        if (allItems.Count == 0)
         {
             order.Status = 4;
         }
+        else
+        {
+            var anyShipped = allItems.Any(i => i.Shipped_Quantity > 0);
+            var allShipped = allItems.All(i => i.Shipped_Quantity >= i.Request_Quantity);
+
+            if (allShipped)
+            {
+                order.Status = 3;
+            }
+            else if (anyShipped)
+            {
+                order.Status = 2;
+            }
+            else
+            {
+                order.Status = 5;
+            }
+        }
+        order.Order_Date = DateTime.SpecifyKind(order.Order_Date, DateTimeKind.Utc);
 
         await _unitOfWork.OrderFulfillments.UpdateAsync(order);
         await _unitOfWork.SaveAsync();
@@ -294,6 +338,26 @@ public class OrderFulfillmentService : IOrderFulfillmentService
 
         if (item.Status != 2 && item.Status != 3)
             throw new BadRequestException("Items can only be cancelled with return if they are Partially Fulfilled or Fulfilled");
+
+        var inventory = await _unitOfWork.Context.Set<Inventory>()
+            .FirstOrDefaultAsync(i => i.Item_ID == item.Item_ID && i.Location_ID == order.Location_ID && !i.Is_Deleted);
+
+        if (inventory == null)
+        {
+            inventory = new Inventory
+            {
+                Item_ID = item.Item_ID,
+                Location_ID = order.Location_ID ?? 0,
+                On_Hand_Quantity = 0,
+                Available_Quantity = 0
+            };
+            await _unitOfWork.Context.Set<Inventory>().AddAsync(inventory);
+        }
+        else
+        {
+            inventory.On_Hand_Quantity += item.Shipped_Quantity;
+            inventory.Available_Quantity += item.Shipped_Quantity;
+        }
 
         item.Shipped_Quantity = 0;
         item.Status = 4;
@@ -326,6 +390,7 @@ public class OrderFulfillmentService : IOrderFulfillmentService
                 order.Status = 5;
             }
         }
+        order.Order_Date = DateTime.SpecifyKind(order.Order_Date, DateTimeKind.Utc);
 
         await _unitOfWork.OrderFulfillments.UpdateAsync(order);
         await _unitOfWork.SaveAsync();
@@ -342,6 +407,7 @@ public class OrderFulfillmentService : IOrderFulfillmentService
             throw new NotFoundException("Order Fulfillment not found");
 
         order.Is_Deleted = true;
+        order.Order_Date = DateTime.SpecifyKind(order.Order_Date, DateTimeKind.Utc);
         await _unitOfWork.OrderFulfillments.UpdateAsync(order);
         await _unitOfWork.SaveAsync();
 
