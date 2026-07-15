@@ -9,6 +9,7 @@ public class StockTransfer
     public TimeSpan Transfer_Time { get; set; }
     public long Item_ID { get; set; }
     public decimal Transfer_Quantity { get; set; }
+    public decimal Received_Quantity { get; set; } = 0;
     public string? Remark { get; set; }
     public int Status { get; set; }
     public decimal Sub_Total { get; set; }

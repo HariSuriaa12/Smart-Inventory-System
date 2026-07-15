@@ -164,6 +164,15 @@ public class MapperProfile : Profile
             .ForMember(dest => dest.Item_Name, opt => opt.MapFrom(src => src.Item != null ? src.Item.Item_Name : ""))
             .ForMember(dest => dest.Location_Name, opt => opt.MapFrom(src => src.Location != null ? src.Location.Location_Name : ""));
 
+        // StockTransfer mappings
+        CreateMap<StockTransfer, StockTransferDto>()
+            .ForMember(dest => dest.From_Location_Name, opt => opt.MapFrom(src => src.FromLocation != null ? src.FromLocation.Location_Name : ""))
+            .ForMember(dest => dest.To_Location_Name, opt => opt.MapFrom(src => src.ToLocation != null ? src.ToLocation.Location_Name : ""))
+            .ForMember(dest => dest.Item_Name, opt => opt.MapFrom(src => src.Item != null ? src.Item.Item_Name : ""))
+            .ForMember(dest => dest.Item_Code, opt => opt.MapFrom(src => src.Item != null ? src.Item.Item_Code : ""))
+            .ForMember(dest => dest.User_Full_Name, opt => opt.MapFrom(src => src.User != null ? src.User.Full_Name : ""))
+            .ForMember(dest => dest.User_Staff_Code, opt => opt.MapFrom(src => src.User != null ? src.User.Staff_Code : ""));
+
         //User
     }
 }

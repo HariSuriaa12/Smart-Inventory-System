@@ -1,0 +1,1 @@
+export { StockTransferListPage } from './StockTransferListPage'

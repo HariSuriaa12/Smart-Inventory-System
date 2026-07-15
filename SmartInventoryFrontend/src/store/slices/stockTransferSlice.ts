@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { stockTransferService } from '@/services/stockTransferService'
-import { StockTransfer, CreateStockTransferRequest, UpdateStockTransferRequest, StockTransferState } from '@/types/stocktransfer'
+import { StockTransfer, CreateStockTransferRequest, UpdateStockTransferRequest, StockTransferState, StockTransferStatus } from '@/types/stocktransfer'
 
 const initialState: StockTransferState = {
   transfers: [],
@@ -12,9 +12,22 @@ const initialState: StockTransferState = {
   take: 10,
 }
 
-export const fetchTransfers = createAsyncThunk('st/fetch', async ({ skip = 0, take = 10 }: any, { rejectWithValue }) => {
+interface FetchTransfersParams {
+  skip?: number
+  take?: number
+  id?: number
+  status?: StockTransferStatus
+  transferType?: 'shipped' | 'received'
+  fromLocationId?: number
+  toLocationId?: number
+  itemId?: number
+  dateFrom?: string
+  dateTo?: string
+}
+
+export const fetchTransfers = createAsyncThunk('st/fetch', async (params: FetchTransfersParams, { rejectWithValue }) => {
   try {
-    return (await stockTransferService.getTransfers(skip, take)).data
+    return (await stockTransferService.getTransfers(params)).data
   } catch (error: any) {
     return rejectWithValue(error.message)
   }

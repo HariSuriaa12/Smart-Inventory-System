@@ -20,12 +20,19 @@ public class StockTransferController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<ApiResponseDto<IEnumerable<object>>>> GetAllStockTransfers(
+    public async Task<ActionResult<ApiResponseDto<PaginatedResponseDto<StockTransferDto>>>> GetAllStockTransfers(
         [FromQuery] int skip = 0,
-        [FromQuery] int take = 10)
+        [FromQuery] int take = 10,
+        [FromQuery] long? id = null,
+        [FromQuery] int? status = null,
+        [FromQuery] long? fromLocationId = null,
+        [FromQuery] long? toLocationId = null,
+        [FromQuery] long? itemId = null,
+        [FromQuery] string? dateFrom = null,
+        [FromQuery] string? dateTo = null)
     {
-        var transfers = await _stService.GetAllStockTransfersAsync(skip, take);
-        return Ok(new ApiResponseDto<IEnumerable<object>>
+        var transfers = await _stService.GetFilteredAsync(id, status, fromLocationId, toLocationId, itemId, dateFrom, dateTo, skip, take);
+        return Ok(new ApiResponseDto<PaginatedResponseDto<StockTransferDto>>
         {
             Success = true,
             Message = "Stock transfers retrieved successfully",
