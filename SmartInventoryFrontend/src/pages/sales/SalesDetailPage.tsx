@@ -2,9 +2,16 @@ import { useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { fetchSaleById } from '@/store/slices/salesSlice'
-import { DataGrid, Card, Column, Badge } from '@/components'
-import { ArrowLeft } from 'lucide-react'
+import { DataGrid, Card, Column } from '@/components'
+import { ArrowLeft, Package } from 'lucide-react'
 import { SalesItem, SalesStatus, SalesStatusLabel } from '@/types/sales'
+
+const STATUS_BADGE_CLASSES: Record<SalesStatus, string> = {
+  [SalesStatus.Confirmed]: 'bg-blue-100 text-blue-800',
+  [SalesStatus.Completed]: 'bg-green-100 text-green-800',
+  [SalesStatus.Refunded]: 'bg-yellow-100 text-yellow-800',
+  [SalesStatus.Cancelled]: 'bg-red-100 text-red-800',
+}
 
 export const SalesDetailPage = () => {
   const { id } = useParams<{ id: string }>()
@@ -23,36 +30,18 @@ export const SalesDetailPage = () => {
       <div className="p-6">
         <button
           onClick={() => navigate('/app/sales')}
-          className="flex items-center gap-2 text-primary-600 hover:text-primary-700 mb-6"
+          className="text-primary-600 hover:text-primary-700 transition-colors"
         >
-          <ArrowLeft size={20} />
-          Back to Sales
+          <ArrowLeft size={24} />
         </button>
-        <Card className="p-6 text-center">
+        <Card className="p-6 text-center mt-6">
           <p className="text-gray-500">Sales record not found</p>
         </Card>
       </div>
     )
   }
 
-  const statusBadgeClasses: Record<SalesStatus, string> = {
-    [SalesStatus.Confirmed]: 'bg-blue-100 text-blue-800',
-    [SalesStatus.Completed]: 'bg-green-100 text-green-800',
-    [SalesStatus.Refunded]: 'bg-yellow-100 text-yellow-800',
-    [SalesStatus.Cancelled]: 'bg-red-100 text-red-800',
-  }
-
-  const salesDate = new Date(sale.sales_Date)
-  const salesTime = sale.sales_Time || '00:00'
-  const [hours, minutes] = salesTime.split(':')
-  const formattedTime = `${hours}:${minutes}`
-
-  const columns: Column<SalesItem>[] = [
-    {
-      key: 'id',
-      label: 'Item ID',
-      width: '80px',
-    },
+  const itemColumns: Column<SalesItem>[] = [
     {
       key: 'item_Code',
       label: 'Item Code',
@@ -67,14 +56,14 @@ export const SalesDetailPage = () => {
     },
     {
       key: 'item_Category',
-      label: 'Category',
+      label: 'Item Category',
       width: '150px',
       render: (value) => value || '-',
     },
     {
       key: 'unit_Of_Measure',
-      label: 'UOM',
-      width: '100px',
+      label: 'Unit of Measure',
+      width: '150px',
       render: (value) => value || '-',
     },
     {
@@ -101,84 +90,63 @@ export const SalesDetailPage = () => {
   ]
 
   return (
-    <div className="p-6 space-y-6">
-      <div>
-        <button
-          onClick={() => navigate('/app/sales')}
-          className="flex items-center gap-2 text-primary-600 hover:text-primary-700 mb-6"
-        >
-          <ArrowLeft size={20} />
-          Back to Sales
-        </button>
-        <h1 className="text-3xl font-bold text-gray-900">Sales Details</h1>
-        <p className="text-gray-600 mt-1">Sales ID: {sale.id}</p>
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <Card>
-          <div className="space-y-3">
-            <div>
-              <p className="text-sm font-medium text-gray-500 uppercase tracking-wide">Sales Date</p>
-              <p className="text-2xl font-bold text-gray-900 mt-1">
-                {salesDate.toLocaleDateString('en-US', { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' })}
+    <div className="p-6 space-y-6 h-full flex flex-col">
+      {/* Header */}
+      <div className="flex items-center justify-between flex-shrink-0">
+        <div className="flex items-center gap-4">
+          <button
+            onClick={() => navigate('/app/sales')}
+            className="text-primary-600 hover:text-primary-700 transition-colors"
+          >
+            <ArrowLeft size={24} />
+          </button>
+          <div>
+            <h1 className="text-3xl font-bold text-gray-900 mb-2">Sales #{sale.id}</h1>
+            <div className="flex items-center gap-4">
+              <span className={`inline-flex px-3 py-1 rounded-full text-sm font-semibold ${STATUS_BADGE_CLASSES[sale.sales_Status]}`}>
+                {SalesStatusLabel[sale.sales_Status]}
+              </span>
+              <p className="text-gray-600">
+                {new Date(sale.sales_Date).toLocaleDateString()}
               </p>
             </div>
           </div>
-        </Card>
+        </div>
+      </div>
 
-        <Card>
-          <div className="space-y-3">
-            <div>
-              <p className="text-sm font-medium text-gray-500 uppercase tracking-wide">Sales Time</p>
-              <p className="text-2xl font-bold text-gray-900 mt-1">{formattedTime}</p>
-            </div>
-          </div>
+      {/* Sales Details Cards */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 flex-shrink-0">
+        <Card className="p-4">
+          <p className="text-sm text-gray-600 mb-1">Location</p>
+          <p className="text-lg font-semibold text-gray-900">{sale.location_Name || '-'}</p>
         </Card>
-
-        <Card>
-          <div className="space-y-3">
-            <div>
-              <p className="text-sm font-medium text-gray-500 uppercase tracking-wide">Sales Number</p>
-              <p className="text-2xl font-bold text-gray-900 mt-1">{sale.sales_Number || '-'}</p>
-            </div>
-          </div>
+        <Card className="p-4">
+          <p className="text-sm text-gray-600 mb-1">Sales Number</p>
+          <p className="text-lg font-semibold text-gray-900">{sale.sales_Number || '-'}</p>
+        </Card>
+        <Card className="p-4">
+          <p className="text-sm text-gray-600 mb-1">Total Amount</p>
+          <p className="text-lg font-semibold text-gray-900">${Number(sale.total_Amount).toFixed(2)}</p>
+        </Card>
+        <Card className="p-4">
+          <p className="text-sm text-gray-600 mb-1">Items Count</p>
+          <p className="text-lg font-semibold text-gray-900">{sale.items?.length || 0}</p>
         </Card>
       </div>
 
-      <Card>
-        <div className="space-y-4 mb-6">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div>
-              <p className="text-sm font-medium text-gray-500">Location</p>
-              <p className="text-lg font-semibold text-gray-900 mt-1">{sale.location_Name || '-'}</p>
-            </div>
-            <div>
-              <p className="text-sm font-medium text-gray-500">Status</p>
-              <div className="mt-1">
-                <Badge className={statusBadgeClasses[sale.sales_Status]}>
-                  {SalesStatusLabel[sale.sales_Status]}
-                </Badge>
-              </div>
-            </div>
-            <div>
-              <p className="text-sm font-medium text-gray-500">Total Amount</p>
-              <p className="text-lg font-semibold text-gray-900 mt-1">${Number(sale.total_Amount).toFixed(2)}</p>
-            </div>
-            <div>
-              <p className="text-sm font-medium text-gray-500">Items Count</p>
-              <p className="text-lg font-semibold text-gray-900 mt-1">{sale.items?.length || 0}</p>
-            </div>
-          </div>
+      {/* Items Table */}
+      <Card className="flex flex-col overflow-hidden p-6" style={{ height: '520px' }}>
+        <div className="mb-4 flex items-center gap-2 flex-shrink-0">
+          <Package size={20} className="text-primary-600" />
+          <h2 className="text-lg font-semibold text-gray-900">Items</h2>
         </div>
-      </Card>
-
-      <Card>
-        <div className="space-y-4">
-          <h2 className="text-lg font-semibold text-gray-900">Sales Items</h2>
-          <DataGrid
-            columns={columns}
+        <div className="flex-1 overflow-y-auto">
+          <DataGrid<SalesItem>
+            columns={itemColumns}
             data={sale.items || []}
             loading={false}
+            rowKey="id"
+            emptyMessage="No items in this sale"
           />
         </div>
       </Card>

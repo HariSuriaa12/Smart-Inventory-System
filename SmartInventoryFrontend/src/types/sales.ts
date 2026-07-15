@@ -38,7 +38,6 @@ export interface Sales {
   sales_Time: string
   sales_Number?: string
   total_Amount: number
-  creation_Date?: string | Date
   items?: SalesItem[]
 }
 

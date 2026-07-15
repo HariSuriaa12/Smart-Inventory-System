@@ -100,10 +100,6 @@ public class SmartInventoryDbContext : DbContext
             .Property(x => x.Shipped_Quantity)
             .HasPrecision(14, 2);
 
-        modelBuilder.Entity<Sales>()
-            .Property(x => x.Total_Amount)
-            .HasPrecision(14, 2);
-
         modelBuilder.Entity<SalesItem>()
             .Property(x => x.Sold_Quantity)
             .HasPrecision(14, 2);
