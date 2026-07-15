@@ -30,7 +30,7 @@ public class SalesRepository : GenericRepository<Sales>, ISalesRepository
 
     public async Task<IEnumerable<Sales>> GetByDateRangeAsync(DateTime startDate, DateTime endDate, int skip = 0, int take = 10)
     {
-        return await _dbSet.Where(s => s.Sales_Date >= startDate && s.Sales_Date <= endDate && !s.Is_Deleted)
+        return await _dbSet.Where(s => s.Sales_Date >= DateTime.SpecifyKind(startDate, DateTimeKind.Utc) && s.Sales_Date <= DateTime.SpecifyKind(endDate, DateTimeKind.Utc) && !s.Is_Deleted)
             .Include(s => s.Location)
             .Skip(skip)
             .Take(take)
@@ -64,10 +64,10 @@ public class SalesRepository : GenericRepository<Sales>, ISalesRepository
             query = query.Where(s => s.Sales_Status == status.Value);
 
         if (!string.IsNullOrEmpty(dateFrom) && DateTime.TryParse(dateFrom, out var fromDate))
-            query = query.Where(s => s.Sales_Date >= fromDate.Date);
+            query = query.Where(s => s.Sales_Date >= DateTime.SpecifyKind(fromDate.Date, DateTimeKind.Utc));
 
         if (!string.IsNullOrEmpty(dateTo) && DateTime.TryParse(dateTo, out var toDate))
-            query = query.Where(s => s.Sales_Date <= toDate.Date.AddDays(1).AddTicks(-1));
+            query = query.Where(s => s.Sales_Date <= DateTime.SpecifyKind(toDate.Date.AddDays(1).AddTicks(-1), DateTimeKind.Utc));
 
         return await query
             .OrderByDescending(s => s.Sales_Date)
@@ -92,10 +92,10 @@ public class SalesRepository : GenericRepository<Sales>, ISalesRepository
             query = query.Where(s => s.Sales_Status == status.Value);
 
         if (!string.IsNullOrEmpty(dateFrom) && DateTime.TryParse(dateFrom, out var fromDate))
-            query = query.Where(s => s.Sales_Date >= fromDate.Date);
+            query = query.Where(s => s.Sales_Date >= DateTime.SpecifyKind(fromDate.Date, DateTimeKind.Utc)); //DateTime.SpecifyKind(po.Purchase_Date, DateTimeKind.Utc)
 
         if (!string.IsNullOrEmpty(dateTo) && DateTime.TryParse(dateTo, out var toDate))
-            query = query.Where(s => s.Sales_Date <= toDate.Date.AddDays(1).AddTicks(-1));
+            query = query.Where(s => s.Sales_Date <= DateTime.SpecifyKind(toDate.Date.AddDays(1).AddTicks(-1), DateTimeKind.Utc));
 
         return await query.CountAsync();
     }

@@ -35,5 +35,6 @@ public class SalesDetailDto
     public DateTime Sales_Date { get; set; }
     public TimeSpan Sales_Time { get; set; }
     public string? Sales_Number { get; set; }
+    public decimal Total_Amount { get; set; }
     public List<SalesItemDto>? Items { get; set; }
 }

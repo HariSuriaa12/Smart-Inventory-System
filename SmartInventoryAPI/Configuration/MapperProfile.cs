@@ -156,7 +156,8 @@ public class MapperProfile : Profile
             .ForMember(dest => dest.Unit_Of_Measure, opt => opt.MapFrom(src => src.Item != null ? src.Item.Unit_Of_Measure : ""));
 
         CreateMap<Sales, SalesDetailDto>()
-            .ForMember(dest => dest.Location_Name, opt => opt.MapFrom(src => src.Location != null ? src.Location.Location_Name : ""));
+            .ForMember(dest => dest.Location_Name, opt => opt.MapFrom(src => src.Location != null ? src.Location.Location_Name : ""))
+            .ForMember(dest => dest.Total_Amount, opt => opt.MapFrom(src => src.Items != null ? src.Items.Sum(i => i.Sub_Total) : 0));
 
         // Forecast mappings
         CreateMap<ForecastedResult, ForecastDto>()
