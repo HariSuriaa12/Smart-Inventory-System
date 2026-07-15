@@ -161,6 +161,10 @@ public class InventoryService : IInventoryService
         if (toInventory == null || toInventory.Is_Deleted)
             throw new NotFoundException("Destination inventory not found");
 
+        var item = await _unitOfWork.Items.GetByIdAsync(request.Item_ID);
+        if (item == null || item.Is_Deleted)
+            throw new NotFoundException("item not found");
+
         // Store previous values for logging
         var fromPreviousOnhand = fromInventory.On_Hand_Quantity;
         var fromPreviousAvailable = fromInventory.Available_Quantity;
@@ -173,7 +177,7 @@ public class InventoryService : IInventoryService
 
         // Add to destination
         toInventory.On_Hand_Quantity += request.Transfer_Quantity;
-        toInventory.Available_Quantity += request.Transfer_Quantity;
+        //toInventory.Available_Quantity += request.Transfer_Quantity;
         await _unitOfWork.Inventories.UpdateAsync(toInventory);
 
         // Create transfer record
@@ -184,10 +188,10 @@ public class InventoryService : IInventoryService
             Item_ID = request.Item_ID,
             Transfer_Quantity = request.Transfer_Quantity,
             Remark = request.Remark,
-            Status = 1,
+            Status = 0,
             Transfer_Date = DateTime.UtcNow.Date,
             Transfer_Time = DateTime.UtcNow.TimeOfDay,
-            Sub_Total = 0,
+            Sub_Total = item.Unit_Cost * request.Transfer_Quantity,
             Performed_By = userId
         };
 
