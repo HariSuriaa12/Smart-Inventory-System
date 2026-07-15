@@ -50,7 +50,7 @@ public class SalesRepository : GenericRepository<Sales>, ISalesRepository
         long? salesId = null, string? salesNumber = null, int? status = null,
         string? dateFrom = null, string? dateTo = null, int skip = 0, int take = 10)
     {
-        var query = _dbSet.Where(s => !s.Is_Deleted)
+        IQueryable<Sales> query = _dbSet.Where(s => !s.Is_Deleted)
             .Include(s => s.Location)
             .Include(s => s.Items);
 

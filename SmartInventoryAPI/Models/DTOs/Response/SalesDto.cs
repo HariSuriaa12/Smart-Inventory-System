@@ -10,7 +10,7 @@ public class SalesDto
     public TimeSpan Sales_Time { get; set; }
     public string? Sales_Number { get; set; }
     public decimal Total_Amount { get; set; }
-    public DateTime Creation_Date { get; set; }
+    //public DateTime Creation_Date { get; set; }
 }
 
 public class SalesItemDto

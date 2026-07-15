@@ -12,7 +12,7 @@ public class Sales
     public string? Sales_Number { get; set; }
     public long? Ref_Sales_Number { get; set; }
     public decimal Total_Amount { get; set; }
-    public DateTime Creation_Date { get; set; } = DateTime.UtcNow;
+    //public DateTime Creation_Date { get; set; } = DateTime.UtcNow;
 
     // Foreign keys
     public virtual Location? Location { get; set; }
