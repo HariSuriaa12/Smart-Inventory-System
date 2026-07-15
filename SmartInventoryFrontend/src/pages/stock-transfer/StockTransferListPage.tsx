@@ -8,7 +8,7 @@ import { ColumnSelectorModal } from '@/components/modals/ColumnSelectorModal'
 import { StockTransferModal } from '@/components/modals/StockTransferModal'
 import { ReceivedQuantityModal } from '@/components/modals/ReceivedQuantityModal'
 import { StockTransfer, StockTransferStatus, StockTransferStatusLabel } from '@/types/stocktransfer'
-import { Plus, Columns3 } from 'lucide-react'
+import { Plus, Columns3, Package, X, RotateCcw } from 'lucide-react'
 
 const PAGE_SIZE = 10
 
@@ -39,6 +39,22 @@ const STATUS_BADGE_CLASSES: Record<StockTransferStatus, string> = {
   [StockTransferStatus.PartiallyReceived]: 'bg-yellow-100 text-yellow-800',
   [StockTransferStatus.Received]: 'bg-green-100 text-green-800',
   [StockTransferStatus.Cancelled]: 'bg-red-100 text-red-800',
+}
+
+const getContextualStatusLabel = (transfer: StockTransfer, currentLocationId?: number): string => {
+  if (transfer.status === StockTransferStatus.Cancelled) return StockTransferStatusLabel[StockTransferStatus.Cancelled]
+  if (transfer.status === StockTransferStatus.Received) return StockTransferStatusLabel[StockTransferStatus.Received]
+  if (transfer.status === StockTransferStatus.PartiallyReceived) return StockTransferStatusLabel[StockTransferStatus.PartiallyReceived]
+
+  // For Shipped status, show based on perspective
+  if (transfer.status === StockTransferStatus.Shipped) {
+    if (currentLocationId === transfer.to_Location_Id) {
+      return 'To Receive'
+    }
+    return StockTransferStatusLabel[StockTransferStatus.Shipped]
+  }
+
+  return StockTransferStatusLabel[transfer.status]
 }
 
 export const StockTransferListPage = () => {
@@ -203,9 +219,9 @@ export const StockTransferListPage = () => {
       key: 'status',
       label: 'Status',
       width: '150px',
-      render: (value: StockTransferStatus) => (
+      render: (value: StockTransferStatus, transfer: StockTransfer) => (
         <span className={`inline-flex px-2.5 py-0.5 rounded-full text-xs font-semibold ${STATUS_BADGE_CLASSES[value]}`}>
-          {StockTransferStatusLabel[value]}
+          {getContextualStatusLabel(transfer, currentLocation?.id)}
         </span>
       ),
     },
@@ -301,31 +317,34 @@ export const StockTransferListPage = () => {
     const actionsColumn: Column<StockTransfer> = {
       key: 'actions',
       label: 'Actions',
-      width: '280px',
+      width: '120px',
       render: (_, transfer) => (
         <div className="flex gap-2">
           {transfer.to_Location_Id === currentLocation?.id && transfer.status !== StockTransferStatus.Received && (
             <button
               onClick={() => handleActionClick(transfer, 'receive')}
-              className="px-3 py-1 text-sm bg-green-100 text-green-800 rounded hover:bg-green-200 transition-colors"
+              className="p-1.5 text-green-600 hover:bg-green-50 rounded transition-colors disabled:opacity-50"
+              title="Receive stock"
             >
-              Receive
+              <Package size={16} />
             </button>
           )}
           {transfer.status !== StockTransferStatus.Received && (
             <button
               onClick={() => handleActionClick(transfer, 'cancel')}
-              className="px-3 py-1 text-sm bg-red-100 text-red-800 rounded hover:bg-red-200 transition-colors"
+              className="p-1.5 text-gray-600 hover:bg-gray-100 rounded transition-colors disabled:opacity-50"
+              title="Cancel transfer"
             >
-              Cancel
+              <X size={16} />
             </button>
           )}
           {transfer.status !== StockTransferStatus.Cancelled && transfer.status !== StockTransferStatus.Shipped && (
             <button
               onClick={() => handleActionClick(transfer, 'cancelWithReturn')}
-              className="px-3 py-1 text-sm bg-orange-100 text-orange-800 rounded hover:bg-orange-200 transition-colors"
+              className="p-1.5 text-orange-600 hover:bg-orange-50 rounded transition-colors disabled:opacity-50"
+              title="Cancel and return stock"
             >
-              Cancel & Return
+              <RotateCcw size={16} />
             </button>
           )}
         </div>
