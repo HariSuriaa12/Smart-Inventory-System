@@ -19,9 +19,9 @@ export const StockTransferStatusLabel: Record<StockTransferStatus, string> = {
 
 export interface StockTransfer extends Entity {
   id: number
-  from_Location_Id: number
+  from_Location_ID: number
   from_Location_Name?: string
-  to_Location_Id: number
+  to_Location_ID: number
   to_Location_Name?: string
   transfer_Date: string | Date
   transfer_Time: string

@@ -42,13 +42,16 @@ const STATUS_BADGE_CLASSES: Record<StockTransferStatus, string> = {
 }
 
 const getContextualStatusLabel = (transfer: StockTransfer, currentLocationId?: number): string => {
+  console.log('getContextualStatusLabel called with transfer:', transfer, 'currentLocationId:', currentLocationId)
   if (transfer.status === StockTransferStatus.Cancelled) return StockTransferStatusLabel[StockTransferStatus.Cancelled]
   if (transfer.status === StockTransferStatus.Received) return StockTransferStatusLabel[StockTransferStatus.Received]
   if (transfer.status === StockTransferStatus.PartiallyReceived) return StockTransferStatusLabel[StockTransferStatus.PartiallyReceived]
 
   // For Shipped status, show based on perspective
   if (transfer.status === StockTransferStatus.Shipped) {
-    if (currentLocationId === transfer.to_Location_Id) {
+    console.log('1')
+    if (currentLocationId === transfer.to_Location_ID) {
+      console.log('2')
       return 'To Receive'
     }
     return StockTransferStatusLabel[StockTransferStatus.Shipped]
@@ -102,7 +105,7 @@ export const StockTransferListPage = () => {
 
       // Handle "To Receive" filter: status 1 (PartiallyReceived) + to_location = current location
       if (statusFilter === 'toReceive' && currentLocation?.id) {
-        finalStatus = StockTransferStatus.PartiallyReceived
+        finalStatus = StockTransferStatus.Shipped
         finalToLocationId = currentLocation.id
       }
 
@@ -344,7 +347,7 @@ export const StockTransferListPage = () => {
       width: '120px',
       render: (_, transfer) => (
         <div className="flex gap-2">
-          {transfer.to_Location_Id === currentLocation?.id && transfer.status !== StockTransferStatus.Received && (
+          {transfer.to_Location_ID === currentLocation?.id && transfer.status !== StockTransferStatus.Received && (
             <button
               onClick={() => handleActionClick(transfer, 'receive')}
               className="p-1.5 text-green-600 hover:bg-green-50 rounded transition-colors disabled:opacity-50"
@@ -405,7 +408,7 @@ export const StockTransferListPage = () => {
             onChange={(e) => setTransferIdFilter(e.target.value)}
             className="flex-1 px-3 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm"
           />
-          <select
+          {/* <select
             value={transferTypeFilter}
             onChange={(e) => setTransferTypeFilter(e.target.value as any)}
             className="flex-1 px-3 py-2.5 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm"
@@ -413,7 +416,7 @@ export const StockTransferListPage = () => {
             <option value="">All Transfer Types</option>
             <option value="shipped">Shipped (From Current)</option>
             <option value="received">To Receive (To Current)</option>
-          </select>
+          </select> */}
           <select
             value={fromLocationFilter}
             onChange={(e) => setFromLocationFilter(e.target.value)}
@@ -460,7 +463,7 @@ export const StockTransferListPage = () => {
             className="flex-1 px-3 py-2.5 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm"
           >
             <option value="">All Status</option>
-            <option value="toReceive">To Receive (Partial)</option>
+            <option value="toReceive">To Receive</option>
             {Object.entries(StockTransferStatusLabel).map(([key, label]) => (
               <option key={key} value={key}>
                 {label}
