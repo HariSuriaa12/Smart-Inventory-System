@@ -3,14 +3,16 @@ import { Item } from './item'
 import { Location } from './location'
 
 export enum SalesStatus {
-  Pending = 0,
+  Confirmed = 0,
   Completed = 1,
-  Cancelled = 2,
+  Refunded = 2,
+  Cancelled = 3,
 }
 
 export const SalesStatusLabel: Record<SalesStatus, string> = {
-  [SalesStatus.Pending]: 'Pending',
+  [SalesStatus.Confirmed]: 'Confirmed',
   [SalesStatus.Completed]: 'Completed',
+  [SalesStatus.Refunded]: 'Refunded',
   [SalesStatus.Cancelled]: 'Cancelled',
 }
 

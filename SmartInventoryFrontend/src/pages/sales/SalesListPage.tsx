@@ -26,8 +26,9 @@ const OPTIONAL_COLUMNS = [
 const STORAGE_KEY = 'sales_visible_columns'
 
 const STATUS_BADGE_CLASSES: Record<SalesStatus, string> = {
-  [SalesStatus.Pending]: 'bg-blue-100 text-blue-800',
+  [SalesStatus.Confirmed]: 'bg-blue-100 text-blue-800',
   [SalesStatus.Completed]: 'bg-green-100 text-green-800',
+  [SalesStatus.Refunded]: 'bg-yellow-100 text-yellow-800',
   [SalesStatus.Cancelled]: 'bg-red-100 text-red-800',
 }
 

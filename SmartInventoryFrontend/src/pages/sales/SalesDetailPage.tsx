@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { fetchSaleById } from '@/store/slices/salesSlice'
-import { DataGrid, Card, Column, Badge, LoadingSpinner } from '@/components'
+import { DataGrid, Card, Column, Badge } from '@/components'
 import { ArrowLeft } from 'lucide-react'
 import { SalesItem, SalesStatus, SalesStatusLabel } from '@/types/sales'
 
@@ -10,7 +10,7 @@ export const SalesDetailPage = () => {
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
-  const { currentSale: sale, loading } = useAppSelector((state) => state.sales)
+  const { currentSale: sale } = useAppSelector((state) => state.sales)
 
   useEffect(() => {
     if (id) {
@@ -18,31 +18,27 @@ export const SalesDetailPage = () => {
     }
   }, [id, dispatch])
 
-  if (loading) {
-    return <LoadingSpinner />
-  }
-
   if (!sale) {
     return (
       <div className="p-6">
-        <Card>
-          <div className="text-center py-12">
-            <h1 className="text-2xl font-bold text-gray-900 mb-2">Sales Record Not Found</h1>
-            <button
-              onClick={() => navigate('/app/sales')}
-              className="mt-4 px-4 py-2 bg-primary-500 text-white rounded-lg hover:bg-primary-600 transition-colors"
-            >
-              Back to Sales
-            </button>
-          </div>
+        <button
+          onClick={() => navigate('/app/sales')}
+          className="flex items-center gap-2 text-primary-600 hover:text-primary-700 mb-6"
+        >
+          <ArrowLeft size={20} />
+          Back to Sales
+        </button>
+        <Card className="p-6 text-center">
+          <p className="text-gray-500">Sales record not found</p>
         </Card>
       </div>
     )
   }
 
   const statusBadgeClasses: Record<SalesStatus, string> = {
-    [SalesStatus.Pending]: 'bg-blue-100 text-blue-800',
+    [SalesStatus.Confirmed]: 'bg-blue-100 text-blue-800',
     [SalesStatus.Completed]: 'bg-green-100 text-green-800',
+    [SalesStatus.Refunded]: 'bg-yellow-100 text-yellow-800',
     [SalesStatus.Cancelled]: 'bg-red-100 text-red-800',
   }
 
@@ -106,18 +102,16 @@ export const SalesDetailPage = () => {
 
   return (
     <div className="p-6 space-y-6">
-      <div className="flex items-center gap-4">
+      <div>
         <button
           onClick={() => navigate('/app/sales')}
-          className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
-          title="Back to Sales"
+          className="flex items-center gap-2 text-primary-600 hover:text-primary-700 mb-6"
         >
-          <ArrowLeft size={24} className="text-gray-600" />
+          <ArrowLeft size={20} />
+          Back to Sales
         </button>
-        <div>
-          <h1 className="text-3xl font-bold text-gray-900">Sales Details</h1>
-          <p className="text-gray-600 mt-1">Sales ID: {sale.id}</p>
-        </div>
+        <h1 className="text-3xl font-bold text-gray-900">Sales Details</h1>
+        <p className="text-gray-600 mt-1">Sales ID: {sale.id}</p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
