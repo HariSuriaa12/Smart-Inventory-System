@@ -61,7 +61,7 @@ export const StockTransferListPage = () => {
   const dispatch = useAppDispatch()
   const [currentPage, setCurrentPage] = useState(1)
   const [transferIdFilter, setTransferIdFilter] = useState('')
-  const [statusFilter, setStatusFilter] = useState<StockTransferStatus | ''>('')
+  const [statusFilter, setStatusFilter] = useState<StockTransferStatus | '' | 'toReceive'>('')
   const [transferTypeFilter, setTransferTypeFilter] = useState<'shipped' | 'received' | ''>('')
   const [fromLocationFilter, setFromLocationFilter] = useState('')
   const [toLocationFilter, setToLocationFilter] = useState('')
@@ -94,6 +94,17 @@ export const StockTransferListPage = () => {
       setCurrentPage(1)
       let finalFromLocationId = fromLocationFilter ? Number(fromLocationFilter) : undefined
       let finalToLocationId = toLocationFilter ? Number(toLocationFilter) : undefined
+      let finalStatus: StockTransferStatus | undefined = undefined
+
+      if (statusFilter && statusFilter !== 'toReceive') {
+        finalStatus = Number(statusFilter) as StockTransferStatus
+      }
+
+      // Handle "To Receive" filter: status 1 (PartiallyReceived) + to_location = current location
+      if (statusFilter === 'toReceive' && currentLocation?.id) {
+        finalStatus = StockTransferStatus.PartiallyReceived
+        finalToLocationId = currentLocation.id
+      }
 
       if (transferTypeFilter === 'shipped' && currentLocation?.id) {
         finalFromLocationId = currentLocation.id
@@ -105,7 +116,7 @@ export const StockTransferListPage = () => {
         skip: 0,
         take: PAGE_SIZE,
         id: transferIdFilter ? Number(transferIdFilter) : undefined,
-        status: statusFilter ? Number(statusFilter) : undefined,
+        status: finalStatus,
         fromLocationId: finalFromLocationId,
         toLocationId: finalToLocationId,
         itemId: itemFilter ? Number(itemFilter) : undefined,
@@ -118,6 +129,17 @@ export const StockTransferListPage = () => {
     const skip = (currentPage - 1) * PAGE_SIZE
     let finalFromLocationId = fromLocationFilter ? Number(fromLocationFilter) : undefined
     let finalToLocationId = toLocationFilter ? Number(toLocationFilter) : undefined
+    let finalStatus: StockTransferStatus | undefined = undefined
+
+    if (statusFilter && statusFilter !== 'toReceive') {
+      finalStatus = Number(statusFilter) as StockTransferStatus
+    }
+
+    // Handle "To Receive" filter: status 1 (PartiallyReceived) + to_location = current location
+    if (statusFilter === 'toReceive' && currentLocation?.id) {
+      finalStatus = StockTransferStatus.PartiallyReceived
+      finalToLocationId = currentLocation.id
+    }
 
     if (transferTypeFilter === 'shipped' && currentLocation?.id) {
       finalFromLocationId = currentLocation.id
@@ -129,7 +151,7 @@ export const StockTransferListPage = () => {
       skip,
       take: PAGE_SIZE,
       id: transferIdFilter ? Number(transferIdFilter) : undefined,
-      status: statusFilter ? Number(statusFilter) : undefined,
+      status: finalStatus,
       fromLocationId: finalFromLocationId,
       toLocationId: finalToLocationId,
       itemId: itemFilter ? Number(itemFilter) : undefined,
@@ -152,7 +174,8 @@ export const StockTransferListPage = () => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(Array.from(newVisibleColumns)))
   }, [])
 
-  const allColumnDefinitions: Record<string, Column<StockTransfer>> = useMemo(() => ({
+  const allColumnDefinitions: Record<string, Column<StockTransfer>> = useMemo(() => {
+    return ({
     id: {
       key: 'id',
       label: 'Transfer ID',
@@ -247,7 +270,8 @@ export const StockTransferListPage = () => {
         </span>
       ) : '-',
     },
-  }), [])
+  })
+  }, [currentLocation])
 
   const columns = useMemo(() => {
     const mandatoryCols = MANDATORY_COLUMNS
@@ -436,6 +460,7 @@ export const StockTransferListPage = () => {
             className="flex-1 px-3 py-2.5 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm"
           >
             <option value="">All Status</option>
+            <option value="toReceive">To Receive (Partial)</option>
             {Object.entries(StockTransferStatusLabel).map(([key, label]) => (
               <option key={key} value={key}>
                 {label}
@@ -465,9 +490,9 @@ export const StockTransferListPage = () => {
               setStatusFilter('')
               setCurrentPage(1)
             }}
-            className="px-4 py-2.5 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors text-sm"
+            className="px-4 py-2.5 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors text-sm whitespace-nowrap"
           >
-            Clear
+            Clear Filters
           </button>
         </div>
       </div>
