@@ -89,4 +89,27 @@ public class SalesService : ISalesService
         var sales = await _unitOfWork.Sales.GetByDateRangeAsync(startDate, endDate, skip, take);
         return _mapper.Map<IEnumerable<SalesDto>>(sales);
     }
+
+    public async Task<PaginatedResponseDto<SalesDto>> GetAllSalesFilteredAsync(
+        int skip = 0, int take = 10, long? salesId = null, string? salesNumber = null,
+        int? status = null, string? dateFrom = null, string? dateTo = null)
+    {
+        var total = await _unitOfWork.Sales.CountFilteredAsync(salesId, salesNumber, status, dateFrom, dateTo);
+        var sales = await _unitOfWork.Sales.GetFilteredAsync(salesId, salesNumber, status, dateFrom, dateTo, skip, take);
+
+        var page = (skip / take) + 1;
+        var totalPages = (int)Math.Ceiling((double)total / take);
+
+        return new PaginatedResponseDto<SalesDto>
+        {
+            Data = _mapper.Map<IEnumerable<SalesDto>>(sales),
+            Total = total,
+            Skip = skip,
+            Take = take,
+            Page = page,
+            TotalPages = totalPages,
+            HasNextPage = skip + take < total,
+            HasPreviousPage = skip > 0
+        };
+    }
 }

@@ -20,6 +20,28 @@ export const fetchSales = createAsyncThunk('sales/fetch', async ({ skip = 0, tak
   }
 })
 
+export const fetchSalesFiltered = createAsyncThunk(
+  'sales/fetchFiltered',
+  async (
+    {
+      skip = 0,
+      take = 10,
+      salesId,
+      salesNumber,
+      status,
+      dateFrom,
+      dateTo,
+    }: any,
+    { rejectWithValue }
+  ) => {
+    try {
+      return (await salesService.getSalesFiltered(skip, take, salesId, salesNumber, status, dateFrom, dateTo)).data
+    } catch (error: any) {
+      return rejectWithValue(error.message)
+    }
+  }
+)
+
 export const fetchSaleById = createAsyncThunk('sales/fetchById', async (id: number, { rejectWithValue }) => {
   try {
     return (await salesService.getSaleById(id)).data
@@ -51,6 +73,16 @@ const salesSlice = createSlice({
         state.total = action.payload?.total || 0
       })
       .addCase(fetchSales.rejected, (state, action) => {
+        state.loading = false
+        state.error = action.payload as string
+      })
+      .addCase(fetchSalesFiltered.pending, (state) => { state.loading = true })
+      .addCase(fetchSalesFiltered.fulfilled, (state, action) => {
+        state.loading = false
+        state.sales = action.payload?.data || []
+        state.total = action.payload?.total || 0
+      })
+      .addCase(fetchSalesFiltered.rejected, (state, action) => {
         state.loading = false
         state.error = action.payload as string
       })

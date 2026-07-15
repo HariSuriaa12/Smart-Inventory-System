@@ -10,4 +10,7 @@ public interface ISalesService
     Task<IEnumerable<SalesDto>> GetAllSalesAsync(int skip = 0, int take = 10);
     Task<IEnumerable<SalesDto>> GetByLocationAsync(long locationId, int skip = 0, int take = 10);
     Task<IEnumerable<SalesDto>> GetByDateRangeAsync(DateTime startDate, DateTime endDate, int skip = 0, int take = 10);
+    Task<PaginatedResponseDto<SalesDto>> GetAllSalesFilteredAsync(
+        int skip = 0, int take = 10, long? salesId = null, string? salesNumber = null,
+        int? status = null, string? dateFrom = null, string? dateTo = null);
 }

@@ -45,4 +45,58 @@ public class SalesRepository : GenericRepository<Sales>, ISalesRepository
             .Take(take)
             .ToListAsync();
     }
+
+    public async Task<IEnumerable<Sales>> GetFilteredAsync(
+        long? salesId = null, string? salesNumber = null, int? status = null,
+        string? dateFrom = null, string? dateTo = null, int skip = 0, int take = 10)
+    {
+        var query = _dbSet.Where(s => !s.Is_Deleted)
+            .Include(s => s.Location)
+            .Include(s => s.Items);
+
+        if (salesId.HasValue)
+            query = query.Where(s => s.ID == salesId.Value);
+
+        if (!string.IsNullOrEmpty(salesNumber))
+            query = query.Where(s => s.Sales_Number != null && s.Sales_Number.Contains(salesNumber));
+
+        if (status.HasValue)
+            query = query.Where(s => s.Sales_Status == status.Value);
+
+        if (!string.IsNullOrEmpty(dateFrom) && DateTime.TryParse(dateFrom, out var fromDate))
+            query = query.Where(s => s.Sales_Date >= fromDate.Date);
+
+        if (!string.IsNullOrEmpty(dateTo) && DateTime.TryParse(dateTo, out var toDate))
+            query = query.Where(s => s.Sales_Date <= toDate.Date.AddDays(1).AddTicks(-1));
+
+        return await query
+            .OrderByDescending(s => s.Sales_Date)
+            .Skip(skip)
+            .Take(take)
+            .ToListAsync();
+    }
+
+    public async Task<int> CountFilteredAsync(
+        long? salesId = null, string? salesNumber = null, int? status = null,
+        string? dateFrom = null, string? dateTo = null)
+    {
+        var query = _dbSet.Where(s => !s.Is_Deleted);
+
+        if (salesId.HasValue)
+            query = query.Where(s => s.ID == salesId.Value);
+
+        if (!string.IsNullOrEmpty(salesNumber))
+            query = query.Where(s => s.Sales_Number != null && s.Sales_Number.Contains(salesNumber));
+
+        if (status.HasValue)
+            query = query.Where(s => s.Sales_Status == status.Value);
+
+        if (!string.IsNullOrEmpty(dateFrom) && DateTime.TryParse(dateFrom, out var fromDate))
+            query = query.Where(s => s.Sales_Date >= fromDate.Date);
+
+        if (!string.IsNullOrEmpty(dateTo) && DateTime.TryParse(dateTo, out var toDate))
+            query = query.Where(s => s.Sales_Date <= toDate.Date.AddDays(1).AddTicks(-1));
+
+        return await query.CountAsync();
+    }
 }

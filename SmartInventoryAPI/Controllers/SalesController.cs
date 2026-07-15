@@ -39,12 +39,17 @@ public class SalesController : ControllerBase
 
     [Authorize]
     [HttpGet]
-    public async Task<ActionResult<ApiResponseDto<IEnumerable<SalesDto>>>> GetAllSales(
+    public async Task<ActionResult<ApiResponseDto<PaginatedResponseDto<SalesDto>>>> GetAllSales(
         [FromQuery] int skip = 0,
-        [FromQuery] int take = 10)
+        [FromQuery] int take = 10,
+        [FromQuery] long? salesId = null,
+        [FromQuery] string? salesNumber = null,
+        [FromQuery] int? status = null,
+        [FromQuery] string? dateFrom = null,
+        [FromQuery] string? dateTo = null)
     {
-        var sales = await _salesService.GetAllSalesAsync(skip, take);
-        return Ok(new ApiResponseDto<IEnumerable<SalesDto>>
+        var sales = await _salesService.GetAllSalesFilteredAsync(skip, take, salesId, salesNumber, status, dateFrom, dateTo);
+        return Ok(new ApiResponseDto<PaginatedResponseDto<SalesDto>>
         {
             Success = true,
             Message = "Sales retrieved successfully",

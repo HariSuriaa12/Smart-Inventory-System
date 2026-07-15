@@ -146,10 +146,14 @@ public class MapperProfile : Profile
 
         // Sales mappings
         CreateMap<Sales, SalesDto>()
-            .ForMember(dest => dest.Location_Name, opt => opt.MapFrom(src => src.Location != null ? src.Location.Location_Name : ""));
+            .ForMember(dest => dest.Location_Name, opt => opt.MapFrom(src => src.Location != null ? src.Location.Location_Name : ""))
+            .ForMember(dest => dest.Total_Amount, opt => opt.MapFrom(src => src.Items != null ? src.Items.Sum(i => i.Sub_Total) : 0));
 
         CreateMap<SalesItem, SalesItemDto>()
-            .ForMember(dest => dest.Item_Name, opt => opt.MapFrom(src => src.Item != null ? src.Item.Item_Name : ""));
+            .ForMember(dest => dest.Item_Name, opt => opt.MapFrom(src => src.Item != null ? src.Item.Item_Name : ""))
+            .ForMember(dest => dest.Item_Code, opt => opt.MapFrom(src => src.Item != null ? src.Item.Item_Code : ""))
+            .ForMember(dest => dest.Item_Category, opt => opt.MapFrom(src => src.Item != null ? src.Item.Item_Category : ""))
+            .ForMember(dest => dest.Unit_Of_Measure, opt => opt.MapFrom(src => src.Item != null ? src.Item.Unit_Of_Measure : ""));
 
         CreateMap<Sales, SalesDetailDto>()
             .ForMember(dest => dest.Location_Name, opt => opt.MapFrom(src => src.Location != null ? src.Location.Location_Name : ""));

@@ -100,6 +100,10 @@ public class SmartInventoryDbContext : DbContext
             .Property(x => x.Shipped_Quantity)
             .HasPrecision(14, 2);
 
+        modelBuilder.Entity<Sales>()
+            .Property(x => x.Total_Amount)
+            .HasPrecision(14, 2);
+
         modelBuilder.Entity<SalesItem>()
             .Property(x => x.Sold_Quantity)
             .HasPrecision(14, 2);
@@ -315,6 +319,32 @@ public class SmartInventoryDbContext : DbContext
             .HasOne(i => i.Item)
             .WithMany()
             .HasForeignKey(i => i.Item_ID)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        // Configure Sales relationships
+        modelBuilder.Entity<Sales>()
+            .HasOne(s => s.Location)
+            .WithMany()
+            .HasForeignKey(s => s.Location_ID)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<Sales>()
+            .HasOne(s => s.RefSales)
+            .WithMany()
+            .HasForeignKey(s => s.Ref_Sales_Number)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        // Configure SalesItem relationships
+        modelBuilder.Entity<SalesItem>()
+            .HasOne(si => si.Sales)
+            .WithMany(s => s.Items)
+            .HasForeignKey(si => si.Sales_ID)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<SalesItem>()
+            .HasOne(si => si.Item)
+            .WithMany()
+            .HasForeignKey(si => si.Item_ID)
             .OnDelete(DeleteBehavior.Restrict);
     }
 }

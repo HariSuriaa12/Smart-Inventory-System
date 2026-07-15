@@ -9,6 +9,19 @@ export const salesService = {
   getSaleById: async (id: number) =>
     (await api.get<ApiResponse<Sales>>(`/api/sales/${id}`)).data,
 
+  getSalesFiltered: async (
+    skip: number = 0,
+    take: number = 10,
+    salesId?: number,
+    salesNumber?: string,
+    status?: number,
+    dateFrom?: string,
+    dateTo?: string
+  ) =>
+    (await api.get<ApiResponse<PaginatedResponse<Sales>>>('/api/sales', {
+      params: { skip, take, salesId, salesNumber, status, dateFrom, dateTo },
+    })).data,
+
   receiveSalesData: async (data: ReceiveSalesRequest) =>
     (await api.post<ApiResponse<any>>('/api/sales/import', data)).data,
 
