@@ -1,3 +1,4 @@
+using SmartInventoryAPI.Models.DTOs.Request.Inventory;
 using SmartInventoryAPI.Models.DTOs.Request.StockTransfer;
 using SmartInventoryAPI.Models.DTOs.Response;
 
@@ -14,4 +15,5 @@ public interface IStockTransferService
     Task<StockTransferDto> ReceiveStockAsync(long id, ReceiveStockRequestDto request);
     Task<StockTransferDto> CancelStockTransferAsync(long id, CancelStockTransferRequestDto request);
     Task<StockTransferDto> CancelStockTransferWithReturnAsync(long id, CancelStockTransferRequestDto request);
+    Task<StockTransferDto> StockTransferAsync(StockTransferRequestDto request);
 }

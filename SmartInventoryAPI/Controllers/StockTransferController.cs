@@ -1,7 +1,10 @@
+using System.Security.Cryptography.Xml;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using SmartInventoryAPI.Models.DTOs.Request.Inventory;
 using SmartInventoryAPI.Models.DTOs.Request.StockTransfer;
 using SmartInventoryAPI.Models.DTOs.Response;
+using SmartInventoryAPI.Services.Implementations;
 using SmartInventoryAPI.Services.Interfaces;
 
 namespace SmartInventoryAPI.Controllers;
@@ -130,6 +133,19 @@ public class StockTransferController : ControllerBase
         {
             Success = true,
             Message = "Stock transfer cancelled and stock returned successfully",
+            Data = transfer,
+            StatusCode = 200
+        });
+    }
+
+    [HttpPost("transfer")]
+    public async Task<ActionResult<ApiResponseDto<StockTransferDto>>> StockTransfer([FromBody] StockTransferRequestDto request)
+    {
+        var transfer = await _stService.StockTransferAsync(request);
+        return Ok(new ApiResponseDto<StockTransferDto>
+        {
+            Success = true,
+            Message = "Stock transfer completed successfully",
             Data = transfer,
             StatusCode = 200
         });

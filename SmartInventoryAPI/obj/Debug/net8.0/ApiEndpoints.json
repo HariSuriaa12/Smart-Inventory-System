@@ -1852,6 +1852,32 @@
     ]
   },
   {
+    "ContainingType": "SmartInventoryAPI.Controllers.StockTransferController",
+    "Method": "StockTransfer",
+    "RelativePath": "api/StockTransfer/transfer",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "SmartInventoryAPI.Models.DTOs.Request.Inventory.StockTransferRequestDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "SmartInventoryAPI.Models.DTOs.Response.ApiResponseDto\u00601[[SmartInventoryAPI.Models.DTOs.Response.StockTransferDto, SmartInventoryAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
     "ContainingType": "SmartInventoryAPI.Controllers.UsersController",
     "Method": "GetAllUsers",
     "RelativePath": "api/Users",

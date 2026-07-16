@@ -287,7 +287,7 @@ public class StockTransferService : IStockTransferService
         return _mapper.Map<StockTransferDto>(transfer);
     }
 
-    public async Task<InventoryDto> StockTransferAsync(StockTransferRequestDto request, long userId)
+    public async Task<StockTransferDto> StockTransferAsync(StockTransferRequestDto request)
     {
         var fromInventory = await _unitOfWork.Inventories.GetByItemAndLocationAsync(request.Item_ID, request.From_Location_ID);
         if (fromInventory == null || fromInventory.Is_Deleted)
@@ -303,6 +303,10 @@ public class StockTransferService : IStockTransferService
         var item = await _unitOfWork.Items.GetByIdAsync(request.Item_ID);
         if (item == null || item.Is_Deleted)
             throw new NotFoundException("item not found");
+
+        var user = await _unitOfWork.User.GetByIdAsync(request.User_ID);
+        if (user == null || user.Is_Deleted)
+            throw new NotFoundException("user not found");
 
         // Store previous values for logging
         var fromPreviousOnhand = fromInventory.On_Hand_Quantity;
@@ -331,7 +335,7 @@ public class StockTransferService : IStockTransferService
             Transfer_Date = DateTime.UtcNow.Date,
             Transfer_Time = DateTime.UtcNow.TimeOfDay,
             Sub_Total = item.Unit_Cost * request.Transfer_Quantity,
-            Performed_By = userId
+            Performed_By = user.ID
         };
 
         await _unitOfWork.StockTransfers.AddAsync(transfer);
@@ -343,7 +347,7 @@ public class StockTransferService : IStockTransferService
             : $"Stock Transfer : {request.Remark}";
 
         var performLogId = await _loggingService.LogPerformanceAsync(
-            performedBy: userId,
+            performedBy: user.ID,
             performedOutlet: request.From_Location_ID,
             performModule: 9, // Stock Transfer module
             operationType: 1, // Transfer operation
@@ -370,6 +374,6 @@ public class StockTransferService : IStockTransferService
             "Stock transferred: Item {ItemID}, Qty {Qty}, From {FromLocation} to {ToLocation}",
             request.Item_ID, request.Transfer_Quantity, request.From_Location_ID, request.To_Location_ID);
 
-        return _mapper.Map<InventoryDto>(toInventory);
+        return _mapper.Map<StockTransferDto>(transfer);
     }
 }

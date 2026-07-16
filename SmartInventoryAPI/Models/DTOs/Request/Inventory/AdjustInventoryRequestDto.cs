@@ -10,6 +10,7 @@ public class AdjustInventoryRequestDto
 
 public class StockTransferRequestDto
 {
+    public long User_ID { get; set; }
     public long From_Location_ID { get; set; }
     public long To_Location_ID { get; set; }
     public long Item_ID { get; set; }
