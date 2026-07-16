@@ -2,13 +2,15 @@ import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { fetchAllLocations, setCurrentLocation } from '@/store/slices/locationSlice'
 import { useLocationModal } from '@/context/LocationModalContext'
 import { useEffect, useState } from 'react'
-import { Building2, CheckCircle, X } from 'lucide-react'
+import { Building2, CheckCircle, X, ArrowLeft } from 'lucide-react'
 import { Spinner } from '@/components'
 import { Location } from '@/types/location'
+import { useNavigate } from 'react-router-dom'
 
 export const LocationSelectionModal = () => {
   const dispatch = useAppDispatch()
-  const { isLocationModalOpen, isMandatory, openLocationModal, closeLocationModal, onLocationConfirmed } = useLocationModal()
+  const navigate = useNavigate()
+  const { isLocationModalOpen, isMandatory, openLocationModal, closeLocationModal, onLocationConfirmed, setOnLocationConfirmed } = useLocationModal()
   const { locations, currentLocation, loading, error } = useAppSelector((state) => state.locations)
   const [selectedLocationId, setSelectedLocationId] = useState<number | null>(null)
 
@@ -20,20 +22,29 @@ export const LocationSelectionModal = () => {
 
   const handleSelectLocation = (location: Location) => {
     setSelectedLocationId(location.id)
-    const previousLocationId = currentLocation?.id
 
     dispatch(setCurrentLocation(location))
 
-    // Only execute callback if location actually changed
-    if (onLocationConfirmed && previousLocationId && location.id !== previousLocationId) {
+    // Execute callback if set (e.g., from LocationSwitchWarningDialog)
+    if (onLocationConfirmed) {
       onLocationConfirmed(location)
+      // Clear callback after execution so it doesn't persist
+      setOnLocationConfirmed(null as any)
     }
 
-    // If it was mandatory, set it to optional now and close
+    // Close modal after selection - use setTimeout to ensure state updates complete first
     if (isMandatory) {
       openLocationModal(false)
     }
-    closeLocationModal()
+    setTimeout(() => {
+      closeLocationModal()
+    }, 0)
+  }
+
+  const handleBackToLogin = () => {
+    // Clear current location and navigate to login
+    dispatch(setCurrentLocation(null as any))
+    navigate('/login')
   }
 
   if (!isLocationModalOpen) return null
@@ -88,15 +99,31 @@ export const LocationSelectionModal = () => {
               <p className="text-gray-600 text-sm font-medium">Loading your outlets...</p>
             </div>
           ) : error ? (
-            <div className="bg-red-50 border-2 border-red-200 rounded-xl p-6 text-center">
-              <p className="text-red-700 font-semibold mb-1">Unable to load outlets</p>
-              <p className="text-red-600 text-sm">{error}</p>
+            <div className="text-center py-12">
+              <div className="bg-red-50 border-2 border-red-200 rounded-xl p-6 mb-6">
+                <p className="text-red-700 font-semibold mb-1">Unable to load outlets</p>
+                <p className="text-red-600 text-sm">{error}</p>
+              </div>
+              <button
+                onClick={handleBackToLogin}
+                className="inline-flex items-center gap-2 px-4 py-2 text-gray-700 font-medium border-2 border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+              >
+                <ArrowLeft size={18} />
+                Back to Login
+              </button>
             </div>
           ) : locations.length === 0 ? (
             <div className="text-center py-12">
               <Building2 size={48} className="text-gray-300 mx-auto mb-4" />
               <p className="text-gray-600 font-medium text-lg">No outlets available</p>
-              <p className="text-gray-500 text-sm mt-2">Please contact your administrator</p>
+              <p className="text-gray-500 text-sm mt-2 mb-6">Please contact your administrator</p>
+              <button
+                onClick={handleBackToLogin}
+                className="inline-flex items-center gap-2 px-4 py-2 text-gray-700 font-medium border-2 border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+              >
+                <ArrowLeft size={18} />
+                Back to Login
+              </button>
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
