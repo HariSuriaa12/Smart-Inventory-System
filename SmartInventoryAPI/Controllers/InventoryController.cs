@@ -121,4 +121,17 @@ public class InventoryController : ControllerBase
             StatusCode = 200
         });
     }
+
+    [HttpGet("trend/{locationId}")]
+    public async Task<ActionResult<ApiResponseDto<IEnumerable<dynamic>>>> GetInventoryTrend(long locationId)
+    {
+        var trend = await _inventoryService.GetInventoryTrendAsync(locationId);
+        return Ok(new ApiResponseDto<IEnumerable<dynamic>>
+        {
+            Success = true,
+            Message = "Inventory trend retrieved successfully",
+            Data = trend,
+            StatusCode = 200
+        });
+    }
 }

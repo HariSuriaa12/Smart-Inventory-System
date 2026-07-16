@@ -112,4 +112,29 @@ public class SalesService : ISalesService
             HasPreviousPage = skip > 0
         };
     }
+
+    public async Task<IEnumerable<dynamic>> GetTopSellingItemsByLocationAsync(long locationId, int skip = 0, int take = 10)
+    {
+        var sales = await _unitOfWork.Sales.GetByLocationAsync(locationId, 0, 1000);
+
+        var groupedByItem = sales
+            .Where(s => s.Items != null)
+            .SelectMany(s => s.Items.Select(si => new { s.ID, si.Item_ID, si.Item, si.Sold_Quantity, si.Sub_Total }))
+            .GroupBy(x => x.Item_ID)
+            .Select(g => new
+            {
+                itemId = g.Key,
+                itemCode = g.First().Item?.Item_Code ?? "",
+                itemName = g.First().Item?.Item_Name ?? "",
+                totalQty = g.Sum(x => x.Sold_Quantity),
+                totalValue = g.Sum(x => x.Sub_Total),
+                averagePrice = g.Average(x => x.Sub_Total / (x.Sold_Quantity > 0 ? x.Sold_Quantity : 1))
+            })
+            .OrderByDescending(x => x.totalValue)
+            .Skip(skip)
+            .Take(take)
+            .ToList<dynamic>();
+
+        return groupedByItem;
+    }
 }

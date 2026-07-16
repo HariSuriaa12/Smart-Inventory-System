@@ -13,4 +13,5 @@ public interface ISalesService
     Task<PaginatedResponseDto<SalesDto>> GetAllSalesFilteredAsync(
         int skip = 0, int take = 10, long? salesId = null, string? salesNumber = null,
         int? status = null, string? dateFrom = null, string? dateTo = null);
+    Task<IEnumerable<dynamic>> GetTopSellingItemsByLocationAsync(long locationId, int skip = 0, int take = 10);
 }

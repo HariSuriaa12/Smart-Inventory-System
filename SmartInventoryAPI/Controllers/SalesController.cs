@@ -106,4 +106,21 @@ public class SalesController : ControllerBase
             StatusCode = 200
         });
     }
+
+    [Authorize]
+    [HttpGet("top-selling/{locationId}")]
+    public async Task<ActionResult<ApiResponseDto<IEnumerable<dynamic>>>> GetTopSellingItems(
+        long locationId,
+        [FromQuery] int skip = 0,
+        [FromQuery] int take = 10)
+    {
+        var topItems = await _salesService.GetTopSellingItemsByLocationAsync(locationId, skip, take);
+        return Ok(new ApiResponseDto<IEnumerable<dynamic>>
+        {
+            Success = true,
+            Message = "Top selling items retrieved successfully",
+            Data = topItems,
+            StatusCode = 200
+        });
+    }
 }

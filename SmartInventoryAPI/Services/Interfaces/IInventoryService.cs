@@ -11,4 +11,5 @@ public interface IInventoryService
     Task<InventoryDetailDto> GetByItemAndLocationAsync(long itemId, long locationId);
     Task<InventoryDto> AdjustInventoryAsync(AdjustInventoryRequestDto request, long userId = 1);
     Task<InventoryDto> StockTransferAsync(StockTransferRequestDto request, long userId = 1);
+    Task<IEnumerable<dynamic>> GetInventoryTrendAsync(long locationId);
 }

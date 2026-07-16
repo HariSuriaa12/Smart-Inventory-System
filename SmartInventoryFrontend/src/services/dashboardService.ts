@@ -1,25 +1,17 @@
-import { itemService } from './itemService'
-import { locationService } from './locationService'
-import { inventoryService } from './inventoryService'
-import { salesService } from './salesService'
-import { purchaseOrderService } from './purchaseOrderService'
-import { forecastingService } from './forecastingService'
+import { api } from './api'
+import { ApiResponse, PaginatedResponse } from '@/types/common'
 
 export interface DashboardStats {
   totalItems: number
   totalLocations: number
   pendingOrders: number
-  lowStockItems: number
-  totalStockValue: number
 }
 
 export interface DashboardAlert {
   id: string
-  type: 'low-stock' | 'pending-order' | 'overstock'
+  type: 'low-stock' | 'pending-order'
   message: string
   severity: 'error' | 'warning' | 'info'
-  itemName?: string
-  quantity?: number
 }
 
 export interface LocationInventoryData {
@@ -40,37 +32,20 @@ export interface TopSellingItem {
   averagePrice: number
 }
 
-export interface InventoryTrendData {
-  month: string
-  value: number
-  items: number
-}
-
 export const dashboardService = {
-  // Get master stats (all data)
+  // Get master stats - master data endpoints
   getStats: async (): Promise<DashboardStats> => {
     try {
-      const itemsResponse = await itemService.getItems(0, 1000)
-      const locationsResponse = await locationService.getAllLocations()
-      const poResponse = await purchaseOrderService.getPurchaseOrders(0, 1000,{
-        status: 0, // Only pending orders
-      })
+      const [itemsRes, locationsRes, poRes] = await Promise.all([
+        api.get<ApiResponse<PaginatedResponse<any>>>('/api/items', { params: { skip: 0, take: 1 } }),
+        api.get<ApiResponse<PaginatedResponse<any>>>('/api/locations', { params: { skip: 0, take: 1 } }),
+        api.get<ApiResponse<PaginatedResponse<any>>>('/api/purchaseorders', { params: { skip: 0, take: 1, status: 0 } }),
+      ])
 
-      const totalItems = itemsResponse.data?.total || 0
-      const totalLocations = locationsResponse.data?.length || 0
-      const pendingOrders = poResponse.data?.total || 0
-
-      console.log('Dashboard Stats:', {
-        totalItems,
-        totalLocations,
-        pendingOrders,
-      })
       return {
-        totalItems,
-        totalLocations,
-        pendingOrders,
-        lowStockItems: 0,
-        totalStockValue: 0,
+        totalItems: itemsRes.data?.data?.total || 0,
+        totalLocations: locationsRes.data?.data?.total || 0,
+        pendingOrders: poRes.data?.data?.total || 0,
       }
     } catch (error) {
       console.error('Failed to fetch dashboard stats:', error)
@@ -78,18 +53,19 @@ export const dashboardService = {
         totalItems: 0,
         totalLocations: 0,
         pendingOrders: 0,
-        lowStockItems: 0,
-        totalStockValue: 0,
       }
     }
   },
 
-  // Get location-specific inventory data
+  // Get location inventory - for dashboard display
   getLocationInventory: async (locationId: number): Promise<LocationInventoryData[]> => {
     try {
-      const response = await inventoryService.getInventoryByLocation(locationId, 0, 100)
+      const response = await api.get<ApiResponse<PaginatedResponse<any>>>(`/api/inventory/location/${locationId}`, {
+        params: { skip: 0, take: 100 },
+      })
+
       return (
-        response.data?.map((inv: any) => ({
+        response.data?.data?.map((inv: any) => ({
           itemId: inv.item_ID,
           itemCode: inv.item?.item_Code || '',
           itemName: inv.item?.item_Name || '',
@@ -104,14 +80,15 @@ export const dashboardService = {
     }
   },
 
-  // Get alerts for location
+  // Get location alerts
   getLocationAlerts: async (locationId: number): Promise<DashboardAlert[]> => {
     try {
-      const inventory = await dashboardService.getLocationInventory(locationId)
       const alerts: DashboardAlert[] = []
-      let alertId = 1
 
-      // Check for low stock items (less than 10 units)
+      // Fetch inventory for low stock check
+      const inventory = await dashboardService.getLocationInventory(locationId)
+
+      let alertId = 1
       inventory.forEach((item) => {
         if (item.availableQty < 10 && item.availableQty >= 0) {
           alerts.push({
@@ -119,158 +96,77 @@ export const dashboardService = {
             type: 'low-stock',
             message: `${item.itemName} is running low (${item.availableQty.toFixed(2)} units)`,
             severity: item.availableQty < 5 ? 'error' : 'warning',
-            itemName: item.itemName,
-            quantity: item.availableQty,
           })
         }
       })
 
       // Get pending orders
-      try {
-        const poResponse = await purchaseOrderService.getPurchaseOrders({
-          skip: 0,
-          take: 100,
-          status: 0,
-        })
+      const poResponse = await api.get<ApiResponse<PaginatedResponse<any>>>('/api/purchaseorders', {
+        params: { skip: 0, take: 100, status: 0 },
+      })
 
-        const pendingCount = poResponse.data?.total || 0
-        if (pendingCount > 0) {
-          alerts.push({
-            id: `alert-${alertId++}`,
-            type: 'pending-order',
-            message: `You have ${pendingCount} pending purchase orders`,
-            severity: 'info',
-          })
-        }
-      } catch (err) {
-        console.error('Failed to fetch pending orders:', err)
+      const pendingCount = poResponse.data?.data?.total || 0
+      if (pendingCount > 0) {
+        alerts.push({
+          id: `alert-${alertId++}`,
+          type: 'pending-order',
+          message: `You have ${pendingCount} pending purchase orders`,
+          severity: 'info',
+        })
       }
 
-      return alerts.slice(0, 5) // Return top 5 alerts
+      return alerts.slice(0, 5)
     } catch (error) {
       console.error('Failed to fetch alerts:', error)
       return []
     }
   },
 
-  // Get top selling items for location
+  // Get top selling items by location
   getTopSellingItems: async (locationId: number): Promise<TopSellingItem[]> => {
     try {
-      const salesResponse = await salesService.getSalesByLocation(locationId, 0, 500)
-
-      if (!salesResponse.data || salesResponse.data.length === 0) {
-        return []
-      }
-
-      // Group sales by item
-      const itemSales: { [key: number]: TopSellingItem } = {}
-
-      salesResponse.data.forEach((sale: any) => {
-        if (!sale.item_ID) return
-
-        if (!itemSales[sale.item_ID]) {
-          itemSales[sale.item_ID] = {
-            itemId: sale.item_ID,
-            itemCode: sale.item?.item_Code || '',
-            itemName: sale.item?.item_Name || '',
-            totalQty: 0,
-            totalValue: 0,
-            averagePrice: 0,
-          }
-        }
-
-        const qty = sale.quantity || 0
-        const price = sale.unit_Price || 0
-
-        itemSales[sale.item_ID].totalQty += qty
-        itemSales[sale.item_ID].totalValue += qty * price
+      const response = await api.get<ApiResponse<any>>(`/api/sales/top-selling/${locationId}`, {
+        params: { skip: 0, take: 10 },
       })
 
-      // Calculate average price and sort by total value
-      Object.values(itemSales).forEach((item) => {
-        if (item.totalQty > 0) {
-          item.averagePrice = item.totalValue / item.totalQty
-        }
-      })
-
-      return Object.values(itemSales)
-        .sort((a, b) => b.totalValue - a.totalValue)
-        .slice(0, 10)
+      return response.data?.data || []
     } catch (error) {
       console.error('Failed to fetch top selling items:', error)
       return []
     }
   },
 
-  // Get inventory value trend
-  getInventoryTrend: async (locationId: number): Promise<InventoryTrendData[]> => {
+  // Get inventory trend
+  getInventoryTrend: async (locationId: number) => {
     try {
-      const inventory = await dashboardService.getLocationInventory(locationId)
-
-      // For now, return current inventory value distributed over months
-      // In a real scenario, this would come from historical data
-      const totalValue = inventory.reduce((sum, item) => sum + item.value, 0)
-      const trend: InventoryTrendData[] = []
-
-      const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun']
-      const baseValue = totalValue / months.length
-
-      months.forEach((month, idx) => {
-        // Simulate trend with some variance
-        const variance = 0.8 + Math.random() * 0.4 // 80-120% of base value
-        trend.push({
-          month,
-          value: Math.round(baseValue * variance),
-          items: Math.round(inventory.length * variance * 0.5),
-        })
-      })
-
-      return trend
+      const response = await api.get<ApiResponse<any>>(`/api/inventory/trend/${locationId}`)
+      return response.data?.data || []
     } catch (error) {
       console.error('Failed to fetch inventory trend:', error)
       return []
     }
   },
 
-  // Get sales analytics for location
-  getLocationSalesAnalytics: async (locationId: number) => {
+  // Get forecasts
+  getForecasts: async () => {
     try {
-      const response = await salesService.getSalesAnalytics(locationId)
-      return response.data || null
-    } catch (error) {
-      console.error('Failed to fetch sales analytics:', error)
-      return null
-    }
-  },
-
-  // Get forecasting results
-  getForecasts: async (locationId: number) => {
-    try {
-      const response = await forecastingService.getForecasts()
-      return response.data || []
+      const response = await api.get<ApiResponse<any>>('/api/forecasting')
+      return response.data?.data || []
     } catch (error) {
       console.error('Failed to fetch forecasts:', error)
       return []
     }
   },
 
-  // Get recent stock movements
-  getRecentTransactions: async (locationId: number) => {
+  // Get sales by location
+  getSalesByLocation: async (locationId: number) => {
     try {
-      const salesResponse = await salesService.getSalesByLocation(locationId, 0, 10)
-      return (
-        salesResponse.data
-          ?.slice(0, 5)
-          .map((sale: any) => ({
-            type: 'sold',
-            itemName: sale.item?.item_Name || 'Unknown Item',
-            quantity: sale.quantity || 0,
-            value: (sale.quantity || 0) * (sale.unit_Price || 0),
-            date: new Date(sale.sale_Date).toLocaleDateString(),
-          })) || []
-      )
+      const response = await api.get<ApiResponse<any>>(`/api/sales/location/${locationId}`, {
+        params: { skip: 0, take: 50 },
+      })
+      return response.data?.data || []
     } catch (error) {
-      console.error('Failed to fetch recent transactions:', error)
+      console.error('Failed to fetch sales:', error)
       return []
     }
   },
