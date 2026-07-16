@@ -1,3 +1,4 @@
+using SmartInventoryAPI.Models.DTOs.Request.StockTransfer;
 using SmartInventoryAPI.Models.DTOs.Response;
 
 namespace SmartInventoryAPI.Services.Interfaces;
@@ -10,4 +11,7 @@ public interface IStockTransferService
     Task<IEnumerable<object>> GetByFromLocationAsync(long locationId, int skip = 0, int take = 10);
     Task<IEnumerable<object>> GetByToLocationAsync(long locationId, int skip = 0, int take = 10);
     Task<IEnumerable<object>> GetByStatusAsync(int status, int skip = 0, int take = 10);
+    Task<StockTransferDto> ReceiveStockAsync(long id, ReceiveStockRequestDto request);
+    Task<StockTransferDto> CancelStockTransferAsync(long id, CancelStockTransferRequestDto request);
+    Task<StockTransferDto> CancelStockTransferWithReturnAsync(long id, CancelStockTransferRequestDto request);
 }

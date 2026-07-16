@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useAppDispatch } from '@/store/hooks'
-import { updateTransfer } from '@/store/slices/stockTransferSlice'
-import { StockTransfer, StockTransferStatus } from '@/types/stocktransfer'
+import { receiveStock } from '@/store/slices/stockTransferSlice'
+import { StockTransfer } from '@/types/stocktransfer'
 import { X, AlertCircle } from 'lucide-react'
 
 interface ReceivedQuantityModalProps {
@@ -53,17 +53,10 @@ export const ReceivedQuantityModal = ({
     setError('')
 
     try {
-      const totalReceived = transfer.received_Quantity + qty
-      const newStatus = totalReceived >= transfer.transfer_Quantity
-        ? StockTransferStatus.Received
-        : StockTransferStatus.PartiallyReceived
-
-      await dispatch(updateTransfer({
+      await dispatch(receiveStock({
         id: transfer.id,
-        data: {
-          received_Quantity: totalReceived,
-          status: newStatus,
-        },
+        receivedQuantity: qty,
+        remark: '',
       }) as any)
       onSuccess()
     } catch (err: any) {

@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using SmartInventoryAPI.Models.DTOs.Request.StockTransfer;
 using SmartInventoryAPI.Models.DTOs.Response;
 using SmartInventoryAPI.Services.Interfaces;
 
@@ -85,6 +86,51 @@ public class StockTransferController : ControllerBase
             Success = true,
             Message = "Stock transfers retrieved by status successfully",
             Data = transfers,
+            StatusCode = 200
+        });
+    }
+
+    [HttpPost("{id}/receive")]
+    public async Task<ActionResult<ApiResponseDto<StockTransferDto>>> ReceiveStock(
+        long id,
+        [FromBody] ReceiveStockRequestDto request)
+    {
+        var transfer = await _stService.ReceiveStockAsync(id, request);
+        return Ok(new ApiResponseDto<StockTransferDto>
+        {
+            Success = true,
+            Message = "Stock received successfully",
+            Data = transfer,
+            StatusCode = 200
+        });
+    }
+
+    [HttpPost("{id}/cancel")]
+    public async Task<ActionResult<ApiResponseDto<StockTransferDto>>> CancelStockTransfer(
+        long id,
+        [FromBody] CancelStockTransferRequestDto request)
+    {
+        var transfer = await _stService.CancelStockTransferAsync(id, request);
+        return Ok(new ApiResponseDto<StockTransferDto>
+        {
+            Success = true,
+            Message = "Stock transfer cancelled successfully",
+            Data = transfer,
+            StatusCode = 200
+        });
+    }
+
+    [HttpPost("{id}/cancel-return")]
+    public async Task<ActionResult<ApiResponseDto<StockTransferDto>>> CancelStockTransferWithReturn(
+        long id,
+        [FromBody] CancelStockTransferRequestDto request)
+    {
+        var transfer = await _stService.CancelStockTransferWithReturnAsync(id, request);
+        return Ok(new ApiResponseDto<StockTransferDto>
+        {
+            Success = true,
+            Message = "Stock transfer cancelled and stock returned successfully",
+            Data = transfer,
             StatusCode = 200
         });
     }

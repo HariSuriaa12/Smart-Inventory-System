@@ -55,4 +55,20 @@ export const stockTransferService = {
     (await api.get<ApiResponse<PaginatedResponse<StockTransfer>>>('/api/stocktransfer', {
       params: { skip, take, locationId },
     })).data,
+
+  receiveStock: async (id: number, receivedQuantity: number, remark?: string) =>
+    (await api.post<ApiResponse<StockTransfer>>(`/api/stocktransfer/${id}/receive`, {
+      receivedQuantity,
+      remark,
+    })).data,
+
+  cancelTransfer: async (id: number, remark?: string) =>
+    (await api.post<ApiResponse<StockTransfer>>(`/api/stocktransfer/${id}/cancel`, {
+      remark,
+    })).data,
+
+  cancelTransferWithReturn: async (id: number, remark?: string) =>
+    (await api.post<ApiResponse<StockTransfer>>(`/api/stocktransfer/${id}/cancel-return`, {
+      remark,
+    })).data,
 }

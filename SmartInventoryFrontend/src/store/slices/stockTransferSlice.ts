@@ -66,6 +66,30 @@ export const deleteTransfer = createAsyncThunk('st/delete', async (id: number, {
   }
 })
 
+export const receiveStock = createAsyncThunk('st/receive', async ({ id, receivedQuantity, remark }: any, { rejectWithValue }) => {
+  try {
+    return (await stockTransferService.receiveStock(id, receivedQuantity, remark)).data
+  } catch (error: any) {
+    return rejectWithValue(error.message)
+  }
+})
+
+export const cancelTransfer = createAsyncThunk('st/cancel', async ({ id, remark }: any, { rejectWithValue }) => {
+  try {
+    return (await stockTransferService.cancelTransfer(id, remark)).data
+  } catch (error: any) {
+    return rejectWithValue(error.message)
+  }
+})
+
+export const cancelTransferWithReturn = createAsyncThunk('st/cancelReturn', async ({ id, remark }: any, { rejectWithValue }) => {
+  try {
+    return (await stockTransferService.cancelTransferWithReturn(id, remark)).data
+  } catch (error: any) {
+    return rejectWithValue(error.message)
+  }
+})
+
 const stSlice = createSlice({
   name: 'stockTransfer',
   initialState,
@@ -93,6 +117,18 @@ const stSlice = createSlice({
       })
       .addCase(deleteTransfer.fulfilled, (state, action) => {
         state.transfers = state.transfers.filter((t) => t.id !== action.payload)
+      })
+      .addCase(receiveStock.fulfilled, (state, action) => {
+        const idx = state.transfers.findIndex((t) => t.id === action.payload.id)
+        if (idx !== -1) state.transfers[idx] = action.payload
+      })
+      .addCase(cancelTransfer.fulfilled, (state, action) => {
+        const idx = state.transfers.findIndex((t) => t.id === action.payload.id)
+        if (idx !== -1) state.transfers[idx] = action.payload
+      })
+      .addCase(cancelTransferWithReturn.fulfilled, (state, action) => {
+        const idx = state.transfers.findIndex((t) => t.id === action.payload.id)
+        if (idx !== -1) state.transfers[idx] = action.payload
       })
   },
 })

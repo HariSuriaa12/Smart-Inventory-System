@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback, useMemo } from 'react'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
-import { fetchTransfers, updateTransfer } from '@/store/slices/stockTransferSlice'
+import { fetchTransfers, cancelTransfer, cancelTransferWithReturn } from '@/store/slices/stockTransferSlice'
 import { fetchAllLocations } from '@/store/slices/locationSlice'
 import { fetchItems } from '@/store/slices/itemSlice'
 import { DataGrid, Card, Column } from '@/components'
@@ -292,11 +292,9 @@ export const StockTransferListPage = () => {
   const handleCancel = useCallback(async (transfer: StockTransfer) => {
     if (!window.confirm('Are you sure you want to cancel this stock transfer?')) return
     try {
-      await dispatch(updateTransfer({
+      await dispatch(cancelTransfer({
         id: transfer.id,
-        data: {
-          status: StockTransferStatus.Cancelled,
-        },
+        remark: '',
       }) as any)
       dispatch(fetchTransfers({
         skip: (currentPage - 1) * PAGE_SIZE,
@@ -310,12 +308,9 @@ export const StockTransferListPage = () => {
   const handleCancelWithReturn = useCallback(async (transfer: StockTransfer) => {
     if (!window.confirm('Are you sure you want to cancel this transfer and return the received stock?')) return
     try {
-      await dispatch(updateTransfer({
+      await dispatch(cancelTransferWithReturn({
         id: transfer.id,
-        data: {
-          status: StockTransferStatus.Cancelled,
-          received_Quantity: 0,
-        },
+        remark: '',
       }) as any)
       dispatch(fetchTransfers({
         skip: (currentPage - 1) * PAGE_SIZE,
