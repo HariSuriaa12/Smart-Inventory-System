@@ -4,8 +4,9 @@ import { Location } from '@/types/location'
 interface LocationModalContextType {
   isLocationModalOpen: boolean
   isWarningDialogOpen: boolean
+  isMandatory: boolean
   pendingLocation: Location | null
-  openLocationModal: () => void
+  openLocationModal: (mandatory?: boolean) => void
   closeLocationModal: () => void
   openWarningDialog: (location: Location) => void
   closeWarningDialog: () => void
@@ -19,12 +20,20 @@ const LocationModalContext = createContext<LocationModalContextType | undefined>
 
 export const LocationModalProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [isLocationModalOpen, setIsLocationModalOpen] = useState(false)
+  const [isMandatory, setIsMandatory] = useState(false)
   const [isWarningDialogOpen, setIsWarningDialogOpen] = useState(false)
   const [pendingLocation, setPendingLocation] = useState<Location | null>(null)
   const [onLocationConfirmed, setOnLocationConfirmed] = useState<((location: Location) => void) | null>(null)
 
-  const openLocationModal = useCallback(() => setIsLocationModalOpen(true), [])
-  const closeLocationModal = useCallback(() => setIsLocationModalOpen(false), [])
+  const openLocationModal = useCallback((mandatory = false) => {
+    setIsLocationModalOpen(true)
+    setIsMandatory(mandatory)
+  }, [])
+  const closeLocationModal = useCallback(() => {
+    if (!isMandatory) {
+      setIsLocationModalOpen(false)
+    }
+  }, [isMandatory])
 
   const openWarningDialog = useCallback((location: Location) => {
     setPendingLocation(location)
@@ -49,6 +58,7 @@ export const LocationModalProvider: React.FC<{ children: ReactNode }> = ({ child
     <LocationModalContext.Provider
       value={{
         isLocationModalOpen,
+        isMandatory,
         isWarningDialogOpen,
         pendingLocation,
         openLocationModal,

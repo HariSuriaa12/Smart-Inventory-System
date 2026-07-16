@@ -1,5 +1,7 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Outlet } from 'react-router-dom'
+import { useAppSelector } from '@/store/hooks'
+import { useLocationModal } from '@/context/LocationModalContext'
 import { Header } from './Header'
 import { Sidebar } from './Sidebar'
 import { LocationSelectionModal } from '../modals/LocationSelectionModal'
@@ -8,6 +10,15 @@ import { LocationSwitchWarningDialog } from '../modals/LocationSwitchWarningDial
 export const MainLayout: React.FC = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false)
+  const { currentLocation } = useAppSelector((state) => state.locations)
+  const { openLocationModal } = useLocationModal()
+
+  // Open location modal if no location is selected (mandatory on first load)
+  useEffect(() => {
+    if (!currentLocation) {
+      openLocationModal(true)
+    }
+  }, [currentLocation, openLocationModal])
 
   return (
     <div className="flex h-screen bg-gray-50">
