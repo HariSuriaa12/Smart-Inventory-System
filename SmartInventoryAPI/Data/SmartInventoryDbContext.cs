@@ -241,16 +241,10 @@ public class SmartInventoryDbContext : DbContext
             .HasPrecision(14, 2);
 
         modelBuilder.Entity<InventoryLog>()
-            .Property(x => x.Previous_Onhand_Quantity)
+            .Property(x => x.Onhand_Quantity_Movement)
             .HasPrecision(14, 2);
         modelBuilder.Entity<InventoryLog>()
-            .Property(x => x.New_Onhand_Quantity)
-            .HasPrecision(14, 2);
-        modelBuilder.Entity<InventoryLog>()
-            .Property(x => x.Previous_Available_Quantity)
-            .HasPrecision(14, 2);
-        modelBuilder.Entity<InventoryLog>()
-            .Property(x => x.New_Available_Quantity)
+            .Property(x => x.Available_Quantity_Movement)
             .HasPrecision(14, 2);
 
         // Configure PurchaseOrderHeader relationships

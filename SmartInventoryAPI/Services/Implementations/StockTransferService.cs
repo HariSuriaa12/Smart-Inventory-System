@@ -342,7 +342,7 @@ public class StockTransferService : IStockTransferService
             ? "Stock Transfer"
             : $"Stock Transfer : {request.Remark}";
 
-        await _loggingService.LogPerformanceAsync(
+        var performLogId = await _loggingService.LogPerformanceAsync(
             performedBy: userId,
             performedOutlet: request.From_Location_ID,
             performModule: 9, // Stock Transfer module
@@ -356,7 +356,7 @@ public class StockTransferService : IStockTransferService
             request.From_Location_ID,
             request.Transfer_Quantity * -1,
             request.Transfer_Quantity * -1,
-            transfer.ID);
+            performLogId);
 
         // Log inventory changes for destination location
         await _loggingService.LogInventoryChangeAsync(
@@ -364,7 +364,7 @@ public class StockTransferService : IStockTransferService
             request.To_Location_ID,
             request.Transfer_Quantity,
             request.Transfer_Quantity,
-            transfer.ID);
+            performLogId);
 
         _logger.LogInformation(
             "Stock transferred: Item {ItemID}, Qty {Qty}, From {FromLocation} to {ToLocation}",
