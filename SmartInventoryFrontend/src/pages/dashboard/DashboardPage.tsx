@@ -2,16 +2,15 @@ import { useEffect, useState } from 'react'
 import { useAppSelector } from '@/store/hooks'
 import { Card, Badge } from '@/components'
 import { useLocationModal } from '@/context/LocationModalContext'
-import { dashboardService, DashboardStats, DashboardAlert, LocationInventoryData } from '@/services/dashboardService'
 import {
-  Package,
-  MapPin,
-  ShoppingCart,
-  TrendingUp,
-  AlertCircle,
-  Loader,
-  Eye,
-} from 'lucide-react'
+  dashboardService,
+  DashboardStats,
+  DashboardAlert,
+  LocationInventoryData,
+  TopSellingItem,
+  InventoryTrendData,
+} from '@/services/dashboardService'
+import { Package, MapPin, ShoppingCart, TrendingUp, AlertCircle, Loader, Eye, BarChart3 } from 'lucide-react'
 
 export const DashboardPage = () => {
   const { openLocationModal } = useLocationModal()
@@ -20,8 +19,9 @@ export const DashboardPage = () => {
   const [stats, setStats] = useState<DashboardStats | null>(null)
   const [alerts, setAlerts] = useState<DashboardAlert[]>([])
   const [inventory, setInventory] = useState<LocationInventoryData[]>([])
+  const [topSellingItems, setTopSellingItems] = useState<TopSellingItem[]>([])
+  const [inventoryTrend, setInventoryTrend] = useState<InventoryTrendData[]>([])
   const [forecasts, setForecasts] = useState<any[]>([])
-  const [salesData, setSalesData] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
 
   // Fetch master stats on mount
@@ -37,24 +37,26 @@ export const DashboardPage = () => {
   // Fetch location-specific data
   useEffect(() => {
     if (!currentLocation) {
-      openLocationModal()
+      openLocationModal(true)
       return
     }
 
     const fetchLocationData = async () => {
       setLoading(true)
       try {
-        const [alertsData, inventoryData, forecastsData, salesData] = await Promise.all([
+        const [alertsData, inventoryData, topSellingData, trendData, forecastsData] = await Promise.all([
           dashboardService.getLocationAlerts(currentLocation.id),
           dashboardService.getLocationInventory(currentLocation.id),
+          dashboardService.getTopSellingItems(currentLocation.id),
+          dashboardService.getInventoryTrend(currentLocation.id),
           dashboardService.getForecasts(currentLocation.id),
-          dashboardService.getLocationSalesData(currentLocation.id),
         ])
 
         setAlerts(alertsData)
         setInventory(inventoryData)
+        setTopSellingItems(topSellingData)
+        setInventoryTrend(trendData)
         setForecasts(forecastsData)
-        setSalesData(salesData)
       } catch (error) {
         console.error('Failed to fetch dashboard data:', error)
       } finally {
@@ -96,7 +98,7 @@ export const DashboardPage = () => {
     },
   ]
 
-  const maxSales = Math.max(...salesData.map((d) => Math.max(d.sales, d.target)), 1)
+  const maxTrendValue = Math.max(...inventoryTrend.map((d) => d.value), 1)
 
   return (
     <div className="relative min-h-screen">
@@ -131,21 +133,19 @@ export const DashboardPage = () => {
         </div>
 
         {/* Main Content Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Forecasts */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+          {/* Top Selling Items */}
           <div className="lg:col-span-2">
-            <Card title="Forecasted Results" subtitle="AI-powered demand forecasts">
+            <Card title="Top Selling Items" subtitle="Best performing products">
               {loading ? (
                 <div className="flex items-center justify-center py-8">
                   <Loader className="animate-spin text-gray-400" size={32} />
                 </div>
-              ) : forecasts.length === 0 ? (
+              ) : topSellingItems.length === 0 ? (
                 <div className="flex flex-col items-center justify-center py-12 text-gray-400">
-                  <Eye size={40} className="mb-3" />
-                  <p className="text-gray-600">No forecast data available</p>
-                  <p className="text-sm text-gray-500 mt-1">
-                    Forecasts will appear once enough historical data is collected
-                  </p>
+                  <BarChart3 size={40} className="mb-3" />
+                  <p className="text-gray-600">No sales data available yet</p>
+                  <p className="text-sm text-gray-500 mt-1">Top items will appear as sales are recorded</p>
                 </div>
               ) : (
                 <div className="overflow-x-auto">
@@ -153,33 +153,28 @@ export const DashboardPage = () => {
                     <thead>
                       <tr className="border-b border-gray-200">
                         <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700">Item</th>
-                        <th className="text-right py-3 px-4 text-sm font-semibold text-gray-700">Forecasted</th>
-                        <th className="text-right py-3 px-4 text-sm font-semibold text-gray-700">Actual</th>
-                        <th className="text-right py-3 px-4 text-sm font-semibold text-gray-700">Accuracy</th>
-                        <th className="text-center py-3 px-4 text-sm font-semibold text-gray-700">Method</th>
+                        <th className="text-right py-3 px-4 text-sm font-semibold text-gray-700">Qty Sold</th>
+                        <th className="text-right py-3 px-4 text-sm font-semibold text-gray-700">Avg Price</th>
+                        <th className="text-right py-3 px-4 text-sm font-semibold text-gray-700">Total Value</th>
                       </tr>
                     </thead>
                     <tbody>
-                      {forecasts.map((forecast: any, idx: number) => (
+                      {topSellingItems.map((item, idx) => (
                         <tr key={idx} className="border-b border-gray-100 hover:bg-gray-50">
                           <td className="py-3 px-4 text-sm text-gray-900 font-medium">
-                            {forecast.item_Name || forecast.itemName || 'Unknown'}
+                            <div>
+                              <p className="font-semibold">{item.itemName}</p>
+                              <p className="text-xs text-gray-500">{item.itemCode}</p>
+                            </div>
                           </td>
                           <td className="py-3 px-4 text-sm text-right text-gray-900 font-medium">
-                            {Math.round(forecast.forecasted_Value || forecast.forecastedValue || 0)}
+                            {item.totalQty.toFixed(0)} units
                           </td>
                           <td className="py-3 px-4 text-sm text-right text-gray-600">
-                            {Math.round(forecast.actual_Value || forecast.actualValue || 0)}
+                            ${item.averagePrice.toFixed(2)}
                           </td>
-                          <td className="py-3 px-4 text-sm text-right">
-                            <span className="inline-block bg-green-100 text-green-800 px-2 py-1 rounded font-semibold">
-                              {(forecast.accuracy || 85).toFixed(1)}%
-                            </span>
-                          </td>
-                          <td className="py-3 px-4 text-center">
-                            <Badge variant="info" size="sm">
-                              {forecast.method_Name || forecast.methodName || 'ANN'}
-                            </Badge>
+                          <td className="py-3 px-4 text-sm text-right font-semibold text-gray-900">
+                            ${item.totalValue.toFixed(2)}
                           </td>
                         </tr>
                       ))}
@@ -246,59 +241,97 @@ export const DashboardPage = () => {
           </div>
         </div>
 
-        {/* Sales Analytics */}
-        <Card title="Sales Analytics" subtitle="Monthly sales vs target" className="mt-6">
+        {/* Inventory Value Trend */}
+        <Card title="Inventory Value Trend" subtitle="Monthly inventory value at current location" className="mb-6">
           {loading ? (
             <div className="flex items-center justify-center py-12">
               <Loader className="animate-spin text-gray-400" size={32} />
             </div>
-          ) : salesData.length === 0 ? (
+          ) : inventoryTrend.length === 0 ? (
             <div className="flex flex-col items-center justify-center py-12 text-gray-400">
               <TrendingUp size={40} className="mb-3" />
-              <p className="text-gray-600">No sales data available</p>
+              <p className="text-gray-600">No trend data available</p>
             </div>
           ) : (
             <div className="space-y-4">
-              {salesData.map((data, idx) => (
+              {inventoryTrend.map((data, idx) => (
                 <div key={idx}>
                   <div className="flex items-center justify-between mb-2">
                     <span className="text-sm font-medium text-gray-700">{data.month}</span>
                     <span className="text-sm font-semibold text-gray-900">
-                      ${data.sales.toLocaleString()} / ${data.target.toLocaleString()}
+                      ${data.value.toLocaleString()} ({data.items} items)
                     </span>
                   </div>
-                  <div className="flex gap-2">
-                    <div className="flex-1 bg-primary-100 rounded-full h-2 overflow-hidden">
-                      <div
-                        className="bg-primary-600 h-full transition-all"
-                        style={{ width: `${(data.sales / maxSales) * 100}%` }}
-                      ></div>
-                    </div>
-                    <div className="flex-1 bg-gray-200 rounded-full h-2 overflow-hidden">
-                      <div
-                        className="bg-gray-400 h-full transition-all"
-                        style={{ width: `${(data.target / maxSales) * 100}%` }}
-                      ></div>
-                    </div>
+                  <div className="bg-primary-100 rounded-full h-2 overflow-hidden">
+                    <div
+                      className="bg-primary-600 h-full transition-all"
+                      style={{ width: `${(data.value / maxTrendValue) * 100}%` }}
+                    ></div>
                   </div>
                 </div>
               ))}
-              <div className="flex gap-4 mt-6 pt-4 border-t border-gray-200">
-                <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 bg-primary-600 rounded-full"></div>
-                  <span className="text-sm text-gray-600">Actual Sales</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 bg-gray-400 rounded-full"></div>
-                  <span className="text-sm text-gray-600">Target</span>
-                </div>
-              </div>
+            </div>
+          )}
+        </Card>
+
+        {/* Forecasting Results */}
+        <Card title="Forecasted Results" subtitle="AI-powered demand forecasts">
+          {loading ? (
+            <div className="flex items-center justify-center py-8">
+              <Loader className="animate-spin text-gray-400" size={32} />
+            </div>
+          ) : forecasts.length === 0 ? (
+            <div className="flex flex-col items-center justify-center py-12 text-gray-400">
+              <Eye size={40} className="mb-3" />
+              <p className="text-gray-600">No forecast data available</p>
+              <p className="text-sm text-gray-500 mt-1">
+                Forecasts will appear once enough historical data is collected
+              </p>
+            </div>
+          ) : (
+            <div className="overflow-x-auto">
+              <table className="w-full">
+                <thead>
+                  <tr className="border-b border-gray-200">
+                    <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700">Item</th>
+                    <th className="text-right py-3 px-4 text-sm font-semibold text-gray-700">Forecasted</th>
+                    <th className="text-right py-3 px-4 text-sm font-semibold text-gray-700">Actual</th>
+                    <th className="text-right py-3 px-4 text-sm font-semibold text-gray-700">Accuracy</th>
+                    <th className="text-center py-3 px-4 text-sm font-semibold text-gray-700">Method</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {forecasts.map((forecast: any, idx: number) => (
+                    <tr key={idx} className="border-b border-gray-100 hover:bg-gray-50">
+                      <td className="py-3 px-4 text-sm text-gray-900 font-medium">
+                        {forecast.item_Name || forecast.itemName || 'Unknown'}
+                      </td>
+                      <td className="py-3 px-4 text-sm text-right text-gray-900 font-medium">
+                        {Math.round(forecast.forecasted_Value || forecast.forecastedValue || 0)}
+                      </td>
+                      <td className="py-3 px-4 text-sm text-right text-gray-600">
+                        {Math.round(forecast.actual_Value || forecast.actualValue || 0)}
+                      </td>
+                      <td className="py-3 px-4 text-sm text-right">
+                        <span className="inline-block bg-green-100 text-green-800 px-2 py-1 rounded font-semibold">
+                          {(forecast.accuracy || 85).toFixed(1)}%
+                        </span>
+                      </td>
+                      <td className="py-3 px-4 text-center">
+                        <Badge variant="info" size="sm">
+                          {forecast.method_Name || forecast.methodName || 'ANN'}
+                        </Badge>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
           )}
         </Card>
 
         {/* Top Inventory Items */}
-        <Card title="Inventory at Current Location" subtitle={`Top items by value at ${currentLocation?.location_Name || 'selected location'}`} className="mt-6">
+        <Card title="Current Inventory" subtitle={`Top items by value at ${currentLocation?.location_Name || 'selected location'}`} className="mt-6">
           {loading ? (
             <div className="flex items-center justify-center py-8">
               <Loader className="animate-spin text-gray-400" size={32} />

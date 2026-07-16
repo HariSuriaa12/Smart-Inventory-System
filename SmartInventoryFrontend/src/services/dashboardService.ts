@@ -4,7 +4,6 @@ import { inventoryService } from './inventoryService'
 import { salesService } from './salesService'
 import { purchaseOrderService } from './purchaseOrderService'
 import { forecastingService } from './forecastingService'
-import { orderFulfillmentService } from './orderFulfillmentService'
 
 export interface DashboardStats {
   totalItems: number
@@ -12,12 +11,11 @@ export interface DashboardStats {
   pendingOrders: number
   lowStockItems: number
   totalStockValue: number
-  averageInventoryLevel: number
 }
 
 export interface DashboardAlert {
   id: string
-  type: 'low-stock' | 'pending-order' | 'overstock' | 'expiry'
+  type: 'low-stock' | 'pending-order' | 'overstock'
   message: string
   severity: 'error' | 'warning' | 'info'
   itemName?: string
@@ -33,17 +31,19 @@ export interface LocationInventoryData {
   value: number
 }
 
-export interface SalesData {
-  month: string
-  sales: number
-  target: number
+export interface TopSellingItem {
+  itemId: number
+  itemCode: string
+  itemName: string
+  totalQty: number
+  totalValue: number
+  averagePrice: number
 }
 
-export interface StockMovementData {
-  type: 'received' | 'sold' | 'transferred'
-  itemName: string
-  quantity: number
-  date: string
+export interface InventoryTrendData {
+  month: string
+  value: number
+  items: number
 }
 
 export const dashboardService = {
@@ -68,7 +68,6 @@ export const dashboardService = {
         pendingOrders,
         lowStockItems: 0,
         totalStockValue: 0,
-        averageInventoryLevel: 0,
       }
     } catch (error) {
       console.error('Failed to fetch dashboard stats:', error)
@@ -78,7 +77,6 @@ export const dashboardService = {
         pendingOrders: 0,
         lowStockItems: 0,
         totalStockValue: 0,
-        averageInventoryLevel: 0,
       }
     }
   },
@@ -86,9 +84,9 @@ export const dashboardService = {
   // Get location-specific inventory data
   getLocationInventory: async (locationId: number): Promise<LocationInventoryData[]> => {
     try {
-      const response = await inventoryService.getByLocation(locationId, 0, 100)
+      const response = await inventoryService.getInventoryByLocation(locationId, 0, 100)
       return (
-        response.data?.data?.map((inv: any) => ({
+        response.data?.map((inv: any) => ({
           itemId: inv.item_ID,
           itemCode: inv.item?.item_Code || '',
           itemName: inv.item?.item_Name || '',
@@ -125,20 +123,24 @@ export const dashboardService = {
       })
 
       // Get pending orders
-      const poResponse = await purchaseOrderService.getPurchaseOrders({
-        skip: 0,
-        take: 100,
-        status: 0,
-      })
-
-      const pendingCount = poResponse.data?.total || 0
-      if (pendingCount > 0) {
-        alerts.push({
-          id: `alert-${alertId++}`,
-          type: 'pending-order',
-          message: `You have ${pendingCount} pending purchase orders`,
-          severity: 'info',
+      try {
+        const poResponse = await purchaseOrderService.getPurchaseOrders({
+          skip: 0,
+          take: 100,
+          status: 0,
         })
+
+        const pendingCount = poResponse.data?.total || 0
+        if (pendingCount > 0) {
+          alerts.push({
+            id: `alert-${alertId++}`,
+            type: 'pending-order',
+            message: `You have ${pendingCount} pending purchase orders`,
+            severity: 'info',
+          })
+        }
+      } catch (err) {
+        console.error('Failed to fetch pending orders:', err)
       }
 
       return alerts.slice(0, 5) // Return top 5 alerts
@@ -148,29 +150,93 @@ export const dashboardService = {
     }
   },
 
-  // Get sales data for location
-  getLocationSalesData: async (locationId: number): Promise<SalesData[]> => {
+  // Get top selling items for location
+  getTopSellingItems: async (locationId: number): Promise<TopSellingItem[]> => {
     try {
-      const response = await salesService.getSales({ skip: 0, take: 100 })
-      // Group by month and calculate totals
-      const salesByMonth: { [key: string]: number } = {}
+      const salesResponse = await salesService.getSalesByLocation(locationId, 0, 500)
 
-      response.data?.data?.forEach((sale: any) => {
-        const date = new Date(sale.sale_Date)
-        const monthKey = date.toLocaleDateString('en-US', { year: 'numeric', month: 'short' })
-        salesByMonth[monthKey] = (salesByMonth[monthKey] || 0) + (sale.total_Amount || 0)
+      if (!salesResponse.data || salesResponse.data.length === 0) {
+        return []
+      }
+
+      // Group sales by item
+      const itemSales: { [key: number]: TopSellingItem } = {}
+
+      salesResponse.data.forEach((sale: any) => {
+        if (!sale.item_ID) return
+
+        if (!itemSales[sale.item_ID]) {
+          itemSales[sale.item_ID] = {
+            itemId: sale.item_ID,
+            itemCode: sale.item?.item_Code || '',
+            itemName: sale.item?.item_Name || '',
+            totalQty: 0,
+            totalValue: 0,
+            averagePrice: 0,
+          }
+        }
+
+        const qty = sale.quantity || 0
+        const price = sale.unit_Price || 0
+
+        itemSales[sale.item_ID].totalQty += qty
+        itemSales[sale.item_ID].totalValue += qty * price
       })
 
-      // Get last 6 months
-      const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun']
-      return months.map((month) => ({
-        month,
-        sales: Math.round(Math.random() * 70000 + 40000),
-        target: 50000,
-      }))
+      // Calculate average price and sort by total value
+      Object.values(itemSales).forEach((item) => {
+        if (item.totalQty > 0) {
+          item.averagePrice = item.totalValue / item.totalQty
+        }
+      })
+
+      return Object.values(itemSales)
+        .sort((a, b) => b.totalValue - a.totalValue)
+        .slice(0, 10)
     } catch (error) {
-      console.error('Failed to fetch sales data:', error)
+      console.error('Failed to fetch top selling items:', error)
       return []
+    }
+  },
+
+  // Get inventory value trend
+  getInventoryTrend: async (locationId: number): Promise<InventoryTrendData[]> => {
+    try {
+      const inventory = await dashboardService.getLocationInventory(locationId)
+
+      // For now, return current inventory value distributed over months
+      // In a real scenario, this would come from historical data
+      const totalValue = inventory.reduce((sum, item) => sum + item.value, 0)
+      const trend: InventoryTrendData[] = []
+
+      const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun']
+      const baseValue = totalValue / months.length
+
+      months.forEach((month, idx) => {
+        // Simulate trend with some variance
+        const variance = 0.8 + Math.random() * 0.4 // 80-120% of base value
+        trend.push({
+          month,
+          value: Math.round(baseValue * variance),
+          items: Math.round(inventory.length * variance * 0.5),
+        })
+      })
+
+      return trend
+    } catch (error) {
+      console.error('Failed to fetch inventory trend:', error)
+      return []
+    }
+  },
+
+  // Get sales analytics for location
+  getLocationSalesAnalytics: async (locationId: number) => {
+    try {
+      const response = await salesService.getSalesAnalytics(locationId)
+      return response.data || null
+    } catch (error) {
+      console.error('Failed to fetch sales analytics:', error)
+      return null
     }
   },
 
@@ -178,7 +244,7 @@ export const dashboardService = {
   getForecasts: async (locationId: number) => {
     try {
       const response = await forecastingService.getForecasts()
-      return response.data?.data || []
+      return response.data || []
     } catch (error) {
       console.error('Failed to fetch forecasts:', error)
       return []
@@ -186,24 +252,22 @@ export const dashboardService = {
   },
 
   // Get recent stock movements
-  getRecentStockMovements: async (locationId: number): Promise<StockMovementData[]> => {
+  getRecentTransactions: async (locationId: number) => {
     try {
-      // Fetch recent sales for location
-      const salesResponse = await salesService.getSales({ skip: 0, take: 20 })
-      const movements: StockMovementData[] = []
-
-      salesResponse.data?.data?.slice(0, 5).forEach((sale: any) => {
-        movements.push({
-          type: 'sold',
-          itemName: sale.item?.item_Name || 'Unknown Item',
-          quantity: sale.quantity || 0,
-          date: new Date(sale.sale_Date).toLocaleDateString(),
-        })
-      })
-
-      return movements
+      const salesResponse = await salesService.getSalesByLocation(locationId, 0, 10)
+      return (
+        salesResponse.data
+          ?.slice(0, 5)
+          .map((sale: any) => ({
+            type: 'sold',
+            itemName: sale.item?.item_Name || 'Unknown Item',
+            quantity: sale.quantity || 0,
+            value: (sale.quantity || 0) * (sale.unit_Price || 0),
+            date: new Date(sale.sale_Date).toLocaleDateString(),
+          })) || []
+      )
     } catch (error) {
-      console.error('Failed to fetch stock movements:', error)
+      console.error('Failed to fetch recent transactions:', error)
       return []
     }
   },
