@@ -104,6 +104,23 @@ public class InventoryService : IInventoryService
         };
     }
 
+    public async Task<InventoryDetailDto> GetByItemAndLocationAsync(long itemId, long locationId)
+    {
+        var item = await _unitOfWork.Inventories.GetByIdAsync(itemId);
+        if (item == null || item.Is_Deleted == true)
+            throw new Exception("item not found");
+
+        var location = await _unitOfWork.Inventories.GetByIdAsync(locationId);
+        if (location == null || location.Is_Deleted == true)
+            throw new Exception("location not found");
+
+        var inventory = await _unitOfWork.Inventories.GetByItemAndLocationAsync(item.ID, location.ID);
+        if (inventory == null || inventory.Is_Deleted == true)
+            throw new Exception("Inventory not found");
+
+        return _mapper.Map<InventoryDetailDto>(inventory);
+    }
+
     public async Task<InventoryDto> AdjustInventoryAsync(AdjustInventoryRequestDto request, long userId = 1)
     {
         var inventory = await _unitOfWork.Inventories.GetByItemAndLocationAsync(request.Item_ID, request.Location_ID);

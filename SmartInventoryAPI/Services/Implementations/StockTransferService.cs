@@ -130,6 +130,7 @@ public class StockTransferService : IStockTransferService
 
         transfer.Received_Quantity = totalReceived + transfer.Received_Quantity;
         transfer.Status = totalReceived >= transfer.Transfer_Quantity ? StatusReceived : StatusPartiallyReceived;
+        transfer.Transfer_Date = DateTime.SpecifyKind(transfer.Transfer_Date, DateTimeKind.Utc);
         if (!string.IsNullOrWhiteSpace(request.Remark))
             transfer.Remark = request.Remark;
 
@@ -209,6 +210,7 @@ public class StockTransferService : IStockTransferService
             balanceQuantity * -1,
             performLogId);
 
+        transfer.Transfer_Date = DateTime.SpecifyKind(transfer.Transfer_Date, DateTimeKind.Utc);
         transfer.Status = StatusCancelled;
         if (!string.IsNullOrWhiteSpace(request.Remark))
             transfer.Remark = request.Remark;
@@ -247,9 +249,10 @@ public class StockTransferService : IStockTransferService
         fromInventory.On_Hand_Quantity += transfer.Transfer_Quantity;
         fromInventory.Available_Quantity += transfer.Transfer_Quantity;
         toInventory.On_Hand_Quantity -= returnQuantity;
-        toInventory.Available_Quantity -= returnQuantity;
+        toInventory.Available_Quantity -= transfer.Transfer_Quantity;
         transfer.Status = StatusCancelled;
         transfer.Received_Quantity = 0;
+        transfer.Transfer_Date = DateTime.SpecifyKind(transfer.Transfer_Date, DateTimeKind.Utc);
         if (!string.IsNullOrWhiteSpace(request.Remark))
             transfer.Remark = request.Remark;
 
@@ -308,18 +311,13 @@ public class StockTransferService : IStockTransferService
         if (user == null || user.Is_Deleted)
             throw new NotFoundException("user not found");
 
-        // Store previous values for logging
-        var fromPreviousOnhand = fromInventory.On_Hand_Quantity;
-        var fromPreviousAvailable = fromInventory.Available_Quantity;
-        var toPreviousOnhand = toInventory.On_Hand_Quantity;
-        var toPreviousAvailable = toInventory.Available_Quantity;
-
         // Deduct from source
         fromInventory.Available_Quantity -= request.Transfer_Quantity;
+        fromInventory.On_Hand_Quantity -= request.Transfer_Quantity;
         await _unitOfWork.Inventories.UpdateAsync(fromInventory);
 
         // Add to destination
-        toInventory.On_Hand_Quantity += request.Transfer_Quantity;
+        toInventory.Available_Quantity += request.Transfer_Quantity;
         //toInventory.Available_Quantity += request.Transfer_Quantity;
         await _unitOfWork.Inventories.UpdateAsync(toInventory);
 
@@ -366,7 +364,7 @@ public class StockTransferService : IStockTransferService
         await _loggingService.LogInventoryChangeAsync(
             request.Item_ID,
             request.To_Location_ID,
-            request.Transfer_Quantity,
+            0,
             request.Transfer_Quantity,
             performLogId);
 

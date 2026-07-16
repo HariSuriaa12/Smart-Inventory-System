@@ -42,7 +42,7 @@ const STATUS_BADGE_CLASSES: Record<StockTransferStatus, string> = {
 }
 
 const getContextualStatusLabel = (transfer: StockTransfer, currentLocationId?: number): string => {
-  console.log('getContextualStatusLabel called with transfer:', transfer, 'currentLocationId:', currentLocationId)
+  //console.log('getContextualStatusLabel called with transfer:', transfer, 'currentLocationId:', currentLocationId)
   if (transfer.status === StockTransferStatus.Cancelled) return StockTransferStatusLabel[StockTransferStatus.Cancelled]
   if (transfer.status === StockTransferStatus.Received) return StockTransferStatusLabel[StockTransferStatus.Received]
   if (transfer.status === StockTransferStatus.PartiallyReceived) return StockTransferStatusLabel[StockTransferStatus.PartiallyReceived]
@@ -342,7 +342,7 @@ export const StockTransferListPage = () => {
       width: '120px',
       render: (_, transfer) => (
         <div className="flex gap-2">
-          {transfer.to_Location_ID === currentLocation?.id && transfer.status !== StockTransferStatus.Received && (
+          {transfer.to_Location_ID === currentLocation?.id && transfer.status !== StockTransferStatus.Received && transfer.status !== StockTransferStatus.Cancelled && (
             <button
               onClick={() => handleActionClick(transfer, 'receive')}
               className="p-1.5 text-green-600 hover:bg-green-50 rounded transition-colors disabled:opacity-50"
@@ -351,7 +351,7 @@ export const StockTransferListPage = () => {
               <Package size={16} />
             </button>
           )}
-          {transfer.status !== StockTransferStatus.Received && (
+          {transfer.status !== StockTransferStatus.Received && transfer.status !== StockTransferStatus.Cancelled && (
             <button
               onClick={() => handleActionClick(transfer, 'cancel')}
               className="p-1.5 text-gray-600 hover:bg-gray-100 rounded transition-colors disabled:opacity-50"
@@ -360,7 +360,7 @@ export const StockTransferListPage = () => {
               <X size={16} />
             </button>
           )}
-          {transfer.status !== StockTransferStatus.Cancelled && transfer.status !== StockTransferStatus.Shipped && (
+          {transfer.status !== StockTransferStatus.Cancelled && transfer.status !== StockTransferStatus.Shipped && transfer.to_Location_ID === currentLocation?.id && (
             <button
               onClick={() => handleActionClick(transfer, 'cancelWithReturn')}
               className="p-1.5 text-orange-600 hover:bg-orange-50 rounded transition-colors disabled:opacity-50"

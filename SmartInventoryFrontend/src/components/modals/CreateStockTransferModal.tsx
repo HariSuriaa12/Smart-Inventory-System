@@ -28,6 +28,7 @@ export const CreateStockTransferModal = ({
   const { locations } = useAppSelector((state) => state.locations)
   const { items } = useAppSelector((state) => state.items)
   const { currentLocation } = useAppSelector((state) => state.locations)
+  const { currentUser } = useAppSelector((state) => state.auth)
 
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
@@ -41,6 +42,7 @@ export const CreateStockTransferModal = ({
 
   useEffect(() => {
     if (isOpen) {
+      console.log('User:', currentUser)
       dispatch(fetchAllLocations() as any)
       dispatch(fetchItems({ skip: 0, take: 500 }) as any)
       setSelectedItem(null)
@@ -58,10 +60,11 @@ export const CreateStockTransferModal = ({
     const fetchAvailableQty = async () => {
       if (selectedItem && currentLocation) {
         try {
-          const response = await inventoryService.getByItemAndLocation(
+          const response = await inventoryService.getInventoryByItemAndLocation(
             selectedItem.id,
             currentLocation.id
           )
+          console.log('Available Quantity Response:', response)
           setAvailableQuantity(response.data?.available_Quantity || 0)
         } catch (err) {
           setAvailableQuantity(0)
@@ -127,6 +130,7 @@ export const CreateStockTransferModal = ({
 
     try {
       await stockTransferService.createStockTransfer({
+        User_ID: currentUser?.userID || 0,
         From_Location_ID: currentLocation.id,
         To_Location_ID: parseInt(toLocation),
         Item_ID: selectedItem.id,

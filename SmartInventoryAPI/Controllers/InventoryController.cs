@@ -80,6 +80,20 @@ public class InventoryController : ControllerBase
         });
     }
 
+    [HttpGet("item/{itemId}/location/{locationId}")]
+    public async Task<ActionResult<ApiResponseDto<InventoryDetailDto>>> GetByItemAndLocation(
+    long itemId, long locationId)
+    {
+        var inventories = await _inventoryService.GetByItemAndLocationAsync(itemId, locationId);
+        return Ok(new ApiResponseDto<InventoryDetailDto>
+        {
+            Success = true,
+            Message = "Success",
+            Data = inventories,
+            StatusCode = 200
+        });
+    }
+
     [HttpPut("adjust")]
     public async Task<ActionResult<ApiResponseDto<InventoryDto>>> AdjustInventory([FromBody] AdjustInventoryRequestDto request)
     {
