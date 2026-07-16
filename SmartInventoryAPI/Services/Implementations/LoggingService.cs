@@ -15,7 +15,7 @@ public class LoggingService : ILoggingService
         _logger = logger;
     }
 
-    public async Task LogPerformanceAsync(long performedBy, long performedOutlet, int performModule,
+    public async Task<long> LogPerformanceAsync(long performedBy, long performedOutlet, int performModule,
         int operationType, string performRemark, long operationId)
     {
         try
@@ -35,10 +35,12 @@ public class LoggingService : ILoggingService
             await _unitOfWork.SaveAsync();
             _logger.LogInformation("Performance logged: Module {Module}, Operation {Operation}, ID {OperationId}",
                 performModule, operationType, operationId);
+            return performLog.ID;
         }
         catch (Exception ex)
         {
             _logger.LogError(ex, "Failed to log performance operation");
+            return 0;
         }
     }
 

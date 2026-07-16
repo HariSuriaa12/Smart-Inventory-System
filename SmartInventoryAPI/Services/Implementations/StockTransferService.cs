@@ -133,7 +133,7 @@ public class StockTransferService : IStockTransferService
         if (!string.IsNullOrWhiteSpace(request.Remark))
             transfer.Remark = request.Remark;
 
-        await _loggingService.LogPerformanceAsync(
+        var performLogId = await _loggingService.LogPerformanceAsync(
             performedBy: transfer.Performed_By,
             performedOutlet: transfer.To_Location_ID,
             performModule: 9, // Stock Transfer module
@@ -145,9 +145,9 @@ public class StockTransferService : IStockTransferService
         await _loggingService.LogInventoryChangeAsync(
             transfer.Item_ID,
             transfer.To_Location_ID,
-            toInventory.On_Hand_Quantity,
+            request.ReceivedQuantity,
             0,
-            transfer.ID);
+            performLogId);
 
         await _unitOfWork.Inventories.UpdateAsync(toInventory);
         await _unitOfWork.StockTransfers.UpdateAsync(transfer);
@@ -185,7 +185,7 @@ public class StockTransferService : IStockTransferService
         fromInventory.Available_Quantity += balanceQuantity;
         toInventory.Available_Quantity -= balanceQuantity;
 
-        await _loggingService.LogPerformanceAsync(
+        var performLogId = await _loggingService.LogPerformanceAsync(
             performedBy: transfer.Performed_By,
             performedOutlet: transfer.From_Location_ID,
             performModule: 9, // Stock Transfer module
@@ -199,7 +199,7 @@ public class StockTransferService : IStockTransferService
             transfer.From_Location_ID,
             balanceQuantity,
             balanceQuantity,
-            transfer.ID);
+            performLogId);
 
         // Log inventory changes for destination location
         await _loggingService.LogInventoryChangeAsync(
@@ -207,7 +207,7 @@ public class StockTransferService : IStockTransferService
             transfer.To_Location_ID,
             0,
             balanceQuantity * -1,
-            transfer.ID);
+            performLogId);
 
         transfer.Status = StatusCancelled;
         if (!string.IsNullOrWhiteSpace(request.Remark))
@@ -253,7 +253,7 @@ public class StockTransferService : IStockTransferService
         if (!string.IsNullOrWhiteSpace(request.Remark))
             transfer.Remark = request.Remark;
 
-        await _loggingService.LogPerformanceAsync(
+        var performLogId = await _loggingService.LogPerformanceAsync(
             performedBy: transfer.Performed_By,
             performedOutlet: transfer.From_Location_ID,
             performModule: 9, // Stock Transfer module
@@ -267,7 +267,7 @@ public class StockTransferService : IStockTransferService
             transfer.From_Location_ID,
             transfer.Transfer_Quantity,
             transfer.Transfer_Quantity,
-            transfer.ID);
+            performLogId);
 
         // Log inventory changes for destination location
         await _loggingService.LogInventoryChangeAsync(
@@ -275,7 +275,7 @@ public class StockTransferService : IStockTransferService
             transfer.To_Location_ID,
             returnQuantity * -1,
             returnQuantity * -1,
-            transfer.ID);
+            performLogId);
 
         await _unitOfWork.Inventories.UpdateAsync(toInventory);
         await _unitOfWork.Inventories.UpdateAsync(fromInventory);
