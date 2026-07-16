@@ -63,15 +63,15 @@ export const dashboardService = {
       const response = await api.get<ApiResponse<PaginatedResponse<any>>>(`/api/inventory/location/${locationId}`, {
         params: { skip: 0, take: 100 },
       })
-
+      console.log('Location inventory response:', response.data)
       return (
-        response.data?.data?.map((inv: any) => ({
+        response.data?.data?.data?.map((inv: any) => ({
           itemId: inv.item_ID,
           itemCode: inv.item?.item_Code || '',
           itemName: inv.item?.item_Name || '',
           onHandQty: inv.on_Hand_Quantity || 0,
           availableQty: inv.available_Quantity || 0,
-          value: (inv.available_Quantity || 0) * (inv.item?.unit_Price || 0),
+          value: (inv.available_Quantity || 0) * (inv.item?.unit_Cost || 0),
         })) || []
       )
     } catch (error) {

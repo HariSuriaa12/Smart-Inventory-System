@@ -245,7 +245,7 @@ public class InventoryService : IInventoryService
     {
         var inventories = await _unitOfWork.Inventories.GetByLocationAsync(locationId, 0, 1000);
 
-        var totalValue = inventories.Sum(i => (i.On_Hand_Quantity * (i.Item?.Unit_Price ?? 0)));
+        var totalValue = inventories.Sum(i => (i.On_Hand_Quantity * (i.Item?.Unit_Cost ?? 0)));
         var baseValue = totalValue / 6;
 
         var months = new[] { "Jan", "Feb", "Mar", "Apr", "May", "Jun" };
@@ -255,7 +255,7 @@ public class InventoryService : IInventoryService
             return new
             {
                 month = month,
-                value = (int)(baseValue * variance),
+                value = (int)(baseValue * (decimal)variance),
                 items = inventories.Count()
             };
         }).ToList<dynamic>();

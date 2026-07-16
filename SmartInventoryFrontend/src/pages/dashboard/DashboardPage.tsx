@@ -51,7 +51,13 @@ export const DashboardPage = () => {
           dashboardService.getInventoryTrend(currentLocation.id),
           dashboardService.getForecasts(currentLocation.id),
         ])
-
+        console.log('Fetched dashboard data:', {
+          alerts: alertsData,
+          inventory: inventoryData,
+          topSelling: topSellingData,
+          trend: trendData,
+          forecasts: forecastsData,
+        })
         setAlerts(alertsData)
         setInventory(inventoryData)
         setTopSellingItems(topSellingData)

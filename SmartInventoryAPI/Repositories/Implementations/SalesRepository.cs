@@ -23,6 +23,8 @@ public class SalesRepository : GenericRepository<Sales>, ISalesRepository
     {
         return await _dbSet.Where(s => s.Location_ID == locationId && !s.Is_Deleted)
             .Include(s => s.Location)
+            .Include(s => s.Items)
+            .ThenInclude(i => i.Item)
             .Skip(skip)
             .Take(take)
             .ToListAsync();
