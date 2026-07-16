@@ -1652,6 +1652,99 @@
   },
   {
     "ContainingType": "SmartInventoryAPI.Controllers.StockTransferController",
+    "Method": "CancelStockTransfer",
+    "RelativePath": "api/StockTransfer/{id}/cancel",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int64",
+        "IsRequired": true
+      },
+      {
+        "Name": "request",
+        "Type": "SmartInventoryAPI.Models.DTOs.Request.StockTransfer.CancelStockTransferRequestDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "SmartInventoryAPI.Models.DTOs.Response.ApiResponseDto\u00601[[SmartInventoryAPI.Models.DTOs.Response.StockTransferDto, SmartInventoryAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "SmartInventoryAPI.Controllers.StockTransferController",
+    "Method": "CancelStockTransferWithReturn",
+    "RelativePath": "api/StockTransfer/{id}/cancel-return",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int64",
+        "IsRequired": true
+      },
+      {
+        "Name": "request",
+        "Type": "SmartInventoryAPI.Models.DTOs.Request.StockTransfer.CancelStockTransferRequestDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "SmartInventoryAPI.Models.DTOs.Response.ApiResponseDto\u00601[[SmartInventoryAPI.Models.DTOs.Response.StockTransferDto, SmartInventoryAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "SmartInventoryAPI.Controllers.StockTransferController",
+    "Method": "ReceiveStock",
+    "RelativePath": "api/StockTransfer/{id}/receive",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int64",
+        "IsRequired": true
+      },
+      {
+        "Name": "request",
+        "Type": "SmartInventoryAPI.Models.DTOs.Request.StockTransfer.ReceiveStockRequestDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "SmartInventoryAPI.Models.DTOs.Response.ApiResponseDto\u00601[[SmartInventoryAPI.Models.DTOs.Response.StockTransferDto, SmartInventoryAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "SmartInventoryAPI.Controllers.StockTransferController",
     "Method": "GetByFromLocation",
     "RelativePath": "api/StockTransfer/from-location/{locationId}",
     "HttpMethod": "GET",

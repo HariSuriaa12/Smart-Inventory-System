@@ -110,9 +110,6 @@ public class InventoryService : IInventoryService
         if (inventory == null || inventory.Is_Deleted)
             throw new NotFoundException("Inventory record not found");
 
-        var previousOnhand = inventory.On_Hand_Quantity;
-        var previousAvailable = inventory.Available_Quantity;
-
         inventory.On_Hand_Quantity += request.QuantityAdjustment;
         inventory.Available_Quantity += request.QuantityAdjustment;
 
@@ -135,15 +132,13 @@ public class InventoryService : IInventoryService
         await _loggingService.LogInventoryChangeAsync(
             request.Item_ID,
             request.Location_ID,
-            previousOnhand,
             inventory.On_Hand_Quantity,
-            previousAvailable,
             inventory.Available_Quantity,
             inventory.ID);
 
         _logger.LogInformation(
-            "Inventory adjusted: Item {ItemID}, Location {LocationID}, Qty: {PreviousQty} -> {NewQty}",
-            request.Item_ID, request.Location_ID, previousOnhand, inventory.On_Hand_Quantity);
+            "Inventory adjusted: Item {ItemID}, Location {LocationID}, Qty Onhand: {Onhand}, Available Onhand: {Av}",
+            request.Item_ID, request.Location_ID, inventory.On_Hand_Quantity, inventory.Available_Quantity);
 
         return _mapper.Map<InventoryDto>(inventory);
     }
@@ -165,14 +160,9 @@ public class InventoryService : IInventoryService
         if (item == null || item.Is_Deleted)
             throw new NotFoundException("item not found");
 
-        // Store previous values for logging
-        var fromPreviousOnhand = fromInventory.On_Hand_Quantity;
-        var fromPreviousAvailable = fromInventory.Available_Quantity;
-        var toPreviousOnhand = toInventory.On_Hand_Quantity;
-        var toPreviousAvailable = toInventory.Available_Quantity;
-
         // Deduct from source
         fromInventory.Available_Quantity -= request.Transfer_Quantity;
+        fromInventory.On_Hand_Quantity -= request.Transfer_Quantity;
         await _unitOfWork.Inventories.UpdateAsync(fromInventory);
 
         // Add to destination
@@ -200,7 +190,7 @@ public class InventoryService : IInventoryService
 
         // Log performance
         var transferRemark = string.IsNullOrEmpty(request.Remark)
-            ? "Stock Transfer : "
+            ? "Stock Transfer"
             : $"Stock Transfer : {request.Remark}";
 
         await _loggingService.LogPerformanceAsync(
@@ -215,9 +205,7 @@ public class InventoryService : IInventoryService
         await _loggingService.LogInventoryChangeAsync(
             request.Item_ID,
             request.From_Location_ID,
-            fromPreviousOnhand,
             fromInventory.On_Hand_Quantity,
-            fromPreviousAvailable,
             fromInventory.Available_Quantity,
             transfer.ID);
 
@@ -225,10 +213,8 @@ public class InventoryService : IInventoryService
         await _loggingService.LogInventoryChangeAsync(
             request.Item_ID,
             request.To_Location_ID,
-            toPreviousOnhand,
             toInventory.On_Hand_Quantity,
-            toPreviousAvailable,
-            toInventory.Available_Quantity,
+            0,
             transfer.ID);
 
         _logger.LogInformation(

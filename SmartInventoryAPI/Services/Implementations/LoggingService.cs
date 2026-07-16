@@ -65,8 +65,7 @@ public class LoggingService : ILoggingService
         }
     }
 
-    public async Task LogInventoryChangeAsync(long itemId, long locationId, decimal previousOnhand,
-        decimal newOnhand, decimal previousAvailable, decimal newAvailable, long performLogId)
+    public async Task LogInventoryChangeAsync(long itemId, long locationId, decimal onhandMovement, decimal availableMovement, long performLogId)
     {
         try
         {
@@ -74,17 +73,19 @@ public class LoggingService : ILoggingService
             {
                 Item_ID = itemId,
                 Location_ID = locationId,
-                Previous_Onhand_Quantity = previousOnhand,
-                New_Onhand_Quantity = newOnhand,
-                Previous_Available_Quantity = previousAvailable,
-                New_Available_Quantity = newAvailable,
+                //Previous_Onhand_Quantity = previousOnhand,
+                //New_Onhand_Quantity = newOnhand,
+                //Previous_Available_Quantity = previousAvailable,
+                //New_Available_Quantity = newAvailable,
+                Onhand_Quantity_Movement = onhandMovement,
+                Available_Quantity_Movement = availableMovement,
                 Performed_Log_ID = performLogId
             };
 
             await _unitOfWork.InventoryLogs.AddAsync(inventoryLog);
             await _unitOfWork.SaveAsync();
-            _logger.LogInformation("Inventory change logged: Item {ItemId}, Location {LocationId}, {OldQty} -> {NewQty}",
-                itemId, locationId, previousOnhand, newOnhand);
+            _logger.LogInformation("Inventory change logged: Item {ItemId}, Location {LocationId}, Onhand {OldQty}, Available {NewQty}",
+                itemId, locationId, onhandMovement, availableMovement);
         }
         catch (Exception ex)
         {
