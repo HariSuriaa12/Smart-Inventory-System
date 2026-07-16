@@ -85,23 +85,23 @@ export const Sidebar: React.FC<SidebarProps> = ({ open, collapsed = false, onTog
         { title: 'Sales', href: '/app/sales', icon: <BarChart3 size={16} /> },
       ],
     },
-    {
-      title: 'Analytics',
-      icon: <BarChart3 size={20} />,
-      submenu: [
-        {
-          title: 'Forecasting',
-          href: '/app/forecasting',
-          icon: <TrendingUp size={16} />,
-        },
-        { title: 'Reports', href: '/app/reports', icon: <BarChart3 size={16} /> },
-      ],
-    },
-    {
-      title: 'Settings',
-      href: '/app/settings',
-      icon: <Settings size={20} />,
-    },
+    // {
+    //   title: 'Analytics',
+    //   icon: <BarChart3 size={20} />,
+    //   submenu: [
+    //     {
+    //       title: 'Forecasting',
+    //       href: '/app/forecasting',
+    //       icon: <TrendingUp size={16} />,
+    //     },
+    //     { title: 'Reports', href: '/app/reports', icon: <BarChart3 size={16} /> },
+    //   ],
+    // },
+    // {
+    //   title: 'Settings',
+    //   href: '/app/settings',
+    //   icon: <Settings size={20} />,
+    // },
   ]
 
   const isActive = (href?: string) => {

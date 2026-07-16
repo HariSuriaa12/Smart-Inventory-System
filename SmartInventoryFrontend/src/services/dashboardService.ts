@@ -50,11 +50,9 @@ export const dashboardService = {
   // Get master stats (all data)
   getStats: async (): Promise<DashboardStats> => {
     try {
-      const itemsResponse = await itemService.getAllItems({ skip: 0, take: 1000 })
+      const itemsResponse = await itemService.getItems(0, 1000)
       const locationsResponse = await locationService.getAllLocations()
-      const poResponse = await purchaseOrderService.getPurchaseOrders({
-        skip: 0,
-        take: 1000,
+      const poResponse = await purchaseOrderService.getPurchaseOrders(0, 1000,{
         status: 0, // Only pending orders
       })
 
@@ -62,6 +60,11 @@ export const dashboardService = {
       const totalLocations = locationsResponse.data?.length || 0
       const pendingOrders = poResponse.data?.total || 0
 
+      console.log('Dashboard Stats:', {
+        totalItems,
+        totalLocations,
+        pendingOrders,
+      })
       return {
         totalItems,
         totalLocations,
