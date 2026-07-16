@@ -47,6 +47,7 @@ export const LocationModalProvider: React.FC<{ children: ReactNode }> = ({ child
 
   const confirmLocationChange = useCallback(() => {
     closeWarningDialog()
+    setIsMandatory(false)
     setIsLocationModalOpen(true)
   }, [closeWarningDialog])
 

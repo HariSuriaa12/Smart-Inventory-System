@@ -20,25 +20,30 @@ export const LocationSelectionModal = () => {
     }
   }, [isLocationModalOpen, locations.length, dispatch])
 
+  // Auto-close modal when location is selected (not mandatory anymore)
+  useEffect(() => {
+    if (selectedLocationId && !isMandatory && isLocationModalOpen) {
+      const timer = setTimeout(() => {
+        closeLocationModal()
+      }, 100)
+      return () => clearTimeout(timer)
+    }
+  }, [selectedLocationId, isMandatory, isLocationModalOpen, closeLocationModal])
+
   const handleSelectLocation = (location: Location) => {
     setSelectedLocationId(location.id)
-
     dispatch(setCurrentLocation(location))
+
+    // If mandatory, set it to optional so modal can close
+    if (isMandatory) {
+      openLocationModal(false)
+    }
 
     // Execute callback if set (e.g., from LocationSwitchWarningDialog)
     if (onLocationConfirmed) {
       onLocationConfirmed(location)
-      // Clear callback after execution so it doesn't persist
       setOnLocationConfirmed(null as any)
     }
-
-    // Close modal after selection - use setTimeout to ensure state updates complete first
-    if (isMandatory) {
-      openLocationModal(false)
-    }
-    setTimeout(() => {
-      closeLocationModal()
-    }, 0)
   }
 
   const handleBackToLogin = () => {
