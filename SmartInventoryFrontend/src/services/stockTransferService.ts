@@ -71,4 +71,7 @@ export const stockTransferService = {
     (await api.post<ApiResponse<StockTransfer>>(`/api/stocktransfer/${id}/cancel-return`, {
       remark,
     })).data,
+
+  createStockTransfer: async (data: any) =>
+    (await api.post<ApiResponse<StockTransfer>>('/api/stocktransfer/transfer', data)).data,
 }

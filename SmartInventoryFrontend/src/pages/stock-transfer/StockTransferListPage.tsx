@@ -5,7 +5,7 @@ import { fetchAllLocations } from '@/store/slices/locationSlice'
 import { fetchItems } from '@/store/slices/itemSlice'
 import { DataGrid, Card, Column } from '@/components'
 import { ColumnSelectorModal } from '@/components/modals/ColumnSelectorModal'
-import { StockTransferModal } from '@/components/modals/StockTransferModal'
+import { CreateStockTransferModal } from '@/components/modals/CreateStockTransferModal'
 import { ReceivedQuantityModal } from '@/components/modals/ReceivedQuantityModal'
 import { StockTransfer, StockTransferStatus, StockTransferStatusLabel } from '@/types/stocktransfer'
 import { Plus, Columns3, Package, X, RotateCcw } from 'lucide-react'
@@ -511,7 +511,7 @@ export const StockTransferListPage = () => {
       </Card>
 
       {/* Create Transfer Modal */}
-      <StockTransferModal
+      <CreateStockTransferModal
         isOpen={isCreateModalOpen}
         onClose={() => setIsCreateModalOpen(false)}
         onSuccess={handleCreateSuccess}
