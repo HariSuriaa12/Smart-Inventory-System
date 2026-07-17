@@ -6,6 +6,7 @@ using SmartInventoryAPI.Models.DTOs.Request.Item;
 using SmartInventoryAPI.Models.DTOs.Request.Location;
 using SmartInventoryAPI.Models.DTOs.Request.OrderFulfillment;
 using SmartInventoryAPI.Models.DTOs.Request.PurchaseOrder;
+using SmartInventoryAPI.Models.DTOs.Request.RolePermission;
 using SmartInventoryAPI.Models.DTOs.Request.Sales;
 using SmartInventoryAPI.Models.DTOs.Request.User;
 using SmartInventoryAPI.Models.DTOs.Request.Vendor;
@@ -173,6 +174,9 @@ public class MapperProfile : Profile
             .ForMember(dest => dest.User_Full_Name, opt => opt.MapFrom(src => src.User != null ? src.User.Full_Name : ""))
             .ForMember(dest => dest.User_Staff_Code, opt => opt.MapFrom(src => src.User != null ? src.User.Staff_Code : ""));
 
-        //User
+        // RolePermission mappings
+        CreateMap<RolePermission, RolePermissionDto>();
+        CreateMap<CreateRolePermissionRequestDto, RolePermission>();
+        CreateMap<UpdateRolePermissionRequestDto, RolePermission>();
     }
 }

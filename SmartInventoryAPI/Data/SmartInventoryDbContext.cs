@@ -27,6 +27,7 @@ public class SmartInventoryDbContext : DbContext
     public DbSet<PriceLog> Price_Log { get; set; }
     public DbSet<InventoryLog> Inventory_Log { get; set; }
     public DbSet<ForecastedResult> Forecasted_Result { get; set; }
+    public DbSet<RolePermission> RolePermission { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

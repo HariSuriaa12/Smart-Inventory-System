@@ -1,7 +1,9 @@
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 import { X } from 'lucide-react'
 import { Input } from '@/components'
 import { CreateUserRequest, UserRole, UserRoleLabel } from '@/types/auth'
+import { rolePermissionService } from '@/services/rolePermissionService'
+import { RolePermission } from '@/types/rolePermission'
 
 interface AddUserModalProps {
   isOpen: boolean
@@ -21,8 +23,33 @@ export const AddUserModal = ({ isOpen, onClose, onSubmit, isLoading = false }: A
     staff_Code: '',
     ic: '',
   })
+  const [activeRoles, setActiveRoles] = useState<RolePermission[]>([])
+  const [rolesLoading, setRolesLoading] = useState(false)
 
   const [errors, setErrors] = useState<Record<string, string>>({})
+
+  useEffect(() => {
+    if (isOpen) {
+      const fetchRoles = async () => {
+        try {
+          setRolesLoading(true)
+          const response = await rolePermissionService.getActiveRoles()
+          if (response.success && response.data) {
+            setActiveRoles(response.data)
+            // Set default role to first available role
+            if (response.data.length > 0) {
+              setFormData(prev => ({ ...prev, role: response.data[0].role_ID }))
+            }
+          }
+        } catch (error) {
+          console.error('Failed to fetch active roles:', error)
+        } finally {
+          setRolesLoading(false)
+        }
+      }
+      fetchRoles()
+    }
+  }, [isOpen])
 
   const validateForm = useCallback(() => {
     const newErrors: Record<string, string> = {}
@@ -151,12 +178,20 @@ export const AddUserModal = ({ isOpen, onClose, onSubmit, isLoading = false }: A
               <select
                 value={formData.role}
                 onChange={(e) => handleInputChange('role', parseInt(e.target.value))}
-                disabled={isLoading}
+                disabled={isLoading || rolesLoading || activeRoles.length === 0}
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-primary-500 focus:border-transparent bg-white transition-colors disabled:bg-gray-100 disabled:cursor-not-allowed"
               >
-                <option value={UserRole.Admin}>{UserRoleLabel[UserRole.Admin]}</option>
-                <option value={UserRole.Manager}>{UserRoleLabel[UserRole.Manager]}</option>
-                <option value={UserRole.Staff}>{UserRoleLabel[UserRole.Staff]}</option>
+                {rolesLoading ? (
+                  <option>Loading roles...</option>
+                ) : activeRoles.length === 0 ? (
+                  <option>No roles available</option>
+                ) : (
+                  activeRoles.map(role => (
+                    <option key={role.role_ID} value={role.role_ID}>
+                      {role.role_Name}
+                    </option>
+                  ))
+                )}
               </select>
             </div>
           </div>

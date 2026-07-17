@@ -2,6 +2,8 @@ import { useState, useCallback, useEffect, useMemo } from 'react'
 import { X, Trash2 } from 'lucide-react'
 import { Input } from '@/components'
 import { User, UpdateUserRequest, UserRole, UserRoleLabel } from '@/types/auth'
+import { rolePermissionService } from '@/services/rolePermissionService'
+import { RolePermission } from '@/types/rolePermission'
 
 interface EditUserModalProps {
   isOpen: boolean
@@ -24,6 +26,26 @@ export const EditUserModal = ({ isOpen, user, onClose, onUpdate, onDelete, isLoa
 
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
+  const [activeRoles, setActiveRoles] = useState<RolePermission[]>([])
+  const [rolesLoading, setRolesLoading] = useState(false)
+
+  // Fetch active roles
+  useEffect(() => {
+    const fetchRoles = async () => {
+      try {
+        setRolesLoading(true)
+        const response = await rolePermissionService.getActiveRoles()
+        if (response.success && response.data) {
+          setActiveRoles(response.data)
+        }
+      } catch (error) {
+        console.error('Failed to fetch active roles:', error)
+      } finally {
+        setRolesLoading(false)
+      }
+    }
+    fetchRoles()
+  }, [])
 
   // Initialize form when user changes
   useEffect(() => {
@@ -185,14 +207,20 @@ export const EditUserModal = ({ isOpen, user, onClose, onUpdate, onDelete, isLoa
               <select
                 value={formData.role || UserRole.Staff}
                 onChange={(e) => handleInputChange('role', parseInt(e.target.value))}
-                disabled={isLoading}
+                disabled={isLoading || rolesLoading || activeRoles.length === 0}
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-primary-500 focus:border-transparent bg-white transition-colors disabled:bg-gray-100 disabled:cursor-not-allowed"
               >
-                <option value={UserRole.Admin}>{UserRoleLabel[UserRole.Admin]}</option>
-                <option value={UserRole.Manager}>{UserRoleLabel[UserRole.Manager]}</option>
-                <option value={UserRole.Staff}>{UserRoleLabel[UserRole.Staff]}</option>
-                <option value={UserRole.IT}>{UserRoleLabel[UserRole.IT]}</option>
-                <option value={UserRole.Other}>{UserRoleLabel[UserRole.Other]}</option>
+                {rolesLoading ? (
+                  <option>Loading roles...</option>
+                ) : activeRoles.length === 0 ? (
+                  <option>No roles available</option>
+                ) : (
+                  activeRoles.map(role => (
+                    <option key={role.role_ID} value={role.role_ID}>
+                      {role.role_Name}
+                    </option>
+                  ))
+                )}
               </select>
             </div>
           </div>

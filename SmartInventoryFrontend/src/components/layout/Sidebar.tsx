@@ -13,9 +13,11 @@ import {
   ChevronDown,
   ChevronLeft,
   ChevronRight,
+  Shield,
 } from 'lucide-react'
 import cn from 'classnames'
 import { useState } from 'react'
+import { useAuth } from '@/hooks'
 
 interface NavItem {
   title: string
@@ -33,6 +35,7 @@ interface SidebarProps {
 
 export const Sidebar: React.FC<SidebarProps> = ({ open, collapsed = false, onToggleCollapse }) => {
   const location = useLocation()
+  const { user } = useAuth()
   const [expandedMenus, setExpandedMenus] = useState<string[]>(['master-data'])
 
   const toggleMenu = (title: string) => {
@@ -40,6 +43,15 @@ export const Sidebar: React.FC<SidebarProps> = ({ open, collapsed = false, onTog
       prev.includes(title) ? prev.filter((m) => m !== title) : [...prev, title]
     )
   }
+
+  const masterDataSubmenu = [
+    { title: 'Items', href: '/app/master-data/items', icon: <Package size={16} /> },
+    { title: 'Locations', href: '/app/master-data/locations', icon: <MapPin size={16} /> },
+    { title: 'Vendors', href: '/app/master-data/vendors', icon: <Building2 size={16} /> },
+    { title: 'Customers', href: '/app/master-data/customers', icon: <Users size={16} /> },
+    { title: 'Users', href: '/app/master-data/users', icon: <Users size={16} /> },
+    ...(user?.role === 0 ? [{ title: 'Role Permissions', href: '/app/master-data/role-permissions', icon: <Shield size={16} /> }] : []),
+  ]
 
   const navItems: NavItem[] = [
     {
@@ -50,13 +62,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ open, collapsed = false, onTog
     {
       title: 'Master Data',
       icon: <Package size={20} />,
-      submenu: [
-        { title: 'Items', href: '/app/master-data/items', icon: <Package size={16} /> },
-        { title: 'Locations', href: '/app/master-data/locations', icon: <MapPin size={16} /> },
-        { title: 'Vendors', href: '/app/master-data/vendors', icon: <Building2 size={16} /> },
-        { title: 'Customers', href: '/app/master-data/customers', icon: <Users size={16} /> },
-        { title: 'Users', href: '/app/master-data/users', icon: <Users size={16} /> },
-      ],
+      submenu: masterDataSubmenu as NavItem[],
     },
     {
       title: 'Inventory',

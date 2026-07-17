@@ -8,6 +8,7 @@ import { LocationsPage } from '@/pages/master-data/LocationsPage'
 import { VendorsPage } from '@/pages/master-data/VendorsPage'
 import { CustomersPage } from '@/pages/master-data/CustomersPage'
 import { UsersPage } from '@/pages/master-data/UsersPage'
+import { RolePermissionsPage } from '@/pages/master-data/RolePermissionsPage'
 import { InventoryPage } from '@/pages/inventory/InventoryPage'
 import { PurchaseOrderListPage, PurchaseOrderDetailPage } from '@/pages/purchase-order'
 import { OrderFulfillmentListPage, OrderFulfillmentDetailPage } from '@/pages/order-fulfillment'
@@ -54,6 +55,7 @@ function App() {
               <Route path="/app/master-data/vendors" element={<VendorsPage />} />
               <Route path="/app/master-data/customers" element={<CustomersPage />} />
               <Route path="/app/master-data/users" element={<UsersPage />} />
+              <Route path="/app/master-data/role-permissions" element={<RolePermissionsPage />} />
 
               {/* Transactional Routes */}
               <Route path="/app/inventory" element={<InventoryPage />} />
