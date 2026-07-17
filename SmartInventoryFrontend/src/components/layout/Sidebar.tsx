@@ -24,6 +24,7 @@ interface NavItem {
   href?: string
   icon: React.ReactNode
   badge?: number
+  isVisible?: boolean
   submenu?: NavItem[]
 }
 
@@ -45,6 +46,25 @@ export const Sidebar: React.FC<SidebarProps> = ({ open, collapsed = false, onTog
     )
   }
 
+  const isAllMasterPageNonVisible = useMemo(() => {
+      return (
+        permissions?.view_Items === false &&
+        permissions?.view_Locations === false &&
+        permissions?.view_Vendors === false &&
+        permissions?.view_Customers === false &&
+        permissions?.view_Users === false
+      )
+    }, [permissions])
+
+  const isAllOperationsPageNonVisible = useMemo(() => {
+      return (
+        permissions?.view_Purchase_Orders === false &&
+        permissions?.view_Order_Fulfillment === false &&
+        permissions?.view_Stock_Transfer === false &&
+        permissions?.view_Sales === false
+      )
+    }, [permissions])
+
   const masterDataSubmenu = useMemo(() => {
     const menu = []
     if (permissions?.view_Items) menu.push({ title: 'Items', href: '/app/master-data/items', icon: <Package size={16} /> })
@@ -60,38 +80,45 @@ export const Sidebar: React.FC<SidebarProps> = ({ open, collapsed = false, onTog
     {
       title: 'Dashboard',
       href: '/app/dashboard',
+      isVisible: true,
       icon: <LayoutDashboard size={20} />,
     },
     {
       title: 'Master Data',
       icon: <Package size={20} />,
+      isVisible: !isAllMasterPageNonVisible,
       submenu: masterDataSubmenu as NavItem[],
     },
     {
       title: 'Inventory',
       href: '/app/inventory',
+      isVisible: permissions?.view_Inventory ?? true,
       icon: <Package size={20} />,
     },
     {
       title: 'Operations',
       icon: <Truck size={20} />,
+      isVisible: !isAllOperationsPageNonVisible,
       submenu: [
         {
           title: 'Purchase Orders',
           href: '/app/purchase-orders',
+          isVisible: permissions?.view_Purchase_Orders ?? true,
           icon: <ShoppingCart size={16} />,
         },
         {
           title: 'Order Fulfillment',
           href: '/app/order-fulfillment',
+          isVisible: permissions?.view_Order_Fulfillment ?? true,
           icon: <Truck size={16} />,
         },
         {
           title: 'Stock Transfer',
           href: '/app/stock-transfer',
+          isVisible: permissions?.view_Stock_Transfer ?? true,
           icon: <TrendingUp size={16} />,
         },
-        { title: 'Sales', href: '/app/sales', icon: <BarChart3 size={16} /> },
+        { title: 'Sales', href: '/app/sales', icon: <BarChart3 size={16} />, isVisible: permissions?.view_Sales ?? true },
       ],
     },
     // {
@@ -122,7 +149,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ open, collapsed = false, onTog
     const hasSubmenu = item.submenu && item.submenu.length > 0
     const isExpanded = expandedMenus.includes(item.title)
 
-    if (hasSubmenu) {
+    if (hasSubmenu && item.isVisible === true) {
       return (
         <div key={item.title}>
           <button
@@ -153,6 +180,10 @@ export const Sidebar: React.FC<SidebarProps> = ({ open, collapsed = false, onTog
           )}
         </div>
       )
+    }
+    
+    if (item.isVisible === false) {
+      return null
     }
 
     return (

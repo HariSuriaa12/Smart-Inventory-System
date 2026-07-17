@@ -7,6 +7,7 @@ import { Card, DataGrid, Column } from '@/components'
 import { ColumnSelectorModal } from '@/components/modals/ColumnSelectorModal'
 import { OrderFulfillment, OrderFulfillmentStatus, OrderFulfillmentStatusLabel } from '@/types/orderfulfillment'
 import { Columns3 } from 'lucide-react'
+import { useAuth, useRolePermissions } from '@/hooks'
 
 const PAGE_SIZE = 10
 
@@ -47,7 +48,10 @@ export const OrderFulfillmentListPage = () => {
   const [statusFilter, setStatusFilter] = useState<OrderFulfillmentStatus | ''>('')
   const [unprocessedOnlyFilter, setUnprocessedOnlyFilter] = useState(false)
   const [isColumnSelectorOpen, setIsColumnSelectorOpen] = useState(false)
-
+  const { user } = useAuth()
+  const { permissions } = useRolePermissions(user?.role)
+  const canCreate = permissions?.create_Data ?? true
+  console.log('User Permissions:', permissions)
   const [visibleColumns, setVisibleColumns] = useState<Set<string>>(() => {
     const stored = localStorage.getItem(STORAGE_KEY)
     if (stored) {

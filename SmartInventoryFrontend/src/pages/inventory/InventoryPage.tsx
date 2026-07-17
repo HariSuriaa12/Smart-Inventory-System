@@ -8,6 +8,7 @@ import { ColumnSelectorModal } from '@/components/modals/ColumnSelectorModal'
 import { Inventory } from '@/types/inventory'
 import { LocationTypeLabel } from '@/types/location'
 import { Search, X, ArrowRightLeft, Edit2, AlertCircle, Columns3 } from 'lucide-react'
+import { useAuth, useRolePermissions } from '@/hooks'
 
 const PAGE_SIZE = 10
 
@@ -42,6 +43,9 @@ export const InventoryPage = () => {
   const [isTransferOpen, setIsTransferOpen] = useState(false)
   const [isColumnSelectorOpen, setIsColumnSelectorOpen] = useState(false)
   const [selectedInventory, setSelectedInventory] = useState<Inventory | null>(null)
+  const { user } = useAuth()
+  const { permissions } = useRolePermissions(user?.role)
+  const canEdit = permissions?.update_Data ?? false
   const [visibleColumns, setVisibleColumns] = useState<Set<string>>(() => {
     const stored = localStorage.getItem(STORAGE_KEY)
     if (stored) {
@@ -303,22 +307,24 @@ export const InventoryPage = () => {
             width: '120px',
             align: 'center',
             render: (_, item) => (
-              <div className="flex items-center justify-center gap-2">
-                <button
-                  onClick={() => handleAdjustClick(item)}
-                  className="p-2 text-primary-600 hover:bg-primary-50 rounded-lg transition-colors"
-                  title="Adjust Inventory"
-                >
-                  <Edit2 size={16} />
-                </button>
-                <button
-                  onClick={() => handleTransferClick(item)}
-                  className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
-                  title="Transfer Stock"
-                >
-                  <ArrowRightLeft size={16} />
-                </button>
-              </div>
+              canEdit === true &&(
+                <div className="flex items-center justify-center gap-2">
+                  <button
+                    onClick={() => handleAdjustClick(item)}
+                    className="p-2 text-primary-600 hover:bg-primary-50 rounded-lg transition-colors"
+                    title="Adjust Inventory"
+                  >
+                    <Edit2 size={16} />
+                  </button>
+                  <button
+                    onClick={() => handleTransferClick(item)}
+                    className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                    title="Transfer Stock"
+                  >
+                    <ArrowRightLeft size={16} />
+                  </button>
+                </div>
+              )
             ),
           }]}
           data={inventory}

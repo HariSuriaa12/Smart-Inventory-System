@@ -9,6 +9,7 @@ import { CreateStockTransferModal } from '@/components/modals/CreateStockTransfe
 import { ReceivedQuantityModal } from '@/components/modals/ReceivedQuantityModal'
 import { StockTransfer, StockTransferStatus, StockTransferStatusLabel } from '@/types/stocktransfer'
 import { Plus, Columns3, Package, X, RotateCcw } from 'lucide-react'
+import { useAuth, useRolePermissions } from '@/hooks'
 
 const PAGE_SIZE = 10
 
@@ -73,6 +74,12 @@ export const StockTransferListPage = () => {
   const [isReceivedModalOpen, setIsReceivedModalOpen] = useState(false)
   const [selectedTransfer, setSelectedTransfer] = useState<StockTransfer | null>(null)
   const [isColumnSelectorOpen, setIsColumnSelectorOpen] = useState(false)
+  const { user } = useAuth()
+  const { permissions } = useRolePermissions(user?.role)
+  const canEdit = permissions?.update_Data ?? false
+  const canDelete = permissions?.delete_Data ?? false
+  const canCreate = permissions?.create_Data ?? false
+  console.log('User Permissions:', permissions)
   const [visibleColumns, setVisibleColumns] = useState<Set<string>>(() => {
     const stored = localStorage.getItem(STORAGE_KEY)
     if (stored) {
@@ -84,7 +91,6 @@ export const StockTransferListPage = () => {
   const { transfers, loading, total } = useAppSelector((state) => state.stockTransfer)
   const { locations } = useAppSelector((state) => state.locations)
   const { items } = useAppSelector((state) => state.items)
-  const { user } = useAppSelector((state) => state.auth)
   const currentLocation = useAppSelector((state) => state.locations.currentLocation)
 
   useEffect(() => {
@@ -342,7 +348,7 @@ export const StockTransferListPage = () => {
       width: '120px',
       render: (_, transfer) => (
         <div className="flex gap-2">
-          {transfer.to_Location_ID === currentLocation?.id && transfer.status !== StockTransferStatus.Received && transfer.status !== StockTransferStatus.Cancelled && (
+          {transfer.to_Location_ID === currentLocation?.id && transfer.status !== StockTransferStatus.Received && transfer.status !== StockTransferStatus.Cancelled && canEdit === true &&(
             <button
               onClick={() => handleActionClick(transfer, 'receive')}
               className="p-1.5 text-green-600 hover:bg-green-50 rounded transition-colors disabled:opacity-50"
@@ -351,7 +357,7 @@ export const StockTransferListPage = () => {
               <Package size={16} />
             </button>
           )}
-          {transfer.status !== StockTransferStatus.Received && transfer.status !== StockTransferStatus.Cancelled && (
+          {transfer.status !== StockTransferStatus.Received && transfer.status !== StockTransferStatus.Cancelled && canEdit === true && (
             <button
               onClick={() => handleActionClick(transfer, 'cancel')}
               className="p-1.5 text-gray-600 hover:bg-gray-100 rounded transition-colors disabled:opacity-50"
@@ -360,7 +366,7 @@ export const StockTransferListPage = () => {
               <X size={16} />
             </button>
           )}
-          {transfer.status !== StockTransferStatus.Cancelled && transfer.status !== StockTransferStatus.Shipped && transfer.to_Location_ID === currentLocation?.id && (
+          {transfer.status !== StockTransferStatus.Cancelled && transfer.status !== StockTransferStatus.Shipped && transfer.to_Location_ID === currentLocation?.id && canEdit === true && (
             <button
               onClick={() => handleActionClick(transfer, 'cancelWithReturn')}
               className="p-1.5 text-orange-600 hover:bg-orange-50 rounded transition-colors disabled:opacity-50"
@@ -385,7 +391,8 @@ export const StockTransferListPage = () => {
         </div>
         <button
           onClick={() => setIsCreateModalOpen(true)}
-          className="flex items-center gap-2 px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors"
+          disabled={!canCreate}
+          className="flex items-center gap-2 px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
         >
           <Plus size={20} />
           Create Transfer

@@ -6,6 +6,7 @@ import { orderFulfillmentService } from '@/services/orderFulfillmentService'
 import { OrderFulfillment, OrderFulfillmentItem, OrderFulfillmentStatus, OrderFulfillmentStatusLabel } from '@/types/orderfulfillment'
 import { ArrowLeft, Check, X, RotateCcw, Package } from 'lucide-react'
 import { useAppSelector } from '@/store/hooks/useAppSelector'
+import { useAuth, useRolePermissions } from '@/hooks'
 
 const STATUS_BADGE_CLASSES: Record<OrderFulfillmentStatus, string> = {
   [OrderFulfillmentStatus.Unassigned]: 'bg-red-100 text-red-800',
@@ -28,6 +29,10 @@ export const OrderFulfillmentDetailPage = () => {
 
   const { currentLocation } = useAppSelector((state) => state.locations)
   const { currentUser } = useAppSelector((state) => state.auth)
+
+  const { user } = useAuth()
+  const { permissions } = useRolePermissions(user?.role)
+  const canEdit = permissions?.update_Data ?? true
 
   useEffect(() => {
     if (id) {
@@ -207,7 +212,7 @@ export const OrderFulfillmentDetailPage = () => {
       width: '120px',
       render: (_, item) => (
         <div className="flex gap-2">
-          {(item.status === OrderFulfillmentStatus.PartiallyFulfilled || item.status === OrderFulfillmentStatus.Fulfilled) && (
+          {(item.status === OrderFulfillmentStatus.PartiallyFulfilled || item.status === OrderFulfillmentStatus.Fulfilled) && canEdit === true && (
             <>
               <button
                 onClick={() => handleCancelItem(item.id)}

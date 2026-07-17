@@ -9,6 +9,7 @@ import { fetchVendors } from '@/store/slices/vendorSlice'
 import { PurchaseOrder, PurchaseOrderStatus, PurchaseOrderStatusLabel } from '@/types/purchaseorder'
 import { Plus, Columns3 } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
+import { useAuth, useRolePermissions } from '@/hooks'
 
 const PAGE_SIZE = 10 
 
@@ -61,6 +62,10 @@ export const PurchaseOrderListPage = () => {
   const [dateToFilter, setDateToFilter] = useState('')
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false)
   const [isColumnSelectorOpen, setIsColumnSelectorOpen] = useState(false)
+  const { user } = useAuth()
+  const { permissions } = useRolePermissions(user?.role)
+  const canCreate = permissions?.create_Data ?? false
+  console.log('User Permissions:', permissions)
   const [visibleColumns, setVisibleColumns] = useState<Set<string>>(() => {
     const stored = localStorage.getItem(STORAGE_KEY)
     if (stored) {
@@ -277,7 +282,8 @@ export const PurchaseOrderListPage = () => {
         </div>
         <button
           onClick={() => setIsCreateModalOpen(true)}
-          className="flex items-center gap-2 px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors"
+          disabled={!canCreate}
+          className="flex items-center gap-2 px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
         >
           <Plus size={20} />
           Create PO

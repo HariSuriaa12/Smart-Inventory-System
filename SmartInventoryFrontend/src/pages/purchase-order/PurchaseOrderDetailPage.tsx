@@ -9,6 +9,8 @@ import { ReceivePurchaseOrderModal } from '@/components/modals/ReceivePurchaseOr
 import { PurchaseOrder, PurchaseOrderItem, PurchaseOrderStatus, PurchaseOrderStatusLabel } from '@/types/purchaseorder'
 import { ArrowLeft, Edit2, Plus, Package, Check, X, Trash2, RotateCcw } from 'lucide-react'
 import { purchaseOrderService } from '@/services/purchaseOrderService'
+import { RolePermission } from '@/types/rolePermission'
+import { useAuth, useRolePermissions } from '@/hooks'
 
 const STATUS_BADGE_CLASSES: Record<PurchaseOrderStatus, string> = {
   [PurchaseOrderStatus.Pending]: 'bg-blue-100 text-blue-800',
@@ -29,6 +31,11 @@ export const PurchaseOrderDetailPage = () => {
 
   const { currentOrder, loading } = useAppSelector((state) => state.purchaseOrders)
   const [actionLoading, setActionLoading] = useState(false)
+
+  const { user } = useAuth()
+  const { permissions } = useRolePermissions(user?.role)
+  const canEdit = permissions?.update_Data ?? true
+  const canDelete = permissions?.delete_Data ?? true
 
   useEffect(() => {
     if (id) {
@@ -239,7 +246,7 @@ export const PurchaseOrderDetailPage = () => {
       width: '180px',
       render: (_, item) => (
         <div className="flex gap-2">
-          {currentOrder.status === PurchaseOrderStatus.Pending && (
+          {currentOrder.status === PurchaseOrderStatus.Pending && canDelete === true &&(
             <button
               onClick={() => handleRemoveItem(item.id)}
               disabled={actionLoading}
@@ -249,7 +256,7 @@ export const PurchaseOrderDetailPage = () => {
               <Trash2 size={16} />
             </button>
           )}
-          {item.status === PurchaseOrderStatus.Confirmed && (
+          {item.status === PurchaseOrderStatus.Confirmed && canEdit === true && (
             <button
               onClick={() => handleCancelItem(item.id)}
               disabled={actionLoading}
@@ -259,7 +266,7 @@ export const PurchaseOrderDetailPage = () => {
               <X size={16} />
             </button>
           )}
-          {(item.status === PurchaseOrderStatus.PartiallyReceived || item.status === PurchaseOrderStatus.Received) && (
+          {(item.status === PurchaseOrderStatus.PartiallyReceived || item.status === PurchaseOrderStatus.Received) && canEdit === true && (
             <>
               <button
                 onClick={() => handleCancelItem(item.id)}
@@ -308,7 +315,7 @@ export const PurchaseOrderDetailPage = () => {
           </div>
         </div>
         <div className="flex gap-3">
-          {isEditable && (
+          {isEditable && canEdit === true && (
             <button
               onClick={() => setIsEditOpen(true)}
               className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
@@ -318,7 +325,7 @@ export const PurchaseOrderDetailPage = () => {
               Edit
             </button>
           )}
-          {canAddItems && (
+          {canAddItems && canEdit === true && (
             <button
               onClick={() => setIsAddItemOpen(true)}
               className="flex items-center gap-2 px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors"
@@ -328,7 +335,7 @@ export const PurchaseOrderDetailPage = () => {
               Add Item
             </button>
           )}
-          {currentOrder.status === PurchaseOrderStatus.Pending && (
+          {currentOrder.status === PurchaseOrderStatus.Pending && canEdit === true && (
             <button
               onClick={handleConfirm}
               className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors disabled:opacity-50"
@@ -338,7 +345,7 @@ export const PurchaseOrderDetailPage = () => {
               Confirm
             </button>
           )}
-          {canCancelPO() && currentOrder.status !== PurchaseOrderStatus.Cancelled && (
+          {canCancelPO() && currentOrder.status !== PurchaseOrderStatus.Cancelled && canEdit === true && (
             <button
               onClick={handleCancel}
               className="flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors disabled:opacity-50"
@@ -399,16 +406,18 @@ export const PurchaseOrderDetailPage = () => {
       </Card>
 
       {/* Edit PO Modal */}
-      <EditPurchaseOrderModal
-        isOpen={isEditOpen}
-        po={currentOrder}
-        onClose={() => setIsEditOpen(false)}
-        onSuccess={handleEditSuccess}
-        isLoading={loading}
-      />
+      { canEdit === true && (
+        <EditPurchaseOrderModal
+          isOpen={isEditOpen}
+          po={currentOrder}
+          onClose={() => setIsEditOpen(false)}
+          onSuccess={handleEditSuccess}
+          isLoading={loading}
+        />
+      )}
 
       {/* Add Item Modal */}
-      {canAddItems && (
+      {canAddItems && canEdit === true && (
         <AddPurchaseOrderItemModal
           isOpen={isAddItemOpen}
           poId={currentOrder.id}
@@ -419,7 +428,7 @@ export const PurchaseOrderDetailPage = () => {
       )}
 
       {/* Receive Item Modal */}
-      {currentOrder.status !== PurchaseOrderStatus.Pending && selectedItem && (
+      {currentOrder.status !== PurchaseOrderStatus.Pending && selectedItem && canEdit === true && (
         <ReceivePurchaseOrderModal
           isOpen={isReceiveOpen}
           poId={currentOrder.id}
