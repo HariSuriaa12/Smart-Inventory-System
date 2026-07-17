@@ -5,18 +5,26 @@ import { DataGrid, Card, Column, Input } from '@/components'
 import { AddItemModal } from '@/components/modals/AddItemModal'
 import { EditItemModal } from '@/components/modals/EditItemModal'
 import { Item, CreateItemRequest, UpdateItemRequest } from '@/types/item'
-import { Plus, Search, X } from 'lucide-react'
+import { Plus, Search, X, AlertCircle } from 'lucide-react'
+import { useAuth, useRolePermissions } from '@/hooks'
 
 const PAGE_SIZE = 10
 
 export const ItemsPage = () => {
   const dispatch = useAppDispatch()
+  const { user } = useAuth()
+  const { permissions } = useRolePermissions(user?.role)
   const [currentPage, setCurrentPage] = useState(1)
   const [searchInput, setSearchInput] = useState('')
   const [isAddItemOpen, setIsAddItemOpen] = useState(false)
   const [isEditItemOpen, setIsEditItemOpen] = useState(false)
   const [selectedItem, setSelectedItem] = useState<Item | null>(null)
   const { items, loading, total, searchQuery, error } = useAppSelector((state) => state.items)
+
+  // Check if user has permission to edit/delete
+  const canEdit = permissions?.update_Data ?? false
+  const canDelete = permissions?.delete_Data ?? false
+  const canCreate = permissions?.create_Data ?? false
 
   // Debounced search effect
   useEffect(() => {
@@ -55,9 +63,12 @@ export const ItemsPage = () => {
   }, [dispatch, searchQuery])
 
   const handleRowDoubleClick = useCallback((item: Item) => {
+    if (!canEdit && !canDelete) {
+      return // Don't allow editing if user doesn't have edit or delete permission
+    }
     setSelectedItem(item)
     setIsEditItemOpen(true)
-  }, [])
+  }, [canEdit, canDelete])
 
   const handleUpdateItem = useCallback(async (formData: UpdateItemRequest) => {
     if (!selectedItem) return
@@ -166,7 +177,9 @@ export const ItemsPage = () => {
         </div>
         <button
           onClick={() => setIsAddItemOpen(true)}
-          className="flex items-center gap-2 px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors"
+          disabled={!canCreate}
+          title={!canCreate ? 'You do not have permission to create items' : ''}
+          className="flex items-center gap-2 px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
         >
           <Plus size={20} />
           Add Item
@@ -231,6 +244,8 @@ export const ItemsPage = () => {
         onUpdate={handleUpdateItem}
         onDelete={handleDeleteItem}
         isLoading={loading}
+        canUpdate={canEdit}
+        canDelete={canDelete}
       />
     </div>
   )

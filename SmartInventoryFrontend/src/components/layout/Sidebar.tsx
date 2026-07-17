@@ -16,8 +16,8 @@ import {
   Shield,
 } from 'lucide-react'
 import cn from 'classnames'
-import { useState } from 'react'
-import { useAuth } from '@/hooks'
+import { useState, useMemo } from 'react'
+import { useAuth, useRolePermissions } from '@/hooks'
 
 interface NavItem {
   title: string
@@ -36,22 +36,25 @@ interface SidebarProps {
 export const Sidebar: React.FC<SidebarProps> = ({ open, collapsed = false, onToggleCollapse }) => {
   const location = useLocation()
   const { user } = useAuth()
+  const { permissions } = useRolePermissions(user?.role)
   const [expandedMenus, setExpandedMenus] = useState<string[]>(['master-data'])
-  console.log('user: ', user)
+
   const toggleMenu = (title: string) => {
     setExpandedMenus((prev) =>
       prev.includes(title) ? prev.filter((m) => m !== title) : [...prev, title]
     )
   }
 
-  const masterDataSubmenu = [
-    { title: 'Items', href: '/app/master-data/items', icon: <Package size={16} /> },
-    { title: 'Locations', href: '/app/master-data/locations', icon: <MapPin size={16} /> },
-    { title: 'Vendors', href: '/app/master-data/vendors', icon: <Building2 size={16} /> },
-    { title: 'Customers', href: '/app/master-data/customers', icon: <Users size={16} /> },
-    { title: 'Users', href: '/app/master-data/users', icon: <Users size={16} /> },
-    ...(user?.role === 0 ? [{ title: 'Role Permissions', href: '/app/master-data/role-permissions', icon: <Shield size={16} /> }] : []),
-  ]
+  const masterDataSubmenu = useMemo(() => {
+    const menu = []
+    if (permissions?.view_Items) menu.push({ title: 'Items', href: '/app/master-data/items', icon: <Package size={16} /> })
+    if (permissions?.view_Locations) menu.push({ title: 'Locations', href: '/app/master-data/locations', icon: <MapPin size={16} /> })
+    if (permissions?.view_Vendors) menu.push({ title: 'Vendors', href: '/app/master-data/vendors', icon: <Building2 size={16} /> })
+    if (permissions?.view_Customers) menu.push({ title: 'Customers', href: '/app/master-data/customers', icon: <Users size={16} /> })
+    if (permissions?.view_Users) menu.push({ title: 'Users', href: '/app/master-data/users', icon: <Users size={16} /> })
+    if (user?.role === 0) menu.push({ title: 'Role Permissions', href: '/app/master-data/role-permissions', icon: <Shield size={16} /> })
+    return menu
+  }, [permissions, user?.role])
 
   const navItems: NavItem[] = [
     {
