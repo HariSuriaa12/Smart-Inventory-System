@@ -43,7 +43,7 @@ public class RolePermissionService : IRolePermissionService
 
     public async Task<RolePermissionDto> GetRolePermissionByIdAsync(int id)
     {
-        var rolePermission = await _unitOfWork.RolePermissions.GetByIdAsync(id);
+        var rolePermission = await _unitOfWork.RolePermissions.GetByIdIntAsync(id);
         if (rolePermission == null)
             throw new NotFoundException("Role permission not found");
 

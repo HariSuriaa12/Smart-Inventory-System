@@ -13,7 +13,8 @@ export const useRolePermissions = (roleId?: number) => {
       try {
         setLoading(true)
         if (roleId !== undefined) {
-          const response = await rolePermissionService.getRolePermissionByRoleId(roleId)
+          //const response = await rolePermissionService.getRolePermissionByRoleId(roleId)
+          const response = await rolePermissionService.getRolePermissionById(roleId)
           if (response.success && response.data) {
             setPermissions(response.data)
           }

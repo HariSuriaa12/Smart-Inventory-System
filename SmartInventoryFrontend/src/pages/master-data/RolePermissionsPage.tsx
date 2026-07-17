@@ -36,7 +36,7 @@ export const RolePermissionsPage = () => {
   const [currentPage, setCurrentPage] = useState(1)
 
   useEffect(() => {
-    if (user?.role !== 0) {
+    if (user?.role !== 1) {
       setError('Only administrators can access role permissions')
       return
     }
@@ -49,7 +49,7 @@ export const RolePermissionsPage = () => {
       const skip = (currentPage - 1) * PAGE_SIZE
       const response = await rolePermissionService.getRolePermissions(skip, PAGE_SIZE)
       if (response.success && response.data) {
-        setRoles(response.data.data || [])
+        setRoles(response.data.data.filter((r) => r.id !== 1) || []) //Exclude super admin
       }
     } catch (err) {
       setError('Failed to fetch roles')
@@ -96,6 +96,7 @@ export const RolePermissionsPage = () => {
         delete_Data: formData.delete_Data,
         is_Active: selectedRole.is_Active,
       }
+      console.log('Updating role with ID:', selectedRole.id, 'Data:', updateData) // Debugging line
       await rolePermissionService.updateRolePermission(selectedRole.id, updateData)
       setIsEditOpen(false)
       resetForm()
@@ -127,6 +128,7 @@ export const RolePermissionsPage = () => {
 
   const handleEditClick = (role: RolePermission) => {
     setSelectedRole(role)
+    console.log('Editing role:', role) // Debugging line
     setFormData({
       role_ID: role.role_ID,
       role_Name: role.role_Name,
@@ -182,7 +184,7 @@ export const RolePermissionsPage = () => {
     }))
   }
 
-  if (user?.role !== 0) {
+  if (user?.role !== 1) {
     return (
       <div className="p-6">
         <Card>
