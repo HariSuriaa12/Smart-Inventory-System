@@ -27,14 +27,24 @@ public class SmartInventoryDbContext : DbContext
     public DbSet<PriceLog> Price_Log { get; set; }
     public DbSet<InventoryLog> Inventory_Log { get; set; }
     public DbSet<ForecastedResult> Forecasted_Result { get; set; }
-    public DbSet<RolePermission> RolePermission { get; set; }
+    public DbSet<RolePermission> role_permissions { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
 
+        var excludedEntityTypes = new List<Type>
+        {
+            typeof(RolePermission),
+        };
+
         foreach (var entityType in modelBuilder.Model.GetEntityTypes())
         {
+            if (excludedEntityTypes.Contains(entityType.ClrType))
+            {
+                continue;
+            }
+
             var properties = entityType.GetProperties()
                 .Where(p => p.ClrType == typeof(bool) || p.ClrType == typeof(bool?));
                 //.Where(p => p.ClrType == typeof(bool) && p.Name.Equals("Is_Deleted"));
@@ -336,6 +346,12 @@ public class SmartInventoryDbContext : DbContext
             .HasOne(si => si.Item)
             .WithMany()
             .HasForeignKey(si => si.Item_ID)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<User>()
+            .HasOne(u => u.Role_Permission)
+            .WithMany()
+            .HasForeignKey(r => r.Role)
             .OnDelete(DeleteBehavior.Restrict);
     }
 }

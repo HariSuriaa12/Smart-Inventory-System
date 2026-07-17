@@ -37,7 +37,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ open, collapsed = false, onTog
   const location = useLocation()
   const { user } = useAuth()
   const [expandedMenus, setExpandedMenus] = useState<string[]>(['master-data'])
-
+  console.log('user: ', user)
   const toggleMenu = (title: string) => {
     setExpandedMenus((prev) =>
       prev.includes(title) ? prev.filter((m) => m !== title) : [...prev, title]

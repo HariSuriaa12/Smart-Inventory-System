@@ -9,9 +9,9 @@ export const LocationSwitchWarningDialog = () => {
 
   const handleConfirm = () => {
     // Set the callback to navigate after location selection
-    setOnLocationConfirmed(() => {
-      navigate('/app/dashboard', { replace: true })
-    })
+    // setOnLocationConfirmed(() => {
+    //   navigate('/app/dashboard', { replace: true })
+    // })
     // Then open the location selection modal
     confirmLocationChange()
   }

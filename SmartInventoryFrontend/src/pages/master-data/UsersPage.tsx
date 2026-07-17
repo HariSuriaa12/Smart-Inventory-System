@@ -17,7 +17,9 @@ export const UsersPage = () => {
   const [isEditUserOpen, setIsEditUserOpen] = useState(false)
   const [selectedUser, setSelectedUser] = useState<User | null>(null)
   const { users, loading, total } = useAppSelector((state) => state.users)
-
+  const { currentUser } = useAppSelector((state) => state.auth) // Adjusted to use the correct slice if needed
+  console.log('UsersPage users:', users) // Debugging line
+  console.log('UsersPage currentUser:', currentUser) // Debugging line
   // Debounced search effect
   useEffect(() => {
     const debounceTimer = setTimeout(() => {
@@ -107,6 +109,7 @@ export const UsersPage = () => {
       key: 'role',
       label: 'Role',
       width: '120px',
+      //render: (value) => UserRoleLabel[value] || value,
       render: (value) => UserRoleLabel[value] || value,
     },
     {
@@ -173,7 +176,7 @@ export const UsersPage = () => {
       <Card className="flex-1 flex flex-col overflow-hidden p-6">
         <DataGrid<User>
           columns={columns}
-          data={users}
+          data={users.filter((user) => user.id !== currentUser?.userID)} // Exclude the current user from the list
           loading={loading}
           currentPage={currentPage}
           pageSize={PAGE_SIZE}

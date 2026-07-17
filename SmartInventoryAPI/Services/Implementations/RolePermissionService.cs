@@ -1,4 +1,5 @@
 using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 using SmartInventoryAPI.Models.DTOs.Request.RolePermission;
 using SmartInventoryAPI.Models.DTOs.Response;
 using SmartInventoryAPI.Models.Entities;
@@ -23,19 +24,20 @@ public class RolePermissionService : IRolePermissionService
 
     public async Task<RolePermissionDto> CreateRolePermissionAsync(CreateRolePermissionRequestDto request)
     {
-        var existingRole = await _unitOfWork.RolePermissions.GetByRoleIdAsync(request.Role_ID);
+        //var existingRole = await _unitOfWork.RolePermissions.GetByRoleIdAsync(request.Role_ID);
+        var existingRole = await _unitOfWork.RolePermissions.GetByRoleNameAsync(request.Role_Name ?? "");
         if (existingRole != null)
             throw new InvalidOperationException($"Role with ID {request.Role_ID} already exists");
 
         var rolePermission = _mapper.Map<RolePermission>(request);
-        rolePermission.Created_At = DateTime.UtcNow;
-        rolePermission.Updated_At = DateTime.UtcNow;
+        rolePermission.created_at = DateTime.UtcNow;
+        rolePermission.updated_at = DateTime.UtcNow;
 
         var createdRole = await _unitOfWork.RolePermissions.AddAsync(rolePermission);
         await _unitOfWork.SaveAsync();
 
         _logger.LogInformation("Role Permission {RoleID} created successfully with name {RoleName}",
-            rolePermission.Role_ID, rolePermission.Role_Name);
+            rolePermission.role_id, rolePermission.role_name);
         return _mapper.Map<RolePermissionDto>(createdRole);
     }
 
@@ -98,12 +100,13 @@ public class RolePermissionService : IRolePermissionService
 
     public async Task<RolePermissionDto> UpdateRolePermissionAsync(int id, UpdateRolePermissionRequestDto request)
     {
-        var rolePermission = await _unitOfWork.RolePermissions.GetByIdAsync(id);
+        var rolePermission = await _unitOfWork.RolePermissions.GetByIdIntAsync(id);
         if (rolePermission == null)
             throw new NotFoundException("Role permission not found");
 
         _mapper.Map(request, rolePermission);
-        rolePermission.Updated_At = DateTime.UtcNow;
+        rolePermission.updated_at = DateTime.UtcNow;
+        rolePermission.created_at = DateTime.SpecifyKind(rolePermission.created_at, DateTimeKind.Utc);
 
         await _unitOfWork.RolePermissions.UpdateAsync(rolePermission);
         await _unitOfWork.SaveAsync();
@@ -118,9 +121,12 @@ public class RolePermissionService : IRolePermissionService
         if (rolePermission == null)
             throw new NotFoundException("Role permission not found");
 
-        var userCount = await _unitOfWork.RolePermissions.CountUsersWithRoleAsync(rolePermission.Role_ID);
+        var userCount = await _unitOfWork.RolePermissions.CountUsersWithRoleAsync(rolePermission.role_id);
         if (userCount > 0)
             throw new InvalidOperationException($"Cannot delete role. {userCount} user(s) are assigned to this role");
+
+        rolePermission.updated_at = DateTime.UtcNow;
+        rolePermission.created_at = DateTime.SpecifyKind(rolePermission.created_at, DateTimeKind.Utc);
 
         await _unitOfWork.RolePermissions.DeleteAsync(id);
         await _unitOfWork.SaveAsync();
@@ -128,9 +134,9 @@ public class RolePermissionService : IRolePermissionService
         _logger.LogInformation("Role Permission {ID} deleted successfully", id);
     }
 
-    public async Task<bool> CanDeleteRoleAsync(int roleId)
+    public async Task<bool> CanDeleteRoleAsync(int id)
     {
-        var userCount = await _unitOfWork.RolePermissions.CountUsersWithRoleAsync(roleId);
+        var userCount = await _unitOfWork.RolePermissions.CountUsersWithRoleAsync(id);
         return userCount == 0;
     }
 }

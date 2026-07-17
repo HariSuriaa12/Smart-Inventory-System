@@ -149,24 +149,24 @@ export const LoginPage = () => {
             </form>
 
             {/* Divider */}
-            <div className="relative my-8">
+            {/* <div className="relative my-8">
               <div className="absolute inset-0 flex items-center">
                 <div className="w-full border-t border-gray-300"></div>
               </div>
               <div className="relative flex justify-center text-sm">
                 <span className="px-2 bg-white text-gray-500">Demo Credentials</span>
               </div>
-            </div>
+            </div> */}
 
             {/* Demo Info */}
-            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+            {/* <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
               <p className="text-sm text-blue-900">
                 <span className="font-semibold">Username:</span> admin
               </p>
               <p className="text-sm text-blue-900">
                 <span className="font-semibold">Password:</span> password
               </p>
-            </div>
+            </div> */}
           </div>
 
           {/* Footer */}

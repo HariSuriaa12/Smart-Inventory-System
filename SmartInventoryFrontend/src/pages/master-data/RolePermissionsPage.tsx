@@ -267,7 +267,7 @@ export const RolePermissionsPage = () => {
                           >
                             <Edit2 size={18} />
                           </button>
-                          <button
+                          {/* <button
                             onClick={() => {
                               setSelectedRole(role)
                               setIsEditOpen(true)
@@ -276,7 +276,7 @@ export const RolePermissionsPage = () => {
                             title="Delete role"
                           >
                             <Trash2 size={18} />
-                          </button>
+                          </button> */}
                         </div>
                       </td>
                     </tr>

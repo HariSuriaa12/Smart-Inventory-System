@@ -3,6 +3,7 @@ namespace SmartInventoryAPI.Repositories.Interfaces;
 public interface IGenericRepository<T> where T : class
 {
     Task<T?> GetByIdAsync(long id);
+    Task<T?> GetByIdIntAsync(int id);
     Task<IEnumerable<T>> GetAllAsync(int skip = 0, int take = 10);
     Task<IEnumerable<T>> GetAllAsync();
     Task<T> AddAsync(T entity);

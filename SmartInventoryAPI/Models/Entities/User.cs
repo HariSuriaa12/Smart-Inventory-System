@@ -13,4 +13,5 @@ public class User
     public string? Mobile_No { get; set; }
     public string? Email { get; set; }
     public string? Staff_Code { get; set; }
+    public virtual RolePermission? Role_Permission { get; set; }
 }

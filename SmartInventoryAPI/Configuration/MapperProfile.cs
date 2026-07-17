@@ -20,7 +20,9 @@ public class MapperProfile : Profile
     public MapperProfile()
     {
         // User mappings
-        CreateMap<User, UserDto>();
+        CreateMap<User, UserDto>()
+                .ForMember(dest => dest.Role_Name, opt => opt.MapFrom(src => src.Role_Permission != null ? src.Role_Permission.role_name : ""));
+
         CreateMap<CreateUserRequestDto, User>();
         CreateMap<UpdateUserRequestDto, User>();
         CreateMap<UpdateUserRequestDto, User>()

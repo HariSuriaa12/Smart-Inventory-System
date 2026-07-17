@@ -13,6 +13,7 @@ export interface AuthResponse {
 
 export interface User extends Entity {
   userID: number
+  role_Name : string
   full_Name: string
   username: string
   email: string
@@ -32,7 +33,7 @@ export enum UserRole {
 }
 
 export const UserRoleLabel: Record<UserRole, string> = {
-  [UserRole.Admin]: 'Admin',
+  [UserRole.Admin]: 'Super Admin',
   [UserRole.Manager]: 'Manager',
   [UserRole.Staff]: 'Staff',
   [UserRole.IT]: 'IT',

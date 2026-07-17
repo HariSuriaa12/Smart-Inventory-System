@@ -6,6 +6,7 @@ public class UserDto
     public string? Full_Name { get; set; }
     public string? Username { get; set; }
     public int Role { get; set; }
+    public string Role_Name { get; set; }
     public DateTime Creation_Date { get; set; }
     public string? IC { get; set; }
     public string? Mobile_No { get; set; }

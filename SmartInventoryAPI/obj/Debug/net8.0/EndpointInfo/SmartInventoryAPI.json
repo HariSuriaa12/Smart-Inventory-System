@@ -2377,6 +2377,345 @@
         }
       }
     },
+    "/api/RolePermissions": {
+      "get": {
+        "tags": [
+          "RolePermissions"
+        ],
+        "parameters": [
+          {
+            "name": "skip",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          },
+          {
+            "name": "take",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 10
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/RolePermissionDtoPaginatedResponseDtoApiResponseDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RolePermissionDtoPaginatedResponseDtoApiResponseDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RolePermissionDtoPaginatedResponseDtoApiResponseDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "RolePermissions"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateRolePermissionRequestDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateRolePermissionRequestDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateRolePermissionRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/RolePermissionDtoApiResponseDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RolePermissionDtoApiResponseDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RolePermissionDtoApiResponseDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/RolePermissions/active": {
+      "get": {
+        "tags": [
+          "RolePermissions"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/RolePermissionDtoIEnumerableApiResponseDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RolePermissionDtoIEnumerableApiResponseDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RolePermissionDtoIEnumerableApiResponseDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/RolePermissions/{id}": {
+      "get": {
+        "tags": [
+          "RolePermissions"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/RolePermissionDtoApiResponseDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RolePermissionDtoApiResponseDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RolePermissionDtoApiResponseDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "RolePermissions"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateRolePermissionRequestDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateRolePermissionRequestDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateRolePermissionRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/RolePermissionDtoApiResponseDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RolePermissionDtoApiResponseDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RolePermissionDtoApiResponseDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "RolePermissions"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/RolePermissions/role/{roleId}": {
+      "get": {
+        "tags": [
+          "RolePermissions"
+        ],
+        "parameters": [
+          {
+            "name": "roleId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/RolePermissionDtoApiResponseDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RolePermissionDtoApiResponseDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RolePermissionDtoApiResponseDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/RolePermissions/{roleId}/can-delete": {
+      "get": {
+        "tags": [
+          "RolePermissions"
+        ],
+        "parameters": [
+          {
+            "name": "roleId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/BooleanApiResponseDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BooleanApiResponseDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BooleanApiResponseDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/Sales/import": {
       "post": {
         "tags": [
@@ -3822,6 +4161,33 @@
         },
         "additionalProperties": false
       },
+      "BooleanApiResponseDto": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "data": {
+            "type": "boolean"
+          },
+          "statusCode": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "CancelStockTransferRequestDto": {
         "type": "object",
         "properties": {
@@ -3970,6 +4336,59 @@
               "$ref": "#/components/schemas/PurchaseOrderItemRequestDto"
             },
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CreateRolePermissionRequestDto": {
+        "type": "object",
+        "properties": {
+          "role_ID": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "role_Name": {
+            "type": "string",
+            "nullable": true
+          },
+          "view_Items": {
+            "type": "boolean"
+          },
+          "view_Locations": {
+            "type": "boolean"
+          },
+          "view_Vendors": {
+            "type": "boolean"
+          },
+          "view_Customers": {
+            "type": "boolean"
+          },
+          "view_Users": {
+            "type": "boolean"
+          },
+          "view_Inventory": {
+            "type": "boolean"
+          },
+          "view_Purchase_Orders": {
+            "type": "boolean"
+          },
+          "view_Order_Fulfillment": {
+            "type": "boolean"
+          },
+          "view_Stock_Transfer": {
+            "type": "boolean"
+          },
+          "view_Sales": {
+            "type": "boolean"
+          },
+          "create_Data": {
+            "type": "boolean"
+          },
+          "update_Data": {
+            "type": "boolean"
+          },
+          "delete_Data": {
+            "type": "boolean"
           }
         },
         "additionalProperties": false
@@ -5562,6 +5981,198 @@
         },
         "additionalProperties": false
       },
+      "RolePermissionDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "role_ID": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "role_Name": {
+            "type": "string",
+            "nullable": true
+          },
+          "view_Items": {
+            "type": "boolean"
+          },
+          "view_Locations": {
+            "type": "boolean"
+          },
+          "view_Vendors": {
+            "type": "boolean"
+          },
+          "view_Customers": {
+            "type": "boolean"
+          },
+          "view_Users": {
+            "type": "boolean"
+          },
+          "view_Inventory": {
+            "type": "boolean"
+          },
+          "view_Purchase_Orders": {
+            "type": "boolean"
+          },
+          "view_Order_Fulfillment": {
+            "type": "boolean"
+          },
+          "view_Stock_Transfer": {
+            "type": "boolean"
+          },
+          "view_Sales": {
+            "type": "boolean"
+          },
+          "create_Data": {
+            "type": "boolean"
+          },
+          "update_Data": {
+            "type": "boolean"
+          },
+          "delete_Data": {
+            "type": "boolean"
+          },
+          "created_At": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updated_At": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "is_Active": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "RolePermissionDtoApiResponseDto": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "data": {
+            "$ref": "#/components/schemas/RolePermissionDto"
+          },
+          "statusCode": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "RolePermissionDtoIEnumerableApiResponseDto": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RolePermissionDto"
+            },
+            "nullable": true
+          },
+          "statusCode": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "RolePermissionDtoPaginatedResponseDto": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RolePermissionDto"
+            },
+            "nullable": true
+          },
+          "total": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "skip": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "take": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "page": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "hasNextPage": {
+            "type": "boolean"
+          },
+          "hasPreviousPage": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "RolePermissionDtoPaginatedResponseDtoApiResponseDto": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "data": {
+            "$ref": "#/components/schemas/RolePermissionDtoPaginatedResponseDto"
+          },
+          "statusCode": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "SalesDetailDto": {
         "type": "object",
         "properties": {
@@ -6255,6 +6866,58 @@
         },
         "additionalProperties": false
       },
+      "UpdateRolePermissionRequestDto": {
+        "type": "object",
+        "properties": {
+          "role_Name": {
+            "type": "string",
+            "nullable": true
+          },
+          "view_Items": {
+            "type": "boolean"
+          },
+          "view_Locations": {
+            "type": "boolean"
+          },
+          "view_Vendors": {
+            "type": "boolean"
+          },
+          "view_Customers": {
+            "type": "boolean"
+          },
+          "view_Users": {
+            "type": "boolean"
+          },
+          "view_Inventory": {
+            "type": "boolean"
+          },
+          "view_Purchase_Orders": {
+            "type": "boolean"
+          },
+          "view_Order_Fulfillment": {
+            "type": "boolean"
+          },
+          "view_Stock_Transfer": {
+            "type": "boolean"
+          },
+          "view_Sales": {
+            "type": "boolean"
+          },
+          "create_Data": {
+            "type": "boolean"
+          },
+          "update_Data": {
+            "type": "boolean"
+          },
+          "delete_Data": {
+            "type": "boolean"
+          },
+          "is_Active": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
       "UpdateUserRequestDto": {
         "type": "object",
         "properties": {
@@ -6325,6 +6988,10 @@
           "role": {
             "type": "integer",
             "format": "int32"
+          },
+          "role_Name": {
+            "type": "string",
+            "nullable": true
           },
           "creation_Date": {
             "type": "string",
