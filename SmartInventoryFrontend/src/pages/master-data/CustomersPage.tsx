@@ -6,17 +6,24 @@ import { AddCustomerModal } from '@/components/modals/AddCustomerModal'
 import { EditCustomerModal } from '@/components/modals/EditCustomerModal'
 import { Customer, CreateCustomerRequest, UpdateCustomerRequest } from '@/types/customer'
 import { Plus, Search, X } from 'lucide-react'
+import { useAuth, useRolePermissions } from '@/hooks'
 
 const PAGE_SIZE = 10
 
 export const CustomersPage = () => {
   const dispatch = useAppDispatch()
+  const { user } = useAuth()
+  const { permissions } = useRolePermissions(user?.role)
   const [currentPage, setCurrentPage] = useState(1)
   const [searchInput, setSearchInput] = useState('')
   const [isAddCustomerOpen, setIsAddCustomerOpen] = useState(false)
   const [isEditCustomerOpen, setIsEditCustomerOpen] = useState(false)
   const [selectedCustomer, setSelectedCustomer] = useState<Customer | null>(null)
   const { customers, loading, total } = useAppSelector((state) => state.customers)
+
+  const canEdit = permissions?.update_Data ?? false
+  const canDelete = permissions?.delete_Data ?? false
+  const canCreate = permissions?.create_Data ?? false
 
   // Debounced search effect
   useEffect(() => {
@@ -52,9 +59,10 @@ export const CustomersPage = () => {
   }, [dispatch])
 
   const handleRowDoubleClick = useCallback((customer: Customer) => {
+    if (!canEdit && !canDelete) return
     setSelectedCustomer(customer)
     setIsEditCustomerOpen(true)
-  }, [])
+  }, [canEdit, canDelete])
 
   const handleUpdateCustomer = useCallback(async (formData: UpdateCustomerRequest) => {
     if (!selectedCustomer) return
@@ -125,7 +133,9 @@ export const CustomersPage = () => {
         </div>
         <button
           onClick={() => setIsAddCustomerOpen(true)}
-          className="flex items-center gap-2 px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors"
+          disabled={!canCreate}
+          title={!canCreate ? 'You do not have permission to create customers' : ''}
+          className="flex items-center gap-2 px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
         >
           <Plus size={20} />
           Add Customer
@@ -190,6 +200,8 @@ export const CustomersPage = () => {
         onUpdate={handleUpdateCustomer}
         onDelete={handleDeleteCustomer}
         isLoading={loading}
+        canUpdate={canEdit}
+        canDelete={canDelete}
       />
     </div>
   )

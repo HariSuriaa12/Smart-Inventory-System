@@ -6,17 +6,24 @@ import { AddLocationModal } from '@/components/modals/AddLocationModal'
 import { EditLocationModal } from '@/components/modals/EditLocationModal'
 import { Location, CreateLocationRequest, UpdateLocationRequest, LocationTypeLabel } from '@/types/location'
 import { Plus, Search, X } from 'lucide-react'
+import { useAuth, useRolePermissions } from '@/hooks'
 
 const PAGE_SIZE = 10
 
 export const LocationsPage = () => {
   const dispatch = useAppDispatch()
+  const { user } = useAuth()
+  const { permissions } = useRolePermissions(user?.role)
   const [currentPage, setCurrentPage] = useState(1)
   const [searchInput, setSearchInput] = useState('')
   const [isAddLocationOpen, setIsAddLocationOpen] = useState(false)
   const [isEditLocationOpen, setIsEditLocationOpen] = useState(false)
   const [selectedLocation, setSelectedLocation] = useState<Location | null>(null)
   const { locations, loading, total } = useAppSelector((state) => state.locations)
+
+  const canEdit = permissions?.update_Data ?? false
+  const canDelete = permissions?.delete_Data ?? false
+  const canCreate = permissions?.create_Data ?? false
 
   // Debounced search effect
   useEffect(() => {
@@ -52,9 +59,10 @@ export const LocationsPage = () => {
   }, [dispatch])
 
   const handleRowDoubleClick = useCallback((location: Location) => {
+    if (!canEdit && !canDelete) return
     setSelectedLocation(location)
     setIsEditLocationOpen(true)
-  }, [])
+  }, [canEdit, canDelete])
 
   const handleUpdateLocation = useCallback(async (formData: UpdateLocationRequest) => {
     if (!selectedLocation) return
@@ -120,7 +128,9 @@ export const LocationsPage = () => {
         </div>
         <button
           onClick={() => setIsAddLocationOpen(true)}
-          className="flex items-center gap-2 px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors"
+          disabled={!canCreate}
+          title={!canCreate ? 'You do not have permission to create locations' : ''}
+          className="flex items-center gap-2 px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
         >
           <Plus size={20} />
           Add Location
@@ -185,6 +195,8 @@ export const LocationsPage = () => {
         onUpdate={handleUpdateLocation}
         onDelete={handleDeleteLocation}
         isLoading={loading}
+        canUpdate={canEdit}
+        canDelete={canDelete}
       />
     </div>
   )

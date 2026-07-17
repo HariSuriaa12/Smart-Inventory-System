@@ -6,20 +6,26 @@ import { AddUserModal } from '@/components/modals/AddUserModal'
 import { EditUserModal } from '@/components/modals/EditUserModal'
 import { User, CreateUserRequest, UpdateUserRequest, UserRoleLabel } from '@/types/auth'
 import { Plus, Search, X } from 'lucide-react'
+import { useAuth, useRolePermissions } from '@/hooks'
 
 const PAGE_SIZE = 10
 
 export const UsersPage = () => {
   const dispatch = useAppDispatch()
+  const { user } = useAuth()
+  const { permissions } = useRolePermissions(user?.role)
   const [currentPage, setCurrentPage] = useState(1)
   const [searchInput, setSearchInput] = useState('')
   const [isAddUserOpen, setIsAddUserOpen] = useState(false)
   const [isEditUserOpen, setIsEditUserOpen] = useState(false)
   const [selectedUser, setSelectedUser] = useState<User | null>(null)
   const { users, loading, total } = useAppSelector((state) => state.users)
-  const { currentUser } = useAppSelector((state) => state.auth) // Adjusted to use the correct slice if needed
-  console.log('UsersPage users:', users) // Debugging line
-  console.log('UsersPage currentUser:', currentUser) // Debugging line
+  const { currentUser } = useAppSelector((state) => state.auth)
+
+  const canEdit = permissions?.update_Data ?? false
+  const canDelete = permissions?.delete_Data ?? false
+  const canCreate = permissions?.create_Data ?? false
+
   // Debounced search effect
   useEffect(() => {
     const debounceTimer = setTimeout(() => {
@@ -54,9 +60,10 @@ export const UsersPage = () => {
   }, [dispatch])
 
   const handleRowDoubleClick = useCallback((user: User) => {
+    if (!canEdit && !canDelete) return
     setSelectedUser(user)
     setIsEditUserOpen(true)
-  }, [])
+  }, [canEdit, canDelete])
 
   const handleUpdateUser = useCallback(async (formData: UpdateUserRequest) => {
     if (!selectedUser) return
@@ -142,7 +149,9 @@ export const UsersPage = () => {
         </div>
         <button
           onClick={() => setIsAddUserOpen(true)}
-          className="flex items-center gap-2 px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors"
+          disabled={!canCreate}
+          title={!canCreate ? 'You do not have permission to create users' : ''}
+          className="flex items-center gap-2 px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
         >
           <Plus size={20} />
           Add User
@@ -207,6 +216,8 @@ export const UsersPage = () => {
         onUpdate={handleUpdateUser}
         onDelete={handleDeleteUser}
         isLoading={loading}
+        canUpdate={canEdit}
+        canDelete={canDelete}
       />
     </div>
   )

@@ -52,7 +52,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ open, collapsed = false, onTog
     if (permissions?.view_Vendors) menu.push({ title: 'Vendors', href: '/app/master-data/vendors', icon: <Building2 size={16} /> })
     if (permissions?.view_Customers) menu.push({ title: 'Customers', href: '/app/master-data/customers', icon: <Users size={16} /> })
     if (permissions?.view_Users) menu.push({ title: 'Users', href: '/app/master-data/users', icon: <Users size={16} /> })
-    if (user?.role === 1) menu.push({ title: 'Role Permissions', href: '/app/master-data/role-permissions', icon: <Shield size={16} /> })
+    if (user?.role === 1) menu.push({ title: 'Role Permissions', href: '/app/master-data/role-permissions', icon: <Shield size={16} /> }) // Admin role = 1
     return menu
   }, [permissions, user?.role])
 

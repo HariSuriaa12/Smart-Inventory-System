@@ -10,9 +10,11 @@ interface EditCustomerModalProps {
   onUpdate: (data: UpdateCustomerRequest) => Promise<void>
   onDelete: () => Promise<void>
   isLoading?: boolean
+  canUpdate?: boolean
+  canDelete?: boolean
 }
 
-export const EditCustomerModal = ({ isOpen, customer, onClose, onUpdate, onDelete, isLoading = false }: EditCustomerModalProps) => {
+export const EditCustomerModal = ({ isOpen, customer, onClose, onUpdate, onDelete, isLoading = false, canUpdate = true, canDelete = true }: EditCustomerModalProps) => {
   const [formData, setFormData] = useState<UpdateCustomerRequest>({
     company_Name: '',
     customer_Code: '',
@@ -270,8 +272,9 @@ export const EditCustomerModal = ({ isOpen, customer, onClose, onUpdate, onDelet
             <button
               type="button"
               onClick={() => setShowDeleteConfirm(true)}
-              disabled={isLoading || showDeleteConfirm}
-              className="px-4 py-2 text-red-600 bg-red-50 rounded-lg hover:bg-red-100 transition-colors disabled:opacity-50 flex items-center gap-2"
+              disabled={isLoading || showDeleteConfirm || !canDelete}
+              title={!canDelete ? 'You do not have permission to delete customers' : ''}
+              className="px-4 py-2 text-red-600 bg-red-50 rounded-lg hover:bg-red-100 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
             >
               <Trash2 size={16} />
               Delete
@@ -289,8 +292,9 @@ export const EditCustomerModal = ({ isOpen, customer, onClose, onUpdate, onDelet
             </button>
             <button
               type="submit"
-              disabled={isLoading || !hasChanges}
-              className="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors disabled:opacity-50"
+              disabled={isLoading || !hasChanges || !canUpdate}
+              title={!canUpdate ? 'You do not have permission to update customers' : ''}
+              className="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isLoading ? 'Updating...' : 'Update'}
             </button>

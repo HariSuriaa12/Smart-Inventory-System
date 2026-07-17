@@ -10,9 +10,11 @@ interface EditVendorModalProps {
   onUpdate: (data: UpdateVendorRequest) => Promise<void>
   onDelete: () => Promise<void>
   isLoading?: boolean
+  canUpdate?: boolean
+  canDelete?: boolean
 }
 
-export const EditVendorModal = ({ isOpen, vendor, onClose, onUpdate, onDelete, isLoading = false }: EditVendorModalProps) => {
+export const EditVendorModal = ({ isOpen, vendor, onClose, onUpdate, onDelete, isLoading = false, canUpdate = true, canDelete = true }: EditVendorModalProps) => {
   const [formData, setFormData] = useState<UpdateVendorRequest>({
     company_Name: '',
     vendor_Code: '',
@@ -246,8 +248,9 @@ export const EditVendorModal = ({ isOpen, vendor, onClose, onUpdate, onDelete, i
             <button
               type="button"
               onClick={() => setShowDeleteConfirm(true)}
-              disabled={isLoading || showDeleteConfirm}
-              className="px-4 py-2 text-red-600 bg-red-50 rounded-lg hover:bg-red-100 transition-colors disabled:opacity-50 flex items-center gap-2"
+              disabled={isLoading || showDeleteConfirm || !canDelete}
+              title={!canDelete ? 'You do not have permission to delete vendors' : ''}
+              className="px-4 py-2 text-red-600 bg-red-50 rounded-lg hover:bg-red-100 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
             >
               <Trash2 size={16} />
               Delete
@@ -265,8 +268,9 @@ export const EditVendorModal = ({ isOpen, vendor, onClose, onUpdate, onDelete, i
             </button>
             <button
               type="submit"
-              disabled={isLoading || !hasChanges}
-              className="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors disabled:opacity-50"
+              disabled={isLoading || !hasChanges || !canUpdate}
+              title={!canUpdate ? 'You do not have permission to update vendors' : ''}
+              className="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isLoading ? 'Updating...' : 'Update'}
             </button>

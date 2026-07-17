@@ -6,17 +6,24 @@ import { AddVendorModal } from '@/components/modals/AddVendorModal'
 import { EditVendorModal } from '@/components/modals/EditVendorModal'
 import { Vendor, CreateVendorRequest, UpdateVendorRequest } from '@/types/vendor'
 import { Plus, Search, X } from 'lucide-react'
+import { useAuth, useRolePermissions } from '@/hooks'
 
 const PAGE_SIZE = 10
 
 export const VendorsPage = () => {
   const dispatch = useAppDispatch()
+  const { user } = useAuth()
+  const { permissions } = useRolePermissions(user?.role)
   const [currentPage, setCurrentPage] = useState(1)
   const [searchInput, setSearchInput] = useState('')
   const [isAddVendorOpen, setIsAddVendorOpen] = useState(false)
   const [isEditVendorOpen, setIsEditVendorOpen] = useState(false)
   const [selectedVendor, setSelectedVendor] = useState<Vendor | null>(null)
   const { vendors, loading, total } = useAppSelector((state) => state.vendors)
+
+  const canEdit = permissions?.update_Data ?? false
+  const canDelete = permissions?.delete_Data ?? false
+  const canCreate = permissions?.create_Data ?? false
 
   // Debounced search effect
   useEffect(() => {
@@ -52,9 +59,10 @@ export const VendorsPage = () => {
   }, [dispatch])
 
   const handleRowDoubleClick = useCallback((vendor: Vendor) => {
+    if (!canEdit && !canDelete) return
     setSelectedVendor(vendor)
     setIsEditVendorOpen(true)
-  }, [])
+  }, [canEdit, canDelete])
 
   const handleUpdateVendor = useCallback(async (formData: UpdateVendorRequest) => {
     if (!selectedVendor) return
@@ -125,7 +133,9 @@ export const VendorsPage = () => {
         </div>
         <button
           onClick={() => setIsAddVendorOpen(true)}
-          className="flex items-center gap-2 px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors"
+          disabled={!canCreate}
+          title={!canCreate ? 'You do not have permission to create vendors' : ''}
+          className="flex items-center gap-2 px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
         >
           <Plus size={20} />
           Add Vendor
@@ -190,6 +200,8 @@ export const VendorsPage = () => {
         onUpdate={handleUpdateVendor}
         onDelete={handleDeleteVendor}
         isLoading={loading}
+        canUpdate={canEdit}
+        canDelete={canDelete}
       />
     </div>
   )
