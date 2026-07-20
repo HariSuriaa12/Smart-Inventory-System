@@ -9,6 +9,7 @@ import {
   LocationInventoryData,
   TopSellingItem,
   InventoryTrendData,
+  ForecastedResult,
 } from '@/services/dashboardService'
 import { Package, MapPin, ShoppingCart, TrendingUp, AlertCircle, Loader, Eye, BarChart3 } from 'lucide-react'
 
@@ -21,7 +22,7 @@ export const DashboardPage = () => {
   const [inventory, setInventory] = useState<LocationInventoryData[]>([])
   const [topSellingItems, setTopSellingItems] = useState<TopSellingItem[]>([])
   const [inventoryTrend, setInventoryTrend] = useState<InventoryTrendData[]>([])
-  const [forecasts, setForecasts] = useState<any[]>([])
+  const [forecasts, setForecasts] = useState<ForecastedResult[]>([])
   const [loading, setLoading] = useState(true)
 
   // Fetch master stats on mount
@@ -299,34 +300,32 @@ export const DashboardPage = () => {
               <table className="w-full">
                 <thead>
                   <tr className="border-b border-gray-200">
-                    <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700">Item</th>
-                    <th className="text-right py-3 px-4 text-sm font-semibold text-gray-700">Forecasted</th>
-                    <th className="text-right py-3 px-4 text-sm font-semibold text-gray-700">Actual</th>
-                    <th className="text-right py-3 px-4 text-sm font-semibold text-gray-700">Accuracy</th>
+                    <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700">Item Code</th>
+                    <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700">Item Name</th>
+                    <th className="text-right py-3 px-4 text-sm font-semibold text-gray-700">Forecasted Qty</th>
                     <th className="text-center py-3 px-4 text-sm font-semibold text-gray-700">Method</th>
+                    <th className="text-center py-3 px-4 text-sm font-semibold text-gray-700">Model</th>
+                    <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700">Forecast Date</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {forecasts.map((forecast: any, idx: number) => (
+                  {forecasts.map((forecast, idx) => (
                     <tr key={idx} className="border-b border-gray-100 hover:bg-gray-50">
-                      <td className="py-3 px-4 text-sm text-gray-900 font-medium">
-                        {forecast.item_Name || forecast.itemName || 'Unknown'}
-                      </td>
+                      <td className="py-3 px-4 text-sm font-medium text-gray-900">{forecast.itemCode}</td>
+                      <td className="py-3 px-4 text-sm text-gray-600">{forecast.itemName}</td>
                       <td className="py-3 px-4 text-sm text-right text-gray-900 font-medium">
-                        {Math.round(forecast.forecasted_Value || forecast.forecastedValue || 0)}
-                      </td>
-                      <td className="py-3 px-4 text-sm text-right text-gray-600">
-                        {Math.round(forecast.actual_Value || forecast.actualValue || 0)}
-                      </td>
-                      <td className="py-3 px-4 text-sm text-right">
-                        <span className="inline-block bg-green-100 text-green-800 px-2 py-1 rounded font-semibold">
-                          {(forecast.accuracy || 85).toFixed(1)}%
-                        </span>
+                        {Math.round(forecast.forecastedQuantity)} units
                       </td>
                       <td className="py-3 px-4 text-center">
                         <Badge variant="info" size="sm">
-                          {forecast.method_Name || forecast.methodName || 'ANN'}
+                          {forecast.forecastMethod === 0 ? 'ANN' : 'MA'}
                         </Badge>
+                      </td>
+                      <td className="py-3 px-4 text-center text-sm text-gray-600">
+                        v{forecast.modelVersion}
+                      </td>
+                      <td className="py-3 px-4 text-sm text-gray-600">
+                        {new Date(forecast.creationDate).toLocaleDateString()}
                       </td>
                     </tr>
                   ))}

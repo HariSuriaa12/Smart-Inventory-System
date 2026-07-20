@@ -17,6 +17,7 @@ public interface IUnitOfWork : IDisposable
     ISalesRepository Sales { get; }
     IStockTransferRepository StockTransfers { get; }
     IRolePermissionRepository RolePermissions { get; }
+    IForecastingRepository Forecasting { get; }
     IGenericRepository<PerformLog> PerformLogs { get; }
     IGenericRepository<PriceLog> PriceLogs { get; }
     IGenericRepository<InventoryLog> InventoryLogs { get; }

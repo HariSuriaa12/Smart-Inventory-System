@@ -18,6 +18,7 @@ public class UnitOfWork : IUnitOfWork
     private ISalesRepository? _salesRepository;
     private IStockTransferRepository? _stockTransferRepository;
     private IRolePermissionRepository? _rolePermissionRepository;
+    private IForecastingRepository? _forecastingRepository;
     private IGenericRepository<PerformLog>? _performLogRepository;
     private IGenericRepository<PriceLog>? _priceLogRepository;
     private IGenericRepository<InventoryLog>? _inventoryLogRepository;
@@ -40,6 +41,7 @@ public class UnitOfWork : IUnitOfWork
     public ISalesRepository Sales => _salesRepository ??= new SalesRepository(_context);
     public IStockTransferRepository StockTransfers => _stockTransferRepository ??= new StockTransferRepository(_context);
     public IRolePermissionRepository RolePermissions => _rolePermissionRepository ??= new RolePermissionRepository(_context);
+    public IForecastingRepository Forecasting => _forecastingRepository ??= new ForecastingRepository(_context);
     public IGenericRepository<PerformLog> PerformLogs => _performLogRepository ??= new GenericRepository<PerformLog>(_context);
     public IGenericRepository<PriceLog> PriceLogs => _priceLogRepository ??= new GenericRepository<PriceLog>(_context);
     public IGenericRepository<InventoryLog> InventoryLogs => _inventoryLogRepository ??= new GenericRepository<InventoryLog>(_context);

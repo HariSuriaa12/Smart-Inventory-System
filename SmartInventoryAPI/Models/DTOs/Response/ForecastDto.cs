@@ -4,6 +4,7 @@ public class ForecastDto
 {
     public long ID { get; set; }
     public long Item_ID { get; set; }
+    public string? Item_Code { get; set; }
     public string? Item_Name { get; set; }
     public long Location_ID { get; set; }
     public string? Location_Name { get; set; }

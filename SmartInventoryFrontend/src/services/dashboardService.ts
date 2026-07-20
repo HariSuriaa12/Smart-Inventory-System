@@ -32,6 +32,17 @@ export interface TopSellingItem {
   averagePrice: number
 }
 
+export interface ForecastedResult {
+  id: number
+  itemId: number
+  itemCode: string
+  itemName: string
+  forecastedQuantity: number
+  forecastMethod: number
+  modelVersion: string
+  creationDate: string
+}
+
 export const dashboardService = {
   // Get master stats - master data endpoints
   getStats: async (): Promise<DashboardStats> => {
@@ -147,11 +158,24 @@ export const dashboardService = {
     }
   },
 
-  // Get forecasts
-  getForecasts: async () => {
+  // Get forecasts by location
+  getForecasts: async (locationId: number): Promise<ForecastedResult[]> => {
     try {
-      const response = await api.get<ApiResponse<any>>('/api/forecasting')
-      return response.data?.data || []
+      const response = await api.get<ApiResponse<PaginatedResponse<any>>>(`/api/forecasting/location/${locationId}`, {
+        params: { skip: 0, take: 100 },
+      })
+      return (
+        response.data?.data?.data?.map((forecast: any) => ({
+          id: forecast.iD,
+          itemId: forecast.item_ID,
+          itemCode: forecast.item_Code || '',
+          itemName: forecast.item_Name || '',
+          forecastedQuantity: forecast.forecasted_Quantity || 0,
+          forecastMethod: forecast.forecast_Method || 0,
+          modelVersion: forecast.model_Version || '0',
+          creationDate: forecast.creation_Date || new Date().toISOString(),
+        })) || []
+      )
     } catch (error) {
       console.error('Failed to fetch forecasts:', error)
       return []

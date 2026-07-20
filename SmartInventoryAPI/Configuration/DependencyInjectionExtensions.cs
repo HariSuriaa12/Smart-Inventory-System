@@ -23,6 +23,7 @@ public static class DependencyInjectionExtensions
         services.AddScoped<ISalesRepository, SalesRepository>();
         services.AddScoped<IStockTransferRepository, StockTransferRepository>();
         services.AddScoped<IRolePermissionRepository, RolePermissionRepository>();
+        services.AddScoped<IForecastingRepository, ForecastingRepository>();
 
         // Register services
         services.AddScoped<ILoggingService, LoggingService>();
@@ -39,6 +40,7 @@ public static class DependencyInjectionExtensions
         services.AddScoped<ISalesService, SalesService>();
         services.AddScoped<IStockTransferService, StockTransferService>();
         services.AddScoped<IRolePermissionService, RolePermissionService>();
+        services.AddScoped<IForecastingService, ForecastingService>();
 
         return services;
     }
