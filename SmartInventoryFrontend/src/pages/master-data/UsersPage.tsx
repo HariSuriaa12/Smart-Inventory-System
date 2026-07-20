@@ -113,11 +113,11 @@ export const UsersPage = () => {
       width: '200px',
     },
     {
-      key: 'role',
+      key: 'role_Name',
       label: 'Role',
       width: '120px',
       //render: (value) => UserRoleLabel[value] || value,
-      render: (value) => UserRoleLabel[value] || value,
+      render: (value) => value || '-',
     },
     {
       key: 'staff_Code',

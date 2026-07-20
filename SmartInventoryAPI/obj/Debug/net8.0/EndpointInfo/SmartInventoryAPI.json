@@ -284,6 +284,64 @@
         }
       }
     },
+    "/api/Forecasting/location/{locationId}": {
+      "get": {
+        "tags": [
+          "Forecasting"
+        ],
+        "parameters": [
+          {
+            "name": "locationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "skip",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          },
+          {
+            "name": "take",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 10
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ForecastDtoPaginatedResponseDtoApiResponseDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ForecastDtoPaginatedResponseDtoApiResponseDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ForecastDtoPaginatedResponseDtoApiResponseDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/Inventory/{id}": {
       "get": {
         "tags": [
@@ -4573,6 +4631,122 @@
           },
           "data": {
             "$ref": "#/components/schemas/CustomerDtoPaginatedResponseDto"
+          },
+          "statusCode": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ForecastDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "item_ID": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "item_Code": {
+            "type": "string",
+            "nullable": true
+          },
+          "item_Name": {
+            "type": "string",
+            "nullable": true
+          },
+          "location_ID": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "location_Name": {
+            "type": "string",
+            "nullable": true
+          },
+          "forecasted_Period_In_Days": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "forecasted_Quantity": {
+            "type": "number",
+            "format": "double"
+          },
+          "forecast_Method": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "model_Version": {
+            "type": "string",
+            "nullable": true
+          },
+          "creation_Date": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ForecastDtoPaginatedResponseDto": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ForecastDto"
+            },
+            "nullable": true
+          },
+          "total": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "skip": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "take": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "page": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "hasNextPage": {
+            "type": "boolean"
+          },
+          "hasPreviousPage": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ForecastDtoPaginatedResponseDtoApiResponseDto": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "data": {
+            "$ref": "#/components/schemas/ForecastDtoPaginatedResponseDto"
           },
           "statusCode": {
             "type": "integer",

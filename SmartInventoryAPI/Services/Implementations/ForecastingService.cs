@@ -37,8 +37,8 @@ public class ForecastingService : IForecastingService
         {
             Data = forecastDtos,
             Total = total,
-            PageSize = take,
-            CurrentPage = page,
+            Take = take,
+            Page = page,
             TotalPages = (int)Math.Ceiling(total / (double)take)
         };
     }

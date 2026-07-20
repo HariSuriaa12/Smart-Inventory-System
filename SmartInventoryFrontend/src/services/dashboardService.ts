@@ -164,6 +164,7 @@ export const dashboardService = {
       const response = await api.get<ApiResponse<PaginatedResponse<any>>>(`/api/forecasting/location/${locationId}`, {
         params: { skip: 0, take: 100 },
       })
+      console.log('Forecasts response:', response.data)
       return (
         response.data?.data?.data?.map((forecast: any) => ({
           id: forecast.iD,

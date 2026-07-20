@@ -166,6 +166,42 @@
     ]
   },
   {
+    "ContainingType": "SmartInventoryAPI.Controllers.ForecastingController",
+    "Method": "GetByLocation",
+    "RelativePath": "api/Forecasting/location/{locationId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "locationId",
+        "Type": "System.Int64",
+        "IsRequired": true
+      },
+      {
+        "Name": "skip",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "take",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "SmartInventoryAPI.Models.DTOs.Response.ApiResponseDto\u00601[[SmartInventoryAPI.Models.DTOs.Response.PaginatedResponseDto\u00601[[SmartInventoryAPI.Models.DTOs.Response.ForecastDto, SmartInventoryAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], SmartInventoryAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
     "ContainingType": "SmartInventoryAPI.Controllers.InventoryController",
     "Method": "GetInventoryById",
     "RelativePath": "api/Inventory/{id}",

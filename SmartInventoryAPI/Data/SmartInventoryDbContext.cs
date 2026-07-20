@@ -348,10 +348,24 @@ public class SmartInventoryDbContext : DbContext
             .HasForeignKey(si => si.Item_ID)
             .OnDelete(DeleteBehavior.Restrict);
 
+        //User
         modelBuilder.Entity<User>()
             .HasOne(u => u.Role_Permission)
             .WithMany()
             .HasForeignKey(r => r.Role)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        //Forecast relationship
+        modelBuilder.Entity<ForecastedResult>()
+            .HasOne(u => u.Item)
+            .WithMany()
+            .HasForeignKey(r => r.Item_ID)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<ForecastedResult>()
+            .HasOne(u => u.Location)
+            .WithMany()
+            .HasForeignKey(r => r.Location_ID)
             .OnDelete(DeleteBehavior.Restrict);
     }
 }
