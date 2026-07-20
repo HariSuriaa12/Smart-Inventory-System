@@ -24,6 +24,8 @@ public class UserRepository : GenericRepository<User>, IUserRepository
     public async Task<IEnumerable<User>> GetActiveUsersAsync(int skip = 0, int take = 10)
     {
         return await _dbSet.Where(u => !u.Is_Deleted)
+            .Include(p => p.Role_Permission)
+            //.ThenInclude(i => i.Item)
             .Skip(skip)
             .Take(take)
             .ToListAsync();
