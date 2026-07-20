@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useAppSelector } from '@/store/hooks'
 import { Card, Badge } from '@/components'
 import { useLocationModal } from '@/context/LocationModalContext'
+import { PreviewDownloadModal } from '@/components/modals/PreviewDownloadModal'
 import {
   dashboardService,
   DashboardStats,
@@ -12,6 +13,7 @@ import {
   ForecastedResult,
 } from '@/services/dashboardService'
 import { Package, MapPin, ShoppingCart, TrendingUp, AlertCircle, Loader, Eye, BarChart3 } from 'lucide-react'
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts'
 
 export const DashboardPage = () => {
   const { openLocationModal } = useLocationModal()
@@ -24,6 +26,7 @@ export const DashboardPage = () => {
   const [inventoryTrend, setInventoryTrend] = useState<InventoryTrendData[]>([])
   const [forecasts, setForecasts] = useState<ForecastedResult[]>([])
   const [loading, setLoading] = useState(true)
+  const [showForecastModal, setShowForecastModal] = useState(false)
 
   // Fetch master stats on mount
   useEffect(() => {
@@ -282,58 +285,99 @@ export const DashboardPage = () => {
         </Card>
 
         {/* Forecasting Results */}
-        <Card title="Forecasted Results" subtitle="AI-powered demand forecasts">
-          {loading ? (
-            <div className="flex items-center justify-center py-8">
-              <Loader className="animate-spin text-gray-400" size={32} />
-            </div>
-          ) : forecasts.length === 0 ? (
-            <div className="flex flex-col items-center justify-center py-12 text-gray-400">
-              <Eye size={40} className="mb-3" />
-              <p className="text-gray-600">No forecast data available</p>
-              <p className="text-sm text-gray-500 mt-1">
-                Forecasts will appear once enough historical data is collected
-              </p>
-            </div>
-          ) : (
-            <div className="overflow-x-auto">
-              <table className="w-full">
-                <thead>
-                  <tr className="border-b border-gray-200">
-                    <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700">Item Code</th>
-                    <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700">Item Name</th>
-                    <th className="text-right py-3 px-4 text-sm font-semibold text-gray-700">Forecasted Qty</th>
-                    <th className="text-center py-3 px-4 text-sm font-semibold text-gray-700">Method</th>
-                    <th className="text-center py-3 px-4 text-sm font-semibold text-gray-700">Model</th>
-                    <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700">Forecast Date</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {forecasts.map((forecast, idx) => (
-                    <tr key={idx} className="border-b border-gray-100 hover:bg-gray-50">
-                      <td className="py-3 px-4 text-sm font-medium text-gray-900">{forecast.itemCode}</td>
-                      <td className="py-3 px-4 text-sm text-gray-600">{forecast.itemName}</td>
-                      <td className="py-3 px-4 text-sm text-right text-gray-900 font-medium">
-                        {Math.round(forecast.forecastedQuantity)} units
-                      </td>
-                      <td className="py-3 px-4 text-center">
-                        <Badge variant="info" size="sm">
-                          {forecast.forecastMethod === 0 ? 'ANN' : 'MA'}
-                        </Badge>
-                      </td>
-                      <td className="py-3 px-4 text-center text-sm text-gray-600">
-                        v{forecast.modelVersion}
-                      </td>
-                      <td className="py-3 px-4 text-sm text-gray-600">
-                        {new Date(forecast.creationDate).toLocaleDateString()}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          )}
+        <Card
+          title="Forecasted Results"
+          subtitle="AI-powered demand forecasts - 30 day projection"
+          className="mb-6"
+        >
+          <div className="flex flex-col gap-6">
+            {/* Chart Section */}
+            {loading ? (
+              <div className="flex items-center justify-center py-12">
+                <Loader className="animate-spin text-gray-400" size={32} />
+              </div>
+            ) : forecasts.length === 0 ? (
+              <div className="flex flex-col items-center justify-center py-12 text-gray-400">
+                <Eye size={40} className="mb-3" />
+                <p className="text-gray-600">No forecast data available</p>
+                <p className="text-sm text-gray-500 mt-1">
+                  Forecasts will appear once enough historical data is collected
+                </p>
+              </div>
+            ) : (
+              <>
+                {/* Line Chart */}
+                <div className="w-full h-80">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <LineChart data={forecasts}>
+                      <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+                      <XAxis
+                        dataKey="itemCode"
+                        stroke="#888"
+                        style={{ fontSize: '12px' }}
+                      />
+                      <YAxis stroke="#888" style={{ fontSize: '12px' }} />
+                      <Tooltip
+                        contentStyle={{
+                          backgroundColor: '#fff',
+                          border: '1px solid #ccc',
+                          borderRadius: '4px',
+                        }}
+                        formatter={(value: any) => [Math.round(value), 'Forecasted Qty']}
+                        labelFormatter={(label) => `Item: ${label}`}
+                      />
+                      <Legend />
+                      <Line
+                        type="monotone"
+                        dataKey="forecastedQuantity"
+                        stroke="#3b82f6"
+                        strokeWidth={2}
+                        dot={{ fill: '#3b82f6', r: 4 }}
+                        activeDot={{ r: 6 }}
+                        name="Forecasted Quantity"
+                      />
+                    </LineChart>
+                  </ResponsiveContainer>
+                </div>
+
+                {/* Preview & Download Button */}
+                <div className="flex justify-end">
+                  <button
+                    onClick={() => setShowForecastModal(true)}
+                    className="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition font-medium flex items-center gap-2"
+                  >
+                    <Eye size={18} />
+                    Preview & Download
+                  </button>
+                </div>
+              </>
+            )}
+          </div>
         </Card>
+
+        {/* Preview Download Modal */}
+        <PreviewDownloadModal
+          isOpen={showForecastModal}
+          onClose={() => setShowForecastModal(false)}
+          title="Forecasted Results - Preview"
+          data={forecasts.map((f) => ({
+            'Item Code': f.itemCode,
+            'Item Name': f.itemName,
+            'Forecasted Qty': f.forecastedQuantity,
+            'Method': f.forecastMethod === 0 ? 'ANN' : 'MA',
+            'Model Version': f.modelVersion,
+            'Forecast Date': new Date(f.creationDate).toLocaleDateString(),
+          }))}
+          columns={[
+            { key: 'Item Code', label: 'Item Code' },
+            { key: 'Item Name', label: 'Item Name' },
+            { key: 'Forecasted Qty', label: 'Forecasted Qty' },
+            { key: 'Method', label: 'Method' },
+            { key: 'Model Version', label: 'Model Version' },
+            { key: 'Forecast Date', label: 'Forecast Date' },
+          ]}
+          filename="forecasted_results"
+        />
 
         {/* Top Inventory Items */}
         <Card title="Current Inventory" subtitle={`Top items by value at ${currentLocation?.location_Name || 'selected location'}`} className="mt-6">
