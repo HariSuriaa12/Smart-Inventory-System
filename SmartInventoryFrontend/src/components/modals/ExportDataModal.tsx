@@ -31,11 +31,11 @@ export const ExportDataModal = ({ isOpen, onClose }: ExportDataModalProps) => {
   const [loading, setLoading] = useState(false)
   const [expandedModules, setExpandedModules] = useState(true)
 
-  if (!isOpen) return null
-
   const availableModules = useMemo(() => {
     return EXPORT_MODULES[exportType]
   }, [exportType])
+
+  if (!isOpen) return null
 
   const handleExportTypeChange = (type: ExportType) => {
     setExportType(type)

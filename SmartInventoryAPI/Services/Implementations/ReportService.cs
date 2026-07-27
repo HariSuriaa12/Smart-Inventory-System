@@ -1,4 +1,5 @@
 using AutoMapper;
+using SmartInventoryAPI.Models.Data_Enums;
 using SmartInventoryAPI.Repositories.Interfaces;
 using SmartInventoryAPI.Services.Interfaces;
 using SmartInventoryAPI.Utilities;
@@ -236,7 +237,6 @@ public class ReportService : IReportService
             { "Location", inv.Location?.Location_Name ?? "" },
             { "On-Hand Qty", inv.On_Hand_Quantity },
             { "Available Qty", inv.Available_Quantity },
-            { "Last Updated", inv.Last_Updated_Date }
         }).ToList();
     }
 
@@ -289,12 +289,14 @@ public class ReportService : IReportService
                 {
                     { "PO ID", po.ID },
                     { "PO Ref No", po.PO_Reference_No ?? "" },
+                    { "Status", (PurchaseOrderHeaderStatusEnum)po.Status },
+                    { "Remark", po.Remark },
                     { "Item Code", item.Item?.Item_Code ?? "" },
                     { "Item Name", item.Item?.Item_Name ?? "" },
-                    { "Quantity", item.Quantity },
+                    { "Ordered Quantity", item.Order_Quantity },
+                    { "Received Quantity", item.Received_Quantity },
                     { "Unit Price", item.Unit_Price },
-                    { "Total Price", item.Total_Price },
-                    { "Remarks", item.Remarks ?? "" }
+                    { "Total Price", item.Sub_Total },
                 });
             }
         }
@@ -334,10 +336,10 @@ public class ReportService : IReportService
                     { "Customer", of.Customer?.Company_Name ?? "" },
                     { "Item Code", item.Item?.Item_Code ?? "" },
                     { "Item Name", item.Item?.Item_Name ?? "" },
-                    { "Ordered Qty", item.Ordered_Quantity },
-                    { "Shipped Qty", item.Shipped_Quantity ?? 0 },
+                    { "Ordered Qty", item.Request_Quantity },
+                    { "Shipped Qty", item.Shipped_Quantity },
                     { "Unit Price", item.Unit_Price },
-                    { "Total Price", item.Total_Price }
+                    { "Total Price", item.Sub_Total }
                 });
             }
         }
@@ -376,9 +378,9 @@ public class ReportService : IReportService
                     { "Sales Number", sale.Sales_Number ?? "" },
                     { "Item Code", item.Item?.Item_Code ?? "" },
                     { "Item Name", item.Item?.Item_Name ?? "" },
-                    { "Quantity Sold", item.Quantity_Sold },
-                    { "Unit Price", item.Unit_Price },
-                    { "Total Price", item.Total_Price }
+                    { "Quantity Sold", item.Sold_Quantity },
+                    { "Item Cost", item.Item.Unit_Cost },
+                    { "Sub Total", item.Sub_Total },
                 });
             }
         }
@@ -396,11 +398,12 @@ public class ReportService : IReportService
             { "ID", st.ID },
             { "Item Code", st.Item?.Item_Code ?? "" },
             { "Item Name", st.Item?.Item_Name ?? "" },
-            { "From Location", st.From_Location?.Location_Name ?? "" },
-            { "To Location", st.To_Location?.Location_Name ?? "" },
-            { "Quantity", st.Quantity },
+            { "From Location", st.FromLocation?.Location_Name ?? "" },
+            { "To Location", st.ToLocation?.Location_Name ?? "" },
+            { "Transfer Quantity", st.Transfer_Quantity },
+            { "Received Quantity", st.Received_Quantity },
             { "Transfer Date", st.Transfer_Date },
-            { "Status", st.Status ?? "" }
+            { "Status", (StockTransferStatusEnum)st.Status }
         }).ToList();
     }
 

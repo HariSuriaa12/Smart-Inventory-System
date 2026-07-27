@@ -260,3 +260,12 @@ C:\Users\User\Documents\Hari\Unitar\Semester 6\Major Project\Smart Inventory Sys
 C:\Users\User\Documents\Hari\Unitar\Semester 6\Major Project\Smart Inventory System\SmartInventoryAPI\obj\Debug\net8.0\SmartInventoryAPI.genruntimeconfig.cache
 C:\Users\User\Documents\Hari\Unitar\Semester 6\Major Project\Smart Inventory System\SmartInventoryAPI\obj\Debug\net8.0\ref\SmartInventoryAPI.dll
 C:\Users\User\Documents\Hari\Unitar\Semester 6\Major Project\Smart Inventory System\SmartInventoryAPI\obj\Debug\net8.0\SmartInventoryAPI.sourcelink.json
+C:\Users\User\Documents\Hari\Unitar\Semester 6\Major Project\Smart Inventory System\SmartInventoryAPI\bin\Debug\net8.0\ClosedXML.dll
+C:\Users\User\Documents\Hari\Unitar\Semester 6\Major Project\Smart Inventory System\SmartInventoryAPI\bin\Debug\net8.0\ClosedXML.Parser.dll
+C:\Users\User\Documents\Hari\Unitar\Semester 6\Major Project\Smart Inventory System\SmartInventoryAPI\bin\Debug\net8.0\CsvHelper.dll
+C:\Users\User\Documents\Hari\Unitar\Semester 6\Major Project\Smart Inventory System\SmartInventoryAPI\bin\Debug\net8.0\DocumentFormat.OpenXml.dll
+C:\Users\User\Documents\Hari\Unitar\Semester 6\Major Project\Smart Inventory System\SmartInventoryAPI\bin\Debug\net8.0\DocumentFormat.OpenXml.Framework.dll
+C:\Users\User\Documents\Hari\Unitar\Semester 6\Major Project\Smart Inventory System\SmartInventoryAPI\bin\Debug\net8.0\ExcelNumberFormat.dll
+C:\Users\User\Documents\Hari\Unitar\Semester 6\Major Project\Smart Inventory System\SmartInventoryAPI\bin\Debug\net8.0\RBush.dll
+C:\Users\User\Documents\Hari\Unitar\Semester 6\Major Project\Smart Inventory System\SmartInventoryAPI\bin\Debug\net8.0\SixLabors.Fonts.dll
+C:\Users\User\Documents\Hari\Unitar\Semester 6\Major Project\Smart Inventory System\SmartInventoryAPI\bin\Debug\net8.0\System.IO.Packaging.dll

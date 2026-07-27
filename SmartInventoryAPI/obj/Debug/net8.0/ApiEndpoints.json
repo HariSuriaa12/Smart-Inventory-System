@@ -1493,6 +1493,54 @@
     ]
   },
   {
+    "ContainingType": "SmartInventoryAPI.Controllers.ReportController",
+    "Method": "ExportLoggingData",
+    "RelativePath": "api/Report/export-logging-data",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "SmartInventoryAPI.Controllers.ExportRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SmartInventoryAPI.Controllers.ReportController",
+    "Method": "ExportMasterData",
+    "RelativePath": "api/Report/export-master-data",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "SmartInventoryAPI.Controllers.ExportRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SmartInventoryAPI.Controllers.ReportController",
+    "Method": "ExportTransactionalData",
+    "RelativePath": "api/Report/export-transactional-data",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "SmartInventoryAPI.Controllers.ExportRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "SmartInventoryAPI.Controllers.RolePermissionsController",
     "Method": "GetAllRolePermissions",
     "RelativePath": "api/RolePermissions",
