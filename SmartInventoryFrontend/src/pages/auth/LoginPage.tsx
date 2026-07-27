@@ -11,7 +11,7 @@ export const LoginPage = () => {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
   const [apiError, setApiError] = useState<string | null>(null)
-
+  //console.log('LoginPage rendered')
   const { values, errors, touched, isSubmitting, handleChange, handleBlur, handleSubmit } = useForm({
     initialValues: {
       username: '',

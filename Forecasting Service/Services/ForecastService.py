@@ -44,17 +44,17 @@ class ForecastService:
                 "IsPromotion",
                 --"LocationAvgDailyDemand",
                 "QtyConsumptionToday",
-                --"QtyConsumptionYesterday",
-                --"QtyConsumptionPast7Days",
-                --"QtyConsumptionPast14Days",
+                "QtyConsumptionYesterday",
+                "QtyConsumptionPast7Days",
+                "QtyConsumptionPast14Days",
                 "QtyConsumptionPast30Days",
-                --"AvgQtyConsumptionPast7Days",
-                --"AvgQtyConsumptionPast14Days",
+                "AvgQtyConsumptionPast7Days",
+                "AvgQtyConsumptionPast14Days",
                 "AvgQtyConsumptionPast30Days",
-                --"DemandTrend7vs30",
-                "DemandTrend14vs30"
-                --"StdDevPast7Days",
-                --"StdDevPast30Days",
+                "DemandTrend7vs30",
+                "DemandTrend14vs30",
+                "StdDevPast7Days",
+                "StdDevPast30Days"
                 --"MaxQtyPast30Days",
                 --"MinQtyPast30Days",
                 --"CoeffOfVariationPast30Days",
@@ -134,7 +134,7 @@ class ForecastService:
         # formatted_df = FormatDataForANN.FormatDataFrame(
         #     ann_df
         # )
-
+        
         feature_columns = [
             "ItemCategory",
             "LocationType",
@@ -142,15 +142,21 @@ class ForecastService:
             "LocationID",
             "DayOfMonth",
             "MonthsSinceStart",
-            "IsHoliday",
-            "IsHolidayEve",
-            "IsWeekend",
-            "IsWeekendEve",
-            "IsPromotion",
-            "IsPaydayWindow",
+            #"IsHoliday",
+            #"IsHolidayEve",
+            #"IsWeekend",
+            #"IsWeekendEve",
+            #"IsPromotion",
+            #"IsPaydayWindow",
             "QtyConsumptionToday",
+            "QtyConsumptionPast7Days",
+            "QtyConsumptionPast14Days",
+            "QtyConsumptionPast30Days",
+            "AvgQtyConsumptionPast7Days",
+            "AvgQtyConsumptionPast14Days",
             "AvgQtyConsumptionPast30Days",
             "DemandTrend14vs30",
+            "StdDevPast30Days",
             "Qty_SameDayLastYear",
         ]
 
@@ -166,7 +172,10 @@ class ForecastService:
             ],
             errors="ignore"
         )
-
+        ann_input_df.to_csv(
+            "ann_input_df.csv",
+            index=False
+        )
         transformed_features = self.preprocessor.transform(
             ann_input_df
         )

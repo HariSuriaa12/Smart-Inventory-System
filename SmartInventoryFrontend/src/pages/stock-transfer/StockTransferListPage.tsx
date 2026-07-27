@@ -79,7 +79,7 @@ export const StockTransferListPage = () => {
   const canEdit = permissions?.update_Data ?? false
   const canDelete = permissions?.delete_Data ?? false
   const canCreate = permissions?.create_Data ?? false
-  console.log('User Permissions:', permissions)
+
   const [visibleColumns, setVisibleColumns] = useState<Set<string>>(() => {
     const stored = localStorage.getItem(STORAGE_KEY)
     if (stored) {

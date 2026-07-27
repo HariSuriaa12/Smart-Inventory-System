@@ -27,7 +27,7 @@ public class RolePermissionService : IRolePermissionService
         //var existingRole = await _unitOfWork.RolePermissions.GetByRoleIdAsync(request.Role_ID);
         var existingRole = await _unitOfWork.RolePermissions.GetByRoleNameAsync(request.Role_Name ?? "");
         if (existingRole != null)
-            throw new InvalidOperationException($"Role with ID {request.Role_ID} already exists");
+            throw new InvalidOperationException($"Role {request.Role_Name} already exists");
 
         var rolePermission = _mapper.Map<RolePermission>(request);
         rolePermission.created_at = DateTime.UtcNow;
@@ -117,11 +117,11 @@ public class RolePermissionService : IRolePermissionService
 
     public async Task DeleteRolePermissionAsync(int id)
     {
-        var rolePermission = await _unitOfWork.RolePermissions.GetByIdAsync(id);
+        var rolePermission = await _unitOfWork.RolePermissions.GetByIdIntAsync(id);
         if (rolePermission == null)
             throw new NotFoundException("Role permission not found");
 
-        var userCount = await _unitOfWork.RolePermissions.CountUsersWithRoleAsync(rolePermission.role_id);
+        var userCount = await _unitOfWork.RolePermissions.CountUsersWithRoleAsync(rolePermission.id);
         if (userCount > 0)
             throw new InvalidOperationException($"Cannot delete role. {userCount} user(s) are assigned to this role");
 
