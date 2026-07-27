@@ -19,17 +19,16 @@ public class ReportController : ControllerBase
         _logger = logger;
     }
 
-    [HttpGet("export-master-data")]
+    [HttpPost("export-master-data")]
     public async Task<IActionResult> ExportMasterData(
-        [FromQuery] DateTime? startDate = null,
-        [FromQuery] DateTime? endDate = null)
+        [FromBody] ExportRequest request)
     {
         try
         {
-            _logger.LogInformation("Exporting master data");
-            var csvBytes = await _reportService.ExportMasterDataAsync(startDate, endDate);
+            _logger.LogInformation("Exporting master data with modules: {Modules}", string.Join(", ", request.Modules));
+            var excelBytes = await _reportService.ExportMasterDataAsync(request.Modules, request.StartDate, request.EndDate);
             var timestamp = DateTime.UtcNow.ToString("yyyy-MM-dd_HH-mm-ss");
-            return File(csvBytes, "text/csv", $"master_data_{timestamp}.csv");
+            return File(excelBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", $"master_data_{timestamp}.xlsx");
         }
         catch (Exception ex)
         {
@@ -43,17 +42,16 @@ public class ReportController : ControllerBase
         }
     }
 
-    [HttpGet("export-transactional-data")]
+    [HttpPost("export-transactional-data")]
     public async Task<IActionResult> ExportTransactionalData(
-        [FromQuery] DateTime? startDate = null,
-        [FromQuery] DateTime? endDate = null)
+        [FromBody] ExportRequest request)
     {
         try
         {
-            _logger.LogInformation("Exporting transactional data");
-            var csvBytes = await _reportService.ExportTransactionalDataAsync(startDate, endDate);
+            _logger.LogInformation("Exporting transactional data with modules: {Modules}", string.Join(", ", request.Modules));
+            var excelBytes = await _reportService.ExportTransactionalDataAsync(request.Modules, request.StartDate, request.EndDate);
             var timestamp = DateTime.UtcNow.ToString("yyyy-MM-dd_HH-mm-ss");
-            return File(csvBytes, "text/csv", $"transactional_data_{timestamp}.csv");
+            return File(excelBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", $"transactional_data_{timestamp}.xlsx");
         }
         catch (Exception ex)
         {
@@ -67,27 +65,33 @@ public class ReportController : ControllerBase
         }
     }
 
-    [HttpGet("export-all-data")]
-    public async Task<IActionResult> ExportAllData(
-        [FromQuery] DateTime? startDate = null,
-        [FromQuery] DateTime? endDate = null)
+    [HttpPost("export-logging-data")]
+    public async Task<IActionResult> ExportLoggingData(
+        [FromBody] ExportRequest request)
     {
         try
         {
-            _logger.LogInformation("Exporting all data");
-            var csvBytes = await _reportService.ExportAllDataAsync(startDate, endDate);
+            _logger.LogInformation("Exporting logging data with modules: {Modules}", string.Join(", ", request.Modules));
+            var excelBytes = await _reportService.ExportLoggingDataAsync(request.Modules, request.StartDate, request.EndDate);
             var timestamp = DateTime.UtcNow.ToString("yyyy-MM-dd_HH-mm-ss");
-            return File(csvBytes, "text/csv", $"complete_inventory_export_{timestamp}.csv");
+            return File(excelBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", $"logging_data_{timestamp}.xlsx");
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Error exporting all data");
+            _logger.LogError(ex, "Error exporting logging data");
             return StatusCode(500, new ApiResponseDto
             {
                 Success = false,
-                Message = "Error exporting all data",
+                Message = "Error exporting logging data",
                 StatusCode = 500
             });
         }
     }
+}
+
+public class ExportRequest
+{
+    public List<string> Modules { get; set; } = new();
+    public DateTime? StartDate { get; set; }
+    public DateTime? EndDate { get; set; }
 }
