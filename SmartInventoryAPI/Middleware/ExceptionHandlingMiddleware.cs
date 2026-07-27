@@ -69,7 +69,8 @@ public class ExceptionHandlingMiddleware
                 context.Response.StatusCode = StatusCodes.Status500InternalServerError;
                 response.StatusCode = 500;
                 response.Success = false;
-                response.Message = $"An internal server error occurred. {GetAllMessages(exception)}";
+                //response.Message = $"An internal server error occurred. {GetAllMessages(exception)}";
+                response.Message = $"{GetAllMessages(exception)}";
                 break;
         }
 

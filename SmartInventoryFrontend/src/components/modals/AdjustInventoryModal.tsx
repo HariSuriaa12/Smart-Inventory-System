@@ -44,6 +44,12 @@ export const AdjustInventoryModal = ({
       return
     }
 
+    const balanceAfterAdjustment = (inventory.onHand_Quantity || 0) + qty
+    if (balanceAfterAdjustment < 0) {
+      setError('Adjustment would result in negative inventory')
+      return
+    }
+
     setLoading(true)
     setError('')
 

@@ -53,6 +53,7 @@ export interface OrderFulfillment extends Entity {
   status: OrderFulfillmentStatus
   verified_By: number
   verified_By_Name?: string
+  verified_By_Code?: string
   total_Amount: number
   customer_Id: number
   customer_Name?: string

@@ -62,7 +62,7 @@ export const RolePermissionsPage = () => {
   const handleAddRole = async () => {
     try {
       setError('')
-      if (!formData.role_ID || !formData.role_Name) {
+      if (/*!formData.role_ID || */!formData.role_Name) {
         setError('Role ID and Role Name are required')
         return
       }
@@ -111,7 +111,7 @@ export const RolePermissionsPage = () => {
       setDeleteError('')
       if (!selectedRole) return
 
-      const canDelete = await rolePermissionService.canDeleteRole(selectedRole.role_ID)
+      const canDelete = await rolePermissionService.canDeleteRole(selectedRole.id)
       if (!canDelete.data) {
         setDeleteError('Cannot delete role because users are assigned to it')
         return
@@ -226,7 +226,7 @@ export const RolePermissionsPage = () => {
               <table className="w-full">
                 <thead className="bg-gray-50 border-b">
                   <tr>
-                    <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">Role ID</th>
+                    {/* <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">Role ID</th> */}
                     <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">Role Name</th>
                     <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">View Permissions</th>
                     <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">Actions</th>
@@ -237,7 +237,7 @@ export const RolePermissionsPage = () => {
                 <tbody>
                   {roles.map(role => (
                     <tr key={role.id} className="border-b hover:bg-gray-50 transition-colors">
-                      <td className="px-6 py-4 text-sm text-gray-600">{role.role_ID}</td>
+                      {/* <td className="px-6 py-4 text-sm text-gray-600">{role.role_ID}</td> */}
                       <td className="px-6 py-4 text-sm font-medium text-gray-900">{role.role_Name}</td>
                       <td className="px-6 py-4 text-sm">
                         <div className="flex gap-1 flex-wrap max-w-xs">
@@ -314,7 +314,7 @@ export const RolePermissionsPage = () => {
               <div className="space-y-6">
                 {/* Role ID and Name */}
                 <div className="grid grid-cols-2 gap-4">
-                  <div>
+                  {/* <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">Role ID</label>
                     <input
                       type="number"
@@ -324,7 +324,7 @@ export const RolePermissionsPage = () => {
                       className="w-full px-3 py-2 border border-gray-300 rounded-lg disabled:bg-gray-50 disabled:text-gray-500"
                       placeholder="e.g., 1"
                     />
-                  </div>
+                  </div> */}
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">Role Name</label>
                     <input

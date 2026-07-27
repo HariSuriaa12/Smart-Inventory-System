@@ -101,7 +101,7 @@ export const dashboardService = {
 
       let alertId = 1
       inventory.forEach((item) => {
-        if (item.availableQty < 10 && item.availableQty >= 0) {
+        if (item.availableQty < 10/* && item.availableQty >= 0*/) {
           alerts.push({
             id: `alert-${alertId++}`,
             type: 'low-stock',

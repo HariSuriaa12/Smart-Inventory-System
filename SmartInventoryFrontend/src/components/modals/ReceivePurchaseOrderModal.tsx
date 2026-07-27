@@ -17,6 +17,7 @@ export const ReceivePurchaseOrderModal = ({ isOpen, poId, item, onClose, onSucce
   const [receivedQuantity, setReceivedQuantity] = useState('')
   const [orderedQuantity, setOrderedQuantity] = useState('')
   const [errors, setErrors] = useState<Record<string, string>>({})
+  const [errorsV2, setErrorsV2] = useState('')
   const [submitting, setSubmitting] = useState(false)
 
   useEffect(() => {
@@ -29,24 +30,33 @@ export const ReceivePurchaseOrderModal = ({ isOpen, poId, item, onClose, onSucce
 
   const validateForm = useCallback(() => {
     const newErrors: Record<string, string> = {}
+    let localErrorV2 = ''
     const received = parseFloat(receivedQuantity)
 
     if (isNaN(received) || received < 0) {
-      newErrors.receivedQuantity = 'Received quantity must be non-negative'
+      //newErrors.receivedQuantity = 'Received quantity must be non-negative'
+      localErrorV2 = 'Received quantity must be non-negative'
     }
     if (received > item!.order_Quantity) {
-      newErrors.receivedQuantity = `Received quantity cannot exceed ordered quantity (${item!.order_Quantity})`
+      console.log('Received quantity exceeds ordered quantity:', received, item!.order_Quantity)
+      //newErrors.receivedQuantity = `Received quantity cannot exceed ordered quantity (${item!.order_Quantity})`
+      localErrorV2 = `Received quantity cannot exceed ordered quantity (${item!.order_Quantity})`
     }
     if (received > (item!.order_Quantity - item!.received_Quantity)) {
-      newErrors.receivedQuantity = `Received quantity cannot exceed remaining quantity (${(item!.order_Quantity - item!.received_Quantity)})`
+      console.log('Received quantity exceeds ordered quantity 2222:', received, item!.order_Quantity)
+      //newErrors.receivedQuantity = `Received quantity cannot exceed remaining quantity (${(item!.order_Quantity - item!.received_Quantity)})`
+      localErrorV2 = `Received quantity cannot exceed remaining quantity (${(item!.order_Quantity - item!.received_Quantity)})`
     }
 
-    setErrors(newErrors)
-    return Object.keys(newErrors).length === 0
+    // setErrors(newErrors)
+    // return Object.keys(newErrors).length === 0
+    setErrorsV2(localErrorV2) // Update UI state
+    return localErrorV2 === '' // Returns false if there is an error string
   }, [receivedQuantity, item])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    console.log('Submitting received quantity:', receivedQuantity, 'for item:', item)
     if (!item || !validateForm()) return
 
     setSubmitting(true)
@@ -138,6 +148,14 @@ export const ReceivePurchaseOrderModal = ({ isOpen, poId, item, onClose, onSucce
             </div>
           )} */}
 
+          {/* Error Alert */}
+          {errorsV2 && (
+            <div className="p-3 bg-red-50 border border-red-200 rounded-lg flex items-start gap-2">
+              <AlertCircle size={18} className="text-red-600 flex-shrink-0 mt-0.5" />
+              <p className="text-sm text-red-800">{errorsV2}</p>
+            </div>
+          )}
+
           {/* Received Quantity Input */}
           {!isFullyReceived && (
             <div>
@@ -149,20 +167,20 @@ export const ReceivePurchaseOrderModal = ({ isOpen, poId, item, onClose, onSucce
                 value={receivedQuantity}
                 onChange={(e) => {
                   setReceivedQuantity(e.target.value)
-                  if (errors.receivedQuantity) {
-                    setErrors((prev) => {
-                      const newErrors = { ...prev }
-                      delete newErrors.receivedQuantity
-                      return newErrors
-                    })
-                  }
+                  // if (errors.receivedQuantity) {
+                  //   setErrors((prev) => {
+                  //     const newErrors = { ...prev }
+                  //     delete newErrors.receivedQuantity
+                  //     return newErrors
+                  //   })
+                  // }
                 }}
                 placeholder="Enter received quantity"
-                min="0"
+                //min="0"
                 step="0.01"
-                max={remainingToReceive}
+                //max={remainingToReceive}
                 disabled={isLoading || submitting || isItemReceived}
-                error={errors.receivedQuantity}
+                //error={errors.receivedQuantity}
               />
               {/* <p className="text-xs text-gray-500 mt-2">Maximum: {item.order_Quantity}</p> */}
               <p className="text-xs text-gray-500 mt-2">Maximum: {remainingToReceive}</p>

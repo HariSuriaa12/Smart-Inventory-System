@@ -64,8 +64,8 @@ export const PurchaseOrderListPage = () => {
   const [isColumnSelectorOpen, setIsColumnSelectorOpen] = useState(false)
   const { user } = useAuth()
   const { permissions } = useRolePermissions(user?.role)
-  const canCreate = permissions?.create_Data ?? false
-  console.log('User Permissions:', permissions)
+  const canCreate = permissions?.create_Data ?? true
+
   const [visibleColumns, setVisibleColumns] = useState<Set<string>>(() => {
     const stored = localStorage.getItem(STORAGE_KEY)
     if (stored) {

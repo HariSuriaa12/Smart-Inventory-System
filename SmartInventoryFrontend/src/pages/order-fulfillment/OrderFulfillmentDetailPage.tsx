@@ -216,7 +216,7 @@ export const OrderFulfillmentDetailPage = () => {
             <>
               <button
                 onClick={() => handleCancelItem(item.id)}
-                disabled={actionLoading}
+                disabled={actionLoading || !canEdit}
                 className="p-1.5 text-gray-600 hover:bg-gray-100 rounded transition-colors disabled:opacity-50"
                 title="Cancel item"
               >
@@ -224,7 +224,7 @@ export const OrderFulfillmentDetailPage = () => {
               </button>
               <button
                 onClick={() => handleCancelItemWithReturn(item.id)}
-                disabled={actionLoading}
+                disabled={actionLoading || !canEdit}
                 className="p-1.5 text-orange-600 hover:bg-orange-50 rounded transition-colors disabled:opacity-50"
                 title="Cancel with return"
               >
@@ -273,7 +273,7 @@ export const OrderFulfillmentDetailPage = () => {
             <button
               onClick={handleVerifyAndAssign}
               //disabled={actionLoading || !selectedLocationId}
-              disabled={actionLoading || !currentLocation?.id}
+              disabled={actionLoading || !currentLocation?.id || !canEdit}
               className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50"
             >
               <Check size={18} />
@@ -322,7 +322,7 @@ export const OrderFulfillmentDetailPage = () => {
             columns={itemColumns}
             data={order.items || []}
             loading={false}
-            onRowDoubleClick={(item) => canShip && item.status !== OrderFulfillmentStatus.Cancelled && handleShipItemClick(item)}
+            onRowDoubleClick={(item) => canShip && item.status !== OrderFulfillmentStatus.Cancelled && canEdit === true && handleShipItemClick(item)}
             rowKey="id"
             emptyMessage="No items in this order"
           />
@@ -330,17 +330,19 @@ export const OrderFulfillmentDetailPage = () => {
       </Card>
 
       {/* Ship Item Modal */}
-      <ShipItemModal
-        isOpen={isShipModalOpen}
-        fulfillmentId={Number(id)}
-        item={selectedItem}
-        onClose={() => {
-          setIsShipModalOpen(false)
-          setSelectedItem(null)
-        }}
-        onSuccess={handleShipSuccess}
-        isLoading={actionLoading}
-      />
+      {canEdit === true && (
+        <ShipItemModal
+          isOpen={isShipModalOpen}
+          fulfillmentId={Number(id)}
+          item={selectedItem}
+          onClose={() => {
+            setIsShipModalOpen(false)
+            setSelectedItem(null)
+          }}
+          onSuccess={handleShipSuccess}
+          isLoading={actionLoading}
+        />
+      )}
     </div>
   )
 }
