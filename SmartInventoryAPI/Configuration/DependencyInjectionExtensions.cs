@@ -41,6 +41,7 @@ public static class DependencyInjectionExtensions
         services.AddScoped<IStockTransferService, StockTransferService>();
         services.AddScoped<IRolePermissionService, RolePermissionService>();
         services.AddScoped<IForecastingService, ForecastingService>();
+        services.AddScoped<IReportService, ReportService>();
 
         return services;
     }

@@ -3,6 +3,7 @@ import { useAppSelector } from '@/store/hooks'
 import { Card, Badge } from '@/components'
 import { useLocationModal } from '@/context/LocationModalContext'
 import { PreviewDownloadModal } from '@/components/modals/PreviewDownloadModal'
+import { ExportDataModal } from '@/components/modals/ExportDataModal'
 import {
   dashboardService,
   DashboardStats,
@@ -12,7 +13,7 @@ import {
   InventoryTrendData,
   ForecastedResult,
 } from '@/services/dashboardService'
-import { Package, MapPin, ShoppingCart, TrendingUp, AlertCircle, Loader, Eye, BarChart3 } from 'lucide-react'
+import { Package, MapPin, ShoppingCart, TrendingUp, AlertCircle, Loader, Eye, BarChart3, Download } from 'lucide-react'
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts'
 
 export const DashboardPage = () => {
@@ -27,6 +28,7 @@ export const DashboardPage = () => {
   const [forecasts, setForecasts] = useState<ForecastedResult[]>([])
   const [loading, setLoading] = useState(true)
   const [showForecastModal, setShowForecastModal] = useState(false)
+  const [showExportModal, setShowExportModal] = useState(false)
 
   // Fetch master stats on mount
   useEffect(() => {
@@ -114,13 +116,22 @@ export const DashboardPage = () => {
     <div className="relative min-h-screen">
       <div className="p-6 max-w-7xl mx-auto">
         {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Dashboard</h1>
-          <p className="text-gray-600">
-            {currentLocation
-              ? `Overview of your inventory system - ${currentLocation.location_Name}`
-              : 'Select a location to view data'}
-          </p>
+        <div className="mb-8 flex items-start justify-between">
+          <div>
+            <h1 className="text-3xl font-bold text-gray-900 mb-2">Dashboard</h1>
+            <p className="text-gray-600">
+              {currentLocation
+                ? `Overview of your inventory system - ${currentLocation.location_Name}`
+                : 'Select a location to view data'}
+            </p>
+          </div>
+          <button
+            onClick={() => setShowExportModal(true)}
+            className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition font-medium flex items-center gap-2"
+          >
+            <Download size={18} />
+            Download Report
+          </button>
         </div>
 
         {/* Stats Grid */}
@@ -377,6 +388,12 @@ export const DashboardPage = () => {
             { key: 'Forecast Date', label: 'Forecast Date' },
           ]}
           filename="forecasted_results"
+        />
+
+        {/* Export Data Modal */}
+        <ExportDataModal
+          isOpen={showExportModal}
+          onClose={() => setShowExportModal(false)}
         />
 
         {/* Top Inventory Items */}
