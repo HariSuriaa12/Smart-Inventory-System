@@ -20,6 +20,10 @@ import { LocationModalProvider } from '@/context/LocationModalContext'
 function App() {
   const { isAuthenticated } = useAuth()
 
+  // This prevents unnecessary re-renders when Redux state changes
+  // We only care about isAuthenticated status changes, not other auth state updates
+  const shouldShowProtectedRoutes = isAuthenticated
+
   const PlaceholderPage = ({ title }: { title: string }) => (
     <div className="p-6">
       <Card>
@@ -37,9 +41,9 @@ function App() {
       <div className="min-h-screen bg-gray-50">
         <Routes>
         {/* Auth Routes - Without Layout */}
-        {!isAuthenticated ? (
+        {!shouldShowProtectedRoutes ? (
           <>
-            <Route path="/login" element={<LoginPage />} />
+            <Route path="/login" element={<LoginPage key="login-page" />} />
             <Route path="/" element={<Navigate to="/login" replace />} />
             <Route path="*" element={<Navigate to="/login" replace />} />
           </>

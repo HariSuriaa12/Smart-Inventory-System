@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAppDispatch } from '@/store/hooks'
 import { login } from '@/store/slices/authSlice'
@@ -11,7 +11,29 @@ export const LoginPage = () => {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
   const [apiError, setApiError] = useState<string | null>(null)
-  //console.log('LoginPage rendered')
+  const [errorDismissible, setErrorDismissible] = useState(true)
+
+  const handleSubmitForm = useCallback(async (formValues: { username: string; password: string }) => {
+    setApiError(null)
+    setErrorDismissible(true)
+    try {
+      const response = await dispatch(login(formValues))
+
+      if (response.type === login.fulfilled.type) {
+        navigate('/app/dashboard', { replace: true })
+      } else {
+        setApiError('Login failed. Please check your credentials.')
+        // Prevent dismissing the error for 3 seconds
+        setErrorDismissible(false)
+        setTimeout(() => setErrorDismissible(true), 3000)
+      }
+    } catch (error: any) {
+      setApiError(error.message || 'An error occurred during login')
+      setErrorDismissible(false)
+      setTimeout(() => setErrorDismissible(true), 3000)
+    }
+  }, [dispatch, navigate])
+
   const { values, errors, touched, isSubmitting, handleChange, handleBlur, handleSubmit } = useForm({
     initialValues: {
       username: '',
@@ -26,27 +48,14 @@ export const LoginPage = () => {
 
       if (!values.password) {
         errors.password = 'Password is required'
-      } 
+      }
       // else if (values.password.length < 6) {
       //   errors.password = 'Password must be at least 6 characters'
       // }
 
       return errors
     },
-    onSubmit: async (formValues) => {
-      setApiError(null)
-      try {
-        const response = await dispatch(login(formValues))
-
-        if (response.type === login.fulfilled.type) {
-          navigate('/app/dashboard', { replace: true })
-        } else {
-          setApiError('Login failed. Please check your credentials.')
-        }
-      } catch (error: any) {
-        setApiError(error.message || 'An error occurred during login')
-      }
-    },
+    onSubmit: handleSubmitForm,
   })
 
   return (
@@ -75,7 +84,12 @@ export const LoginPage = () => {
           <div className="px-8 py-8">
             {/* Error Alert */}
             {apiError && (
-              <Alert variant="error" dismissible onDismiss={() => setApiError(null)} className="mb-6">
+              <Alert
+                variant="error"
+                dismissible={errorDismissible}
+                onDismiss={() => errorDismissible && setApiError(null)}
+                className="mb-6"
+              >
                 {apiError}
               </Alert>
             )}
