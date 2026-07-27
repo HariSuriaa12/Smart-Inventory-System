@@ -520,8 +520,7 @@
               "RelativeToolTip": "Repositories\\Implementations\\InventoryLogRepository.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-26T13:01:21.829Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-26T13:01:21.829Z"
             },
             {
               "$type": "Document",
@@ -533,8 +532,7 @@
               "RelativeToolTip": "Repositories\\Implementations\\InventoryRepository.cs",
               "ViewState": "AgIAABIAAAAAAAAAAAAEwC4AAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-07T14:57:38.677Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-07T14:57:38.677Z"
             },
             {
               "$type": "Document",
@@ -546,8 +544,7 @@
               "RelativeToolTip": "Utilities\\Exceptions\\BadRequestException.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-26T02:40:58.044Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-26T02:40:58.044Z"
             },
             {
               "$type": "Document",
@@ -559,8 +556,7 @@
               "RelativeToolTip": "Utilities\\Exceptions\\ConflictException.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAeAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-26T02:41:02.928Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-26T02:41:02.928Z"
             },
             {
               "$type": "Document",
@@ -572,8 +568,7 @@
               "RelativeToolTip": "Utilities\\Exceptions\\NotFoundException.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-26T02:41:01.32Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-26T02:41:01.32Z"
             },
             {
               "$type": "Document",
@@ -585,8 +580,7 @@
               "RelativeToolTip": "Utilities\\Exceptions\\UnauthorizedException.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-26T02:41:06.272Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-26T02:41:06.272Z"
             },
             {
               "$type": "Document",
@@ -598,8 +592,7 @@
               "RelativeToolTip": "Services\\Implementations\\AuthService.cs",
               "ViewState": "AgIAAAIAAAAAAAAAAAAewB0AAAAWAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-07T13:49:21.016Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-07T13:49:21.016Z"
             },
             {
               "$type": "Document",
@@ -615,6 +608,10 @@
               "EditorCaption": ""
             },
             {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
+            },
+            {
               "$type": "Document",
               "DocumentIndex": 9,
               "Title": "LoginRequestDto.cs",
@@ -624,8 +621,7 @@
               "RelativeToolTip": "Models\\DTOs\\Request\\Auth\\LoginRequestDto.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-09T13:17:53.259Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-09T13:17:53.259Z"
             },
             {
               "$type": "Document",
@@ -637,8 +633,7 @@
               "RelativeToolTip": "Middleware\\ExceptionHandlingMiddleware.cs",
               "ViewState": "AgIAABgAAAAAAAAAAAAewBsAAAASAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-07T15:41:22.89Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-07T15:41:22.89Z"
             },
             {
               "$type": "Document",
@@ -650,8 +645,7 @@
               "RelativeToolTip": "Middleware\\RequestLoggingMiddleware.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-26T12:01:51.906Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-26T12:01:51.906Z"
             },
             {
               "$type": "Document",
@@ -663,8 +657,7 @@
               "RelativeToolTip": "logs\\log-20260707.txt",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003109|",
-              "WhenOpened": "2026-07-07T14:56:48.819Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-07T14:56:48.819Z"
             },
             {
               "$type": "Document",
@@ -676,8 +669,7 @@
               "RelativeToolTip": "Data\\SmartInventoryDbContext.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-16T13:39:47.615Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-16T13:39:47.615Z"
             },
             {
               "$type": "Document",
@@ -689,8 +681,7 @@
               "RelativeToolTip": "Configuration\\MapperProfile.cs",
               "ViewState": "AgIAABcAAAAAAAAAAAAwwEsAAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-11T14:08:25.04Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-11T14:08:25.04Z"
             },
             {
               "$type": "Document",
@@ -714,8 +705,7 @@
               "RelativeToolTip": "Repositories\\Implementations\\ForecastingRepository.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-20T14:32:44.961Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-20T14:32:44.961Z"
             },
             {
               "$type": "Document",
@@ -776,10 +766,6 @@
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAxAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-07-07T14:18:09.672Z"
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
             },
             {
               "$type": "Document",
