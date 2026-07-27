@@ -2,6 +2,7 @@ using AutoMapper;
 using SmartInventoryAPI.Repositories.Interfaces;
 using SmartInventoryAPI.Services.Interfaces;
 using SmartInventoryAPI.Utilities;
+using SmartInventoryAPI.Models.Data_Enums;
 
 namespace SmartInventoryAPI.Services.Implementations;
 
@@ -28,7 +29,7 @@ public class ReportService : IReportService
             var columnNames = new List<string>();
 
             // Export Users
-            var users = await _unitOfWork.Users.GetAllAsync(0, int.MaxValue);
+            var users = await _unitOfWork.User.GetAllUsersWithPermission(0, int.MaxValue);
             var nonDeletedUsers = users.Where(u => !u.Is_Deleted).ToList();
             if (nonDeletedUsers.Any())
             {
@@ -39,10 +40,10 @@ public class ReportService : IReportService
                     records.Add(new Dictionary<string, object?>
                     {
                         { "ID", user.ID },
-                        { "User_Name", user.User_Name },
+                        { "User_Name", user.Username },
                         { "Email", user.Email },
-                        { "Mobile_Number", user.Mobile_Number ?? "" },
-                        { "Role", user.Role ?? "" }
+                        { "Mobile_Number", user.Mobile_No ?? "" },
+                        { "Role", user.Role_Permission?.role_name ?? "" }
                     });
                 }
                 if (!columnNames.Contains("DataType"))
@@ -63,7 +64,7 @@ public class ReportService : IReportService
                         { "ID", item.ID },
                         { "Item_Code", item.Item_Code },
                         { "Item_Name", item.Item_Name },
-                        { "Category", item.Category ?? "" },
+                        { "Category", item.Item_Category ?? "" },
                         { "Unit_Of_Measure", item.Unit_Of_Measure ?? "" },
                         { "Unit_Cost", item.Unit_Cost },
                         { "Is_Active", item.Is_Active }
@@ -86,9 +87,9 @@ public class ReportService : IReportService
                         { "DataType", "LOCATIONS" },
                         { "ID", location.ID },
                         { "Location_Name", location.Location_Name },
-                        { "Location_Type", location.Location_Type ?? "" },
+                        { "Location_Type", location.Location_Type == 0 ? "Outlet" : "Warehouse" },
                         { "Address", location.Address ?? "" },
-                        { "Is_Active", location.Is_Active }
+                        //{ "Is_Active", location.Is_Active }
                     });
                 }
             }
@@ -105,10 +106,10 @@ public class ReportService : IReportService
                     {
                         { "DataType", "VENDORS" },
                         { "ID", vendor.ID },
-                        { "Vendor_Name", vendor.Vendor_Name },
-                        { "Contact_Person", vendor.Contact_Person ?? "" },
-                        { "Email", vendor.Email ?? "" },
-                        { "Phone_Number", vendor.Phone_Number ?? "" }
+                        { "Vendor_Name", vendor.Company_Name },
+                        { "Contact_Person", vendor.Mobile ?? "" },
+                        { "Vendor_Code", vendor.Vendor_Code ?? "" },
+                        { "Email", vendor.Email ?? "" }
                     });
                 }
             }
@@ -125,10 +126,10 @@ public class ReportService : IReportService
                     {
                         { "DataType", "CUSTOMERS" },
                         { "ID", customer.ID },
-                        { "Customer_Name", customer.Customer_Name },
-                        { "Contact_Person", customer.Contact_Person ?? "" },
+                        { "Customer_Name", customer.Company_Name },
+                        { "Contact_Person", customer.Mobile ?? "" },
                         { "Email", customer.Email ?? "" },
-                        { "Phone_Number", customer.Phone_Number ?? "" }
+                        { "Customer_Code", customer.Customer_Code ?? "" }
                     });
                 }
             }
@@ -156,7 +157,7 @@ public class ReportService : IReportService
             var columnNames = new List<string>();
 
             // Export Inventory
-            var inventory = await _unitOfWork.Inventory.GetAllAsync(0, int.MaxValue);
+            var inventory = await _unitOfWork.Inventories.GetAllAsync(0, int.MaxValue);
             var nonDeletedInventory = inventory.Where(i => !i.Is_Deleted).ToList();
             if (nonDeletedInventory.Any())
             {
@@ -172,7 +173,6 @@ public class ReportService : IReportService
                         { "Location", inv.Location?.Location_Name ?? "" },
                         { "On_Hand_Qty", inv.On_Hand_Quantity },
                         { "Available_Qty", inv.Available_Quantity },
-                        { "Last_Updated", inv.Last_Updated_Date }
                     });
                 }
                 if (!columnNames.Contains("Item_Code"))
@@ -193,9 +193,9 @@ public class ReportService : IReportService
                         { "ID", log.ID },
                         { "Item_Code", log.Item?.Item_Code ?? "" },
                         { "Location", log.Location?.Location_Name ?? "" },
-                        { "Movement_Type", log.Movement_Type ?? "" },
-                        { "Quantity", log.Quantity },
-                        { "Log_Date", log.Log_Date }
+                        { "Quantity", log.Onhand_Quantity_Movement },
+                        { "Log_Date", log.Available_Quantity_Movement },
+                        { "Performed_By", log.PerformLog.User.Full_Name }
                     });
                 }
             }
@@ -212,11 +212,11 @@ public class ReportService : IReportService
                     {
                         { "DataType", "PURCHASE_ORDERS" },
                         { "ID", po.ID },
-                        { "PO_Number", po.PO_Number },
-                        { "Vendor", po.Vendor?.Vendor_Name ?? "" },
-                        { "Order_Date", po.Order_Date },
-                        { "Expected_Delivery_Date", po.Expected_Delivery_Date ?? (object)"" },
-                        { "Status", po.Status ?? "" },
+                        { "PO_Number", po.PO_Reference_No },
+                        { "Vendor", po.Vendor?.Company_Name ?? "" },
+                        { "Order_Date", po.Purchase_Date },
+                        { "Remarks", po.Remark ?? (object)"" },
+                        { "Status", (PurchaseOrderHeaderStatusEnum)po.Status },
                         { "Total_Amount", po.Total_Amount }
                     });
                 }
@@ -237,8 +237,7 @@ public class ReportService : IReportService
                         { "DataType", "SALES" },
                         { "ID", sale.ID },
                         { "Sales_Order_ID", sale.Sales_Order_ID },
-                        { "Customer", sale.Customer?.Customer_Name ?? "" },
-                        { "Item_Code", sale.Item?.Item_Code ?? "" },
+                        { "Item_Code", sale.Items ?? "" },
                         { "Quantity_Sold", sale.Quantity_Sold },
                         { "Unit_Price", sale.Unit_Price },
                         { "Total_Price", sale.Total_Price },
@@ -261,13 +260,13 @@ public class ReportService : IReportService
                     {
                         { "DataType", "STOCK_TRANSFERS" },
                         { "ID", transfer.ID },
-                        { "Transfer_ID", transfer.Transfer_ID },
                         { "Item_Code", transfer.Item?.Item_Code ?? "" },
-                        { "From_Location", transfer.From_Location?.Location_Name ?? "" },
-                        { "To_Location", transfer.To_Location?.Location_Name ?? "" },
-                        { "Quantity", transfer.Quantity },
+                        { "From_Location", transfer.FromLocation?.Location_Name ?? "" },
+                        { "To_Location", transfer.ToLocation?.Location_Name ?? "" },
+                        { "Transferred_Quantity", transfer.Transfer_Quantity },
+                        { "Received_Quantity", transfer.Received_Quantity },
                         { "Transfer_Date", transfer.Transfer_Date },
-                        { "Status", transfer.Status ?? "" }
+                        { "Status", (StockTransferStatusEnum)transfer.Status }
                     });
                 }
                 if (!columnNames.Contains("Transfer_ID"))
