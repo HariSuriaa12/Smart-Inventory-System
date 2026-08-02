@@ -1,5 +1,5 @@
-import { useState, useMemo } from 'react'
-import { X, Download, Calendar, Loader, ChevronDown } from 'lucide-react'
+import { useState } from 'react'
+import { X, Download, Calendar, Loader } from 'lucide-react'
 import { reportService } from '@/services/reportService'
 import { toast } from 'react-toastify'
 
@@ -8,51 +8,26 @@ interface ExportDataModalProps {
   onClose: () => void
 }
 
-type ExportType = 'master' | 'transactional' | 'logging'
-
-const EXPORT_MODULES = {
-  master: ['Users', 'Items', 'Locations', 'Vendors', 'Customers'],
-  transactional: [
-    'Inventory',
-    'Purchase Orders',
-    'Order Fulfillment',
-    'Sales',
-    'Stock Transfers',
-  ],
-  logging: ['Perform Logs', 'Inventory Logs', 'Price Logs'],
-}
+const AVAILABLE_MODULES = [
+  'Purchase Order',
+  'Order Fulfilment',
+  'Stock Transfer',
+  'Sales',
+  'Inventory Balance',
+]
 
 export const ExportDataModal = ({ isOpen, onClose }: ExportDataModalProps) => {
-  const [exportType, setExportType] = useState<ExportType>('master')
   const [selectedModules, setSelectedModules] = useState<string[]>([])
   const [startDate, setStartDate] = useState<string>('')
   const [endDate, setEndDate] = useState<string>('')
   const [loading, setLoading] = useState(false)
-  const [expandedModules, setExpandedModules] = useState(true)
-
-  const availableModules = useMemo(() => {
-    return EXPORT_MODULES[exportType]
-  }, [exportType])
 
   if (!isOpen) return null
-
-  const handleExportTypeChange = (type: ExportType) => {
-    setExportType(type)
-    setSelectedModules([])
-  }
 
   const toggleModule = (module: string) => {
     setSelectedModules((prev) =>
       prev.includes(module) ? prev.filter((m) => m !== module) : [...prev, module]
     )
-  }
-
-  const selectAllModules = () => {
-    setSelectedModules(availableModules)
-  }
-
-  const deselectAllModules = () => {
-    setSelectedModules([])
   }
 
   const handleExport = async () => {
@@ -70,22 +45,9 @@ export const ExportDataModal = ({ isOpen, onClose }: ExportDataModalProps) => {
         endDate: endDate ? new Date(endDate) : undefined,
       }
 
-      switch (exportType) {
-        case 'master':
-          await reportService.exportMasterData(request)
-          toast.success('Master data exported successfully!')
-          break
-        case 'transactional':
-          await reportService.exportTransactionalData(request)
-          toast.success('Transactional data exported successfully!')
-          break
-        case 'logging':
-          await reportService.exportLoggingData(request)
-          toast.success('Logging data exported successfully!')
-          break
-      }
+      await reportService.exportData(request)
+      toast.success('Data exported successfully!')
 
-      //onClose()
       setSelectedModules([])
       setStartDate('')
       setEndDate('')
@@ -116,133 +78,15 @@ export const ExportDataModal = ({ isOpen, onClose }: ExportDataModalProps) => {
 
         {/* Content */}
         <div className="flex-1 overflow-auto p-6 space-y-6">
-          {/* Export Type Selection */}
-          <div>
-            <label className="block text-sm font-semibold text-gray-900 mb-3">
-              Export Type
-            </label>
-            {/*<div className="space-y-3">*/}
-            <div className="space-y-3 max-h-48 overflow-y-auto border border-gray-200 rounded-lg p-3">
-              <label className="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer transition"
-                onClick={() => toggleModule('master')}>
-                <input
-                  type="radio"
-                  name="exportType"
-                  value="master"
-                  checked={exportType === 'master'}
-                  onChange={(e) => handleExportTypeChange(e.target.value as ExportType)}
-                  disabled={loading}
-                  className="w-4 h-4 text-blue-600"
-                />
-                <div className="ml-3">
-                  <p className="text-sm font-medium text-gray-900">Purchase Order</p>
-                  <p className="text-xs text-gray-500">Export purchase order data</p>
-                </div>
-              </label>
-
-              <label className="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer transition"
-                onClick={() => handleExportTypeChange('transactional')}>
-                <input
-                  type="radio"
-                  name="exportType"
-                  value="transactional"
-                  checked={exportType === 'transactional'}
-                  onChange={(e) => handleExportTypeChange(e.target.value as ExportType)}
-                  disabled={loading}
-                  className="w-4 h-4 text-blue-600"
-                />
-                <div className="ml-3">
-                  <p className="text-sm font-medium text-gray-900">Order Fulfilment</p>
-                  <p className="text-xs text-gray-500">
-                    Export order fulfilment data
-                  </p>
-                </div>
-              </label>
-
-              <label className="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer transition"
-                onClick={() => handleExportTypeChange('logging')}>
-                <input
-                  type="radio"
-                  name="exportType"
-                  value="logging"
-                  checked={exportType === 'logging'}
-                  onChange={(e) => handleExportTypeChange(e.target.value as ExportType)}
-                  disabled={loading}
-                  className="w-4 h-4 text-blue-600"
-                />
-                <div className="ml-3">
-                  <p className="text-sm font-medium text-gray-900">Stock Transfer</p>
-                  <p className="text-xs text-gray-500">
-                    Export stock transfer data
-                  </p>
-                </div>
-              </label>
-
-              <label className="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer transition"
-                onClick={() => handleExportTypeChange('logging')}>
-                <input
-                  type="radio"
-                  name="exportType"
-                  value="logging"
-                  checked={exportType === 'logging'}
-                  onChange={(e) => handleExportTypeChange(e.target.value as ExportType)}
-                  disabled={loading}
-                  className="w-4 h-4 text-blue-600"
-                />
-                <div className="ml-3">
-                  <p className="text-sm font-medium text-gray-900">Sales</p>
-                  <p className="text-xs text-gray-500">
-                    Export sales data
-                  </p>
-                </div>
-              </label>
-
-              <label className="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer transition"
-                onClick={() => handleExportTypeChange('logging')}>
-                <input
-                  type="radio"
-                  name="exportType"
-                  value="logging"
-                  checked={exportType === 'logging'}
-                  onChange={(e) => handleExportTypeChange(e.target.value as ExportType)}
-                  disabled={loading}
-                  className="w-4 h-4 text-blue-600"
-                />
-                <div className="ml-3">
-                  <p className="text-sm font-medium text-gray-900">Inventory Balance</p>
-                  <p className="text-xs text-gray-500">
-                    Export inventory balance data
-                  </p>
-                </div>
-              </label>
-            </div>
-          </div>
-
           {/* Module Selection */}
-          {/*<div className="border-t border-gray-200 pt-6">
+          <div>
             <div className="flex items-center justify-between mb-3">
               <label className="block text-sm font-semibold text-gray-900">
                 Select Modules
               </label>
-              <div className="flex gap-2">
-                <button
-                  onClick={selectAllModules}
-                  disabled={loading}
-                  className="text-xs text-blue-600 hover:text-blue-700 disabled:opacity-50 font-medium"
-                >
-                  Select All
-                </button>
-                <button
-                  onClick={deselectAllModules}
-                  disabled={loading}
-                  className="text-xs text-gray-600 hover:text-gray-700 disabled:opacity-50 font-medium"
-                >
-                  Clear
-                </button>
-              </div>
             </div>
             <div className="space-y-2 max-h-48 overflow-y-auto border border-gray-200 rounded-lg p-3 bg-gray-50">
-              {availableModules.map((module) => (
+              {AVAILABLE_MODULES.map((module) => (
                 <label key={module} className="flex items-center p-2 hover:bg-gray-100 rounded cursor-pointer">
                   <input
                     type="checkbox"
@@ -256,9 +100,9 @@ export const ExportDataModal = ({ isOpen, onClose }: ExportDataModalProps) => {
               ))}
             </div>
             <p className="text-xs text-gray-600 mt-2">
-              {selectedModules.length} of {availableModules.length} selected
+              {selectedModules.length} of {AVAILABLE_MODULES.length} selected
             </p>
-          </div>*/}
+          </div>
 
           {/* Date Range Selection */}
           <div className="border-t border-gray-200 pt-6">

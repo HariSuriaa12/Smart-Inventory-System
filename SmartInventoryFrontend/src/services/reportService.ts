@@ -65,6 +65,31 @@ export const reportService = {
       throw error
     }
   },
+
+  exportData: async (request: ExportRequest): Promise<void> => {
+    try {
+      const response = await api.post('/api/report/export-data', {
+        modules: request.modules,
+        startDate: request.startDate ? request.startDate.toISOString() : null,
+        endDate: request.endDate ? request.endDate.toISOString() : null,
+      }, {
+        responseType: 'blob',
+      })
+
+      let filename = 'export.csv'
+      if (response.headers['content-disposition']) {
+        const match = response.headers['content-disposition'].match(/filename\*?=(?:UTF-8'')?([^;\n"']*)\b/)
+        if (match && match[1]) {
+          filename = decodeURIComponent(match[1])
+        }
+      }
+
+      downloadFile(response.data, filename)
+    } catch (error) {
+      console.error('Failed to export data:', error)
+      throw error
+    }
+  },
 }
 
 const downloadFile = (blob: Blob, filename: string) => {
