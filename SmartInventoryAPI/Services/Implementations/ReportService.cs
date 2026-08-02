@@ -1,5 +1,6 @@
 using AutoMapper;
 using SmartInventoryAPI.Models.Data_Enums;
+using SmartInventoryAPI.Models.Entities;
 using SmartInventoryAPI.Repositories.Interfaces;
 using SmartInventoryAPI.Services.Interfaces;
 using SmartInventoryAPI.Utilities;
@@ -62,7 +63,7 @@ public class ReportService : IReportService
         }
     }
 
-    public async Task<byte[]> ExportTransactionalDataAsync(List<string> modules, DateTime? startDate = null, DateTime? endDate = null)
+    public async Task<Dictionary<string, byte[]>> ExportTransactionalDataAsync(List<string> modules, DateTime? startDate = null, DateTime? endDate = null)
     {
         try
         {
@@ -74,27 +75,30 @@ public class ReportService : IReportService
                 sheetsData.Add("Inventory", await GetInventorySheet());
             }
 
-            if (modules.Contains("Inventory Logs") || modules.Count == 0)
-            {
-                sheetsData.Add("Inventory Logs", await GetInventoryLogsSheet());
-            }
+            //if (modules.Contains("Inventory Logs") || modules.Count == 0)
+            //{
+            //    sheetsData.Add("Inventory Logs", await GetInventoryLogsSheet());
+            //}
 
             if (modules.Contains("Purchase Orders") || modules.Count == 0)
             {
-                sheetsData.Add("PO Headers", await GetPurchaseOrderHeadersSheet());
-                sheetsData.Add("PO Items", await GetPurchaseOrderItemsSheet());
+                //sheetsData.Add("PO Header", await GetPurchaseOrderHeadersSheet());
+                //sheetsData.Add("PO Items", await GetPurchaseOrderItemsSheet());
+                sheetsData.Add("Purchase Order", await GetPurchaseOrders());
             }
 
             if (modules.Contains("Order Fulfillment") || modules.Count == 0)
             {
-                sheetsData.Add("OF Headers", await GetOrderFulfillmentHeadersSheet());
-                sheetsData.Add("OF Items", await GetOrderFulfillmentItemsSheet());
+                //sheetsData.Add("OF Headers", await GetOrderFulfillmentHeadersSheet());
+                //sheetsData.Add("OF Items", await GetOrderFulfillmentItemsSheet());
+                sheetsData.Add("Order Fulfillment", await GetOrderFulfillment());
             }
 
             if (modules.Contains("Sales") || modules.Count == 0)
             {
-                sheetsData.Add("Sales Headers", await GetSalesHeadersSheet());
-                sheetsData.Add("Sales Items", await GetSalesItemsSheet());
+                //sheetsData.Add("Sales Headers", await GetSalesHeadersSheet());
+                //sheetsData.Add("Sales Items", await GetSalesItemsSheet());
+                sheetsData.Add("Sales", await GetSales());
             }
 
             if (modules.Contains("Stock Transfers") || modules.Count == 0)
@@ -102,9 +106,34 @@ public class ReportService : IReportService
                 sheetsData.Add("Stock Transfers", await GetStockTransfersSheet());
             }
 
-            var excelBytes = ExcelGenerator.GenerateExcel(sheetsData);
-            _logger.LogInformation("Transactional data export completed successfully");
-            return excelBytes;
+            var returnDict = new Dictionary<string, byte[]>();
+
+            // 2. Count sheets that actually contain data
+            var activeSheets = sheetsData.Where(s => s.Value != null && s.Value.Any()).ToList();
+
+            if (activeSheets.Count == 0)
+            {
+                return new Dictionary<string, byte[]>();
+            }
+
+            // 3. Conditional evaluation: More than 1 active sheet gets Excel, otherwise CSV
+            byte[] fileBytes;
+            if (activeSheets.Count > 1)
+            {
+                _logger.LogInformation("Generating Excel package for multiple tables ({Count} sheets)", activeSheets.Count);
+                fileBytes = ExcelGenerator.GenerateExcel(sheetsData);
+                returnDict.Add("Excel", fileBytes);
+            }
+            else
+            {
+                var singleSheetData = activeSheets.First().Value;
+                var columnNames = singleSheetData.First().Keys.ToArray();
+                _logger.LogInformation("Generating single CSV export for sheet: {SheetName}", activeSheets.First().Key);
+                fileBytes = CsvGenerator.GenerateCsvFromDictionariesV2(singleSheetData, columnNames);
+                returnDict.Add("Csv", fileBytes);
+            }
+
+            return returnDict;
         }
         catch (Exception ex)
         {
@@ -242,7 +271,7 @@ public class ReportService : IReportService
 
     private async Task<List<Dictionary<string, object?>>> GetInventoryLogsSheet()
     {
-        var logs = await _unitOfWork.InventoryLogs.GetAllAsync(0, int.MaxValue);
+        var logs = await _unitOfWork.InventoryLogs.GetInventoryLogs(0, int.MaxValue);
         var nonDeletedLogs = logs.Where(l => !l.Is_Deleted).ToList();
 
         return nonDeletedLogs.Select(log => new Dictionary<string, object?>
@@ -258,6 +287,51 @@ public class ReportService : IReportService
         }).ToList();
     }
 
+    private async Task<List<Dictionary<string, object?>>> GetPurchaseOrders()
+    {
+        var pos = await _unitOfWork.PurchaseOrders.GetAllWithDetailsAsync(0, int.MaxValue);
+        var records = new List<Dictionary<string, object?>>();
+
+        try
+        {
+            foreach (var po in pos)
+            {
+                foreach (var item in po.Items.Where(i => !i.Is_Deleted))
+                {
+                    records.Add(new Dictionary<string, object?>
+                    {
+                        { "PO ID", po.ID },
+                        { "PO Ref No", po.PO_Reference_No ?? "" },
+                        { "PO Date", po.Purchase_Date },
+                        { "PO Time", po.Purchase_Time },
+                        { "PO Remark", po.Remark },
+                        { "Status", (PurchaseOrderHeaderStatusEnum)po.Status },
+                        { "Ordered Location Name", po.Location?.Location_Name },
+                        { "Ordered Location Code", po.Location?.Outlet_Code },
+                        { "Vendor Company", po.Vendor?.Company_Name},
+                        { "Vendor Code", po.Vendor?.Vendor_Code},
+                        { "User Name", po.User?.Full_Name},
+                        { "Staff Code", po.User?.Staff_Code},
+                        { "Item Code", item.Item?.Item_Code ?? "" },
+                        { "Item Name", item.Item?.Item_Name ?? "" },
+                        { "Item Category", item.Item?.Item_Category ?? "" },
+                        { "Item Order Status", (PurchaseOrderItemStatusEnum)item.Status },
+                        { "Ordered Quantity", item.Order_Quantity },
+                        { "Received Quantity", item.Received_Quantity },
+                        { "Unit Price", item.Unit_Price },
+                        { "Total Price", item.Sub_Total },
+                    });
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            throw;
+        }
+
+        return records;
+    }
+
     private async Task<List<Dictionary<string, object?>>> GetPurchaseOrderHeadersSheet()
     {
         var pos = await _unitOfWork.PurchaseOrders.GetAllAsync(0, int.MaxValue);
@@ -270,7 +344,7 @@ public class ReportService : IReportService
             { "Vendor", po.Vendor?.Company_Name ?? "" },
             { "Location", po.Location?.Location_Name ?? "" },
             { "Purchase Date", po.Purchase_Date },
-            { "Status", po.Status.ToString() },
+            { "Status", (PurchaseOrderHeaderStatusEnum)po.Status },
             { "Total Amount", po.Total_Amount },
             { "Remark", po.Remark ?? "" }
         }).ToList();
@@ -304,6 +378,42 @@ public class ReportService : IReportService
         return records;
     }
 
+    private async Task<List<Dictionary<string, object?>>> GetOrderFulfillment()
+    {
+        var ofs = await _unitOfWork.OrderFulfillments.GetOrderFulfillmentWithDetails(0, int.MaxValue);
+        var records = new List<Dictionary<string, object?>>();
+
+        foreach (var of in ofs.Where(o => !o.Is_Deleted && o.Items != null))
+        {
+            foreach (var item in of.Items.Where(i => !i.Is_Deleted))
+            {
+                records.Add(new Dictionary<string, object?>
+                {
+                    { "Order ID", of.ID },
+                    { "Order Date", of.Order_Date },
+                    { "Order Time", of.Order_Time },
+                    { "Order Remark", of.Remark },
+                    { "Status", (OrderFulfillmentHeaderStatusEnum)of.Status },
+                    { "Customer Name", of.Customer?.Company_Name ?? "" },
+                    { "Customer Code", of.Customer?.Customer_Code ?? "" },
+                    { "Customer Address", $"{of.Shipment_Address_Line_1}, {of.Shipment_Address_Line_2}, {of.Shipment_City}, {of.Shipment_PostCode}, {of.Shipment_State}, {of.Shipment_Country_Code}" },
+                    { "Assigned Location Name", of.Location?.Location_Name ?? "" },
+                    { "Assigned Location Code", of.Location?.Outlet_Code ?? "" },
+                    { "Item Code", item.Item?.Item_Code ?? "" },
+                    { "Item Name", item.Item?.Item_Name ?? "" },
+                    { "Item Category", item.Item?.Item_Category ?? "" },
+                    { "Item Order Status", (OrderFulfillmentItemStatusEnum)item.Status },
+                    { "Ordered Qty", item.Request_Quantity },
+                    { "Shipped Qty", item.Shipped_Quantity },
+                    { "Unit Price", item.Unit_Price },
+                    { "Total Price", item.Sub_Total }
+                });
+            }
+        }
+
+        return records;
+    }
+
     private async Task<List<Dictionary<string, object?>>> GetOrderFulfillmentHeadersSheet()
     {
         var ofs = await _unitOfWork.OrderFulfillments.GetAllAsync(0, int.MaxValue);
@@ -315,7 +425,7 @@ public class ReportService : IReportService
             { "Customer", of.Customer?.Company_Name ?? "" },
             { "Location", of.Location?.Location_Name ?? "" },
             { "Order Date", of.Order_Date },
-            { "Status", of.Status.ToString() },
+            { "Status", (OrderFulfillmentHeaderStatusEnum)of.Status },
             { "Total Amount", of.Total_Amount },
             { "Shipment Address", $"{of.Shipment_Address_Line_1}, {of.Shipment_City}" }
         }).ToList();
@@ -347,6 +457,44 @@ public class ReportService : IReportService
         return records;
     }
 
+    private async Task<List<Dictionary<string, object?>>> GetSales()
+    {
+        var salesObj = await _unitOfWork.Sales.GetSalesWithDetails(0, int.MaxValue);
+        var records = new List<Dictionary<string, object?>>();
+
+        try
+        {
+            foreach (var sale in salesObj)
+            {
+                foreach (var item in sale.Items.Where(i => !i.Is_Deleted))
+                {
+                    records.Add(new Dictionary<string, object?>
+                    {
+                    { "Sales ID", sale.ID },
+                    { "Sales Number", sale.Sales_Number ?? "" },
+                    { "Sales Date", sale.Sales_Date },
+                    { "Sales Time", sale.Sales_Time },
+                    { "Sales Status", (SalesStatusEnum)sale.Sales_Status },
+                    { "Sales Location", sale.Location?.Location_Name ?? "" },
+                    { "Sales Location Code", sale.Location?.Outlet_Code ?? "" },
+                    { "Item Code", item.Item?.Item_Code ?? "" },
+                    { "Item Name", item.Item?.Item_Name ?? "" },
+                    { "Item Category", item.Item?.Item_Category ?? "" },
+                    { "Quantity Sold", item.Sold_Quantity },
+                    { "Item Cost", item.Item.Unit_Cost },
+                    { "Sub Total", item.Sub_Total },
+                });
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            throw;
+        }
+
+        return records;
+    }
+
     private async Task<List<Dictionary<string, object?>>> GetSalesHeadersSheet()
     {
         var sales = await _unitOfWork.Sales.GetAllAsync(0, int.MaxValue);
@@ -358,7 +506,7 @@ public class ReportService : IReportService
             { "Sales Number", s.Sales_Number ?? "" },
             { "Location", s.Location?.Location_Name ?? "" },
             { "Sales Date", s.Sales_Date },
-            { "Status", s.Sales_Status.ToString() },
+            { "Status", (SalesStatusEnum)s.Sales_Status },
             { "Reserved", s.Is_Reserved ? "Yes" : "No" }
         }).ToList();
     }
@@ -390,27 +538,31 @@ public class ReportService : IReportService
 
     private async Task<List<Dictionary<string, object?>>> GetStockTransfersSheet()
     {
-        var transfers = await _unitOfWork.StockTransfers.GetAllAsync(0, int.MaxValue);
-        var nonDeletedTransfers = transfers.Where(st => !st.Is_Deleted).ToList();
+        var transfers = await _unitOfWork.StockTransfers.GetAllWithDetailsAsyncV2(0, int.MaxValue);
 
-        return nonDeletedTransfers.Select(st => new Dictionary<string, object?>
+        return transfers.Select(st => new Dictionary<string, object?>
         {
-            { "ID", st.ID },
+            { "Transfer ID", st.ID },
+            { "Transfer Date", st.Transfer_Date },
+            { "Transfer Time", st.Transfer_Time },
+            { "Transfer Remark", st.Remark ?? "" },
+            { "Status", (StockTransferStatusEnum)st.Status },
             { "Item Code", st.Item?.Item_Code ?? "" },
             { "Item Name", st.Item?.Item_Name ?? "" },
+            { "Item Category", st.Item?.Item_Category ?? "" },
             { "From Location", st.FromLocation?.Location_Name ?? "" },
             { "To Location", st.ToLocation?.Location_Name ?? "" },
+            { "Performed By", st.User?.Full_Name ?? "" },
+            { "Staff Code", st.User?.Staff_Code ?? "" },
             { "Transfer Quantity", st.Transfer_Quantity },
             { "Received Quantity", st.Received_Quantity },
-            { "Transfer Date", st.Transfer_Date },
-            { "Status", (StockTransferStatusEnum)st.Status }
         }).ToList();
     }
 
     // Logging Data Sheets
     private async Task<List<Dictionary<string, object?>>> GetPerformLogsSheet()
     {
-        var logs = await _unitOfWork.PerformLogs.GetAllAsync(0, int.MaxValue);
+        var logs = await _unitOfWork.PerformLogs.GetPerformedLogs(0, int.MaxValue);
         var nonDeletedLogs = logs.Where(l => !l.Is_Deleted).ToList();
 
         return nonDeletedLogs.Select(log => new Dictionary<string, object?>
@@ -418,8 +570,8 @@ public class ReportService : IReportService
             { "ID", log.ID },
             { "Performed By", log.User?.Username ?? "" },
             { "Performed Outlet", log.Location?.Location_Name ?? "" },
-            { "Perform Module", log.Perform_Module.ToString() },
-            { "Operation Type", log.Operation_Type.ToString() },
+            { "Perform Module", (PerformedLogModuleEnum)log.Perform_Module },
+            { "Operation Type", (PerformedLogOperationTypeEnum)log.Operation_Type },
             { "Perform Remark", log.Perform_Remark ?? "" },
             { "Operation ID", log.Operation_ID },
             { "Perform Date", log.Perform_Date }
@@ -428,7 +580,7 @@ public class ReportService : IReportService
 
     private async Task<List<Dictionary<string, object?>>> GetPriceLogsSheet()
     {
-        var logs = await _unitOfWork.PriceLogs.GetAllAsync(0, int.MaxValue);
+        var logs = await _unitOfWork.PriceLogs.GetPriceLogs(0, int.MaxValue);
         var nonDeletedLogs = logs.Where(l => !l.Is_Deleted).ToList();
 
         return nonDeletedLogs.Select(log => new Dictionary<string, object?>

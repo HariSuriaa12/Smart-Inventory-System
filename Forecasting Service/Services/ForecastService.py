@@ -8,6 +8,7 @@ from tensorflow.keras.models import load_model
 from Database.DatabaseConnection import engine
 import Helper.FormatDataForANN as FormatDataForANN
 import Helper.EnumModel as EnumModel
+import Helper.BuildFeature as BuildFeature
 
 
 class ForecastService:
@@ -135,34 +136,36 @@ class ForecastService:
         #     ann_df
         # )
         
-        feature_columns = [
-            "ItemCategory",
-            "LocationType",
-            "ItemID",
-            "LocationID",
-            "DayOfMonth",
-            "MonthsSinceStart",
-            #"IsHoliday",
-            #"IsHolidayEve",
-            #"IsWeekend",
-            #"IsWeekendEve",
-            #"IsPromotion",
-            #"IsPaydayWindow",
-            "QtyConsumptionToday",
-            "QtyConsumptionPast7Days",
-            "QtyConsumptionPast14Days",
-            "QtyConsumptionPast30Days",
-            "AvgQtyConsumptionPast7Days",
-            "AvgQtyConsumptionPast14Days",
-            "AvgQtyConsumptionPast30Days",
-            "DemandTrend14vs30",
-            "StdDevPast30Days",
-            "Qty_SameDayLastYear",
-        ]
+        # feature_columns = [
+        #     "ItemCategory",
+        #     "LocationType",
+        #     "ItemID",
+        #     "LocationID",
+        #     "DayOfMonth",
+        #     #"MonthsSinceStart",
+        #     #"IsHoliday",
+        #     #"IsHolidayEve",
+        #     #"IsWeekend",
+        #     #"IsWeekendEve",
+        #     #"IsPromotion",
+        #     #"IsPaydayWindow",
+        #     "QtyConsumptionToday",
+        #     "QtyConsumptionPast7Days",
+        #     "QtyConsumptionPast14Days",
+        #     "QtyConsumptionPast30Days",
+        #     "AvgQtyConsumptionPast7Days",
+        #     "AvgQtyConsumptionPast14Days",
+        #     "AvgQtyConsumptionPast30Days",
+        #     "DemandTrend14vs30",
+        #     "StdDevPast30Days",
+        #     "Qty_SameDayLastYear",
+        # ]
 
-        ann_input_df = ann_df[
-                feature_columns
-            ].copy()
+        # ann_input_df = ann_df[
+        #     feature_columns
+        # ].copy()
+
+        ann_input_df = ann_df.copy()
 
         # These columns must match the ANN training code exactly.
         ann_input_df = ann_input_df.drop(
@@ -285,14 +288,15 @@ class ForecastService:
 
         return latest_rows
 
-    def run_forecast(self) -> pd.DataFrame:
+    def run_forecast(self, location_id: int) -> pd.DataFrame:
 
-        forecast_df = self.get_forecasting_features()
+        #forecast_df = self.get_forecasting_features()
+        forecast_df = BuildFeature.BuildFeature(self, location_id)
 
         # Uses the same feature engineering function used during training.
-        forecast_df = FormatDataForANN.FormatDataFrame(
-            forecast_df
-        )
+        # forecast_df = FormatDataForANN.FormatDataFrame(
+        #     forecast_df
+        # )
 
         forecast_df = self.get_latest_forecast_row_per_item_location(
             forecast_df

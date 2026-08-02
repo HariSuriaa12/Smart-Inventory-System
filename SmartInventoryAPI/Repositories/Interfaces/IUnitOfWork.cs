@@ -18,9 +18,12 @@ public interface IUnitOfWork : IDisposable
     IStockTransferRepository StockTransfers { get; }
     IRolePermissionRepository RolePermissions { get; }
     IForecastingRepository Forecasting { get; }
-    IGenericRepository<PerformLog> PerformLogs { get; }
-    IGenericRepository<PriceLog> PriceLogs { get; }
-    IGenericRepository<InventoryLog> InventoryLogs { get; }
+    //IGenericRepository<PerformLog> PerformLogs { get; }
+    IPerformLogRepository PerformLogs { get; }
+    //IGenericRepository<PriceLog> PriceLogs { get; }
+    IPriceLogRepository PriceLogs { get; }
+    //IGenericRepository<InventoryLog> InventoryLogs { get; }
+    IInventoryLogRepository InventoryLogs { get; }
 
     Task SaveAsync();
 }

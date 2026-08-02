@@ -14,7 +14,6 @@ const EXPORT_MODULES = {
   master: ['Users', 'Items', 'Locations', 'Vendors', 'Customers'],
   transactional: [
     'Inventory',
-    'Inventory Logs',
     'Purchase Orders',
     'Order Fulfillment',
     'Sales',
@@ -86,7 +85,7 @@ export const ExportDataModal = ({ isOpen, onClose }: ExportDataModalProps) => {
           break
       }
 
-      onClose()
+      //onClose()
       setSelectedModules([])
       setStartDate('')
       setEndDate('')
@@ -108,7 +107,7 @@ export const ExportDataModal = ({ isOpen, onClose }: ExportDataModalProps) => {
           <h2 className="text-xl font-bold text-gray-900">Download Reports</h2>
           <button
             onClick={onClose}
-            disabled={loading}
+            //disabled={loading}
             className="p-1 hover:bg-gray-100 rounded-lg transition disabled:opacity-50"
           >
             <X size={24} className="text-gray-600" />
@@ -122,9 +121,10 @@ export const ExportDataModal = ({ isOpen, onClose }: ExportDataModalProps) => {
             <label className="block text-sm font-semibold text-gray-900 mb-3">
               Export Type
             </label>
-            <div className="space-y-3">
+            {/*<div className="space-y-3">*/}
+            <div className="space-y-3 max-h-48 overflow-y-auto border border-gray-200 rounded-lg p-3">
               <label className="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer transition"
-                onClick={() => handleExportTypeChange('master')}>
+                onClick={() => toggleModule('master')}>
                 <input
                   type="radio"
                   name="exportType"
@@ -135,8 +135,8 @@ export const ExportDataModal = ({ isOpen, onClose }: ExportDataModalProps) => {
                   className="w-4 h-4 text-blue-600"
                 />
                 <div className="ml-3">
-                  <p className="text-sm font-medium text-gray-900">Master Data</p>
-                  <p className="text-xs text-gray-500">Users, Items, Locations, Vendors, Customers</p>
+                  <p className="text-sm font-medium text-gray-900">Purchase Order</p>
+                  <p className="text-xs text-gray-500">Export purchase order data</p>
                 </div>
               </label>
 
@@ -152,9 +152,9 @@ export const ExportDataModal = ({ isOpen, onClose }: ExportDataModalProps) => {
                   className="w-4 h-4 text-blue-600"
                 />
                 <div className="ml-3">
-                  <p className="text-sm font-medium text-gray-900">Transactional Data</p>
+                  <p className="text-sm font-medium text-gray-900">Order Fulfilment</p>
                   <p className="text-xs text-gray-500">
-                    Inventory, Orders, Stock Transfers, Sales
+                    Export order fulfilment data
                   </p>
                 </div>
               </label>
@@ -171,9 +171,47 @@ export const ExportDataModal = ({ isOpen, onClose }: ExportDataModalProps) => {
                   className="w-4 h-4 text-blue-600"
                 />
                 <div className="ml-3">
-                  <p className="text-sm font-medium text-gray-900">Logging Data</p>
+                  <p className="text-sm font-medium text-gray-900">Stock Transfer</p>
                   <p className="text-xs text-gray-500">
-                    Perform Logs, Inventory Logs, Price Logs
+                    Export stock transfer data
+                  </p>
+                </div>
+              </label>
+
+              <label className="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer transition"
+                onClick={() => handleExportTypeChange('logging')}>
+                <input
+                  type="radio"
+                  name="exportType"
+                  value="logging"
+                  checked={exportType === 'logging'}
+                  onChange={(e) => handleExportTypeChange(e.target.value as ExportType)}
+                  disabled={loading}
+                  className="w-4 h-4 text-blue-600"
+                />
+                <div className="ml-3">
+                  <p className="text-sm font-medium text-gray-900">Sales</p>
+                  <p className="text-xs text-gray-500">
+                    Export sales data
+                  </p>
+                </div>
+              </label>
+
+              <label className="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer transition"
+                onClick={() => handleExportTypeChange('logging')}>
+                <input
+                  type="radio"
+                  name="exportType"
+                  value="logging"
+                  checked={exportType === 'logging'}
+                  onChange={(e) => handleExportTypeChange(e.target.value as ExportType)}
+                  disabled={loading}
+                  className="w-4 h-4 text-blue-600"
+                />
+                <div className="ml-3">
+                  <p className="text-sm font-medium text-gray-900">Inventory Balance</p>
+                  <p className="text-xs text-gray-500">
+                    Export inventory balance data
                   </p>
                 </div>
               </label>
@@ -181,7 +219,7 @@ export const ExportDataModal = ({ isOpen, onClose }: ExportDataModalProps) => {
           </div>
 
           {/* Module Selection */}
-          <div className="border-t border-gray-200 pt-6">
+          {/*<div className="border-t border-gray-200 pt-6">
             <div className="flex items-center justify-between mb-3">
               <label className="block text-sm font-semibold text-gray-900">
                 Select Modules
@@ -220,7 +258,7 @@ export const ExportDataModal = ({ isOpen, onClose }: ExportDataModalProps) => {
             <p className="text-xs text-gray-600 mt-2">
               {selectedModules.length} of {availableModules.length} selected
             </p>
-          </div>
+          </div>*/}
 
           {/* Date Range Selection */}
           <div className="border-t border-gray-200 pt-6">
@@ -260,7 +298,7 @@ export const ExportDataModal = ({ isOpen, onClose }: ExportDataModalProps) => {
           {/* Info Box */}
           <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
             <p className="text-xs text-blue-900">
-              <strong>Note:</strong> Only non-deleted records will be exported. Excel file with multiple sheets will be downloaded automatically.
+              <strong>Note:</strong> Files will be downloaded as .CSV format.
             </p>
           </div>
         </div>

@@ -67,16 +67,29 @@ public class PurchaseOrderRepository : GenericRepository<PurchaseOrderHeader>, I
 
     public async Task<IEnumerable<PurchaseOrderHeader>> GetAllWithDetailsAsync(int skip = 0, int take = 10)
     {
-        return await _dbSet
-            .Where(p => !p.Is_Deleted)
-            .Include(p => p.Vendor)
-            .Include(p => p.Location)
-            .Include(p => p.Items)
-            .ThenInclude(i => i.Item)
-            .Include(p => p.User)
-            .Skip(skip)
-            .Take(take)
-            .ToListAsync();
+        var query = _dbSet
+        .AsNoTracking()                       // 1. Critical for read-only performance
+        .AsSplitQuery()                       // 2. Prevents Cartesian explosion
+        .Where(p => p.Is_Deleted == false)            // 3. Filter applied early
+        .OrderBy(p => p.ID)                   // 4. Required for efficient Skip/Take
+        .Skip(skip)
+        .Take(take)
+        .Include(p => p.Vendor)
+        .Include(p => p.Location)
+        .Include(p => p.User)
+        .Include(p => p.Items)
+        .ThenInclude(i => i.Item)
+        .ToListAsync();
+
+        try
+        {
+            string sql = query.ToString();
+            return await query;
+        }
+        catch (Exception ex)
+        {
+            throw;
+        }
     }
 
     public async Task<IEnumerable<PurchaseOrderHeader>> GetByVendorWithDetailsAsync(long vendorId, int skip = 0, int take = 10)

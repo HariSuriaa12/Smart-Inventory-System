@@ -11,7 +11,7 @@ import {
   LocationInventoryData,
   TopSellingItem,
   InventoryTrendData,
-  ForecastedResult,
+  ForecastedResultData_Py,
 } from '@/services/dashboardService'
 import { Package, MapPin, ShoppingCart, TrendingUp, AlertCircle, Loader, Eye, BarChart3, Download } from 'lucide-react'
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts'
@@ -25,7 +25,7 @@ export const DashboardPage = () => {
   const [inventory, setInventory] = useState<LocationInventoryData[]>([])
   const [topSellingItems, setTopSellingItems] = useState<TopSellingItem[]>([])
   const [inventoryTrend, setInventoryTrend] = useState<InventoryTrendData[]>([])
-  const [forecasts, setForecasts] = useState<ForecastedResult[]>([])
+  const [forecasts, setForecasts] = useState<ForecastedResultData_Py[]>([])
   const [loading, setLoading] = useState(true)
   const [showForecastModal, setShowForecastModal] = useState(false)
   const [showExportModal, setShowExportModal] = useState(false)
@@ -39,7 +39,7 @@ export const DashboardPage = () => {
 
     fetchMasterStats()
   }, [])
-
+  console.log('Current location:', currentLocation)
   // Fetch location-specific data
   useEffect(() => {
     if (!currentLocation) {
@@ -77,7 +77,7 @@ export const DashboardPage = () => {
     }
 
     fetchLocationData()
-  }, [currentLocation, openLocationModal])
+  }, [currentLocation] /*[currentLocation, openLocationModal]*/)
 
   const statCards = [
     {
@@ -103,7 +103,7 @@ export const DashboardPage = () => {
     },
     {
       title: 'Stock Value',
-      value: `$${(inventory.reduce((sum, item) => sum + item.value, 0) / 1000).toFixed(0)}K`,
+      value: `$${(inventory.reduce((sum, item) => sum + item.value, 0) / 1000).toFixed(0)}`,
       icon: TrendingUp,
       color: 'bg-purple-100 text-purple-600',
       description: 'Current location',
@@ -317,13 +317,14 @@ export const DashboardPage = () => {
               </div>
             ) : (
               <>
+                {console.log('Forecasts data for chart:', forecasts)}
                 {/* Line Chart */}
                 <div className="w-full h-80">
                   <ResponsiveContainer width="100%" height="100%">
                     <LineChart data={forecasts}>
                       <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
                       <XAxis
-                        dataKey="itemCode"
+                        dataKey="ItemCode"
                         stroke="#888"
                         style={{ fontSize: '12px' }}
                       />
@@ -340,7 +341,7 @@ export const DashboardPage = () => {
                       <Legend />
                       <Line
                         type="monotone"
-                        dataKey="forecastedQuantity"
+                        dataKey="PredictedDemandNext30Days"
                         stroke="#3b82f6"
                         strokeWidth={2}
                         dot={{ fill: '#3b82f6', r: 4 }}
@@ -372,12 +373,12 @@ export const DashboardPage = () => {
           onClose={() => setShowForecastModal(false)}
           title="Forecasted Results - Preview"
           data={forecasts.map((f) => ({
-            'Item Code': f.itemCode,
-            'Item Name': f.itemName,
-            'Forecasted Qty': f.forecastedQuantity,
-            'Method': f.forecastMethod === 0 ? 'ANN' : 'MA',
-            'Model Version': f.modelVersion,
-            'Forecast Date': new Date(f.creationDate).toLocaleDateString(),
+            'Item Code': f.ItemCode,
+            'Item Name': f.ItemName,
+            'Forecasted Qty': f.PredictedDemandNext30Days,
+            'Method': f.Method === 0 ? 'ANN' : 'MA',
+            'Model Version': '1.0',
+            'Forecast Date': new Date(f.Date).toLocaleDateString(),
           }))}
           columns={[
             { key: 'Item Code', label: 'Item Code' },

@@ -54,9 +54,25 @@ public class StockTransferRepository : GenericRepository<StockTransfer>, IStockT
 
     public async Task<IEnumerable<StockTransfer>> GetAllWithDetailsAsync(int skip = 0, int take = 10)
     {
-        return await IncludeRelatedEntities(_dbSet.Where(s => !s.Is_Deleted))
+        return await IncludeRelatedEntities(_dbSet.Where(s => s.Is_Deleted == false))
             .Skip(skip)
             .Take(take)
+            .ToListAsync();
+    }
+
+    public async Task<IEnumerable<StockTransfer>> GetAllWithDetailsAsyncV2(int skip = 0, int take = 10)
+    {
+        return await _dbSet
+            .AsNoTracking()                       // 1. Critical for read-only performance
+            .AsSplitQuery()                       // 2. Prevents Cartesian explosion
+            .Where(s => s.Is_Deleted == false)            // 3. Filter applied early
+            .OrderBy(s => s.ID)                   // 4. Required for efficient Skip/Take
+            .Skip(skip)
+            .Take(take)
+            .Include(s => s.FromLocation)
+            .Include(s => s.ToLocation)
+            .Include(s => s.User)
+            .Include(s => s.Item)
             .ToListAsync();
     }
 

@@ -11,6 +11,21 @@ public class SalesRepository : GenericRepository<Sales>, ISalesRepository
     {
     }
 
+    public async Task<IEnumerable<Sales?>> GetSalesWithDetails(int skip = 0, int take = 10)
+    {
+        return await _dbSet
+            .AsNoTracking()                       // 1. Critical for read-only performance
+            .AsSplitQuery()                       // 2. Prevents Cartesian explosion
+            .Where(s => s.Is_Deleted == false)            // 3. Filter applied early
+            .OrderBy(s => s.ID)                   // 4. Required for efficient Skip/Take
+            .Skip(skip)
+            .Take(take)
+            .Include(s => s.Location)
+            .Include(s => s.Items)
+            .ThenInclude(i => i.Item)
+            .ToListAsync();
+    }
+
     public async Task<Sales?> GetWithItemsAsync(long id)
     {
         return await _dbSet.Include(s => s.Items)

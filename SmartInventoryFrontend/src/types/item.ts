@@ -1,6 +1,7 @@
 import { Entity } from './common'
 
 export interface Item extends Entity {
+  ID: number
   Item_Name: string
   Item_Code: string
   Description?: string

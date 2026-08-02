@@ -19,9 +19,12 @@ public class UnitOfWork : IUnitOfWork
     private IStockTransferRepository? _stockTransferRepository;
     private IRolePermissionRepository? _rolePermissionRepository;
     private IForecastingRepository? _forecastingRepository;
-    private IGenericRepository<PerformLog>? _performLogRepository;
-    private IGenericRepository<PriceLog>? _priceLogRepository;
-    private IGenericRepository<InventoryLog>? _inventoryLogRepository;
+    //private IGenericRepository<PerformLog>? _performLogRepository;
+    private IPerformLogRepository? _performLogRepository;
+    //private IGenericRepository<PriceLog>? _priceLogRepository;
+    private IPriceLogRepository? _priceLogRepository;
+    //private IGenericRepository<InventoryLog>? _inventoryLogRepository;
+    private IInventoryLogRepository? _inventoryLogRepository;
 
     public UnitOfWork(SmartInventoryDbContext context)
     {
@@ -42,9 +45,12 @@ public class UnitOfWork : IUnitOfWork
     public IStockTransferRepository StockTransfers => _stockTransferRepository ??= new StockTransferRepository(_context);
     public IRolePermissionRepository RolePermissions => _rolePermissionRepository ??= new RolePermissionRepository(_context);
     public IForecastingRepository Forecasting => _forecastingRepository ??= new ForecastingRepository(_context);
-    public IGenericRepository<PerformLog> PerformLogs => _performLogRepository ??= new GenericRepository<PerformLog>(_context);
-    public IGenericRepository<PriceLog> PriceLogs => _priceLogRepository ??= new GenericRepository<PriceLog>(_context);
-    public IGenericRepository<InventoryLog> InventoryLogs => _inventoryLogRepository ??= new GenericRepository<InventoryLog>(_context);
+    //public IGenericRepository<PerformLog> PerformLogs => _performLogRepository ??= new GenericRepository<PerformLog>(_context);
+    public IPerformLogRepository PerformLogs => _performLogRepository ??= new PerformLogRepository(_context);
+    //public IGenericRepository<PriceLog> PriceLogs => _priceLogRepository ??= new GenericRepository<PriceLog>(_context);
+    public IPriceLogRepository PriceLogs => _priceLogRepository ??= new PriceLogRepository(_context);
+    //public IGenericRepository<InventoryLog> InventoryLogs => _inventoryLogRepository ??= new GenericRepository<InventoryLog>(_context);
+    public IInventoryLogRepository InventoryLogs => _inventoryLogRepository ??= new InventoryLogRepository(_context);
 
     public async Task SaveAsync()
     {

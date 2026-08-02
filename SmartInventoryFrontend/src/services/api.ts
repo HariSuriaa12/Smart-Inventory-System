@@ -2,9 +2,20 @@ import axios, { AxiosInstance, AxiosError } from 'axios'
 import { ApiResponse } from '@/types/common'
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://localhost:62549'
+const FORECAST_API_BASE_URL = import.meta.env.VITE_FORECAST_API_BASE_URL || 'http://localhost:8000'
 
 export const api: AxiosInstance = axios.create({
   baseURL: API_BASE_URL,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  httpsAgent: {
+    rejectUnauthorized: false,
+  } as any,
+})
+
+export const forecastApi: AxiosInstance = axios.create({
+  baseURL: FORECAST_API_BASE_URL,
   headers: {
     'Content-Type': 'application/json',
   },

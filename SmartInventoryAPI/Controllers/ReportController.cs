@@ -49,9 +49,13 @@ public class ReportController : ControllerBase
         try
         {
             _logger.LogInformation("Exporting transactional data with modules: {Modules}", string.Join(", ", request.Modules));
-            var excelBytes = await _reportService.ExportTransactionalDataAsync(request.Modules, request.StartDate, request.EndDate);
+            var fileContentDict = await _reportService.ExportTransactionalDataAsync(request.Modules, request.StartDate, request.EndDate);
             var timestamp = DateTime.UtcNow.ToString("yyyy-MM-dd_HH-mm-ss");
-            return File(excelBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", $"transactional_data_{timestamp}.xlsx");
+
+            if (fileContentDict.Keys.First() == "Excel")
+                return File(fileContentDict.Values.First(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", $"transactional_data_{timestamp}.xlsx");
+            else
+                return File(fileContentDict.Values.First(), "text/csv", $"{request.Modules[0]}_Report_{timestamp}.csv");
         }
         catch (Exception ex)
         {

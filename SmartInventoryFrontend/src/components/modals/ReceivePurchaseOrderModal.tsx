@@ -47,6 +47,9 @@ export const ReceivePurchaseOrderModal = ({ isOpen, poId, item, onClose, onSucce
       //newErrors.receivedQuantity = `Received quantity cannot exceed remaining quantity (${(item!.order_Quantity - item!.received_Quantity)})`
       localErrorV2 = `Received quantity cannot exceed remaining quantity (${(item!.order_Quantity - item!.received_Quantity)})`
     }
+    if(received == 0){
+      localErrorV2 = 'Enter a valid quantity!'
+    }
 
     // setErrors(newErrors)
     // return Object.keys(newErrors).length === 0

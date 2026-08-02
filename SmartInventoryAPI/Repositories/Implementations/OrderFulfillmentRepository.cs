@@ -10,6 +10,22 @@ public class OrderFulfillmentRepository : GenericRepository<OrderFulfillmentHead
     public OrderFulfillmentRepository(SmartInventoryDbContext context) : base(context)
     {
     }
+    public async Task<IEnumerable<OrderFulfillmentHeader?>> GetOrderFulfillmentWithDetails(int skip = 0, int take = 10)
+    {
+        return await _dbSet
+            .AsNoTracking()                       // 1. Critical for read-only performance
+            .AsSplitQuery()                       // 2. Prevents Cartesian explosion
+            .Where(o => o.Is_Deleted == false)            // 3. Filter applied early
+            .OrderBy(o => o.ID)                   // 4. Required for efficient Skip/Take
+            .Skip(skip)
+            .Take(take)
+            .Include(o => o.Customer)
+            .Include(o => o.Location)
+            .Include(o => o.Items)
+            .ThenInclude(i => i.Item)
+            .Include(o => o.User)
+            .ToListAsync();
+    }
 
     public async Task<OrderFulfillmentHeader?> GetWithItemsAsync(long id)
     {

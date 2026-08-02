@@ -60,6 +60,39 @@ public static class CsvGenerator
         }
     }
 
+    public static byte[] GenerateCsvFromDictionariesV2(IEnumerable<Dictionary<string, object?>> records, string[] columnNames)
+    {
+        var sb = new StringBuilder();
+
+        // 1. Write Header Row
+        sb.AppendLine(string.Join(",", columnNames.Select(EscapeCsvField)));
+
+        // 2. Write Data Rows
+        foreach (var record in records)
+        {
+            var values = new List<string>();
+            foreach (var columnName in columnNames)
+            {
+                var value = record.ContainsKey(columnName) ? record[columnName]?.ToString() ?? "" : "";
+                values.Add(EscapeCsvField(value));
+            }
+            sb.AppendLine(string.Join(",", values));
+        }
+
+        // 3. Directly convert the built string to UTF8 bytes (with BOM for Excel compatibility)
+        var csvText = sb.ToString();
+
+        // Adding the BOM (Byte Order Mark) ensures Excel opens the CSV with correct UTF-8 encoding
+        var bom = new byte[] { 0xEF, 0xBB, 0xBF };
+        var textBytes = Encoding.UTF8.GetBytes(csvText);
+
+        var finalBytes = new byte[bom.Length + textBytes.Length];
+        Buffer.BlockCopy(bom, 0, finalBytes, 0, bom.Length);
+        Buffer.BlockCopy(textBytes, 0, finalBytes, bom.Length, textBytes.Length);
+
+        return finalBytes;
+    }
+
     private static string EscapeCsvField(string? field)
     {
         if (string.IsNullOrEmpty(field))

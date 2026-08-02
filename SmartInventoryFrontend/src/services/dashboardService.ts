@@ -1,5 +1,6 @@
-import { api } from './api'
+import { api, forecastApi } from './api'
 import { ApiResponse, PaginatedResponse } from '@/types/common'
+import { itemService } from './itemService'
 
 export interface DashboardStats {
   totalItems: number
@@ -43,6 +44,24 @@ export interface ForecastedResult {
   creationDate: string
 }
 
+export interface ForecastedResult_Py {
+  status: string
+  rowsPredicted: number
+  annRows: number
+  maRows: string
+  data: ForecastedResultData_Py[]
+}
+
+export interface ForecastedResultData_Py {
+  Date: string
+  ItemID: number
+  ItemCode: string
+  ItemName: string
+  LocationID: number
+  Method: number
+  PredictedDemandNext30Days: number
+}
+
 export const dashboardService = {
   // Get master stats - master data endpoints
   getStats: async (): Promise<DashboardStats> => {
@@ -76,13 +95,14 @@ export const dashboardService = {
       })
       console.log('Location inventory response:', response.data)
       return (
-        response.data?.data?.data?.map((inv: any) => ({
-          itemId: inv.item_ID,
-          itemCode: inv.item?.item_Code || '',
-          itemName: inv.item?.item_Name || '',
-          onHandQty: inv.on_Hand_Quantity || 0,
-          availableQty: inv.available_Quantity || 0,
-          value: (inv.available_Quantity || 0) * (inv.item?.unit_Cost || 0),
+        response.data?.data?.data?.map((x: any) => ({
+          date: x.Date || new Date().toISOString(),
+          itemId: x.item_ID,
+          itemCode: x.item?.item_Code || '',
+          itemName: x.item?.item_Name || '',
+          onHandQty: x.on_Hand_Quantity || 0,
+          availableQty: x.available_Quantity || 0,
+          value: (x.available_Quantity || 0) * (x.item?.unit_Cost || 0),
         })) || []
       )
     } catch (error) {
@@ -158,23 +178,44 @@ export const dashboardService = {
     }
   },
 
-  // Get forecasts by location
-  getForecasts: async (locationId: number): Promise<ForecastedResult[]> => {
+  // // Get forecasts by location
+  // getForecasts: async (locationId: number): Promise<ForecastedResult[]> => {
+  //   try {
+  //     const response = await forecastApi.get<ApiResponse<PaginatedResponse<any>>>(`/api/forecast/run/location/${locationId}`)
+  //     console.log('Forecasts response:', response.data)
+  //     return (
+  //       response.data?.data?.data?.map((forecast: any) => ({
+  //         id: forecast.iD,
+  //         itemId: forecast.item_ID,
+  //         itemCode: forecast.item_Code || '',
+  //         itemName: forecast.item_Name || '',
+  //         forecastedQuantity: forecast.forecasted_Quantity || 0,
+  //         forecastMethod: forecast.forecast_Method || 0,
+  //         modelVersion: forecast.model_Version || '0',
+  //         creationDate: forecast.creation_Date || new Date().toISOString(),
+  //       })) || []
+  //     )
+  //   } catch (error) {
+  //     console.error('Failed to fetch forecasts:', error)
+  //     return []
+  //   }
+  // },
+
+  getForecasts: async (locationId: number): Promise<ForecastedResultData_Py[]> => {
     try {
-      const response = await api.get<ApiResponse<PaginatedResponse<any>>>(`/api/forecasting/location/${locationId}`, {
-        params: { skip: 0, take: 100 },
-      })
+      const response = await forecastApi.post<ForecastedResult_Py>(`/api/forecast/run/location/${locationId}`)
+      const itemResponse = await itemService.getItems(0, 999999) // Fetch all items to map item names and codes
       console.log('Forecasts response:', response.data)
+      console.log('Forecasts Item response:', itemResponse.data)
       return (
-        response.data?.data?.data?.map((forecast: any) => ({
-          id: forecast.iD,
-          itemId: forecast.item_ID,
-          itemCode: forecast.item_Code || '',
-          itemName: forecast.item_Name || '',
-          forecastedQuantity: forecast.forecasted_Quantity || 0,
-          forecastMethod: forecast.forecast_Method || 0,
-          modelVersion: forecast.model_Version || '0',
-          creationDate: forecast.creation_Date || new Date().toISOString(),
+        response.data?.data?.map((forecast: any) => ({
+          Date: forecast.Date || new Date().toISOString(),
+          ItemID: forecast.ItemID,
+          ItemCode: itemResponse.data?.data?.find((item) => item.id === forecast.ItemID)?.item_Code || '',
+          ItemName: itemResponse.data?.data?.find((item) => item.id === forecast.ItemID)?.item_Name || '',
+          LocationID: forecast.LocationID,
+          Method: forecast.Best_Method || 0,
+          PredictedDemandNext30Days: forecast.PredictedDemandNext30Days || 0,
         })) || []
       )
     } catch (error) {

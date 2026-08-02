@@ -212,25 +212,25 @@ export const OrderFulfillmentDetailPage = () => {
       width: '120px',
       render: (_, item) => (
         <div className="flex gap-2">
+          {(item.status !== OrderFulfillmentStatus.Cancelled && item.status !== OrderFulfillmentStatus.Fulfilled) && canEdit === true && (
+            <button
+              onClick={() => handleCancelItem(item.id)}
+              disabled={actionLoading || !canEdit}
+              className="p-1.5 text-gray-600 hover:bg-gray-100 rounded transition-colors disabled:opacity-50"
+              title="Cancel item"
+            >
+              <X size={16} />
+            </button>
+          )}
           {(item.status === OrderFulfillmentStatus.PartiallyFulfilled || item.status === OrderFulfillmentStatus.Fulfilled) && canEdit === true && (
-            <>
-              <button
-                onClick={() => handleCancelItem(item.id)}
-                disabled={actionLoading || !canEdit}
-                className="p-1.5 text-gray-600 hover:bg-gray-100 rounded transition-colors disabled:opacity-50"
-                title="Cancel item"
-              >
-                <X size={16} />
-              </button>
-              <button
-                onClick={() => handleCancelItemWithReturn(item.id)}
-                disabled={actionLoading || !canEdit}
-                className="p-1.5 text-orange-600 hover:bg-orange-50 rounded transition-colors disabled:opacity-50"
-                title="Cancel with return"
-              >
-                <RotateCcw size={16} />
-              </button>
-            </>
+            <button
+              onClick={() => handleCancelItemWithReturn(item.id)}
+              disabled={actionLoading || !canEdit}
+              className="p-1.5 text-orange-600 hover:bg-orange-50 rounded transition-colors disabled:opacity-50"
+              title="Cancel with return"
+            >
+              <RotateCcw size={16} />
+            </button>
           )}
         </div>
       ),

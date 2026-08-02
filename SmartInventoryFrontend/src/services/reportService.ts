@@ -34,7 +34,15 @@ export const reportService = {
         responseType: 'blob',
       })
 
-      downloadFile(response.data, 'transactional_data')
+      let filename = 'download.csv';
+      if (response.headers['content-disposition']) {
+      const match = response.headers['content-disposition'].match(/filename\*?=(?:UTF-8'')?([^;\n"']*)\b/);
+      if (match && match[1]) {
+        filename = decodeURIComponent(match[1]);
+      }
+    }
+      
+    downloadFile(response.data, filename)
     } catch (error) {
       console.error('Failed to export transactional data:', error)
       throw error
@@ -63,7 +71,8 @@ const downloadFile = (blob: Blob, filename: string) => {
   const url = window.URL.createObjectURL(blob)
   const link = document.createElement('a')
   link.href = url
-  link.download = `${filename}_${new Date().toISOString().split('T')[0]}.xlsx`
+  //link.download = `${filename}_${new Date().toISOString().split('T')[0]}.xlsx`
+  link.download = `${filename}`
   document.body.appendChild(link)
   link.click()
   document.body.removeChild(link)

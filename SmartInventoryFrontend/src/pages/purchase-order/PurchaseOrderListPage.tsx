@@ -79,7 +79,7 @@ export const PurchaseOrderListPage = () => {
 
   useEffect(() => {
     dispatch(fetchVendors({ skip: 0, take: 100 }) as any)
-  }, [dispatch])
+  }, [])
 
   // Debounce all filters together
   useEffect(() => {

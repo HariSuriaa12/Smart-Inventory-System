@@ -37,6 +37,9 @@ export const ShipItemModal = ({ isOpen, fulfillmentId, item, onClose, onSuccess,
     if (shipped > item!.request_Quantity) {
       newErrors.shippedQuantity = `Shipped quantity cannot exceed requested quantity (${item!.request_Quantity})`
     }
+    if (shipped === 0) {
+      newErrors.shippedQuantity = 'Enter a valid quantity!'
+    }
 
     setErrors(newErrors)
     return Object.keys(newErrors).length === 0

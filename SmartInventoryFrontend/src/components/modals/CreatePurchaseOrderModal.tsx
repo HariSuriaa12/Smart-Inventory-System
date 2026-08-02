@@ -53,7 +53,7 @@ export const CreatePurchaseOrderModal = ({ isOpen, onClose, onSuccess, isLoading
         setFormData((prev) => ({ ...prev, locationId: locations[0].id.toString() }))
       }
     }
-  }, [isOpen, dispatch, locations])
+  }, [isOpen, dispatch])
 
   const handleSearchItems = useCallback(async (query: string) => {
     if (query.length < 2) {
@@ -400,6 +400,7 @@ export const CreatePurchaseOrderModal = ({ isOpen, onClose, onSuccess, isLoading
             </button>
             <button
               type="submit"
+              onClick={handleSubmit}
               disabled={isLoading || selectedItems.length === 0}
               className="px-6 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors disabled:bg-gray-400 font-medium"
             >

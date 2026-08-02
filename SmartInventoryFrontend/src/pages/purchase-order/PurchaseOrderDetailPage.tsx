@@ -266,25 +266,25 @@ export const PurchaseOrderDetailPage = () => {
               <X size={16} />
             </button>
           )}
+          {(item.status !== PurchaseOrderStatus.Cancelled && item.status !== PurchaseOrderStatus.Received) && canEdit === true && (
+            <button
+              onClick={() => handleCancelItem(item.id)}
+              disabled={actionLoading}
+              className="p-1.5 text-gray-600 hover:bg-gray-100 rounded transition-colors disabled:opacity-50"
+              title="Cancel item"
+            >
+              <X size={16} />
+            </button>
+          )}
           {(item.status === PurchaseOrderStatus.PartiallyReceived || item.status === PurchaseOrderStatus.Received) && canEdit === true && (
-            <>
-              <button
-                onClick={() => handleCancelItem(item.id)}
-                disabled={actionLoading}
-                className="p-1.5 text-gray-600 hover:bg-gray-100 rounded transition-colors disabled:opacity-50"
-                title="Cancel item"
-              >
-                <X size={16} />
-              </button>
-              <button
-                onClick={() => handleCancelItemWithReturn(item.id)}
-                disabled={actionLoading}
-                className="p-1.5 text-orange-600 hover:bg-orange-50 rounded transition-colors disabled:opacity-50"
-                title="Cancel with return"
-              >
-                <RotateCcw size={16} />
-              </button>
-            </>
+            <button
+              onClick={() => handleCancelItemWithReturn(item.id)}
+              disabled={actionLoading}
+              className="p-1.5 text-orange-600 hover:bg-orange-50 rounded transition-colors disabled:opacity-50"
+              title="Cancel with return"
+            >
+              <RotateCcw size={16} />
+            </button>
           )}
         </div>
       ),
