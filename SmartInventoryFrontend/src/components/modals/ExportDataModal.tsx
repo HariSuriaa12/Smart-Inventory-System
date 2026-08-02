@@ -17,22 +17,16 @@ const AVAILABLE_MODULES = [
 ]
 
 export const ExportDataModal = ({ isOpen, onClose }: ExportDataModalProps) => {
-  const [selectedModules, setSelectedModules] = useState<string[]>([])
+  const [selectedModule, setSelectedModule] = useState<string>('')
   const [startDate, setStartDate] = useState<string>('')
   const [endDate, setEndDate] = useState<string>('')
   const [loading, setLoading] = useState(false)
 
   if (!isOpen) return null
 
-  const toggleModule = (module: string) => {
-    setSelectedModules((prev) =>
-      prev.includes(module) ? prev.filter((m) => m !== module) : [...prev, module]
-    )
-  }
-
   const handleExport = async () => {
-    if (selectedModules.length === 0) {
-      toast.error('Please select at least one module to export')
+    if (!selectedModule) {
+      toast.error('Please select a module to export')
       return
     }
 
@@ -40,7 +34,7 @@ export const ExportDataModal = ({ isOpen, onClose }: ExportDataModalProps) => {
       setLoading(true)
 
       const request = {
-        modules: selectedModules,
+        modules: [selectedModule],
         startDate: startDate ? new Date(startDate) : undefined,
         endDate: endDate ? new Date(endDate) : undefined,
       }
@@ -48,7 +42,7 @@ export const ExportDataModal = ({ isOpen, onClose }: ExportDataModalProps) => {
       await reportService.exportData(request)
       toast.success('Data exported successfully!')
 
-      setSelectedModules([])
+      setSelectedModule('')
       setStartDate('')
       setEndDate('')
     } catch (error) {
@@ -80,28 +74,27 @@ export const ExportDataModal = ({ isOpen, onClose }: ExportDataModalProps) => {
         <div className="flex-1 overflow-auto p-6 space-y-6">
           {/* Module Selection */}
           <div>
-            <div className="flex items-center justify-between mb-3">
-              <label className="block text-sm font-semibold text-gray-900">
-                Select Modules
-              </label>
-            </div>
-            <div className="space-y-2 max-h-48 overflow-y-auto border border-gray-200 rounded-lg p-3 bg-gray-50">
+            <label className="block text-sm font-semibold text-gray-900 mb-3">
+              Select Module
+            </label>
+            <div className="space-y-3 max-h-48 overflow-y-auto border border-gray-200 rounded-lg p-3">
               {AVAILABLE_MODULES.map((module) => (
-                <label key={module} className="flex items-center p-2 hover:bg-gray-100 rounded cursor-pointer">
+                <label key={module} className="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer transition">
                   <input
-                    type="checkbox"
-                    checked={selectedModules.includes(module)}
-                    onChange={() => toggleModule(module)}
+                    type="radio"
+                    name="module"
+                    value={module}
+                    checked={selectedModule === module}
+                    onChange={(e) => setSelectedModule(e.target.value)}
                     disabled={loading}
-                    className="w-4 h-4 text-blue-600 rounded disabled:opacity-50"
+                    className="w-4 h-4 text-blue-600"
                   />
-                  <span className="ml-3 text-sm text-gray-700">{module}</span>
+                  <div className="ml-3">
+                    <p className="text-sm font-medium text-gray-900">{module}</p>
+                  </div>
                 </label>
               ))}
             </div>
-            <p className="text-xs text-gray-600 mt-2">
-              {selectedModules.length} of {AVAILABLE_MODULES.length} selected
-            </p>
           </div>
 
           {/* Date Range Selection */}
@@ -158,7 +151,7 @@ export const ExportDataModal = ({ isOpen, onClose }: ExportDataModalProps) => {
           </button>
           <button
             onClick={handleExport}
-            disabled={loading || !isDateRangeValid || selectedModules.length === 0}
+            disabled={loading || !isDateRangeValid || !selectedModule}
             className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-medium flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {loading ? (
