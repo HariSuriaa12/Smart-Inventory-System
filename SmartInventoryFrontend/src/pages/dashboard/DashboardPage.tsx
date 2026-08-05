@@ -143,14 +143,41 @@ export const DashboardPage = () => {
 
   const prepareConsumptionChartData = () => {
     const filteredForecasts = forecasts.filter((f) => selectedItems.includes(f.ItemID))
-    const consumptionKey = getConsumptionDataByPeriod(timePeriod)
 
-    return filteredForecasts.map((f) => ({
-      name: f.ItemCode,
-      [consumptionKey]: f[consumptionKey],
-      PredictedDemandNext30Days: f.PredictedDemandNext30Days,
-      itemId: f.ItemID,
-    }))
+    return filteredForecasts.map((f) => {
+      const dataPoint: Record<string, number | string> = {
+        name: f.ItemCode,
+        itemId: f.ItemID,
+      }
+
+      if (timePeriod === '1y') {
+        dataPoint['Year Ago'] = f.QtyConsumption30Days_Y1
+        dataPoint['5 Months Ago'] = f.QtyConsumption30Days_M5
+        dataPoint['4 Months Ago'] = f.QtyConsumption30Days_M4
+        dataPoint['3 Months Ago'] = f.QtyConsumption30Days_M3
+        dataPoint['2 Months Ago'] = f.QtyConsumption30Days_M2
+        dataPoint['1 Month Ago'] = f.QtyConsumption30Days_M1
+        dataPoint['Current Month'] = f.QtyConsumption30Days
+        dataPoint['Forecasted'] = f.PredictedDemandNext30Days
+      } else if (timePeriod === '6m') {
+        dataPoint['4 Months Ago'] = f.QtyConsumption30Days_M4
+        dataPoint['3 Months Ago'] = f.QtyConsumption30Days_M3
+        dataPoint['2 Months Ago'] = f.QtyConsumption30Days_M2
+        dataPoint['1 Month Ago'] = f.QtyConsumption30Days_M1
+        dataPoint['Current Month'] = f.QtyConsumption30Days
+        dataPoint['Forecasted'] = f.PredictedDemandNext30Days
+      } else if (timePeriod === '3m') {
+        dataPoint['2 Months Ago'] = f.QtyConsumption30Days_M2
+        dataPoint['1 Month Ago'] = f.QtyConsumption30Days_M1
+        dataPoint['Current Month'] = f.QtyConsumption30Days
+        dataPoint['Forecasted'] = f.PredictedDemandNext30Days
+      } else {
+        dataPoint['Current Month'] = f.QtyConsumption30Days
+        dataPoint['Forecasted'] = f.PredictedDemandNext30Days
+      }
+
+      return dataPoint as any
+    })
   }
 
   const prepareForecastBarChartData = () => {
@@ -167,6 +194,51 @@ export const DashboardPage = () => {
     code: f.ItemCode,
     name: f.ItemName,
   }))
+
+  const getLineConfigs = () => {
+    const lineColors = {
+      'Year Ago': '#c4b5fd',
+      '5 Months Ago': '#a5d6ff',
+      '4 Months Ago': '#7dd3fc',
+      '3 Months Ago': '#22d3ee',
+      '2 Months Ago': '#4ade80',
+      '1 Month Ago': '#60a5fa',
+      'Current Month': '#10b981',
+      'Forecasted': '#f59e0b',
+    }
+
+    const lines: Array<{ dataKey: string; color: string; strokeWidth: number; showDot?: boolean }> = []
+
+    if (timePeriod === '1y') {
+      lines.push(
+        { dataKey: 'Year Ago', color: lineColors['Year Ago'], strokeWidth: 2 },
+        { dataKey: '5 Months Ago', color: lineColors['5 Months Ago'], strokeWidth: 2 },
+        { dataKey: '4 Months Ago', color: lineColors['4 Months Ago'], strokeWidth: 2 },
+        { dataKey: '3 Months Ago', color: lineColors['3 Months Ago'], strokeWidth: 2 },
+        { dataKey: '2 Months Ago', color: lineColors['2 Months Ago'], strokeWidth: 2 },
+        { dataKey: '1 Month Ago', color: lineColors['1 Month Ago'], strokeWidth: 2 }
+      )
+    } else if (timePeriod === '6m') {
+      lines.push(
+        { dataKey: '4 Months Ago', color: lineColors['4 Months Ago'], strokeWidth: 2 },
+        { dataKey: '3 Months Ago', color: lineColors['3 Months Ago'], strokeWidth: 2 },
+        { dataKey: '2 Months Ago', color: lineColors['2 Months Ago'], strokeWidth: 2 },
+        { dataKey: '1 Month Ago', color: lineColors['1 Month Ago'], strokeWidth: 2 }
+      )
+    } else if (timePeriod === '3m') {
+      lines.push(
+        { dataKey: '2 Months Ago', color: lineColors['2 Months Ago'], strokeWidth: 2 },
+        { dataKey: '1 Month Ago', color: lineColors['1 Month Ago'], strokeWidth: 2 }
+      )
+    }
+
+    lines.push(
+      { dataKey: 'Current Month', color: lineColors['Current Month'], strokeWidth: 3, showDot: true },
+      { dataKey: 'Forecasted', color: lineColors['Forecasted'], strokeWidth: 3, showDot: true }
+    )
+
+    return lines
+  }
 
   return (
     <div className="relative min-h-screen">
@@ -430,102 +502,141 @@ export const DashboardPage = () => {
               </div>
             ) : (
               <>
-                {/* Filters */}
-                <div className="flex flex-col md:flex-row gap-4 p-4 bg-gray-50 rounded-lg">
-                  {/* Item Filter */}
-                  <div className="flex-1">
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Filter Items</label>
-                    <div className="space-y-2 max-h-48 overflow-y-auto">
-                      {uniqueItems.map((item) => (
-                        <label key={item.id} className="flex items-center gap-2 cursor-pointer">
-                          <input
-                            type="checkbox"
-                            checked={selectedItems.includes(item.id)}
-                            onChange={(e) => {
-                              if (e.target.checked) {
-                                setSelectedItems([...selectedItems, item.id])
-                              } else {
-                                setSelectedItems(selectedItems.filter((id) => id !== item.id))
-                              }
-                            }}
-                            className="w-4 h-4 rounded border-gray-300"
-                          />
-                          <span className="text-sm text-gray-700">
-                            {item.code} - {item.name}
-                          </span>
-                        </label>
-                      ))}
+                {/* Improved Filter Section */}
+                <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg border border-blue-100 p-6">
+                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    {/* Item Filter */}
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-900 mb-3">Select Items</label>
+                      <div className="bg-white rounded-lg border border-gray-200 p-3 space-y-2 max-h-64 overflow-y-auto shadow-sm">
+                        {uniqueItems.length === 0 ? (
+                          <p className="text-sm text-gray-500">No items available</p>
+                        ) : (
+                          uniqueItems.map((item) => (
+                            <label key={item.id} className="flex items-center gap-3 cursor-pointer hover:bg-gray-50 p-2 rounded transition">
+                              <input
+                                type="checkbox"
+                                checked={selectedItems.includes(item.id)}
+                                onChange={(e) => {
+                                  if (e.target.checked) {
+                                    setSelectedItems([...selectedItems, item.id])
+                                  } else {
+                                    setSelectedItems(selectedItems.filter((id) => id !== item.id))
+                                  }
+                                }}
+                                className="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                              />
+                              <span className="text-sm text-gray-700 flex-1">
+                                <span className="font-medium">{item.code}</span>
+                                <span className="text-gray-500 ml-1">({item.name})</span>
+                              </span>
+                            </label>
+                          ))
+                        )}
+                      </div>
+                      <div className="mt-2 text-xs text-gray-600">
+                        {selectedItems.length} item{selectedItems.length !== 1 ? 's' : ''} selected
+                      </div>
                     </div>
-                  </div>
 
-                  {/* Time Period Filter */}
-                  <div className="flex-1">
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Time Period</label>
-                    <div className="space-y-2">
-                      {[
-                        { value: '1m', label: 'Past Month' },
-                        { value: '3m', label: 'Past 3 Months' },
-                        { value: '6m', label: 'Past 6 Months' },
-                        { value: '1y', label: 'Past Year' },
-                      ].map((period) => (
-                        <label key={period.value} className="flex items-center gap-2 cursor-pointer">
-                          <input
-                            type="radio"
-                            name="period"
-                            value={period.value}
-                            checked={timePeriod === period.value}
-                            onChange={(e) => setTimePeriod(e.target.value as '1m' | '3m' | '6m' | '1y')}
-                            className="w-4 h-4"
-                          />
-                          <span className="text-sm text-gray-700">{period.label}</span>
-                        </label>
-                      ))}
+                    {/* Time Period Filter */}
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-900 mb-3">Time Period</label>
+                      <div className="flex flex-col gap-2">
+                        {[
+                          { value: '1m', label: 'Past Month', description: 'Last 30 days' },
+                          { value: '3m', label: 'Past 3 Months', description: 'Last 90 days' },
+                          { value: '6m', label: 'Past 6 Months', description: 'Last 180 days' },
+                          { value: '1y', label: 'Past Year', description: 'Last 365 days' },
+                        ].map((period) => (
+                          <label
+                            key={period.value}
+                            className={`flex items-center gap-3 p-2 rounded-lg cursor-pointer transition ${
+                              timePeriod === period.value
+                                ? 'bg-blue-100 border border-blue-300'
+                                : 'bg-white border border-gray-200 hover:border-gray-300'
+                            }`}
+                          >
+                            <input
+                              type="radio"
+                              name="period"
+                              value={period.value}
+                              checked={timePeriod === period.value}
+                              onChange={(e) => setTimePeriod(e.target.value as '1m' | '3m' | '6m' | '1y')}
+                              className="w-4 h-4 text-blue-600"
+                            />
+                            <div className="flex-1">
+                              <p className="text-sm font-medium text-gray-900">{period.label}</p>
+                              <p className="text-xs text-gray-500">{period.description}</p>
+                            </div>
+                          </label>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Info Box */}
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-900 mb-3">Chart Legend</label>
+                      <div className="bg-white rounded-lg border border-gray-200 p-4 space-y-2 text-xs">
+                        <div className="flex items-center gap-2">
+                          <div className="w-3 h-0.5 bg-gray-400"></div>
+                          <span className="text-gray-700">Historical consumption data</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <div className="w-3 h-0.5 bg-amber-400"></div>
+                          <span className="text-gray-700">Forecasted demand</span>
+                        </div>
+                        <div className="mt-4 pt-4 border-t border-gray-200">
+                          <p className="text-gray-600">
+                            Shows {timePeriod === '1y' ? 'all 12 months' : timePeriod === '6m' ? '6 months' : timePeriod === '3m' ? '3 months' : '1 month'} of data
+                          </p>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
 
                 {/* Line Chart */}
                 {selectedItems.length > 0 ? (
-                  <div className="w-full h-80">
+                  <div className="w-full h-96 bg-white rounded-lg border border-gray-200 p-4">
                     <ResponsiveContainer width="100%" height="100%">
                       <LineChart data={prepareConsumptionChartData()}>
-                        <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
-                        <XAxis dataKey="name" stroke="#888" style={{ fontSize: '12px' }} />
-                        <YAxis stroke="#888" style={{ fontSize: '12px' }} />
+                        <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+                        <XAxis dataKey="name" stroke="#666" style={{ fontSize: '12px' }} />
+                        <YAxis stroke="#666" style={{ fontSize: '12px' }} />
                         <Tooltip
                           contentStyle={{
-                            backgroundColor: '#fff',
-                            border: '1px solid #ccc',
-                            borderRadius: '4px',
+                            backgroundColor: '#ffffff',
+                            border: '1px solid #d1d5db',
+                            borderRadius: '6px',
+                            boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
                           }}
                           formatter={(value: any) => Math.round(value)}
+                          labelStyle={{ color: '#111827' }}
                         />
-                        <Legend />
-                        <Line
-                          type="monotone"
-                          dataKey={getConsumptionDataByPeriod(timePeriod)}
-                          stroke="#10b981"
-                          strokeWidth={2}
-                          dot={{ fill: '#10b981', r: 4 }}
-                          activeDot={{ r: 6 }}
-                          name="Historical Consumption"
+                        <Legend
+                          wrapperStyle={{ paddingTop: '20px' }}
+                          iconType="line"
                         />
-                        <Line
-                          type="monotone"
-                          dataKey="PredictedDemandNext30Days"
-                          stroke="#f59e0b"
-                          strokeWidth={2}
-                          dot={{ fill: '#f59e0b', r: 4 }}
-                          activeDot={{ r: 6 }}
-                          name="Forecasted Demand"
-                        />
+                        {getLineConfigs().map((lineConfig) => (
+                          <Line
+                            key={lineConfig.dataKey}
+                            type="monotone"
+                            dataKey={lineConfig.dataKey}
+                            stroke={lineConfig.color}
+                            strokeWidth={lineConfig.strokeWidth}
+                            dot={lineConfig.showDot ? { fill: lineConfig.color, r: 4 } : false}
+                            activeDot={{ r: 6 }}
+                          />
+                        ))}
                       </LineChart>
                     </ResponsiveContainer>
                   </div>
                 ) : (
-                  <div className="flex flex-col items-center justify-center py-12 text-gray-400">
-                    <AlertCircle size={40} className="mb-3" />
-                    <p className="text-gray-600">Please select at least one item to view the chart</p>
+                  <div className="flex flex-col items-center justify-center py-12 bg-gray-50 rounded-lg border-2 border-dashed border-gray-300">
+                    <AlertCircle size={40} className="mb-3 text-gray-400" />
+                    <p className="text-gray-600 font-medium">Select at least one item</p>
+                    <p className="text-sm text-gray-500">Choose items from the filter panel to display the chart</p>
                   </div>
                 )}
               </>
