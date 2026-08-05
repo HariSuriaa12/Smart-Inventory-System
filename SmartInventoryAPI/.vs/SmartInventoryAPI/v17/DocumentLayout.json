@@ -552,8 +552,7 @@
               "RelativeToolTip": "Services\\Implementations\\ReportService.cs",
               "ViewState": "AgIAAFcBAAAAAAAAAADgv2sBAABGAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-27T14:06:06.315Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-27T14:06:06.315Z"
             },
             {
               "$type": "Document",
@@ -565,8 +564,7 @@
               "RelativeToolTip": "Repositories\\Implementations\\PurchaseOrderRepository.cs",
               "ViewState": "AgIAAC4AAAAAAAAAAAAkwFYAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-07T13:52:31.311Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-07T13:52:31.311Z"
             },
             {
               "$type": "Document",
@@ -578,8 +576,7 @@
               "RelativeToolTip": "Repositories\\Interfaces\\IPurchaseOrderRepository.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAACIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-08-01T12:56:17.431Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-08-01T12:56:17.431Z"
             },
             {
               "$type": "Document",
@@ -591,8 +588,7 @@
               "RelativeToolTip": "Controllers\\AuthController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAABBAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-07T14:55:31.296Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-07T14:55:31.296Z"
             },
             {
               "$type": "Document",
@@ -604,8 +600,7 @@
               "RelativeToolTip": "Models\\DTOs\\Response\\ApiResponseDto.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-09T13:20:16.183Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-09T13:20:16.183Z"
             },
             {
               "$type": "Document",
@@ -617,8 +612,7 @@
               "RelativeToolTip": "Models\\DTOs\\Response\\AuthResponseDto.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAApAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-09T13:20:18.726Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-09T13:20:18.726Z"
             },
             {
               "$type": "Document",
@@ -630,8 +624,7 @@
               "RelativeToolTip": "Configuration\\MapperProfile.cs",
               "ViewState": "AgIAAD8AAAAAAAAAAAASwEsAAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-11T14:08:25.04Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-11T14:08:25.04Z"
             },
             {
               "$type": "Document",
@@ -641,7 +634,7 @@
               "RelativeDocumentMoniker": "Controllers\\UsersController.cs",
               "ToolTip": "C:\\Users\\User\\Documents\\Hari\\Unitar\\Semester 6\\Major Project\\Smart Inventory System\\SmartInventoryAPI\\Controllers\\UsersController.cs",
               "RelativeToolTip": "Controllers\\UsersController.cs",
-              "ViewState": "AgIAADcAAAAAAAAAAADgv1EAAAAIAAAAAAAAAA==",
+              "ViewState": "AgIAADcAAAAAAAAAAADgv0oAAAATAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-07-07T13:45:41.791Z",
               "EditorCaption": ""
@@ -656,8 +649,7 @@
               "RelativeToolTip": "Controllers\\RolePermissionsController.cs",
               "ViewState": "AgIAAAkAAAAAAAAAAAD4vyYAAABPAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-17T14:36:31.049Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-17T14:36:31.049Z"
             },
             {
               "$type": "Document",
@@ -669,8 +661,7 @@
               "RelativeToolTip": "Services\\Interfaces\\IReportService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAlAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-08-01T15:34:01.821Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-08-01T15:34:01.821Z"
             },
             {
               "$type": "Document",
@@ -682,8 +673,7 @@
               "RelativeToolTip": "Controllers\\ReportController.cs",
               "ViewState": "AgIAAAYAAAAAAAAAAAAuwBwAAABGAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-27T16:31:09.47Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-27T16:31:09.47Z"
             },
             {
               "$type": "Document",
@@ -695,8 +685,7 @@
               "RelativeToolTip": "Repositories\\Implementations\\RolePermissionRepository.cs",
               "ViewState": "AgIAAA0AAAAAAAAAAAApwBkAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-17T15:17:25.927Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-17T15:17:25.927Z"
             },
             {
               "$type": "Document",
@@ -708,8 +697,7 @@
               "RelativeToolTip": "Services\\Implementations\\RolePermissionService.cs",
               "ViewState": "AgIAAAYAAAAAAAAAAAArwDMAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-17T15:04:26.002Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-17T15:04:26.002Z"
             },
             {
               "$type": "Document",
@@ -721,8 +709,7 @@
               "RelativeToolTip": "Middleware\\ExceptionHandlingMiddleware.cs",
               "ViewState": "AgIAACgAAAAAAAAAAAASwEQAAAAQAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-07T15:41:22.89Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-07T15:41:22.89Z"
             },
             {
               "$type": "Document",
@@ -734,8 +721,7 @@
               "RelativeToolTip": "Repositories\\Implementations\\ItemRepository.cs",
               "ViewState": "AgIAAA4AAAAAAAAAAAASwCoAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-07T13:52:30.117Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-07T13:52:30.117Z"
             },
             {
               "$type": "Document",
@@ -747,8 +733,7 @@
               "RelativeToolTip": "Controllers\\ForecastingController.cs",
               "ViewState": "AgIAAAEAAAAAAAAAAAASwAQAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-20T14:30:09.918Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-20T14:30:09.918Z"
             },
             {
               "$type": "Document",
@@ -868,8 +853,7 @@
               "RelativeToolTip": "Repositories\\Interfaces\\IUnitOfWork.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAuwBAAAAAUAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-07T15:19:34.613Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-07T15:19:34.613Z"
             },
             {
               "$type": "Document",
@@ -941,8 +925,7 @@
               "RelativeToolTip": "Controllers\\PurchaseOrdersController.cs",
               "ViewState": "AgIAAH0AAAAAAAAAAIA6wI0AAABIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-07T14:28:07.255Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-07T14:28:07.255Z"
             },
             {
               "$type": "Document",
@@ -1122,8 +1105,7 @@
               "RelativeToolTip": "Controllers\\InventoryController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAACwAAAAmAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-12T02:53:07.588Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-12T02:53:07.588Z"
             },
             {
               "$type": "Document",
@@ -1159,8 +1141,7 @@
               "RelativeToolTip": "Controllers\\ItemsController.cs",
               "ViewState": "AgIAAAkAAAAAAAAAAAAAABwAAAA3AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-07T14:27:35.144Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-07T14:27:35.144Z"
             },
             {
               "$type": "Document",
@@ -1172,8 +1153,7 @@
               "RelativeToolTip": "Controllers\\StockTransferController.cs",
               "ViewState": "AgIAAHMAAAAAAAAAAAASwIgAAAAcAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-12T15:34:24.854Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-12T15:34:24.854Z"
             },
             {
               "$type": "Document",
@@ -1185,8 +1165,7 @@
               "RelativeToolTip": "Controllers\\OrderFulfillmentController.cs",
               "ViewState": "AgIAAGgAAAAAAAAAAADgv5AAAAAUAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-07T15:04:32.938Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-07T15:04:32.938Z"
             },
             {
               "$type": "Document",
@@ -1246,8 +1225,7 @@
               "RelativeToolTip": "Repositories\\Interfaces\\IGenericRepository.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAZAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-09T14:21:22.792Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-09T14:21:22.792Z"
             },
             {
               "$type": "Document",
@@ -1559,8 +1537,7 @@
               "RelativeToolTip": "Services\\Implementations\\InventoryService.cs",
               "ViewState": "AgIAAGMAAAAAAAAAAAAIwIEAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-07T14:21:00.139Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-07T14:21:00.139Z"
             },
             {
               "$type": "Document",
@@ -1584,8 +1561,7 @@
               "RelativeToolTip": "Services\\Implementations\\UserService.cs",
               "ViewState": "AgIAAAMAAAAAAAAAAAAvwB0AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-07T13:46:33.123Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-07T13:46:33.123Z"
             },
             {
               "$type": "Document",
@@ -1633,8 +1609,7 @@
               "RelativeToolTip": "Controllers\\CustomersController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAABSAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-07T14:55:39.544Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-07T14:55:39.544Z"
             },
             {
               "$type": "Document",
@@ -1718,8 +1693,7 @@
               "RelativeToolTip": "Controllers\\LocationsController.cs",
               "ViewState": "AgIAAAQAAAAAAAAAAAASwCQAAAAEAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-09T13:59:22.328Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-09T13:59:22.328Z"
             },
             {
               "$type": "Document",
@@ -1731,8 +1705,7 @@
               "RelativeToolTip": "Services\\Interfaces\\IRolePermissionService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAuwA4AAAAlAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-17T15:39:45Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-17T15:39:45Z"
             },
             {
               "$type": "Document",
@@ -1744,8 +1717,7 @@
               "RelativeToolTip": "Repositories\\Interfaces\\IRolePermissionRepository.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAuwAgAAAA8AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-17T15:20:29.67Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-17T15:20:29.67Z"
             },
             {
               "$type": "Document",

@@ -150,8 +150,8 @@ class ForecastService:
         "QtyConsumptionPast14Days",
         "QtyConsumptionPast30Days",
 
-        "AvgQtyConsumptionPast7Days",
-        "AvgQtyConsumptionPast14Days",
+        # "AvgQtyConsumptionPast7Days",
+        # "AvgQtyConsumptionPast14Days",
         "AvgQtyConsumptionPast30Days",
 
         "DemandTrend14vs30",

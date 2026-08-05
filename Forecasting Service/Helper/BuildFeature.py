@@ -97,7 +97,7 @@ def get_qty_consumption(startDate: str, endDate: str, location_id: int) -> pd.Da
 
 def BuildFeature(self, location_id: int) -> pd.DataFrame:
 
-    df = get_qty_consumption('2025-08-01', '2026-01-28', location_id)
+    df = get_qty_consumption('2024-12-01', '2026-01-28', location_id)
     df["date"] = pd.to_datetime(df["date"])
 
     df = df.sort_values(
@@ -388,6 +388,7 @@ def BuildFeature(self, location_id: int) -> pd.DataFrame:
         "QtyConsumptionPast30Days_M3",
         "QtyConsumptionPast30Days_M4",
         "QtyConsumptionPast30Days_M5",
+        "QtyConsumptionPast30Days_Y1",
 
         "AvgQtyConsumptionPast7Days",
         "AvgQtyConsumptionPast14Days",
