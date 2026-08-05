@@ -60,6 +60,14 @@ export interface ForecastedResultData_Py {
   LocationID: number
   Method: number
   PredictedDemandNext30Days: number
+  QtyConsumption30Days_Y1: number
+  QtyConsumption30Days_M5: number
+  QtyConsumption30Days_M4: number
+  QtyConsumption30Days_M3: number
+  QtyConsumption30Days_M2: number
+  QtyConsumption30Days_M1: number
+  QtyConsumption30Days: number
+  Best_Method: string
 }
 
 export const dashboardService = {
@@ -204,7 +212,7 @@ export const dashboardService = {
   getForecasts: async (locationId: number): Promise<ForecastedResultData_Py[]> => {
     try {
       const response = await forecastApi.post<ForecastedResult_Py>(`/api/forecast/run/location/${locationId}`)
-      const itemResponse = await itemService.getItems(0, 999999) // Fetch all items to map item names and codes
+      const itemResponse = await itemService.getItems(0, 999999)
       console.log('Forecasts response:', response.data)
       console.log('Forecasts Item response:', itemResponse.data)
       return (
@@ -216,6 +224,14 @@ export const dashboardService = {
           LocationID: forecast.LocationID,
           Method: forecast.Best_Method || 0,
           PredictedDemandNext30Days: forecast.PredictedDemandNext30Days || 0,
+          QtyConsumption30Days_Y1: forecast.QtyConsumption30Days_Y1 || 0,
+          QtyConsumption30Days_M5: forecast.QtyConsumption30Days_M5 || 0,
+          QtyConsumption30Days_M4: forecast.QtyConsumption30Days_M4 || 0,
+          QtyConsumption30Days_M3: forecast.QtyConsumption30Days_M3 || 0,
+          QtyConsumption30Days_M2: forecast.QtyConsumption30Days_M2 || 0,
+          QtyConsumption30Days_M1: forecast.QtyConsumption30Days_M1 || 0,
+          QtyConsumption30Days: forecast.QtyConsumption30Days || 0,
+          Best_Method: forecast.Best_Method || 'ANN',
         })) || []
       )
     } catch (error) {
