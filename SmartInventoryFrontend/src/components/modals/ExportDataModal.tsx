@@ -53,7 +53,7 @@ export const ExportDataModal = ({ isOpen, onClose }: ExportDataModalProps) => {
     }
   }
 
-  const isDateRangeValid = !startDate || !endDate || new Date(startDate) <= new Date(endDate)
+  const isDateRangeValid = !startDate || !endDate || new Date(startDate) <= new Date(endDate) || new Date(startDate) <= new Date()
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4">

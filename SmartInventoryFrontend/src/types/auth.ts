@@ -17,7 +17,7 @@ export interface User extends Entity {
   full_Name: string
   username: string
   email: string
-  role: UserRole
+  role: number
   mobile_No?: string
   staff_Code?: string
   ic?: string
@@ -64,7 +64,7 @@ export interface UpdateUserRequest {
   full_Name?: string
   username?: string
   email?: string
-  role?: UserRole
+  role?: number
   mobile_No?: string
   staff_Code?: string
   ic?: string

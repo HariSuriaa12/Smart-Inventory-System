@@ -120,36 +120,157 @@ def BuildFeature(self, location_id: int) -> pd.DataFrame:
         + (df["date"].dt.month - TRAINING_START_DATE.month)
     )
 
-    group = df.groupby(["item", "location"], group_keys=False)
+    # group = df.groupby(["item", "location"], group_keys=False)
+    # print(df.groupby(["item", "location"]).size())
+    # print(df.groupby(["item", "location"]).size().describe())
 
     df["QtyConsumptionToday"] = df["consumptionqty"]
 
-    df["QtyConsumptionPast7Days"] = (
-    group["consumptionqty"]
-    .transform(lambda s:
-        s.shift(1)
-         .rolling(7, min_periods=1)
-         .sum())
+    # df["QtyConsumptionPast7Days"] = (
+    # group["consumptionqty"]
+    # .transform(lambda s:
+    #     s.shift(1)
+    #      .rolling(7, min_periods=1)
+    #      .sum())
+    # )
+
+    # df["QtyConsumptionPast14Days"] = (
+    # group["consumptionqty"]
+    # .transform(lambda s:
+    #     s.shift(1)
+    #      .rolling(14, min_periods=1)
+    #      .sum())
+    # )
+
+    # df["QtyConsumptionPast30Days"] = (
+    #     group["consumptionqty"]
+    #     .transform(lambda s:
+    #         s.shift(1)
+    #         .rolling(30, min_periods=1)
+    #         .sum())
+    # )
+
+    # df["QtyConsumptionPast30Days_M1"] = (
+    #     group["consumptionqty"]
+    #     .transform(lambda s:
+    #         s.shift(31)
+    #         .rolling(30, min_periods=1)
+    #         .sum())
+    # )
+
+    # df["QtyConsumptionPast30Days_M2"] = (
+    #     group["consumptionqty"]
+    #     .transform(lambda s:
+    #         s.shift(61)
+    #         .rolling(30, min_periods=1)
+    #         .sum())
+    # )
+
+    # df["QtyConsumptionPast30Days_M3"] = (
+    #     group["consumptionqty"]
+    #     .transform(lambda s:
+    #         s.shift(91)
+    #         .rolling(30, min_periods=1)
+    #         .sum())
+    # )
+
+    history = df.copy()
+
+    df = (
+        df.sort_values("date")
+        .groupby(["item", "location"])
+        .tail(1)
+        .reset_index(drop=True)
     )
 
-    df["QtyConsumptionPast14Days"] = (
-    group["consumptionqty"]
-    .transform(lambda s:
-        s.shift(1)
-         .rolling(14, min_periods=1)
-         .sum())
-    )
+    forecast_date = history["date"].max()
 
-    df["QtyConsumptionPast30Days"] = (
-        group["consumptionqty"]
-        .transform(lambda s:
-            s.shift(1)
-            .rolling(30, min_periods=1)
-            .sum())
-    )
+    # Current windows
+    past7 = get_window_sum(
+        history,
+        forecast_date - pd.Timedelta(days=1),
+        7
+    ).rename(columns={"consumptionqty": "QtyConsumptionPast7Days"})
+
+    past14 = get_window_sum(
+        history,
+        forecast_date - pd.Timedelta(days=1),
+        14
+    ).rename(columns={"consumptionqty": "QtyConsumptionPast14Days"})
+
+    past30 = get_window_sum(
+        history,
+        forecast_date - pd.Timedelta(days=1),
+        30
+    ).rename(columns={"consumptionqty": "QtyConsumptionPast30Days"})
+
+    m1_end = forecast_date - pd.Timedelta(days=31)
+
+    past30_m1 = get_window_sum(
+        history,
+        m1_end,
+        30
+    ).rename(columns={"consumptionqty": "QtyConsumptionPast30Days_M1"})
+
+    m2_end = forecast_date - pd.Timedelta(days=61)
+
+    past30_m2 = get_window_sum(
+        history,
+        m2_end,
+        30
+    ).rename(columns={"consumptionqty": "QtyConsumptionPast30Days_M2"})
+
+    m3_end = forecast_date - pd.Timedelta(days=91)
+
+    past30_m3 = get_window_sum(
+        history,
+        m3_end,
+        30
+    ).rename(columns={"consumptionqty": "QtyConsumptionPast30Days_M3"})
+
+    m4_end = forecast_date - pd.Timedelta(days=121)
+
+    past30_m4 = get_window_sum(
+        history,
+        m4_end,
+        30
+    ).rename(columns={"consumptionqty": "QtyConsumptionPast30Days_M4"})
+
+    m5_end = forecast_date - pd.Timedelta(days=151)
+
+    past30_m5 = get_window_sum(
+        history,
+        m5_end,
+        30
+    ).rename(columns={"consumptionqty": "QtyConsumptionPast30Days_M5"})
+
+    y1_end = forecast_date - pd.Timedelta(days=361)
+
+    past30_y1 = get_window_sum(
+        history,
+        y1_end,
+        30
+    ).rename(columns={"consumptionqty": "QtyConsumptionPast30Days_Y1"})
+
+    for feature_df in [
+    past7,
+    past14,
+    past30,
+    past30_m1,
+    past30_m2,
+    past30_m3,
+    past30_m4,
+    past30_m5,
+    past30_y1
+    ]:
+        df = df.merge(
+            feature_df,
+            on=["item", "location"],
+            how="left"
+        )
 
     df["AvgQtyConsumptionPast7Days"] = (
-    df["QtyConsumptionPast7Days"] / 7
+        df["QtyConsumptionPast7Days"] / 7
     )
 
     df["AvgQtyConsumptionPast14Days"] = (
@@ -166,23 +287,17 @@ def BuildFeature(self, location_id: int) -> pd.DataFrame:
         df["AvgQtyConsumptionPast14Days"] / df["AvgQtyConsumptionPast30Days"]
     )
 
-    df["DemandTrend14vs30"] = np.where(
-        df["AvgQtyConsumptionPast30Days"] == 0,
-        0,
-        df["AvgQtyConsumptionPast14Days"] / df["AvgQtyConsumptionPast30Days"]
+    past30_std = get_window_std(
+        history,
+        forecast_date - pd.Timedelta(days=1),
+        30
     )
 
-    df["StdDevPast30Days"] = (
-        group["consumptionqty"]
-        .transform(lambda s:
-            s.shift(1)
-            .rolling(30, min_periods=1)
-            .std()
-        )
-        .fillna(0)
+    df = df.merge(
+        past30_std,
+        on=["item","location"],
+        how="left"
     )
-
-    df = df.sort_values("date").groupby(["item", "location"]).tail(1).reset_index(drop=True)
 
     forecast_date = df["date"].max()
     last_year_date = forecast_date - pd.DateOffset(years=1)
@@ -248,6 +363,11 @@ def BuildFeature(self, location_id: int) -> pd.DataFrame:
         "date": "Date"
     })
 
+    df = (
+        df.replace([np.inf, -np.inf], np.nan)
+        .fillna(0)
+    )
+
     features = df[
     [
         "Date",
@@ -263,6 +383,12 @@ def BuildFeature(self, location_id: int) -> pd.DataFrame:
         "QtyConsumptionPast14Days",
         "QtyConsumptionPast30Days",
 
+        "QtyConsumptionPast30Days_M1",
+        "QtyConsumptionPast30Days_M2",
+        "QtyConsumptionPast30Days_M3",
+        "QtyConsumptionPast30Days_M4",
+        "QtyConsumptionPast30Days_M5",
+
         "AvgQtyConsumptionPast7Days",
         "AvgQtyConsumptionPast14Days",
         "AvgQtyConsumptionPast30Days",
@@ -273,3 +399,40 @@ def BuildFeature(self, location_id: int) -> pd.DataFrame:
     ]]
 
     return features
+
+def get_window_sum(history_df, end_date, days):
+    """
+    Returns the total consumption within a date window.
+
+    end_date : inclusive end date
+    days     : number of days in window
+    """
+
+    start_date = end_date - pd.Timedelta(days=days - 1)
+
+    result = (
+        history_df[
+            (history_df["date"] >= start_date) &
+            (history_df["date"] <= end_date)
+        ]
+        .groupby(["item", "location"])["consumptionqty"]
+        .sum()
+        .reset_index()
+    )
+
+    return result
+
+def get_window_std(history_df, end_date, days):
+
+    start_date = end_date - pd.Timedelta(days=days - 1)
+
+    return (
+        history_df[
+            (history_df["date"] >= start_date) &
+            (history_df["date"] <= end_date)
+        ]
+        .groupby(["item","location"])["consumptionqty"]
+        .std()
+        .fillna(0)
+        .reset_index(name="StdDevPast30Days")
+    )

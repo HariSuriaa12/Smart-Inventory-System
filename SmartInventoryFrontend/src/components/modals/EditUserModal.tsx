@@ -12,18 +12,20 @@ interface EditUserModalProps {
   onUpdate: (data: UpdateUserRequest) => Promise<void>
   onDelete: () => Promise<void>
   isLoading?: boolean
+  isCurrentUser?: boolean
 }
 
-export const EditUserModal = ({ isOpen, user, onClose, onUpdate, onDelete, isLoading = false }: EditUserModalProps) => {
+export const EditUserModal = ({ isOpen, user, onClose, onUpdate, onDelete, isLoading = false, isCurrentUser = false }: EditUserModalProps) => {
   const [formData, setFormData] = useState<UpdateUserRequest>({
     full_Name: '',
     email: '',
-    role: UserRole.Staff,
+    role: 0,
     mobile_No: '',
     staff_Code: '',
     ic: '',
   })
 
+  console.log('EditUserModal - user prop:', user)
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
   const [activeRoles, setActiveRoles] = useState<RolePermission[]>([])
@@ -37,6 +39,7 @@ export const EditUserModal = ({ isOpen, user, onClose, onUpdate, onDelete, isLoa
         const response = await rolePermissionService.getActiveRoles()
         if (response.success && response.data) {
           setActiveRoles(response.data)
+          console.log('Fetched active roles:', response.data)
         }
       } catch (error) {
         console.error('Failed to fetch active roles:', error)
@@ -53,7 +56,7 @@ export const EditUserModal = ({ isOpen, user, onClose, onUpdate, onDelete, isLoa
       setFormData({
         full_Name: user.full_Name || '',
         email: user.email || '',
-        role: user.role || UserRole.Staff,
+        role: user.role,
         mobile_No: user.mobile_No || '',
         staff_Code: user.staff_Code || '',
         ic: user.ic || '',
@@ -146,7 +149,7 @@ export const EditUserModal = ({ isOpen, user, onClose, onUpdate, onDelete, isLoa
       <div className="bg-white rounded-lg shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto border border-gray-200">
         {/* Header */}
         <div className="sticky top-0 flex items-center justify-between px-6 py-4 border-b border-gray-200 bg-white">
-          <h2 className="text-2xl font-bold text-gray-900">Edit User</h2>
+          <h2 className="text-2xl font-bold text-gray-900">{isCurrentUser ? 'Edit My Profile' : 'Edit User'}</h2>
           <button
             onClick={onClose}
             disabled={isLoading}
@@ -205,9 +208,9 @@ export const EditUserModal = ({ isOpen, user, onClose, onUpdate, onDelete, isLoa
                 Role <span className="text-red-500">*</span>
               </label>
               <select
-                value={formData.role || UserRole.Staff}
+                value={formData.role}
                 onChange={(e) => handleInputChange('role', parseInt(e.target.value))}
-                disabled={isLoading || rolesLoading || activeRoles.length === 0}
+                disabled={isLoading || rolesLoading || activeRoles.length === 0 || isCurrentUser}
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-primary-500 focus:border-transparent bg-white transition-colors disabled:bg-gray-100 disabled:cursor-not-allowed"
               >
                 {rolesLoading ? (
@@ -215,8 +218,10 @@ export const EditUserModal = ({ isOpen, user, onClose, onUpdate, onDelete, isLoa
                 ) : activeRoles.length === 0 ? (
                   <option>No roles available</option>
                 ) : (
-                  activeRoles.map(role => (
-                    <option key={role.role_ID} value={role.role_ID}>
+                  activeRoles
+                  .filter(role => role.id !== 1) // Exclude the "Super Admin" role
+                  .map(role => (
+                    <option key={role.id} value={role.id}>
                       {role.role_Name}
                     </option>
                   ))
@@ -289,15 +294,17 @@ export const EditUserModal = ({ isOpen, user, onClose, onUpdate, onDelete, isLoa
 
           {/* Footer */}
           <div className="flex gap-3 justify-end pt-4 border-t border-gray-200">
-            <button
-              type="button"
-              onClick={() => setShowDeleteConfirm(true)}
-              disabled={isLoading || showDeleteConfirm}
-              className="px-4 py-2 text-red-600 bg-red-50 rounded-lg hover:bg-red-100 transition-colors disabled:opacity-50 flex items-center gap-2"
-            >
-              <Trash2 size={16} />
-              Delete
-            </button>
+            {!isCurrentUser && (
+              <button
+                type="button"
+                onClick={() => setShowDeleteConfirm(true)}
+                disabled={isLoading || showDeleteConfirm}
+                className="px-4 py-2 text-red-600 bg-red-50 rounded-lg hover:bg-red-100 transition-colors disabled:opacity-50 flex items-center gap-2"
+              >
+                <Trash2 size={16} />
+                Delete
+              </button>
+            )}
 
             <div className="flex-1" />
 

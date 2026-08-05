@@ -11,6 +11,7 @@ export const RolePermissionsPage = () => {
   const { user } = useAuth()
   const [roles, setRoles] = useState<RolePermission[]>([])
   const [loading, setLoading] = useState(false)
+  const [typeInput, isTyped] = useState(false)
   const [isAddOpen, setIsAddOpen] = useState(false)
   const [isEditOpen, setIsEditOpen] = useState(false)
   const [selectedRole, setSelectedRole] = useState<RolePermission | null>(null)
@@ -34,6 +35,7 @@ export const RolePermissionsPage = () => {
   const [error, setError] = useState('')
   const [deleteError, setDeleteError] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
+  const userRoles: Array<string> = ["-", "Admin", "General Manager", "Supervisor", "Warehouse Manager", "Sales Manager", "Purchasing Manager", "Inventory Controller", "Logistics Coordinator", "Vendor Manager", "Operations Manager", "Quality Assurance", "IT Support", "HR Manager", "Marketing Manager", "Business Analyst", "Staff"];
 
   useEffect(() => {
     if (user?.role !== 1) {
@@ -62,8 +64,8 @@ export const RolePermissionsPage = () => {
   const handleAddRole = async () => {
     try {
       setError('')
-      if (/*!formData.role_ID || */!formData.role_Name) {
-        setError('Role ID and Role Name are required')
+      if (/*!formData.role_ID || */!formData.role_Name || formData.role_Name.trim() === '-') {
+        setError('Role Name is required')
         return
       }
       await rolePermissionService.createRolePermission(formData)
@@ -313,7 +315,7 @@ export const RolePermissionsPage = () => {
 
               <div className="space-y-6">
                 {/* Role ID and Name */}
-                <div className="grid grid-cols-2 gap-4">
+                {/*<div className="grid grid-cols-2 gap-4">*/}
                   {/* <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">Role ID</label>
                     <input
@@ -327,15 +329,38 @@ export const RolePermissionsPage = () => {
                   </div> */}
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">Role Name</label>
-                    <input
-                      type="text"
-                      value={formData.role_Name}
-                      onChange={(e) => setFormData(prev => ({ ...prev, role_Name: e.target.value }))}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
-                      placeholder="e.g., Manager"
-                    />
+                    <div className="flex flex-1 gap-5">
+                    {!isEditOpen && (
+                      <select
+                        value={formData.role_Name}
+                        onChange={(e) => setFormData(prev => ({ ...prev, role_Name: e.target.value }))}
+                        //disabled={isLoading || rolesLoading || activeRoles.length === 0}
+                        disabled={typeInput}
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-primary-500 focus:border-transparent bg-white transition-colors disabled:bg-gray-100 disabled:cursor-not-allowed"
+                      >
+                        {(
+                          userRoles.map(role => (
+                            <option key={role} value={role}>
+                              {role}
+                            </option>
+                          ))
+                        )}
+                      </select>
+                    )}
+                      <input
+                        type="text"
+                        value={!isEditOpen ? typeInput ? formData.role_Name : "" : formData.role_Name}
+                        onChange={(e) => 
+                          {
+                            setFormData(prev => ({ ...prev, role_Name: e.target.value }))
+                            isTyped(e.target.value.trim() !== "")
+                          }}
+                        className={`${isEditOpen ? "w-[45%]" : "w-full"} px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500`}
+                        placeholder="Input a customised Role"
+                      />
+                    </div>
                   </div>
-                </div>
+                {/*</div>*/}
 
                 {/* View Permissions */}
                 <div>

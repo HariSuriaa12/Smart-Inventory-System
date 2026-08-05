@@ -136,36 +136,34 @@ class ForecastService:
         #     ann_df
         # )
         
-        # feature_columns = [
-        #     "ItemCategory",
-        #     "LocationType",
-        #     "ItemID",
-        #     "LocationID",
-        #     "DayOfMonth",
-        #     #"MonthsSinceStart",
-        #     #"IsHoliday",
-        #     #"IsHolidayEve",
-        #     #"IsWeekend",
-        #     #"IsWeekendEve",
-        #     #"IsPromotion",
-        #     #"IsPaydayWindow",
-        #     "QtyConsumptionToday",
-        #     "QtyConsumptionPast7Days",
-        #     "QtyConsumptionPast14Days",
-        #     "QtyConsumptionPast30Days",
-        #     "AvgQtyConsumptionPast7Days",
-        #     "AvgQtyConsumptionPast14Days",
-        #     "AvgQtyConsumptionPast30Days",
-        #     "DemandTrend14vs30",
-        #     "StdDevPast30Days",
-        #     "Qty_SameDayLastYear",
-        # ]
+        feature_columns = [
+        "Date",
+        "ItemCategory",
+        "LocationType",
+        "ItemID",
+        "LocationID",
+        "DayOfMonth",
+        "MonthsSinceStart",
 
-        # ann_input_df = ann_df[
-        #     feature_columns
-        # ].copy()
+        "QtyConsumptionToday",
+        "QtyConsumptionPast7Days",
+        "QtyConsumptionPast14Days",
+        "QtyConsumptionPast30Days",
 
-        ann_input_df = ann_df.copy()
+        "AvgQtyConsumptionPast7Days",
+        "AvgQtyConsumptionPast14Days",
+        "AvgQtyConsumptionPast30Days",
+
+        "DemandTrend14vs30",
+        "StdDevPast30Days",
+        "Qty_SameDayLastYear"
+        ]
+
+        ann_input_df = ann_df[
+            feature_columns
+        ].copy()
+
+        # ann_input_df = ann_df.copy()
 
         # These columns must match the ANN training code exactly.
         ann_input_df = ann_input_df.drop(
@@ -352,6 +350,13 @@ class ForecastService:
                         "ItemID",
                         "LocationID",
                         "Best_Method",
+                        "QtyConsumptionPast30Days_Y1",
+                        "QtyConsumptionPast30Days_M5",
+                        "QtyConsumptionPast30Days_M4",
+                        "QtyConsumptionPast30Days_M3",
+                        "QtyConsumptionPast30Days_M2",
+                        "QtyConsumptionPast30Days_M1",
+                        "QtyConsumptionPast30Days",
                         "PredictedDemandNext30Days"
                     ]
                 ]
@@ -373,6 +378,13 @@ class ForecastService:
                         "ItemID",
                         "LocationID",
                         "Best_Method",
+                        "QtyConsumptionPast30Days_Y1",
+                        "QtyConsumptionPast30Days_M5",
+                        "QtyConsumptionPast30Days_M4",
+                        "QtyConsumptionPast30Days_M3",
+                        "QtyConsumptionPast30Days_M2",
+                        "QtyConsumptionPast30Days_M1",
+                        "QtyConsumptionPast30Days",
                         "PredictedDemandNext30Days"
                     ]
                 ]
@@ -403,8 +415,11 @@ class ForecastService:
         # print("What ANN actually equals:", EnumModel.ForecastMethod['ANN'].value)
         # print("What MA actually equals:", EnumModel.ForecastMethod['MA'].value)
 
-        self.save_forecast_results(
-            result_df
-        )
-
+        try:
+            self.save_forecast_results(
+                result_df
+            )
+        except Exception as error:
+            pass
+        
         return result_df

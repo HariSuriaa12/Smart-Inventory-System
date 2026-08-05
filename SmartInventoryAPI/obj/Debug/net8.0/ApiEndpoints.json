@@ -1494,6 +1494,22 @@
   },
   {
     "ContainingType": "SmartInventoryAPI.Controllers.ReportController",
+    "Method": "ExportDataAsync",
+    "RelativePath": "api/Report/export-data",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "SmartInventoryAPI.Controllers.ExportRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SmartInventoryAPI.Controllers.ReportController",
     "Method": "ExportLoggingData",
     "RelativePath": "api/Report/export-logging-data",
     "HttpMethod": "POST",

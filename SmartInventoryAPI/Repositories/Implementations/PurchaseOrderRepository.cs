@@ -65,12 +65,14 @@ public class PurchaseOrderRepository : GenericRepository<PurchaseOrderHeader>, I
         return await _dbSet.Where(p => p.Vendor_ID == vendorId && !p.Is_Deleted).CountAsync();
     }
 
-    public async Task<IEnumerable<PurchaseOrderHeader>> GetAllWithDetailsAsync(int skip = 0, int take = 10)
+    public async Task<IEnumerable<PurchaseOrderHeader>> GetAllWithDetailsAsync(int skip = 0, int take = 10, DateTime? startDate = null, DateTime? endDate = null)
     {
         var query = _dbSet
         .AsNoTracking()                       // 1. Critical for read-only performance
         .AsSplitQuery()                       // 2. Prevents Cartesian explosion
         .Where(p => p.Is_Deleted == false)            // 3. Filter applied early
+        .Where(p => startDate == null || p.Purchase_Date >= startDate)
+        .Where(p => endDate == null || p.Purchase_Date <= endDate)
         .OrderBy(p => p.ID)                   // 4. Required for efficient Skip/Take
         .Skip(skip)
         .Take(take)

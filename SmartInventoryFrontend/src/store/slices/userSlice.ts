@@ -20,6 +20,14 @@ export const fetchUsers = createAsyncThunk('users/fetch', async ({ skip = 0, tak
   }
 })
 
+export const fetchUserById = createAsyncThunk('users/fetchById', async (id: number, { rejectWithValue }) => {
+  try {
+    return (await authService.getUserById(id)).data
+  } catch (error: any) {
+    return rejectWithValue(error.message)
+  }
+})
+
 export const createUser = createAsyncThunk('users/create', async (data: CreateUserRequest, { rejectWithValue }) => {
   try {
     return (await authService.createUser(data)).data

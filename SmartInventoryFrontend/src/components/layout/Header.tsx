@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useAuth } from '@/hooks'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { logout } from '@/store/slices/authSlice'
@@ -8,6 +8,11 @@ import cn from 'classnames'
 import { useLocationModal } from '@/context/LocationModalContext'
 import { Location } from '@/types/location'
 import { setCurrentLocation } from '@/store/slices/locationSlice'
+import { EditUserModal } from '../modals/EditUserModal'
+import { UpdateUserRequest } from '@/types/user'
+import { updateUser } from '@/store/slices/userSlice'
+import { User as UserType } from '@/types/auth'
+import { authService } from '@/services/authService'
 
 interface HeaderProps {
   onMenuClick?: () => void
@@ -25,7 +30,22 @@ export const Header: React.FC<HeaderProps> = ({ onMenuClick, sidebarOpen }) => {
   const { currentLocation } = useAppSelector((state) => state.locations)
   const { openLocationModal, openWarningDialog, setOnLocationConfirmed } = useLocationModal()
 
+  const [isEditUserOpen, setIsEditUserOpen] = useState(false)
+  const [currentUser, setCurrentUser] = useState<UserType | null>(null)
+
   const isDashboard = location.pathname === '/app/dashboard'
+  console.log('Current user in Header 1:', user)
+  useEffect(() => {
+    const fetchUser = async () => {
+      if (user) {
+        const data = await authService.getUserById(user.userID);
+          console.log('Current user in Header:', data.data)
+        setCurrentUser(data.data || null);
+      }
+    };
+
+    fetchUser();
+  }, []);
 
   const handleLogout = () => {
     dispatch(logout())
@@ -40,6 +60,16 @@ export const Header: React.FC<HeaderProps> = ({ onMenuClick, sidebarOpen }) => {
       openWarningDialog(currentLocation!)
     }
   }
+
+  const handleUpdateUser = useCallback(async (formData: UpdateUserRequest) => {
+    if (!user) return
+    try {
+      await dispatch(updateUser({ id: user.id, data: formData }) as any)
+    } catch (err) {
+      console.error('Failed to update user:', err)
+      throw err
+    }
+  }, [dispatch, user])
 
   // Sample notifications
   const notifications = [
@@ -163,27 +193,31 @@ export const Header: React.FC<HeaderProps> = ({ onMenuClick, sidebarOpen }) => {
               className="flex items-center gap-3 p-2 hover:bg-gray-100 rounded-lg transition-colors"
             >
               <div className="w-8 h-8 bg-gradient-to-br from-primary-400 to-primary-600 rounded-full flex items-center justify-center text-white font-semibold text-sm">
-                {user?.fullName?.charAt(0).toUpperCase() || 'U'}
+                {user?.full_Name?.charAt(0).toUpperCase() || 'U'}
               </div>
-              <span className="font-medium text-gray-900 hidden sm:inline text-sm">{user?.fullName || 'User'}</span>
+              <span className="font-medium text-gray-900 hidden sm:inline text-sm">{user?.full_Name || 'User'}</span>
             </button>
 
             {/* User Dropdown Menu */}
             {showUserMenu && (
               <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-xl border border-gray-200 z-50">
                 <div className="p-4 border-b border-gray-200">
-                  <p className="font-semibold text-gray-900 text-sm">{user?.fullName}</p>
-                  <p className="text-gray-600 text-xs">{user?.email}</p>
+                  <div className="space-y-1">
+                    <p className="font-semibold text-gray-900 text-sm truncate">{user?.full_Name}</p> 
+                    <p className="text-gray-600 text-xs truncate">{user?.email}</p>
+                  </div>
                 </div>
                 <nav className="py-2">
-                  <button className="w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-3 transition-colors">
+                  <button 
+                    onClick={() => setIsEditUserOpen(true)}
+                    className="w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-3 transition-colors">
                     <User size={16} />
                     My Profile
                   </button>
-                  <button className="w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-3 transition-colors">
+                  {/* <button className="w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-3 transition-colors">
                     <Settings size={16} />
                     Settings
-                  </button>
+                  </button> */}
                   <hr className="my-2" />
                   <button
                     onClick={handleLogout}
@@ -197,6 +231,21 @@ export const Header: React.FC<HeaderProps> = ({ onMenuClick, sidebarOpen }) => {
             )}
           </div>
         </div>
+
+        <EditUserModal
+          isOpen={isEditUserOpen}
+          user={currentUser}
+          onClose={() => {
+            setIsEditUserOpen(false)
+            // setSelectedUser(null)
+          }}
+          onUpdate={handleUpdateUser}
+          onDelete={null}
+          isLoading={user === null}
+          canUpdate={true}
+          canDelete={false}
+          isCurrentUser={true}
+        />
       </div>
     </header>
   )

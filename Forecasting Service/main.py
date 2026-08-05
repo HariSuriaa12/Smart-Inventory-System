@@ -44,7 +44,7 @@ def run_forecast(
 ):
     try:
         result_df = forecast_service.run_forecast(location_id=location_id)
-
+        
         data_records = result_df.to_dict(orient="records")
 
         return {

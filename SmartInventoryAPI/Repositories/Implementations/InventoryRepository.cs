@@ -11,6 +11,24 @@ public class InventoryRepository : GenericRepository<Inventory>, IInventoryRepos
     {
     }
 
+    public async Task<IEnumerable<Inventory>> GetInventoryDetails(int skip = 0, int take = 10)
+    {
+        var inventories = await _dbSet
+            .AsNoTracking()                       // 1. Critical for read-only performance
+            .AsSplitQuery()                       // 2. Prevents Cartesian explosion
+            .Where(i => i.Is_Deleted == false)            // 3. Filter applied early
+            .OrderBy(i => i.ID)                   // 4. Required for efficient Skip/Take
+            .Skip(skip)
+            .Take(take)
+            .Include(i => i.Location)
+            .Include(i => i.Item)
+            .Skip(skip)
+            .Take(take)
+            .ToListAsync();
+
+        return inventories;
+    }
+
     public async Task<Inventory?> GetByItemAndLocationAsync(long itemId, long locationId)
     {
         var inventory = await _dbSet
