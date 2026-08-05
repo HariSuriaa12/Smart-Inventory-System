@@ -24,6 +24,12 @@ export interface LocationInventoryData {
   value: number
 }
 
+export interface InventoryTrendData {
+  month: string
+  value: number
+  items: number
+}
+
 export interface TopSellingItem {
   itemId: number
   itemCode: string

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useAppSelector } from '@/store/hooks'
-import { Card, Badge } from '@/components'
+import { Card } from '@/components'
 import { useLocationModal } from '@/context/LocationModalContext'
 import { PreviewDownloadModal } from '@/components/modals/PreviewDownloadModal'
 import { ExportDataModal } from '@/components/modals/ExportDataModal'
@@ -131,52 +131,55 @@ export const DashboardPage = () => {
 
   const maxTrendValue = Math.max(...inventoryTrend.map((d) => d.value), 1)
 
-  const getConsumptionDataByPeriod = (period: '1m' | '3m' | '6m' | '1y') => {
-    const periodMap = {
-      '1m': 'QtyConsumption30Days',
-      '3m': 'QtyConsumption30Days_M2',
-      '6m': 'QtyConsumption30Days_M4',
-      '1y': 'QtyConsumption30Days_Y1',
+  const getPeriodKeys = () => {
+    if (timePeriod === '1y') {
+      return ['Year Ago', '5 Months Ago', '4 Months Ago', '3 Months Ago', '2 Months Ago', '1 Month Ago', 'Current Month', 'Forecasted']
+    } else if (timePeriod === '6m') {
+      return ['4 Months Ago', '3 Months Ago', '2 Months Ago', '1 Month Ago', 'Current Month', 'Forecasted']
+    } else if (timePeriod === '3m') {
+      return ['2 Months Ago', '1 Month Ago', 'Current Month', 'Forecasted']
+    } else {
+      return ['Current Month', 'Forecasted']
     }
-    return periodMap[period] as keyof ForecastedResultData_Py
+  }
+
+  const getDataForPeriod = (forecast: ForecastedResultData_Py, period: string) => {
+    switch (period) {
+      case 'Year Ago':
+        return forecast.QtyConsumption30Days_Y1
+      case '5 Months Ago':
+        return forecast.QtyConsumption30Days_M5
+      case '4 Months Ago':
+        return forecast.QtyConsumption30Days_M4
+      case '3 Months Ago':
+        return forecast.QtyConsumption30Days_M3
+      case '2 Months Ago':
+        return forecast.QtyConsumption30Days_M2
+      case '1 Month Ago':
+        return forecast.QtyConsumption30Days_M1
+      case 'Current Month':
+        return forecast.QtyConsumption30Days
+      case 'Forecasted':
+        return forecast.PredictedDemandNext30Days
+      default:
+        return 0
+    }
   }
 
   const prepareConsumptionChartData = () => {
     const filteredForecasts = forecasts.filter((f) => selectedItems.includes(f.ItemID))
+    const periodKeys = getPeriodKeys()
 
-    return filteredForecasts.map((f) => {
-      const dataPoint: Record<string, number | string> = {
-        name: f.ItemCode,
-        itemId: f.ItemID,
+    return periodKeys.map((period) => {
+      const dataPoint: Record<string, any> = {
+        period: period,
       }
 
-      if (timePeriod === '1y') {
-        dataPoint['Year Ago'] = f.QtyConsumption30Days_Y1
-        dataPoint['5 Months Ago'] = f.QtyConsumption30Days_M5
-        dataPoint['4 Months Ago'] = f.QtyConsumption30Days_M4
-        dataPoint['3 Months Ago'] = f.QtyConsumption30Days_M3
-        dataPoint['2 Months Ago'] = f.QtyConsumption30Days_M2
-        dataPoint['1 Month Ago'] = f.QtyConsumption30Days_M1
-        dataPoint['Current Month'] = f.QtyConsumption30Days
-        dataPoint['Forecasted'] = f.PredictedDemandNext30Days
-      } else if (timePeriod === '6m') {
-        dataPoint['4 Months Ago'] = f.QtyConsumption30Days_M4
-        dataPoint['3 Months Ago'] = f.QtyConsumption30Days_M3
-        dataPoint['2 Months Ago'] = f.QtyConsumption30Days_M2
-        dataPoint['1 Month Ago'] = f.QtyConsumption30Days_M1
-        dataPoint['Current Month'] = f.QtyConsumption30Days
-        dataPoint['Forecasted'] = f.PredictedDemandNext30Days
-      } else if (timePeriod === '3m') {
-        dataPoint['2 Months Ago'] = f.QtyConsumption30Days_M2
-        dataPoint['1 Month Ago'] = f.QtyConsumption30Days_M1
-        dataPoint['Current Month'] = f.QtyConsumption30Days
-        dataPoint['Forecasted'] = f.PredictedDemandNext30Days
-      } else {
-        dataPoint['Current Month'] = f.QtyConsumption30Days
-        dataPoint['Forecasted'] = f.PredictedDemandNext30Days
-      }
+      filteredForecasts.forEach((forecast) => {
+        dataPoint[forecast.ItemCode] = getDataForPeriod(forecast, period)
+      })
 
-      return dataPoint as any
+      return dataPoint
     })
   }
 
@@ -195,49 +198,15 @@ export const DashboardPage = () => {
     name: f.ItemName,
   }))
 
-  const getLineConfigs = () => {
-    const lineColors = {
-      'Year Ago': '#c4b5fd',
-      '5 Months Ago': '#a5d6ff',
-      '4 Months Ago': '#7dd3fc',
-      '3 Months Ago': '#22d3ee',
-      '2 Months Ago': '#4ade80',
-      '1 Month Ago': '#60a5fa',
-      'Current Month': '#10b981',
-      'Forecasted': '#f59e0b',
-    }
+  const getItemColors = () => {
+    const colors = ['#3b82f6', '#ef4444', '#10b981', '#f59e0b', '#8b5cf6', '#ec4899', '#06b6d4', '#14b8a6']
+    return colors
+  }
 
-    const lines: Array<{ dataKey: string; color: string; strokeWidth: number; showDot?: boolean }> = []
-
-    if (timePeriod === '1y') {
-      lines.push(
-        { dataKey: 'Year Ago', color: lineColors['Year Ago'], strokeWidth: 2 },
-        { dataKey: '5 Months Ago', color: lineColors['5 Months Ago'], strokeWidth: 2 },
-        { dataKey: '4 Months Ago', color: lineColors['4 Months Ago'], strokeWidth: 2 },
-        { dataKey: '3 Months Ago', color: lineColors['3 Months Ago'], strokeWidth: 2 },
-        { dataKey: '2 Months Ago', color: lineColors['2 Months Ago'], strokeWidth: 2 },
-        { dataKey: '1 Month Ago', color: lineColors['1 Month Ago'], strokeWidth: 2 }
-      )
-    } else if (timePeriod === '6m') {
-      lines.push(
-        { dataKey: '4 Months Ago', color: lineColors['4 Months Ago'], strokeWidth: 2 },
-        { dataKey: '3 Months Ago', color: lineColors['3 Months Ago'], strokeWidth: 2 },
-        { dataKey: '2 Months Ago', color: lineColors['2 Months Ago'], strokeWidth: 2 },
-        { dataKey: '1 Month Ago', color: lineColors['1 Month Ago'], strokeWidth: 2 }
-      )
-    } else if (timePeriod === '3m') {
-      lines.push(
-        { dataKey: '2 Months Ago', color: lineColors['2 Months Ago'], strokeWidth: 2 },
-        { dataKey: '1 Month Ago', color: lineColors['1 Month Ago'], strokeWidth: 2 }
-      )
-    }
-
-    lines.push(
-      { dataKey: 'Current Month', color: lineColors['Current Month'], strokeWidth: 3, showDot: true },
-      { dataKey: 'Forecasted', color: lineColors['Forecasted'], strokeWidth: 3, showDot: true }
-    )
-
-    return lines
+  const getLineForItem = (itemCode: string, index: number) => {
+    const colors = getItemColors()
+    const color = colors[index % colors.length]
+    return { itemCode, color }
   }
 
   return (
@@ -458,7 +427,7 @@ export const DashboardPage = () => {
                           borderRadius: '4px',
                         }}
                         formatter={(value: any) => [Math.round(value), 'Forecasted Qty']}
-                        labelFormatter={(label) => `Item: ${label}`}
+                        labelFormatter={(label: any) => `Item: ${label}`}
                       />
                       <Legend />
                       <Bar dataKey="forecast" fill="#3b82f6" name="Forecasted Quantity (Next 30 Days)" />
@@ -576,20 +545,39 @@ export const DashboardPage = () => {
 
                     {/* Info Box */}
                     <div>
-                      <label className="block text-sm font-semibold text-gray-900 mb-3">Chart Legend</label>
-                      <div className="bg-white rounded-lg border border-gray-200 p-4 space-y-2 text-xs">
-                        <div className="flex items-center gap-2">
-                          <div className="w-3 h-0.5 bg-gray-400"></div>
-                          <span className="text-gray-700">Historical consumption data</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <div className="w-3 h-0.5 bg-amber-400"></div>
-                          <span className="text-gray-700">Forecasted demand</span>
-                        </div>
-                        <div className="mt-4 pt-4 border-t border-gray-200">
+                      <label className="block text-sm font-semibold text-gray-900 mb-3">Chart Information</label>
+                      <div className="bg-white rounded-lg border border-gray-200 p-4 space-y-3 text-xs">
+                        <div>
+                          <p className="font-medium text-gray-900 mb-2">X-Axis: Time Periods</p>
                           <p className="text-gray-600">
-                            Shows {timePeriod === '1y' ? 'all 12 months' : timePeriod === '6m' ? '6 months' : timePeriod === '3m' ? '3 months' : '1 month'} of data
+                            {timePeriod === '1y'
+                              ? '12 months of historical data + forecast'
+                              : timePeriod === '6m'
+                                ? '6 months of historical data + forecast'
+                                : timePeriod === '3m'
+                                  ? '3 months of historical data + forecast'
+                                  : '1 month of historical data + forecast'}
                           </p>
+                        </div>
+                        <div className="pt-2 border-t border-gray-200">
+                          <p className="font-medium text-gray-900 mb-2">Y-Axis: Quantity</p>
+                          <p className="text-gray-600">Each line represents one selected item's consumption and forecast</p>
+                        </div>
+                        <div className="pt-2 border-t border-gray-200">
+                          <p className="font-medium text-gray-900 mb-1">Selected Items: {selectedItems.length}</p>
+                          <div className="space-y-1 mt-2">
+                            {forecasts
+                              .filter((f) => selectedItems.includes(f.ItemID))
+                              .map((f, idx) => (
+                                <div key={f.ItemID} className="flex items-center gap-2">
+                                  <div
+                                    className="w-2 h-2 rounded-full"
+                                    style={{ backgroundColor: getItemColors()[idx % getItemColors().length] }}
+                                  ></div>
+                                  <span className="text-gray-700">{f.ItemCode}</span>
+                                </div>
+                              ))}
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -602,8 +590,15 @@ export const DashboardPage = () => {
                     <ResponsiveContainer width="100%" height="100%">
                       <LineChart data={prepareConsumptionChartData()}>
                         <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
-                        <XAxis dataKey="name" stroke="#666" style={{ fontSize: '12px' }} />
-                        <YAxis stroke="#666" style={{ fontSize: '12px' }} />
+                        <XAxis
+                          dataKey="period"
+                          stroke="#666"
+                          style={{ fontSize: '12px' }}
+                          angle={-45}
+                          textAnchor="end"
+                          height={80}
+                        />
+                        <YAxis stroke="#666" style={{ fontSize: '12px' }} label={{ value: 'Quantity', angle: -90, position: 'insideLeft' }} />
                         <Tooltip
                           contentStyle={{
                             backgroundColor: '#ffffff',
@@ -618,17 +613,23 @@ export const DashboardPage = () => {
                           wrapperStyle={{ paddingTop: '20px' }}
                           iconType="line"
                         />
-                        {getLineConfigs().map((lineConfig) => (
-                          <Line
-                            key={lineConfig.dataKey}
-                            type="monotone"
-                            dataKey={lineConfig.dataKey}
-                            stroke={lineConfig.color}
-                            strokeWidth={lineConfig.strokeWidth}
-                            dot={lineConfig.showDot ? { fill: lineConfig.color, r: 4 } : false}
-                            activeDot={{ r: 6 }}
-                          />
-                        ))}
+                        {forecasts
+                          .filter((f) => selectedItems.includes(f.ItemID))
+                          .map((forecast, index) => {
+                            const lineConfig = getLineForItem(forecast.ItemCode, index)
+                            return (
+                              <Line
+                                key={forecast.ItemID}
+                                type="monotone"
+                                dataKey={forecast.ItemCode}
+                                stroke={lineConfig.color}
+                                strokeWidth={2}
+                                dot={{ fill: lineConfig.color, r: 4 }}
+                                activeDot={{ r: 6 }}
+                                name={`${forecast.ItemCode} (${forecast.ItemName})`}
+                              />
+                            )
+                          })}
                       </LineChart>
                     </ResponsiveContainer>
                   </div>
