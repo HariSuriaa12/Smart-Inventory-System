@@ -14,7 +14,18 @@ import {
   ForecastedResultData_Py,
 } from '@/services/dashboardService'
 import { Package, MapPin, ShoppingCart, TrendingUp, AlertCircle, Loader, Eye, BarChart3, Download } from 'lucide-react'
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts'
+import {
+  LineChart,
+  Line,
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from 'recharts'
 
 export const DashboardPage = () => {
   const { openLocationModal } = useLocationModal()
@@ -29,6 +40,8 @@ export const DashboardPage = () => {
   const [loading, setLoading] = useState(true)
   const [showForecastModal, setShowForecastModal] = useState(false)
   const [showExportModal, setShowExportModal] = useState(false)
+  const [selectedItems, setSelectedItems] = useState<number[]>([])
+  const [timePeriod, setTimePeriod] = useState<'1m' | '3m' | '6m' | '1y'>('1m')
 
   // Fetch master stats on mount
   useEffect(() => {
@@ -77,7 +90,13 @@ export const DashboardPage = () => {
     }
 
     fetchLocationData()
-  }, [currentLocation] /*[currentLocation, openLocationModal]*/)
+  }, [currentLocation]) /*[currentLocation, openLocationModal]*/
+
+  useEffect(() => {
+    if (forecasts.length > 0 && selectedItems.length === 0) {
+      setSelectedItems([forecasts[0].ItemID])
+    }
+  }, [forecasts])
 
   const statCards = [
     {
@@ -111,6 +130,43 @@ export const DashboardPage = () => {
   ]
 
   const maxTrendValue = Math.max(...inventoryTrend.map((d) => d.value), 1)
+
+  const getConsumptionDataByPeriod = (period: '1m' | '3m' | '6m' | '1y') => {
+    const periodMap = {
+      '1m': 'QtyConsumption30Days',
+      '3m': 'QtyConsumption30Days_M2',
+      '6m': 'QtyConsumption30Days_M4',
+      '1y': 'QtyConsumption30Days_Y1',
+    }
+    return periodMap[period] as keyof ForecastedResultData_Py
+  }
+
+  const prepareConsumptionChartData = () => {
+    const filteredForecasts = forecasts.filter((f) => selectedItems.includes(f.ItemID))
+    const consumptionKey = getConsumptionDataByPeriod(timePeriod)
+
+    return filteredForecasts.map((f) => ({
+      name: f.ItemCode,
+      [consumptionKey]: f[consumptionKey],
+      PredictedDemandNext30Days: f.PredictedDemandNext30Days,
+      itemId: f.ItemID,
+    }))
+  }
+
+  const prepareForecastBarChartData = () => {
+    return forecasts.map((f) => ({
+      name: f.ItemCode,
+      forecast: f.PredictedDemandNext30Days,
+      itemId: f.ItemID,
+      itemName: f.ItemName,
+    }))
+  }
+
+  const uniqueItems = Array.from(new Map(forecasts.map((f) => [f.ItemID, f])).values()).map((f) => ({
+    id: f.ItemID,
+    code: f.ItemCode,
+    name: f.ItemName,
+  }))
 
   return (
     <div className="relative min-h-screen">
@@ -295,14 +351,13 @@ export const DashboardPage = () => {
           )}
         </Card>
 
-        {/* Forecasting Results */}
+        {/* Forecasted Results - Bar Chart */}
         <Card
-          title="Forecasted Results"
-          subtitle="AI-powered demand forecasts - 30 day projection"
+          title="Forecasted Demand - Next 30 Days"
+          subtitle="AI-powered demand forecasts by item for current location"
           className="mb-6"
         >
           <div className="flex flex-col gap-6">
-            {/* Chart Section */}
             {loading ? (
               <div className="flex items-center justify-center py-12">
                 <Loader className="animate-spin text-gray-400" size={32} />
@@ -317,17 +372,12 @@ export const DashboardPage = () => {
               </div>
             ) : (
               <>
-                {console.log('Forecasts data for chart:', forecasts)}
-                {/* Line Chart */}
+                {/* Bar Chart */}
                 <div className="w-full h-80">
                   <ResponsiveContainer width="100%" height="100%">
-                    <LineChart data={forecasts}>
+                    <BarChart data={prepareForecastBarChartData()}>
                       <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
-                      <XAxis
-                        dataKey="ItemCode"
-                        stroke="#888"
-                        style={{ fontSize: '12px' }}
-                      />
+                      <XAxis dataKey="name" stroke="#888" style={{ fontSize: '12px' }} />
                       <YAxis stroke="#888" style={{ fontSize: '12px' }} />
                       <Tooltip
                         contentStyle={{
@@ -339,16 +389,8 @@ export const DashboardPage = () => {
                         labelFormatter={(label) => `Item: ${label}`}
                       />
                       <Legend />
-                      <Line
-                        type="monotone"
-                        dataKey="PredictedDemandNext30Days"
-                        stroke="#3b82f6"
-                        strokeWidth={2}
-                        dot={{ fill: '#3b82f6', r: 4 }}
-                        activeDot={{ r: 6 }}
-                        name="Forecasted Quantity"
-                      />
-                    </LineChart>
+                      <Bar dataKey="forecast" fill="#3b82f6" name="Forecasted Quantity (Next 30 Days)" />
+                    </BarChart>
                   </ResponsiveContainer>
                 </div>
 
@@ -362,6 +404,130 @@ export const DashboardPage = () => {
                     Preview & Download
                   </button>
                 </div>
+              </>
+            )}
+          </div>
+        </Card>
+
+        {/* Historical Consumption Trend */}
+        <Card
+          title="Consumption Trend & Forecast"
+          subtitle="Historical consumption patterns with forecast comparison"
+          className="mb-6"
+        >
+          <div className="flex flex-col gap-6">
+            {loading ? (
+              <div className="flex items-center justify-center py-12">
+                <Loader className="animate-spin text-gray-400" size={32} />
+              </div>
+            ) : forecasts.length === 0 ? (
+              <div className="flex flex-col items-center justify-center py-12 text-gray-400">
+                <TrendingUp size={40} className="mb-3" />
+                <p className="text-gray-600">No historical data available</p>
+                <p className="text-sm text-gray-500 mt-1">
+                  Historical trends will appear once enough data is collected
+                </p>
+              </div>
+            ) : (
+              <>
+                {/* Filters */}
+                <div className="flex flex-col md:flex-row gap-4 p-4 bg-gray-50 rounded-lg">
+                  {/* Item Filter */}
+                  <div className="flex-1">
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Filter Items</label>
+                    <div className="space-y-2 max-h-48 overflow-y-auto">
+                      {uniqueItems.map((item) => (
+                        <label key={item.id} className="flex items-center gap-2 cursor-pointer">
+                          <input
+                            type="checkbox"
+                            checked={selectedItems.includes(item.id)}
+                            onChange={(e) => {
+                              if (e.target.checked) {
+                                setSelectedItems([...selectedItems, item.id])
+                              } else {
+                                setSelectedItems(selectedItems.filter((id) => id !== item.id))
+                              }
+                            }}
+                            className="w-4 h-4 rounded border-gray-300"
+                          />
+                          <span className="text-sm text-gray-700">
+                            {item.code} - {item.name}
+                          </span>
+                        </label>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Time Period Filter */}
+                  <div className="flex-1">
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Time Period</label>
+                    <div className="space-y-2">
+                      {[
+                        { value: '1m', label: 'Past Month' },
+                        { value: '3m', label: 'Past 3 Months' },
+                        { value: '6m', label: 'Past 6 Months' },
+                        { value: '1y', label: 'Past Year' },
+                      ].map((period) => (
+                        <label key={period.value} className="flex items-center gap-2 cursor-pointer">
+                          <input
+                            type="radio"
+                            name="period"
+                            value={period.value}
+                            checked={timePeriod === period.value}
+                            onChange={(e) => setTimePeriod(e.target.value as '1m' | '3m' | '6m' | '1y')}
+                            className="w-4 h-4"
+                          />
+                          <span className="text-sm text-gray-700">{period.label}</span>
+                        </label>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Line Chart */}
+                {selectedItems.length > 0 ? (
+                  <div className="w-full h-80">
+                    <ResponsiveContainer width="100%" height="100%">
+                      <LineChart data={prepareConsumptionChartData()}>
+                        <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+                        <XAxis dataKey="name" stroke="#888" style={{ fontSize: '12px' }} />
+                        <YAxis stroke="#888" style={{ fontSize: '12px' }} />
+                        <Tooltip
+                          contentStyle={{
+                            backgroundColor: '#fff',
+                            border: '1px solid #ccc',
+                            borderRadius: '4px',
+                          }}
+                          formatter={(value: any) => Math.round(value)}
+                        />
+                        <Legend />
+                        <Line
+                          type="monotone"
+                          dataKey={getConsumptionDataByPeriod(timePeriod)}
+                          stroke="#10b981"
+                          strokeWidth={2}
+                          dot={{ fill: '#10b981', r: 4 }}
+                          activeDot={{ r: 6 }}
+                          name="Historical Consumption"
+                        />
+                        <Line
+                          type="monotone"
+                          dataKey="PredictedDemandNext30Days"
+                          stroke="#f59e0b"
+                          strokeWidth={2}
+                          dot={{ fill: '#f59e0b', r: 4 }}
+                          activeDot={{ r: 6 }}
+                          name="Forecasted Demand"
+                        />
+                      </LineChart>
+                    </ResponsiveContainer>
+                  </div>
+                ) : (
+                  <div className="flex flex-col items-center justify-center py-12 text-gray-400">
+                    <AlertCircle size={40} className="mb-3" />
+                    <p className="text-gray-600">Please select at least one item to view the chart</p>
+                  </div>
+                )}
               </>
             )}
           </div>
